@@ -35,4 +35,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('downloaddocument','Admin\DownloadDocumentController');
     Route::resource('aboutus','Admin\AboutUsController');
     Route::resource('contactus','Admin\ContactUsController');
+    Route::resource('contactusform','Admin\ContactUsFormController');
 });

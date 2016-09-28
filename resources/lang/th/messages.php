@@ -20,5 +20,7 @@ return [
     'menu_slide_image' => 'สไลด์โชว์รูปภาพ',
     'menu_download_document' => 'ดาวน์โหลดเอกสาร',
     'menu_aboutus' => 'เกี่ยวกับเรา',
-    'menu_contactus' => 'ติดต่อเรา'
+    'menu_contactus' => 'ติดต่อเรา',
+    'menu_contactusinfo' => 'ข้อมูลติดต่อเรา',
+    'menu_contactusform' => 'รายการติดต่อเรา'
 ];

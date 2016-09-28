@@ -20,5 +20,7 @@ return [
     'menu_slide_image' => 'Slide Image',
     'menu_download_document' => 'Download Document',
     'menu_aboutus' => 'About Us',
-    'menu_contactus' => 'Contact Us'
+    'menu_contactus' => 'Contact Us',
+    'menu_contactusinfo' => 'Contact Us Infomation',
+    'menu_contactusform' => 'Contact Us Form'
 ];

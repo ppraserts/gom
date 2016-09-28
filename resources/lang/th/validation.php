@@ -135,6 +135,14 @@ return [
         'contactus_address_en' => 'ที่อยู่(อังกฤษ)',
         'contactus_latitude' => 'ลัดติจูด',
         'contactus_longitude' => 'ลองติจูด',
+        'created_at' => 'วันที่ทำรายการ',
+        'contactusform_subject' => 'หัวเรื่อง',
+        'contactusform_messagebox' => 'รายละเอียด',
+        'contactusform_name' => 'ชื่อ',
+        'contactusform_surname' => 'นามสกุล',
+        'contactusform_email' => 'อีเมล์',
+        'contactusform_phone' => 'เบอร์โทร',
+        'contactusform_file' => 'ไฟล์',
     ],
 
 ];

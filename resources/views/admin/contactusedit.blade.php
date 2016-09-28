@@ -12,6 +12,16 @@ $controllerAction = "contactus.update";
 @section('section')
 <div class="col-sm-12">
     <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{{ url ('admin/contactus') }}" >{{ trans('messages.menu_contactusinfo') }}</a>
+            </li>
+            <li><a href="{{ url ('admin/contactusform') }}" >{{ trans('messages.menu_contactusform') }}</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h3>{{ trans('messages.addeditform') }}</h3>

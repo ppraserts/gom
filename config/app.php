@@ -9,6 +9,7 @@ return [
     'paginate' => 10,
     'upload_slideimage' => 'upload/slides/',
     'upload_document' => 'upload/documents/',
+    'upload_contactus' => 'upload/contactus/',
     /*
     |--------------------------------------------------------------------------
     | Application Name

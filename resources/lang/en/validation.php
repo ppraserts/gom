@@ -135,6 +135,14 @@ return [
         'contactus_address_en' => 'Address(EN)',
         'contactus_latitude' => 'Latitude',
         'contactus_longitude' => 'Longitude',
+        'created_at' => 'Create At',
+        'contactusform_subject' => 'Subject',
+        'contactusform_messagebox' => 'Message',
+        'contactusform_name' => 'Name',
+        'contactusform_surname' => 'Surname',
+        'contactusform_email' => 'Email',
+        'contactusform_phone' => 'Phone',
+        'contactusform_file' => 'File',
     ],
 
 ];
