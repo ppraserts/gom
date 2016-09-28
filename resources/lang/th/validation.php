@@ -131,6 +131,10 @@ return [
         'downloaddocument_file' => 'ไฟล์เอกสาร',
         'aboutus_description_th' => 'เกี่ยวกับเรา(ไทย)',
         'aboutus_description_en' => 'เกี่ยวกับเรา(อังกฤษ)',
+        'contactus_address_th' => 'ที่อยู่(ไทย)',
+        'contactus_address_en' => 'ที่อยู่(อังกฤษ)',
+        'contactus_latitude' => 'ลัดติจูด',
+        'contactus_longitude' => 'ลองติจูด',
     ],
 
 ];
