@@ -22,5 +22,7 @@ return [
     'menu_aboutus' => 'About Us',
     'menu_contactus' => 'Contact Us',
     'menu_contactusinfo' => 'Contact Us Infomation',
-    'menu_contactusform' => 'Contact Us Form'
+    'menu_contactusform' => 'Contact Us Form',
+    'menu_faqcategory' => 'Faq Category',
+    'menu_faq' => 'Faq'
 ];

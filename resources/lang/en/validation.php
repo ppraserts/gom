@@ -143,6 +143,14 @@ return [
         'contactusform_email' => 'Email',
         'contactusform_phone' => 'Phone',
         'contactusform_file' => 'File',
+        'faqcategory_title_en' => 'FAQ Category(EN)',
+        'faqcategory_title_th' => 'FAQ Category(TH)',
+        'faqcategory_description_en' => 'Description(EN)',
+        'faqcategory_description_th' => 'Description(TH)',
+        'faq_question_en' => 'FAQ Question(EN)',
+        'faq_question_th' => 'FAQ Question(TH)',
+        'faq_answer_en' => 'FAQ Answer(EN)',
+        'faq_answer_th' => 'FAQ Answer(TH)',
     ],
 
 ];

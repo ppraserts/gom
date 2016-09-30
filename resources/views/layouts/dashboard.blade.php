@@ -72,6 +72,9 @@
                         <li {{ (Request::is('*admin/contactus*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/contactus') }}"><i class="glyphicon glyphicon-edit"></i> {{ trans('messages.menu_contactus') }}</a>
                         </li>
+                        <li {{ (Request::is('*admin/faq*') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/faqcategory') }}"><i class="glyphicon glyphicon-question-sign"></i> {{ trans('messages.menu_faqcategory') }}</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

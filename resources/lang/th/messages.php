@@ -22,5 +22,7 @@ return [
     'menu_aboutus' => 'เกี่ยวกับเรา',
     'menu_contactus' => 'ติดต่อเรา',
     'menu_contactusinfo' => 'ข้อมูลติดต่อเรา',
-    'menu_contactusform' => 'รายการติดต่อเรา'
+    'menu_contactusform' => 'รายการติดต่อเรา',
+    'menu_faqcategory' => 'ประเภทคำถามที่พบบ่อย',
+    'menu_faq' => 'คำถามที่พบบ่อย'
 ];

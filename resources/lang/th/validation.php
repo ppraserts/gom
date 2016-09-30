@@ -143,6 +143,14 @@ return [
         'contactusform_email' => 'อีเมล์',
         'contactusform_phone' => 'เบอร์โทร',
         'contactusform_file' => 'ไฟล์',
+        'faqcategory_title_en' => 'ประเภทคำถามที่พบบ่อย(อังกฤษ)',
+        'faqcategory_title_th' => 'ประเภทคำถามที่พบบ่อย(ไทย)',
+        'faqcategory_description_en' => 'รายละเอียดกลุ่มสินค้า(อังกฤษ)',
+        'faqcategory_description_th' => 'รายละเอียดกลุ่มสินค้า(ไทย)',
+        'faq_question_en' => 'คำถามที่พบบ่อย(อังกฤษ)',
+        'faq_question_th' => 'คำถามที่พบบ่อย(ไทย)',
+        'faq_answer_en' => 'คำตอบ(อังกฤษ)',
+        'faq_answer_th' => 'คำตอบ(ไทย)',
     ],
 
 ];
