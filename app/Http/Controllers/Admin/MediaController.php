@@ -5,16 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Faq;
+use App\Media;
 
-class FaqController extends Controller
+class MediaController extends Controller
 {
     private $rules = [
-       'faq_question_th' => 'required',
-       'faq_answer_th' => 'required',
-       'faq_question_en' => 'required',
-       'faq_answer_en' => 'required',
-       'faqcategory_id' => 'required',
+       'media_name_th' => 'required',
+       'media_name_en' => 'required',
+       'media_urllink' => 'required|url',
        'sequence' => 'required|integer',
     ];
     /**
@@ -29,60 +27,53 @@ class FaqController extends Controller
 
     public function index(Request $request)
     {
-        $faqcategory = \Request::get('faqcategory');
-        $items = Faq::Where('faqcategory_id', '=', $faqcategory)
-                    ->Where(function ($query) {
-                       $search = \Request::get('search');
-                       $query->where('faq_question_th','like','%'.$search.'%')
-                             ->orWhere('faq_question_en','like','%'.$search.'%');
-                    })
+        $search = \Request::get('search');
+        $items = Media::where('media_name_th','like','%'.$search.'%')
+                    ->orwhere('media_name_en','like','%'.$search.'%')
                     ->orderBy('sequence','ASC')
                     ->paginate(config('app.paginate'));
-        return view('admin.faqindex',compact('items'))
+        return view('admin.mediaindex',compact('items'))
             ->with('i', ($request->input('page', 1) - 1) * config('app.paginate'));
     }
 
     public function create()
     {
         $data = array('mode' => 'create');
-        $item = new Faq();
+        $item = new Media();
         $item->sequence = 999;
-        return view('admin.faqedit',compact('item'))->with($data);
+        return view('admin.mediaedit',compact('item'))->with($data);
     }
 
     public function store(Request $request)
     {
         //$this->validate($request, $this->rules, $this->messages);
-        $faqcategory = $_REQUEST["faqcategory_id"];
         Validator::make($request->all(), $this->rules)->validate();
-        Faq::create($request->all());
-        return redirect()->route('faq.index',['faqcategory'=>$faqcategory])
+        Media::create($request->all());
+        return redirect()->route('media.index')
                        ->with('success',trans('messages.message_create_success'));
     }
 
     public function edit($id)
     {
         $data = array('mode' => 'edit');
-        $item = Faq::find($id);
-        return view('admin.faqedit',compact('item'))->with($data);
+        $item = Media::find($id);
+        return view('admin.mediaedit',compact('item'))->with($data);
     }
 
     public function update(Request $request, $id)
     {
-        $faqcategory = $_REQUEST["faqcategory_id"];
         $this->validate($request, $this->rules);
 
-        Faq::find($id)->update($request->all());
-        return redirect()->route('faq.index',['faqcategory'=>$faqcategory])
+        Media::find($id)->update($request->all());
+        return redirect()->route('media.index')
                         ->with('success',trans('messages.message_update_success'));
     }
 
 
     public function destroy($id)
     {
-        $faqcategory = $_REQUEST["faqcategory"];
-        Faq::find($id)->delete();
-        return redirect()->route('faq.index',['faqcategory'=>$faqcategory])
+        Media::find($id)->delete();
+        return redirect()->route('media.index')
                         ->with('success',trans('messages.message_delete_success'));
     }
 }

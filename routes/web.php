@@ -38,4 +38,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('contactusform','Admin\ContactUsFormController');
     Route::resource('faqcategory','Admin\FaqCategoryController');
     Route::resource('faq','Admin\FaqController');
+    Route::resource('media','Admin\MediaController');
 });

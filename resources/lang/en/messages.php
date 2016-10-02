@@ -16,6 +16,7 @@ return [
     'message_create_success'=> 'Created successfully',
     'message_update_success'=> 'Updated successfully',
     'message_delete_success'=> 'Deleted successfully',
+    'message_delete_inuse'=> 'Cannot delete or update a parent row: a foreign key constraint fails',
     'menu_product_category' => 'Product Category',
     'menu_slide_image' => 'Slide Image',
     'menu_download_document' => 'Download Document',
@@ -24,5 +25,6 @@ return [
     'menu_contactusinfo' => 'Contact Us Infomation',
     'menu_contactusform' => 'Contact Us Form',
     'menu_faqcategory' => 'Faq Category',
-    'menu_faq' => 'Faq'
+    'menu_faq' => 'Faq',
+    'menu_media' => 'Media'
 ];

@@ -151,6 +151,9 @@ return [
         'faq_question_th' => 'FAQ Question(TH)',
         'faq_answer_en' => 'FAQ Answer(EN)',
         'faq_answer_th' => 'FAQ Answer(TH)',
+        'media_name_th' => 'Media Name(TH)',
+        'media_name_en' => 'Media Name(EN)',
+        'media_urllink' => 'Media Url',
     ],
 
 ];

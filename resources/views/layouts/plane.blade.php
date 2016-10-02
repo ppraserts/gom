@@ -40,6 +40,18 @@
 			CKEDITOR.replace( 'contactus_address_th' );
 	    CKEDITOR.replace( 'contactus_address_en' );
 		}
+
+		if ( $( "[name=faq_answer_th]" ).length )
+		{
+			CKEDITOR.replace( 'faq_answer_th' );
+			CKEDITOR.replace( 'faq_answer_en' );
+		}
+
+		if ( $( "[name=faqcategory_description_th]" ).length )
+		{
+			CKEDITOR.replace( 'faqcategory_description_th' );
+	    CKEDITOR.replace( 'faqcategory_description_en' );
+		}
 	</script>
 	<?php
 		if(isset($controllerAction) && $controllerAction == "contactus.update")

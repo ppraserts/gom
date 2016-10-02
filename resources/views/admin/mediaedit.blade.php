@@ -1,24 +1,22 @@
 <?php
-use App\FaqCategory;
-$faqcategoryItem = FaqCategory::find($_REQUEST["faqcategory"]);
-$pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_th)";
+$pagetitle = trans('messages.menu_media');
 
 if($mode=="create")
 {
   $method = "POST";
   $formModelId = 0;
-  $controllerAction = "faq.store";
+  $controllerAction = "media.store";
 }
 else
 {
   $method = "PATCH";
   $formModelId =  $item->id;
-  $controllerAction = "faq.update";
+  $controllerAction = "media.update";
 }
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
-@section('page_heading_image','<i class="glyphicon glyphicon-question-sign"></i>')
+@section('page_heading_image','<i class="glyphicon glyphicon-facetime-video"></i>')
 @section('section')
 <div class="col-sm-12">
     <div class="row">
@@ -27,7 +25,7 @@ else
                 <h3>{{ trans('messages.addeditform') }}</h3>
             </div>
             <div class="pull-right">
-                <a class="btn btn-default" href="{{ route('faq.index') }}?faqcategory=<?php echo $_REQUEST["faqcategory"]; ?>">
+                <a class="btn btn-default" href="{{ route('media.index') }}">
                   <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                    {{ trans('messages.button_back') }}</a>
             </div>
@@ -49,32 +47,24 @@ else
     {!! Form::model($item, ['method' => $method,'route' => [$controllerAction, $formModelId]]) !!}
 
     <div class="row">
-
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group {{ $errors->has('faq_question_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.faq_question_th') }}:</strong>
-                {!! Form::text('faq_question_th', null, array('placeholder' => Lang::get('validation.attributes.faq_question_th'),'class' => 'form-control')) !!}
+            <div class="form-group {{ $errors->has('media_name_th') ? 'has-error' : '' }}">
+                <strong>{{ Lang::get('validation.attributes.media_name_th') }}:</strong>
+                {!! Form::text('media_name_th', null, array('placeholder' => Lang::get('validation.attributes.media_name_th'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group {{ $errors->has('faq_answer_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.faq_answer_th') }}:</strong>
-                {!! Form::textarea('faq_answer_th', null, array('placeholder' => Lang::get('validation.attributes.faq_answer_th'),'class' => 'form-control','style'=>'height:100px')) !!}
+            <div class="form-group {{ $errors->has('media_name_en') ? 'has-error' : '' }}">
+                <strong>{{ Lang::get('validation.attributes.media_name_en') }}:</strong>
+                {!! Form::text('media_name_en', null, array('placeholder' => Lang::get('validation.attributes.media_name_en'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group {{ $errors->has('faq_question_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.faq_question_en') }}:</strong>
-                {!! Form::text('faq_question_en', null, array('placeholder' => Lang::get('validation.attributes.faq_question_en'),'class' => 'form-control')) !!}
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group {{ $errors->has('faq_answer_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.faq_answer_en') }}:</strong>
-                {!! Form::textarea('faq_answer_en', null, array('placeholder' => Lang::get('validation.attributes.faq_answer_en'),'class' => 'form-control','style'=>'height:100px')) !!}
+            <div class="form-group {{ $errors->has('media_urllink') ? 'has-error' : '' }}">
+                <strong>{{ Lang::get('validation.attributes.media_urllink') }}:</strong>
+                {!! Form::text('media_urllink', null, array('placeholder' => Lang::get('validation.attributes.media_urllink'),'class' => 'form-control')) !!}
             </div>
         </div>
 
@@ -89,8 +79,13 @@ else
             </div>
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; margin-bottom:10px;">
+            <div class="embed-responsive embed-responsive-16by9" >
+              <iframe class="embed-responsive-item" src="{{ $item->media_urllink }}"></iframe>
+            </div>
+        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-12" >
-               <input type="hidden" id="faqcategory_id" name="faqcategory_id" value="<?php echo $_REQUEST["faqcategory"]; ?>" />
                 <button type="submit" class="btn btn-primary">
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                   {{ trans('messages.button_save')}}</button>

@@ -73,7 +73,10 @@
                             <a href="{{ url ('admin/contactus') }}"><i class="glyphicon glyphicon-edit"></i> {{ trans('messages.menu_contactus') }}</a>
                         </li>
                         <li {{ (Request::is('*admin/faq*') ? 'class=active' : '') }}>
-                            <a href="{{ url ('admin/faqcategory') }}"><i class="glyphicon glyphicon-question-sign"></i> {{ trans('messages.menu_faqcategory') }}</a>
+                            <a href="{{ url ('admin/faqcategory') }}"><i class="glyphicon glyphicon-question-sign"></i> {{ trans('messages.menu_faq') }}</a>
+                        </li>
+                        <li {{ (Request::is('*admin/media*') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/media') }}"><i class="glyphicon glyphicon-facetime-video"></i> {{ trans('messages.menu_media') }}</a>
                         </li>
                     </ul>
                 </div>

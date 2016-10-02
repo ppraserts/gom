@@ -1,12 +1,10 @@
 <?php
-use App\FaqCategory;
-$url = "admin/faq";
-$faqcategoryItem = FaqCategory::find($_REQUEST["faqcategory"]);
-$pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_th)"
+$url = "admin/media";
+$pagetitle = trans('messages.menu_media');
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
-@section('page_heading_image','<i class="glyphicon glyphicon-question-sign"></i>')
+@section('page_heading_image','<i class="glyphicon glyphicon-facetime-video"></i>')
 @section('section')
 
 <div class="col-sm-12">
@@ -21,7 +19,6 @@ $pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_t
         <div class="panel-body">
               {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
               <div class="input-group custom-search-form">
-                  <input type="hidden" id="faqcategory" name="faqcategory" value="<?php echo $_REQUEST["faqcategory"]; ?>" />
                   <input type="text" id="search" name="search" class="form-control" placeholder="{{ trans('messages.search') }}
 ...">
                   <span class="input-group-btn">
@@ -37,11 +34,11 @@ $pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_t
                     <thead>
                       <tr>
                           <th>{{ trans('messages.no') }}</th>
-                          <th>{{ Lang::get('validation.attributes.faq_question_th') }}</th>
-                          <th>{{ Lang::get('validation.attributes.faq_question_en') }}</th>
+                          <th>{{ Lang::get('validation.attributes.media_name_th') }}</th>
+                          <th>{{ Lang::get('validation.attributes.media_name_en') }}</th>
                           <th>{{ Lang::get('validation.attributes.sequence') }}</th>
                           <th width="130px" style="text-align:center;">
-                            <a class="btn btn-success" href="{{ url ('admin/faq/create?faqcategory='.$_REQUEST['faqcategory']) }}">
+                            <a class="btn btn-success" href="{{ route('media.create') }}">
                               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </a>
                           </th>
@@ -51,18 +48,18 @@ $pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_t
                 @foreach ($items as $key => $item)
                       <tr>
                           <td>{{ ++$i }}</td>
-                          <td>{{ $item->faq_question_th }}</td>
-                          <td>{{ $item->faq_question_en }}</td>
+                          <td>{{ $item->media_name_th }}</td>
+                          <td>{{ $item->media_name_en }}</td>
                           <td>{{ $item->sequence }}</td>
                           <td style="text-align:center;">
-                              <a class="btn btn-primary" href="{{ url ('admin/faq/'.$item->id.'/edit?faqcategory='.$_REQUEST['faqcategory']) }}">
+                              <a class="btn btn-primary" href="{{ route('media.edit',$item->id) }}">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                               </a>
                               <?php
-                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->faq_question_th]);
+                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->media_name_th]);
                               ?>
-                              {!! Form::open(['method' => 'DELETE','route' => ['faq.destroy', $item->id],'style'=>'display:inline']) !!}
-                              <input type="hidden" id="faqcategory" name="faqcategory" value="<?php echo $_REQUEST["faqcategory"]; ?>" />
+                              {!! Form::open(['method' => 'DELETE','route' => ['media.destroy', $item->id],'style'=>'display:inline']) !!}
+
                               <button onclick="return confirm('{{$confirmdelete}}');"  class="btn btn-danger" type="submit">
                                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                               </button>

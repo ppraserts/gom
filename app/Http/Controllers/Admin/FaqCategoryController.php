@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -73,8 +74,15 @@ class FaqCategoryController extends Controller
 
     public function destroy($id)
     {
-        FaqCategory::find($id)->delete();
-        return redirect()->route('faqcategory.index')
-                        ->with('success',trans('messages.message_delete_success'));
+        $total = DB::select(DB::raw("select count(*) as cnt from faq where faqcategory_id = $id "));
+        if($total[0]->cnt == 0){
+            FaqCategory::find($id)->delete();
+            return redirect()->route('faqcategory.index')
+                            ->with('success',trans('messages.message_delete_success'));
+        }
+        else {
+          return redirect()->route('faqcategory.index')
+                          ->with('error',trans('messages.message_delete_inuse'));
+        }
     }
 }

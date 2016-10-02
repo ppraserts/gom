@@ -151,6 +151,9 @@ return [
         'faq_question_th' => 'คำถามที่พบบ่อย(ไทย)',
         'faq_answer_en' => 'คำตอบ(อังกฤษ)',
         'faq_answer_th' => 'คำตอบ(ไทย)',
+        'media_name_th' => 'ชื่อมีเดีย(ไทย)',
+        'media_name_en' => 'ชื่อมีเดีย(อังกฤษ)',
+        'media_urllink' => 'ที่อยู่ของมีเดีย',
     ],
 
 ];

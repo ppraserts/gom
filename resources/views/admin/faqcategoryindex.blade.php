@@ -15,6 +15,11 @@ $pagetitle = trans('messages.menu_faqcategory');
               <p>{{ $message }}</p>
           </div>
       @endif
+      @if ($message = Session::get('error'))
+          <div class="alert alert-danger">
+              <p>{{ $message }}</p>
+          </div>
+      @endif
       <div class="panel panel-default">
         <div class="panel-body">
               {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
@@ -51,9 +56,9 @@ $pagetitle = trans('messages.menu_faqcategory');
                       <tr>
                           <td>{{ ++$i }}</td>
                           <td>{{ $item->faqcategory_title_th }}</td>
-                          <td>{{ $item->faqcategory_description_th }}</td>
+                          <td>{!! $item->faqcategory_description_th !!}</td>
                           <td>{{ $item->faqcategory_title_en }}</td>
-                          <td>{{ $item->faqcategory_description_en }}</td>
+                          <td>{!! $item->faqcategory_description_en !!}</td>
                           <td>{{ $item->sequence }}</td>
                           <td style="text-align:center;">
                               <a class="btn btn-primary" href="{{ url ('admin/faq?faqcategory='.$item->id) }}">
