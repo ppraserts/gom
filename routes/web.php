@@ -39,4 +39,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('faqcategory','Admin\FaqCategoryController');
     Route::resource('faq','Admin\FaqController');
     Route::resource('media','Admin\MediaController');
+    Route::resource('changepassword','Admin\ChangePasswordController');
 });

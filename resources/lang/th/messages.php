@@ -17,6 +17,7 @@ return [
     'message_update_success'=> 'ระบบปรับปรุงรายการได้สำเร็จ',
     'message_delete_success'=> 'ระบบลบรายการได้สำเร็จ',
     'message_delete_inuse'=> 'ไม่สามารถลบข้อมูลได้ เนื่องจากข้อมูลมีการใช้ข้อมูลนี้ในระบบ',
+    'message_reset_password_success' => 'การเปลี่ยนแปลงรหัสผ่านสำเร็จ',
     'menu_product_category' => 'กลุ่มสินค้า',
     'menu_slide_image' => 'สไลด์โชว์รูปภาพ',
     'menu_download_document' => 'ดาวน์โหลดเอกสาร',
@@ -26,5 +27,6 @@ return [
     'menu_contactusform' => 'รายการติดต่อเรา',
     'menu_faqcategory' => 'ประเภทคำถามที่พบบ่อย',
     'menu_faq' => 'คำถามที่พบบ่อย',
-    'menu_media' => 'มีเดีย'
+    'menu_media' => 'มีเดีย',
+    'menu_changepassword' => 'เปลี่ยนรหัสผ่าน',
 ];

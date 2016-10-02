@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url ('/admin/home') }}">{{ config('app.name', 'Laravel') }}</a>
+                <a class="navbar-brand" href="{{ url ('/admin/productcategory') }}">{{ config('app.name', 'Laravel') }}</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -39,6 +39,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> {{ trans('messages.userprofile') }}</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{{ url ('admin/changepassword') }}"><i class="fa fa-key fa-fw"></i> {{ trans('messages.menu_changepassword') }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ url ('/logout') }}" onclick="event.preventDefault();

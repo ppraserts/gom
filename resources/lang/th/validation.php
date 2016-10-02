@@ -40,6 +40,7 @@ return [
     'exists'               => 'ข้อมูล ที่ถูกเลือกจาก :attribute ไม่ถูกต้อง',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'ข้อมูล :attribute จำเป็นต้องกรอก',
+    'hash'                 => 'ข้อมูล :attribute ไม่ตรงกับรหัสผ่านปัจจุบันที่ใช้อยู่',
     'image'                => 'ข้อมูล :attribute ต้องเป็นรูปภาพ',
     'in'                   => 'ข้อมูล ที่ถูกเลือกใน :attribute ไม่ถูกต้อง',
     'in_array'             => 'ข้อมูล :attribute ไม่มีอยู่ภายในค่าของ :other',
@@ -154,6 +155,9 @@ return [
         'media_name_th' => 'ชื่อมีเดีย(ไทย)',
         'media_name_en' => 'ชื่อมีเดีย(อังกฤษ)',
         'media_urllink' => 'ที่อยู่ของมีเดีย',
+        'now_password' => 'รหัสผ่านเดิม',
+        'new_password' => 'รหัสผ่านใหม่',
+        'password_confirmation' => 'ยืนยันรหัสผ่าน',
     ],
 
 ];

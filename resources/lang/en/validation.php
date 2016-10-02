@@ -40,6 +40,7 @@ return [
     'exists'               => 'The selected :attribute is invalid.',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'The :attribute field is required.',
+    'hash'                 => 'The :attribute doesn\'t match current password.',
     'image'                => 'The :attribute must be an image.',
     'in'                   => 'The selected :attribute is invalid.',
     'in_array'             => 'The :attribute field does not exist in :other.',
@@ -154,6 +155,9 @@ return [
         'media_name_th' => 'Media Name(TH)',
         'media_name_en' => 'Media Name(EN)',
         'media_urllink' => 'Media Url',
+        'now_password' => 'Current Password',
+        'new_password' => 'New Password',
+        'password_confirmation' => 'Confirm Password',
     ],
 
 ];

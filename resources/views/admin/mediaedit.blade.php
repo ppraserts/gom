@@ -78,12 +78,18 @@ else
                 </div>
             </div>
         </div>
-
+        <?php
+          if($mode=="edit")
+          {
+        ?>
         <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; margin-bottom:10px;">
             <div class="embed-responsive embed-responsive-16by9" >
               <iframe class="embed-responsive-item" src="{{ $item->media_urllink }}"></iframe>
             </div>
         </div>
+        <?php
+          }
+        ?>
 
         <div class="col-xs-12 col-sm-12 col-md-12" >
                 <button type="submit" class="btn btn-primary">
