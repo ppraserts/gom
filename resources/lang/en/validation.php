@@ -158,6 +158,12 @@ return [
         'now_password' => 'Current Password',
         'new_password' => 'New Password',
         'password_confirmation' => 'Confirm Password',
+        'users_firstname_th' => 'Firstname(TH)',
+        'users_lastname_th' => 'Lastname(TH)',
+        'users_firstname_en' => 'Firstname(EN)',
+        'users_lastname_en' => 'Lastname(EN)',
+        'users_mobilephone' => 'Mobile Phone',
+        'users_phone' => 'Phone',
     ],
 
 ];

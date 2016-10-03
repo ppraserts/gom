@@ -158,6 +158,12 @@ return [
         'now_password' => 'รหัสผ่านเดิม',
         'new_password' => 'รหัสผ่านใหม่',
         'password_confirmation' => 'ยืนยันรหัสผ่าน',
+        'users_firstname_th' => 'ชื่อ(ไทย)',
+        'users_lastname_th' => 'นามสกุล(ไทย)',
+        'users_firstname_en' => 'ชื่อ(อังกฤษ)',
+        'users_lastname_en' => 'นามสกุล(อังกฤษ)',
+        'users_mobilephone' => 'เบอร์มือถือ',
+        'users_phone' => 'เบอร์โทร',
     ],
 
 ];

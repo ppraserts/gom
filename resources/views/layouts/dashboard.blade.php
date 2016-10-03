@@ -38,7 +38,7 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> {{ trans('messages.userprofile') }}</a>
+                        <li><a href="{{ url ('admin/userprofile') }}"><i class="fa fa-user fa-fw"></i> {{ trans('messages.userprofile') }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ url ('admin/changepassword') }}"><i class="fa fa-key fa-fw"></i> {{ trans('messages.menu_changepassword') }}</a>

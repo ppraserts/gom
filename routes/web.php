@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('welcome');
+});
+
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
     return Redirect::back();
@@ -26,7 +30,7 @@ Route::get('change/{locale}', function ($locale) {
 });
 
 Auth::routes();
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('home', 'HomeController@index');
     Route::resource('userprofile','Admin\UserProfileController');

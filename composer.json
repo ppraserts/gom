@@ -10,7 +10,8 @@
         "laravelcollective/html": "5.3.*",
         "captcha-com/laravel-captcha": "4.*",
         "ckeditor/ckeditor": "^4.5",
-        "unisharp/laravel-ckeditor": "^4.5"
+        "unisharp/laravel-ckeditor": "^4.5",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

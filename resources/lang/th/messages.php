@@ -18,6 +18,7 @@ return [
     'message_delete_success'=> 'ระบบลบรายการได้สำเร็จ',
     'message_delete_inuse'=> 'ไม่สามารถลบข้อมูลได้ เนื่องจากข้อมูลมีการใช้ข้อมูลนี้ในระบบ',
     'message_reset_password_success' => 'การเปลี่ยนแปลงรหัสผ่านสำเร็จ',
+    'message_email_inuse' => 'อีเมล์ที่ระบุมามีผู้ใช้งานอยู่',
     'menu_product_category' => 'กลุ่มสินค้า',
     'menu_slide_image' => 'สไลด์โชว์รูปภาพ',
     'menu_download_document' => 'ดาวน์โหลดเอกสาร',
