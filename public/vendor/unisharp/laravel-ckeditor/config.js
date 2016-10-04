@@ -35,4 +35,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+	config.extraPlugins = 'image';
+	config.filebrowserUploadUrl = 'http://localhost/ckupload.php';
+	config.image_removeLinkByEmptyURL= true;
+	config.image_previewText = CKEDITOR.tools.repeat( 'ตัวอย่างรูปภาพ ', 100 );
 };
