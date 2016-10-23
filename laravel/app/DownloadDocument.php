@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DownloadDocument extends Model
 {
-    protected $table = "DownloadDocuments";
+    protected $table = "downloaddocuments";
     public $fillable = ['downloaddocument_title_th',
                         'downloaddocument_title_en',
                         'downloaddocument_description_th',

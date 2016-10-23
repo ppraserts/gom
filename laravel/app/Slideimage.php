@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SlideImage extends Model
 {
-    protected $table = "SlideImages";
+    protected $table = "slideimages";
     public $fillable = ['slideimage_name',
                         'slideimage_file',
                         'slideimage_type',
