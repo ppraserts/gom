@@ -14,6 +14,7 @@ return [
     */
 
     'accepted'             => 'The :attribute must be accepted.',
+    'uploaded'             => 'The :attribute must be correct.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
     'alpha'                => 'The :attribute may only contain letters.',

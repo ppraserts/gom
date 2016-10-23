@@ -11,13 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/home', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
@@ -31,8 +26,7 @@ Route::get('change/{locale}', function ($locale) {
 
 Auth::routes();
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('/', 'HomeController@index');
-    Route::get('home', 'HomeController@index');
+    Route::get('/', 'Admin\UserProfileController@index');
     Route::resource('userprofile','Admin\UserProfileController');
     Route::resource('productcategory','Admin\ProductCategoryController');
     Route::resource('slideimage','Admin\SlideImageController');

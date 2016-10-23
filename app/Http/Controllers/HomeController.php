@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User;
 use App\Http\Controllers\Controller;
+use App\AboutUs;
+use App\SlideImage;
+use App\Media;
+use App\ProductCategory;
 
 class HomeController extends Controller
 {
@@ -16,7 +20,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -29,6 +32,27 @@ class HomeController extends Controller
         //echo Hash::check('12345', $user->password);
         //echo $user = auth()->authenticate();
         //echo auth()->user()->password;
-        return view('home');
+        $aboutusItem = AboutUs::find(1);
+        $bannerItem = SlideImage::where('slideimage_type','=','B')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $slideItem = SlideImage::where('slideimage_type','=','AS')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $mediaItem = Media::orderBy('sequence','ASC')
+                    ->get();
+
+        $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
+                    ->get();
+
+        return view('welcome',compact('aboutusItem'
+                                        ,'bannerItem'
+                                        ,'slideItem'
+                                        ,'mediaItem'
+                                        ,'productCategoryitem'));
     }
 }

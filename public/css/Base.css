@@ -1,0 +1,414 @@
+@font-face {
+    font-family: 'THSarabunNew';
+    src: url('fonts/THSarabunNew.eot');
+    src: url('fonts/THSarabunNew.eot?#iefix') format('embedded-opentype'), url('fonts/THSarabunNew.woff') format('woff'), url('fonts/THSarabunNew.ttf') format('truetype'), url('fonts/THSarabunNew.svg#dax-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'THSarabunNew-Bold';
+    src: url('fonts/THSarabunNew-Bold.eot');
+    src: url('fonts/THSarabunNew-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/THSarabunNew-Bold.woff') format('woff'), url('fonts/THSarabunNew-Bold.ttf') format('truetype'), url('fonts/THSarabunNew-Bold.svg#dax-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'THSarabunNew-Italic';
+    src: url('fonts/THSarabunNew-Italic.eot');
+    src: url('fonts/THSarabunNew-Italic.eot?#iefix') format('embedded-opentype'), url('fonts/THSarabunNew-Italic.woff') format('woff'), url('fonts/THSarabunNew-Italic.ttf') format('truetype'), url('fonts/THSarabunNew-Italic.svg#dax-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'thaisansneue-light-webfont';
+    src: url('fonts/thaisansneue-light-webfont.eot');
+    src: url('fonts/thaisansneue-light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/thaisansneue-light-webfont.woff') format('woff'), url('fonts/thaisansneue-light-webfont.ttf') format('truetype'), url('fonts/thaisansneue-light-webfont.svg#dax-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+Body{
+	font-family:'THSarabunNew', 'thaisansneue-light-webfont';
+	font-size:24px;
+	color:#4f4f4f;
+	overflow-x:hidden;
+	width:100%;
+}
+a, .btn{
+	transition: background-color 0.3s ease-in 0s, color 0.3s ease-in 0s;
+}
+.navbar-default {
+    background-color: #25211b;
+    border-color: #25211b;
+	border-radius:0;
+}
+.navbar-brand img{
+	width:200px;
+}
+.langBox{
+	padding: 0;
+    list-style: none;
+	padding-top:10px;
+	margin-bottom:0;
+}
+.langBox a{
+	display: block;
+    padding: 10px 0;
+	color:#fff;
+}
+.flag img{
+	margin-right:10px;
+}
+.navbar-default .navbar-nav>li>a{
+	color:#fff;
+}
+.signUpBox .loginBox{
+	display:block;
+	padding:10px 0;
+	color:#fff;
+	text-align:center;
+}
+.langBox a{
+	opacity:0.5;
+}
+.langBox .active, .langBox a:active, .langBox a:hover{
+	opacity:1;
+}
+.btn-primary{
+	background-color:#606441;
+	border-color:#606441;
+}
+.btn-primary:hover, .btn.focus, .btn:focus, .btn:hover,
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover{
+	background-color:#697032;
+	border-color:#697032;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
+	background-color:#e2caaa;
+	color:#fff;
+}
+.navbar-default{
+	margin-bottom:0;
+}
+.carousel-indicators .active{
+	background-color:#606441;
+	border-color:#606441;
+}
+.carousel-indicators li{
+	border: 1px solid #606441;
+}
+.searchArea{
+	background-color:#bab3a9;
+	padding-bottom:20px;
+}
+.form-control{
+	border-radius: 10px;
+    border-color: #fff;
+    box-shadow: none;
+	font-size:24px;
+	height:48px;
+	padding:8px 12px;
+}
+.dropdown-menu{
+	font-size:24px;
+}
+.btn{
+	border-radius: 10px;
+	font-size:24px;
+}
+.lineBottom{
+	border-bottom: 4px solid #a66c42;
+	width:90px;
+	margin-bottom:15px;
+}
+p{
+	font-size:24px;
+}
+h1{
+	font-size:65px;
+}
+h2{
+	margin-bottom:0;
+	font-size:45px;
+	color:#43372e;
+}
+h3{
+	font-size:34px;
+}
+a{
+	color:#a66c42;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
+	color:#fff;
+}
+a:hover{
+	color:#bc8258;
+}
+
+.newsContainer{
+	background-color:#25211b;
+	color:#fff;
+	padding-bottom:30px;
+}
+.dateBox{
+	background-color:#a66c42;
+}
+.detailBox{
+	background-color:#3c424e;
+}
+.dateBox p, .detailBox p{
+	margin-top:10px;
+}
+.newsBox{
+	margin-bottom:10px;
+}
+.viewAll{
+	display:block;
+	text-align:right;
+}
+.thumbnail{
+	padding:0;
+	border-radius:0;
+}
+.viewAllLink{
+	text-align:right;
+}
+.thumbnail1{
+	background-color:#a66c42;
+}
+.thumbnail2{
+	background-color:#5b8532;
+}
+.thumbnail3{
+	background-color:#606441;
+}
+.thumbnail4{
+	background-color:#74314c;
+}
+.thumbnail5{
+	background-color:#56a0c6;
+}
+.thumbnail6{
+	background-color:#56a0c6;
+}
+.viewTeasor{
+	background:rgba(0, 0, 0, 0.5);
+}
+.viewAllLink a{
+	display:block;
+	width:100%;
+	padding:10px 0;
+	color:#fff;
+}
+.thumbnail .caption, .thumbnail .caption a{
+	color:#fff;
+}
+.thumbnail  h3{
+	margin:10px 0;
+}
+.noCaption{
+	text-align:center;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.thumbnail a>img, .thumbnail>img{
+	width:100%;
+}
+.feature{
+	margin-bottom:30px;
+}
+.featureArea{
+	background-color:#edeceb;
+	padding-top:30px;
+}
+.centerContent{
+	text-align:center;
+	background-color:#a66c42;
+	color:#fff;
+}
+.footer{
+	text-align:center;
+	background-color:#25211b;
+	color:#fff;
+}
+.slidesBannerArea{
+	max-height: 56px;
+    display: inline-block;
+    width: 100%;
+}
+.footer{
+	padding:15px 0;
+}
+.itemBanner{
+	max-height:56px;
+}
+.overlayBG{
+	background:rgba(0, 0, 0, 0.5);
+	position:absolute;
+	height:100%;
+}
+.loginBtn:hover{
+	background-color:#ccc;
+}
+.rightSideArea{
+	margin-top:10px;
+}
+.navbar-brand{
+	padding-left:15px;
+}
+@media (min-width: 768px){
+	.centerContent h2{
+		color:#fff;
+	}
+	.langBox {
+		display: inline-block;
+		width: 185px;
+		float: right;
+		padding-top:0;
+	}
+	.langBox li {
+		display: inline-block;
+		float: left;
+		margin-right:10px;
+		
+	}
+	.signUpBox{
+		display: inline-block;
+		float:right;
+	}
+	.rightSide{
+		float:right;
+		text-align:right;
+		margin-top:15px;
+	}
+	.rightSideArea{
+		margin-top:-60px;
+		padding-bottom:10px;
+		background-color:#25211b;
+	}
+	.loginBtn{
+		display: inline-block;
+		width: 110px;
+		
+	}
+	.signUpBtn{
+		display: inline-block;
+		float: left;
+		width: 110px;
+		margin-top: 0 !important;
+		vertical-align: top;
+		margin-right: 10px;
+	}
+	.menuArea{
+		background:rgba(166, 108, 66, 0.6);
+		z-index: 1000;
+		position: absolute;
+		width:100%;
+	}
+	.navbar-default{
+			background:none;
+			border:none;
+	}
+	.navbar-header{
+		padding-left:15px;
+	}
+	.langBox a{
+		padding:5px 0;
+	}
+	.navbar-nav{
+		float:right;
+	}
+	.slideShowMain .carousel-control{
+		height: 60px;
+		width: 58px;
+		top: 35%;
+		background-color: #a66c42;
+		font-size:16px;
+	}
+	.slideShowMain .carousel-control .glyphicon-chevron-left, .slideShowMain .carousel-control .glyphicon-chevron-right, .slideShowMain .carousel-control .icon-next, .slideShowMain .carousel-control .icon-prev{
+		width: 18px;
+		height: 18px;
+		margin-top: -10px;
+		font-size: 18px;
+	}
+	.searchBtn{
+		min-width: 156px;
+		display: inline-block;
+	}
+	.btnArea{
+		text-align:center;
+	}
+	.searchArea{
+		margin-top: -282px;
+		position: relative;
+		background:rgba(186, 179, 169, 0.7);
+	}
+	.slideShowMain .carousel-indicators{
+    top: 26%;
+    right: 0;
+    left: 96%;
+    margin-left: 0;
+	}
+	.slideShowMain .carousel-indicators li{
+		display:block;
+	}
+}
+@media (min-width: 992px){
+	.searchArea{
+	 margin-top: -171px;
+	}
+	.dateBox p span{
+		display:block;
+		text-align:center;
+		font-size:24px;
+	}
+	.dateBox{
+		padding:0;
+	}
+	.dateBox , .detailBox {
+		height:124px;
+	}
+	.titleDate{
+		font-size:34px !important;
+	}
+}
+@media (min-width: 1200px){
+	.thumbnail img, .thumbnail .caption{
+		width:50%;
+		float:left;
+		display:inline-block;
+	}
+	.thumbnail .caption{
+		padding: 0;
+		padding-left: 10px;
+	}
+	.thumbnail{
+		display:inline-block;
+		width:100%;
+	}
+	.caption h3{
+		margin:0;
+	}
+	.thumbnail .noCaption{
+		margin-left: -41px;
+		display: inline-block;
+		background-color: red;
+		top: 75px;
+		position: absolute;
+		width: 32px;
+	}
+	.thumbnail1 .noCaption {
+		background-color:#a66c42;
+	}
+	.caption p{
+		margin-bottom:0;
+		line-height:1;
+	}
+	.caption .title{
+		margin:2px 0;
+	}
+}
+
+
+
+

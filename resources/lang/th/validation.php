@@ -14,6 +14,7 @@ return [
     */
 
     'accepted'             => 'ข้อมูล :attribute ต้องผ่านการยอมรับก่อน',
+    'uploaded'             => 'ข้อมูล :attribute ต้องถูกต้อง',
     'active_url'           => 'ข้อมูล :attribute ต้องเป็น URL เท่านั้น',
     'after'                => 'ข้อมูล :attribute ต้องเป็นวันที่หลังจาก :date.',
     'alpha'                => 'ข้อมูล :attribute ต้องเป็นตัวอักษรภาษาอังกฤษเท่านั้น',

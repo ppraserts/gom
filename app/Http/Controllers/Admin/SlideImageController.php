@@ -14,7 +14,7 @@ class SlideImageController extends Controller
     private $rules = [
        'slideimage_type' => 'required',
        'slideimage_name' => 'required',
-       'slideimage_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+       'slideimage_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
        'slideimage_urllink' => 'url',
        'sequence' => 'required|integer',
     ];
