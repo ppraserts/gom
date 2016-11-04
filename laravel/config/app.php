@@ -10,6 +10,7 @@ return [
     'upload_slideimage' => 'upload/slides/',
     'upload_document' => 'upload/documents/',
     'upload_contactus' => 'upload/contactus/',
+    'upload_marketimage' => 'upload/market/',
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -59,7 +60,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost:8989'),
 
     /*
     |--------------------------------------------------------------------------

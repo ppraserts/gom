@@ -165,6 +165,11 @@ return [
         'users_lastname_en' => 'Lastname(EN)',
         'users_mobilephone' => 'Mobile Phone',
         'users_phone' => 'Phone',
+        'market_title_th' => 'Market (TH)',
+        'market_title_en' => 'Market (EN)',
+        'market_description_th' =>  'Description(TH)',
+        'market_description_en' =>  'Description(EN)',
+        'marketimage_file' => 'Image File',
     ],
 
 ];

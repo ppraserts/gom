@@ -116,8 +116,8 @@ class SlideImageController extends Controller
         $rawfileArr = explode("/", $rawfile);
         $indexFile = count($rawfileArr) - 1;
         $indexFolder = count($rawfileArr) - 2;
-        File::delete(public_path($rawfile));
-        File::deleteDirectory(public_path(config('app.upload_slideimage').$rawfileArr[$indexFolder]));
+        File::delete($rawfile);
+        File::deleteDirectory(config('app.upload_slideimage').$rawfileArr[$indexFolder]);
     }
 
     private function UploadImage(Request $request)
@@ -126,7 +126,7 @@ class SlideImageController extends Controller
         $imageTempName = $request->file('slideimage_file')->getPathname();
 
         $imageName = $request->slideimage_file->getClientOriginalName();
-        $request->slideimage_file->move(public_path(config('app.upload_slideimage').$fileTimeStamp."/"), $imageName);
+        $request->slideimage_file->move(config('app.upload_slideimage').$fileTimeStamp."/", $imageName);
         $imageName = config('app.upload_slideimage').$fileTimeStamp."/".$imageName;
 
         return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);

@@ -165,6 +165,11 @@ return [
         'users_lastname_en' => 'นามสกุล(อังกฤษ)',
         'users_mobilephone' => 'เบอร์มือถือ',
         'users_phone' => 'เบอร์โทร',
+        'market_title_th' => 'ตลาด (ไทย)',
+        'market_title_en' => 'ตลาด (อังกฤษ)',
+        'market_description_th' =>  'รายละเอียดตลาด(ไทย)',
+        'market_description_en' =>  'รายละเอียดตลาด(อังกฤษ)',
+        'marketimage_file' => 'ไฟล์รูป',
     ],
 
 ];

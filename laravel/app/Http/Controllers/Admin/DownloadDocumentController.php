@@ -111,8 +111,8 @@ class DownloadDocumentController extends Controller
         $rawfileArr = explode("/", $rawfile);
         $indexFile = count($rawfileArr) - 1;
         $indexFolder = count($rawfileArr) - 2;
-        File::delete(public_path($rawfile));
-        File::deleteDirectory(public_path(config('app.upload_document').$rawfileArr[$indexFolder]));
+        File::delete($rawfile);
+        File::deleteDirectory(config('app.upload_document').$rawfileArr[$indexFolder]);
     }
 
     private function uploadDocument(Request $request)
@@ -121,7 +121,7 @@ class DownloadDocumentController extends Controller
         $documentTempName = $request->file('downloaddocument_file')->getPathname();
 
         $documentName = $request->downloaddocument_file->getClientOriginalName();
-        $request->downloaddocument_file->move(public_path(config('app.upload_document').$fileTimeStamp."/"), $documentName);
+        $request->downloaddocument_file->move(config('app.upload_document').$fileTimeStamp."/", $documentName);
         $documentName = config('app.upload_document').$fileTimeStamp."/".$documentName;
 
         return array('documentTempName'=> $documentTempName, 'documentName' => $documentName);

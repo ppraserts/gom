@@ -10,6 +10,7 @@ use App\AboutUs;
 use App\SlideImage;
 use App\Media;
 use App\ProductCategory;
+use App\Market;
 
 class HomeController extends Controller
 {
@@ -49,10 +50,24 @@ class HomeController extends Controller
         $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                     ->get();
 
+         $marketItem = Market::orderBy('sequence','ASC')
+                    ->get();
+
         return view('welcome',compact('aboutusItem'
                                         ,'bannerItem'
                                         ,'slideItem'
                                         ,'mediaItem'
-                                        ,'productCategoryitem'));
+                                        ,'productCategoryitem'
+                                        ,'marketItem'));
+    }
+
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contactus(Request $request)
+    {
+            return view('contactus');
     }
 }

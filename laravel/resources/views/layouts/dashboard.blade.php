@@ -44,6 +44,9 @@
                         <li><a href="{{ url ('admin/changepassword') }}"><i class="fa fa-key fa-fw"></i> {{ trans('messages.menu_changepassword') }}</a>
                         </li>
                         <li class="divider"></li>
+                        <li><a href="{{ url ('/') }}"><i class="glyphicon glyphicon-home"></i>  {{ trans('messages.menu_visit') }}</a>
+                        </li>
+                        <li class="divider"></li>
                         <li><a href="{{ url ('/logout') }}" onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-fw"></i> {{ trans('messages.logout') }}</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -60,6 +63,9 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+                         <li {{ (Request::is('*admin/market*') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/market') }}"><i class="glyphicon glyphicon-shopping-cart"></i> {{ trans('messages.menu_market') }}</a>
+                        </li>
                         <li {{ (Request::is('*admin/productcategory*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/productcategory') }}"><i class="glyphicon glyphicon-inbox fa-fw"></i> {{ trans('messages.menu_product_category') }}</a>
                         </li>

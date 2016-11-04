@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/contactus','HomeController@contactus');
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
@@ -38,4 +39,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::resource('faq','Admin\FaqController');
     Route::resource('media','Admin\MediaController');
     Route::resource('changepassword','Admin\ChangePasswordController');
+    Route::resource('market','Admin\MarketController');
 });
