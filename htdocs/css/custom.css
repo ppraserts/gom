@@ -162,3 +162,15 @@ html, body {
 .one{
     color: #000;
 }
+
+.faqHeader {
+    font-size: 27px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.faqContent{
+  font-size: 14px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+}

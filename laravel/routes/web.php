@@ -11,33 +11,76 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
-Route::get('/contactus','HomeController@contactus');
-
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    return Redirect::back();
-});
-
-Route::get('change/{locale}', function ($locale) {
-	Session::set('locale', $locale); // กำหนดค่าตัวแปรแบบ locale session ให้มีค่าเท่ากับตัวแปรที่ส่งเข้ามา
-	return Redirect::back(); // สั่งให้โหลดหน้าเดิม
-});
-
 Auth::routes();
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('/', 'Admin\UserProfileController@index');
-    Route::resource('userprofile','Admin\UserProfileController');
-    Route::resource('productcategory','Admin\ProductCategoryController');
-    Route::resource('slideimage','Admin\SlideImageController');
-    Route::resource('downloaddocument','Admin\DownloadDocumentController');
-    Route::resource('aboutus','Admin\AboutUsController');
-    Route::resource('contactus','Admin\ContactUsController');
-    Route::resource('contactusform','Admin\ContactUsFormController');
-    Route::resource('faqcategory','Admin\FaqCategoryController');
-    Route::resource('faq','Admin\FaqController');
-    Route::resource('media','Admin\MediaController');
-    Route::resource('changepassword','Admin\ChangePasswordController');
-    Route::resource('market','Admin\MarketController');
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
+    Route::resource('/contactus','ContactusController');
+    Route::get('/faq', 'FaqController@index');
+
+    Route::get('/clear-cache', function() {
+        $exitCode = Artisan::call('cache:clear');
+        return Redirect::back();
+    });
+
+    Route::get('change/{locale}', function ($locale) {
+    	Session::set('locale', $locale); // กำหนดค่าตัวแปรแบบ locale session ให้มีค่าเท่ากับตัวแปรที่ส่งเข้ามา
+    	return Redirect::back(); // สั่งให้โหลดหน้าเดิม
+    });
+
+
+    // ADMIN
+    Route::get('admin/login', 'backend\Auth\LoginController@getLoginForm');
+    Route::post('admin/authenticate', 'backend\Auth\LoginController@authenticate');
+
+    //Route::get('admin/register', 'backend\Auth\RegisterController@getRegisterForm');
+    //Route::post('admin/saveregister', 'backend\Auth\RegisterController@saveRegisterForm');
+
+    // USER
+    Route::get('user/login', 'frontend\Auth\LoginController@getLoginForm');
+    Route::post('user/authenticate', 'frontend\Auth\LoginController@authenticate');
+
+    Route::get('user/chooseregister', 'frontend\Auth\RegisterController@getChooseRegisterForm');
+    Route::get('user/register', 'frontend\Auth\RegisterController@getRegisterForm');
+    Route::post('user/saveregister', 'frontend\Auth\RegisterController@saveRegisterForm');
+
+    Route::get('user/companyregister', 'frontend\Auth\RegisterController@getCompanyRegisterForm');
+    Route::post('user/savecompanyregister', 'frontend\Auth\RegisterController@saveCompanyRegisterForm');
+
+    // Password Reset Routes...
+    Route::get('user/password/reset', 'frontend\Auth\ForgotPasswordController@showLinkRequestForm');
+    Route::post('user/password/email', 'frontend\Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::get('user/password/reset/{token}', 'frontend\Auth\ResetPasswordController@showResetForm');
+    Route::get('password/reset/{token}', 'frontend\Auth\ResetPasswordController@showResetForm');
+    Route::post('user/password/reset', 'frontend\Auth\ResetPasswordController@reset');
+});
+
+Route::group(['middleware' => ['user']], function () {
+    Route::post('user/logout', 'frontend\Auth\LoginController@getLogout');
+    Route::get('user/dashboard', 'frontend\UserController@dashboard');
+
+    Route::get('user/dashboard1/', function () {
+        return view('frontend.dashboard');
+    });
+});
+
+Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
+    Route::get('dashboard', 'backend\AdminController@dashboard');
+    Route::post('logout', 'backend\Auth\LoginController@getLogout');
+    Route::get('/', 'backend\UserProfileController@index');
+    Route::resource('userprofile','backend\UserProfileController');
+    Route::resource('productcategory','backend\ProductCategoryController');
+    Route::resource('slideimage','backend\SlideImageController');
+    Route::resource('downloaddocument','backend\DownloadDocumentController');
+    Route::resource('aboutus','backend\AboutUsController');
+    Route::resource('contactus','backend\ContactUsController');
+    Route::resource('contactusform','backend\ContactUsFormController');
+    Route::resource('faqcategory','backend\FaqCategoryController');
+    Route::resource('faq','backend\FaqController');
+    Route::resource('product','backend\ProductController');
+    Route::resource('media','backend\MediaController');
+    Route::resource('changepassword','backend\ChangePasswordController');
+    Route::resource('market','backend\MarketController');
+    Route::resource('users','backend\UsersController');
+    Route::resource('companys','backend\CompanysController');
 });

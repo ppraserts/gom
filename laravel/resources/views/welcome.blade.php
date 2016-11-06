@@ -38,7 +38,7 @@
                           </div>
                     @endforeach
                 </div>
-	    
+
 	    <h1 class="one"><span>{{ trans('messages.i_want_to_sale') }}</span></h1>
                   <div class="row marketmenuboxs">
                   @foreach ($marketItem as $key => $item)

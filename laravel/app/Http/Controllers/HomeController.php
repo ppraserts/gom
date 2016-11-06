@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User;
 use App\Http\Controllers\Controller;
@@ -11,6 +13,8 @@ use App\SlideImage;
 use App\Media;
 use App\ProductCategory;
 use App\Market;
+use App\Contactus;
+use App\ContactUsForm;
 
 class HomeController extends Controller
 {
@@ -59,15 +63,5 @@ class HomeController extends Controller
                                         ,'mediaItem'
                                         ,'productCategoryitem'
                                         ,'marketItem'));
-    }
-
-     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function contactus(Request $request)
-    {
-            return view('contactus');
     }
 }

@@ -1,5 +1,15 @@
+<?php
+        if(Lang::locale() == "th")
+        {
+          $enActive = "";
+          $thActive = "active";
+        }
+        else {
+          $enActive = "active";
+          $thActive = "";
+        }
+?>
 @extends('layouts.plane')
-
 @section('body')
  <div id="wrapper">
 
@@ -17,18 +27,18 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                <li class="dropdown {{ $thActive }}">
                     <a href="{{ url('/change/th') }}">
                         <img style="height: 20px;" src="{{url('/images/icon_th.png')}}" alt="Image"/>
-                        TH
+                        {{ trans('messages.flag_th') }}
                     </a>
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown {{ $enActive }}">
                   <a href="{{ url('/change/en') }}">
                       <img style="height: 20px;" src="{{url('/images/icon_en.png')}}" alt="Image"/>
-                      EN
+                      {{ trans('messages.flag_en') }}
                   </a>
                     <!-- /.dropdown-tasks -->
                 </li>
@@ -47,9 +57,9 @@
                         <li><a href="{{ url ('/') }}"><i class="glyphicon glyphicon-home"></i>  {{ trans('messages.menu_visit') }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{{ url ('/logout') }}" onclick="event.preventDefault();
+                        <li><a href="{{ url ('admin/logout') }}" onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-fw"></i> {{ trans('messages.logout') }}</a>
-                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ url('admin/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -63,10 +73,13 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                         <li {{ (Request::is('*admin/market*') ? 'class=active' : '') }}>
+                        <li {{ (Request::is('*admin/users*') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/users') }}"><i class="fa fa-user fa-fw"></i> {{ trans('messages.menu_user') }}</a>
+                        </li>
+                        <li {{ (Request::is('*admin/market*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/market') }}"><i class="glyphicon glyphicon-shopping-cart"></i> {{ trans('messages.menu_market') }}</a>
                         </li>
-                        <li {{ (Request::is('*admin/productcategory*') ? 'class=active' : '') }}>
+                        <li {{ (Request::is('*admin/product*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/productcategory') }}"><i class="glyphicon glyphicon-inbox fa-fw"></i> {{ trans('messages.menu_product_category') }}</a>
                         </li>
                         <li {{ (Request::is('*admin/slideimage*') ? 'class=active' : '') }}>

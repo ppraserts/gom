@@ -1,4 +1,4 @@
-@extends ('layouts.plane')
+@extends ('layouts.main')
 @section ('body')
 <div class="container">
         <div class="row">
@@ -26,6 +26,17 @@
                                         <input type="checkbox" name="remember">{{ Lang::get('validation.attributes.rememberme') }}
                                     </label>
                                 </div>
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
+                                        <br>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-success btn-block">
                                     {{ Lang::get('validation.attributes.btnLogin') }}

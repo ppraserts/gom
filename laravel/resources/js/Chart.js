@@ -19,37 +19,39 @@
 
 	//Occupy the global variable of Chart, and create a simple base class
 	var Chart = function(context){
-		var chart = this;
-		this.canvas = context.canvas;
-
-		this.ctx = context;
-
-		//Variables global to the chart
-		var computeDimension = function(element,dimension)
+		if(context != undefined)
 		{
-			if (element['offset'+dimension])
-			{
-				return element['offset'+dimension];
-			}
-			else
-			{
-				return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
-			}
+				var chart = this;
+				this.canvas = context != undefined ? context.canvas : null;
+
+				this.ctx = context;
+
+				//Variables global to the chart
+				var computeDimension = function(element,dimension)
+				{
+					if (element['offset'+dimension])
+					{
+						return element['offset'+dimension];
+					}
+					else
+					{
+						return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
+					}
+				}
+
+				var width = this.width = computeDimension(context.canvas,'Width');
+				var height = this.height = computeDimension(context.canvas,'Height');
+
+				// Firefox requires this to work correctly
+				context.canvas.width  = width;
+				context.canvas.height = height;
+
+				var width = this.width = context.canvas.width;
+				var height = this.height = context.canvas.height;
+				this.aspectRatio = this.width / this.height;
+				//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
+				helpers.retinaScale(this);
 		}
-
-		var width = this.width = computeDimension(context.canvas,'Width');
-		var height = this.height = computeDimension(context.canvas,'Height');
-
-		// Firefox requires this to work correctly
-		context.canvas.width  = width;
-		context.canvas.height = height;
-
-		var width = this.width = context.canvas.width;
-		var height = this.height = context.canvas.height;
-		this.aspectRatio = this.width / this.height;
-		//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
-		helpers.retinaScale(this);
-
 		return this;
 	};
 	//Globally expose the defaults to allow for user updating/changing
@@ -3079,7 +3081,7 @@
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
-			
+
 			this.reflow();
 			this.render();
 		},
