@@ -100,6 +100,9 @@
                         <li {{ (Request::is('*admin/media*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/media') }}"><i class="glyphicon glyphicon-facetime-video"></i> {{ trans('messages.menu_media') }}</a>
                         </li>
+                         <li {{ (Request::is('*admin/news*') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/news') }}"><i class="glyphicon glyphicon-bullhorn"></i> {{ trans('messages.menu_news') }}</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

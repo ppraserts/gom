@@ -1,35 +1,22 @@
 <?php
-$url = "admin/users";
-$pagetitle = trans('messages.menu_user');
+$url = "admin/news";
+$pagetitle = trans('messages.menu_news');
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
-@section('page_heading_image','<i class="fa fa-user fa-fw"></i>')
+@section('page_heading_image','<i class="glyphicon glyphicon-bullhorn"></i>')
 @section('section')
 
 <div class="col-sm-12">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <ul class="nav nav-tabs">
-          <li class="active">
-                  <a href="{{ url ('admin/users') }}" >
-                        {{ trans('messages.membertype_individual') }} 
-                        <span class="badge">{{ $countinactiveusers }}</span>
-                  </a>
-          </li>
-          <li >
-                  <a href="{{ url ('admin/companys') }}" >
-                      {{ trans('messages.membertype_company') }}
-                      <span class="badge">{{ $countinactivecompanyusers }}</span>
-                    </a>
-          </li>
-      </ul>
-    </div>
-  </div>
-  <div class="row" style="margin-top:10px;">
   	<div class="col-sm-12">
       @if ($message = Session::get('success'))
           <div class="alert alert-success">
+              <p>{{ $message }}</p>
+          </div>
+      @endif
+      @if ($message = Session::get('error'))
+          <div class="alert alert-danger">
               <p>{{ $message }}</p>
           </div>
       @endif
@@ -52,30 +39,39 @@ $pagetitle = trans('messages.menu_user');
                     <thead>
                       <tr>
                           <th>{{ trans('messages.no') }}</th>
-                          <th>{{ Lang::get('validation.attributes.iwantto') }}</th>
-                          <th>{{ Lang::get('validation.attributes.users_firstname_th') }} - {{ Lang::get('validation.attributes.users_lastname_th') }}</th>
-                          <th>{{ Lang::get('validation.attributes.users_firstname_en') }} - {{ Lang::get('validation.attributes.users_lastname_en') }}</th>
-                          <th>{{ Lang::get('validation.attributes.email') }}</th>
-                          <th width="130px" style="text-align:center;">
+                          <th>{{ Lang::get('validation.attributes.news_title_th') }}</th>
+                          <th>{{ Lang::get('validation.attributes.news_title_en') }}</th>
+                          <th>{{ Lang::get('validation.attributes.news_created_at') }}</th>
+                          <th>{{ Lang::get('validation.attributes.news_place') }}</th>
+                          <th>{{ Lang::get('validation.attributes.news_tags') }}</th>
+                          <th>{{ Lang::get('validation.attributes.news_sponsor') }}</th>
+                          <th>{{ Lang::get('validation.attributes.sequence') }}</th>
+                          <th width="150px" style="text-align:center;">
+                            <a class="btn btn-success" href="{{ route('news.create') }}">
+                              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </a>
                           </th>
                       </tr>
                     </thead>
                     <tbody>
                 @foreach ($items as $key => $item)
-                      <tr class="{{ $item->is_active == 0? 'danger' : '' }}">
+                      <tr>
                           <td>{{ ++$i }}</td>
-                          <td>{{ $item->iwantto }}</td>
-                          <td>{{ $item->users_firstname_th }} {{ $item->users_lastname_th }}</td>
-                          <td>{{ $item->users_firstname_en }} {{ $item->users_lastname_en }}</td>
-                          <td>{{ $item->email }}</td>
+                          <td>{{ $item->news_title_th }}</td>
+                          <td>{{ $item->news_title_en }}</td>
+                          <td>{{ $item->news_created_at }}</td>
+                          <td>{{ $item->news_place }}</td>
+                          <td>{{ $item->news_tags }}</td>
+                          <td>{{ $item->news_sponsor }}</td>
+                          <td>{{ $item->sequence }}</td>
                           <td style="text-align:center;">
-                              <a class="btn btn-primary" href="{{ route('users.edit',$item->id) }}">
+                              <a class="btn btn-primary" href="{{ route('news.edit',$item->id) }}">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                               </a>
                               <?php
-                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->users_firstname_th]);
+                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->news_title_th]);
                               ?>
-                              {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $item->id],'style'=>'display:inline']) !!}
+                              {!! Form::open(['method' => 'DELETE','route' => ['news.destroy', $item->id],'style'=>'display:inline']) !!}
 
                               <button onclick="return confirm('{{$confirmdelete}}');"  class="btn btn-danger" type="submit">
                                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

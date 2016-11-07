@@ -1,0 +1,9 @@
+Update autoload class 
+- composer dump-autoload -o
+
+Change Configuration
+- .env
+- config/app.php
+- ckupload.php
+
+SELECT GROUP_CONCAT(`product_name_th` SEPARATOR ',') AS order_summary FROM products

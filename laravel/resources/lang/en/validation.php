@@ -189,6 +189,15 @@ return [
         'name' => 'Fullname',
         'product_name_th'=> 'Product Name(TH)',
         'product_name_en'=> 'Product Name(EN)',
+        'news_title_th'=> 'News Title(TH)',
+        'news_title_en'=> 'News Title(EN)',
+        'news_created_at'=> 'Date',
+        'news_description_th'=> 'Description(TH)',
+        'news_description_en'=> 'Description(EN)',
+        'news_place'=> 'Place',
+        'news_tags'=> 'Tags',
+        'news_sponsor'=> 'Sponsor',
+        'news_document_file'=> 'File',
     ],
 
 ];

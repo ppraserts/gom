@@ -33,6 +33,7 @@ return [
     'menu_changepassword' => 'เปลี่ยนรหัสผ่าน',
     'menu_product' => 'สินค้า',
     'menu_user' => 'ผู้ใช้งาน',
+    'menu_news' => 'ข่าวประชาสัมพันธ์',
     'flag_th' => 'ไทย',
     'flag_en' => 'อังกฤษ',
     'menu_visit' => 'เยี่ยมชม',

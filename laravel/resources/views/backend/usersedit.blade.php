@@ -38,12 +38,20 @@ $controllerAction = "users.update";
 <div class="col-sm-12">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="{{ url ('admin/users') }}" >{{ trans('messages.membertype_individual') }}</a>
-            </li>
-            <li ><a href="{{ url ('admin/companys') }}" >{{ trans('messages.membertype_company') }}</a>
-            </li>
-        </ul>
+              <ul class="nav nav-tabs">
+                  <li class="active">
+                          <a href="{{ url ('admin/users') }}" >
+                                {{ trans('messages.membertype_individual') }} 
+                                <span class="badge">{{ $countinactiveusers }}</span>
+                          </a>
+                  </li>
+                  <li >
+                          <a href="{{ url ('admin/companys') }}" >
+                              {{ trans('messages.membertype_company') }}
+                              <span class="badge">{{ $countinactivecompanyusers }}</span>
+                            </a>
+                  </li>
+              </ul>
       </div>
     </div>
     <br/>
@@ -77,6 +85,9 @@ $controllerAction = "users.update";
 
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6">
+            @if($item->users_imageprofile != "")
+                <img height="150" width="150" src="{{ $item->users_imageprofile }}" alt="" class="img-circle">
+            @endif
             <div class="form-group {{ $errors->has('is_active') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.is_active') }}
                 :

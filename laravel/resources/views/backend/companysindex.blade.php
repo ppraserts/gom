@@ -10,12 +10,20 @@ $pagetitle = trans('messages.menu_user');
 <div class="col-sm-12">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-      <ul class="nav nav-tabs">
-          <li ><a href="{{ url ('admin/users') }}" >{{ trans('messages.membertype_individual') }}</a>
-          </li>
-          <li class="active"><a href="{{ url ('admin/companys') }}" >{{ trans('messages.membertype_company') }}</a>
-          </li>
-      </ul>
+             <ul class="nav nav-tabs">
+                <li >
+                        <a href="{{ url ('admin/users') }}" >
+                              {{ trans('messages.membertype_individual') }} 
+                              <span class="badge">{{ $countinactiveusers }}</span>
+                        </a>
+                </li>
+                <li  class="active">
+                        <a href="{{ url ('admin/companys') }}" >
+                            {{ trans('messages.membertype_company') }}
+                            <span class="badge">{{ $countinactivecompanyusers }}</span>
+                          </a>
+                </li>
+            </ul>
     </div>
   </div>
   <div class="row" style="margin-top:10px;">

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2016 at 06:40 PM
+-- Generation Time: Nov 07, 2016 at 11:56 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -63,7 +63,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `usertype`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', 'b3vVTG1Kq2gpzV1pKwMkUTxLQQ1ig5P9OO1L4r7ApPZm1MAm3wwUWLp7MIRH', '2016-09-12 03:16:24', '2016-11-06 09:17:34');
+(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', '7LGNJ6p4lvZEEOrs6Nonn2uqN4rYBbEbsRSLUQq5zg6zcjCWIO6oVG8lwLl5', '2016-09-12 03:16:24', '2016-11-07 02:03:05');
 
 -- --------------------------------------------------------
 
@@ -267,7 +267,37 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2016_11_05_114801_create_admins_passowrd_resets_table', 3),
 (19, '2016_11_06_023513_addcolumns_users_table', 3),
 (20, '2016_11_06_072902_addcolumns2_users_table', 4),
-(22, '2016_11_06_124806_create_products_table', 5);
+(22, '2016_11_06_124806_create_products_table', 5),
+(24, '2016_11_07_062218_create_news_table', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `news_title_th` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `news_description_th` text COLLATE utf8_unicode_ci NOT NULL,
+  `news_title_en` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `news_description_en` text COLLATE utf8_unicode_ci NOT NULL,
+  `news_created_at` date NOT NULL,
+  `news_place` text COLLATE utf8_unicode_ci NOT NULL,
+  `news_tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `news_sponsor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `news_document_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sequence` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `news_title_th`, `news_description_th`, `news_title_en`, `news_description_en`, `news_created_at`, `news_place`, `news_tags`, `news_sponsor`, `news_document_file`, `sequence`, `created_at`, `updated_at`) VALUES
+(4, 'รัสเซียห้ามการนำเข้าเกลือจาก EU และ ยูเครน', '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; พระราชกฤษฎีกาของรัสเซียว่าด้วยการห้ามนำเข้าเกลือจากต่างประเทศต่าง ที่มีมาตรการคว่ำบาตรรัสเซีย มีผลบังคับใช้แล้วตั้งแต่วันที่ 1 พฤศจิกายน 2559 โดยมาตรการตอบโต้ครั้งนี้ส่งผลกระทบต่อ 26 ประเทศที่ คิดเป็นปริมาณเกลือถึง 424,300 ตัน หรือร้อยละ 40.2 ของเกลือที่รัสเซียนำเข้าทั้งหมดตั้งแต่ต้นปีจนถึงเดือนสิงหาคม 2559 โดยเฉพาะอย่างยิ่ง เมื่อเทียบจากสถิติในปี 2558 จะส่งผลต่อสหภาพยุโรปซึ่งเป็นกลุ่มประเทศมีส่วนแบ่งตลาดเกลือบริโภคถึงร้อยละ 17.8 และส่วนแบ่งตลาดเกลือที่ใช้ในภาคอุตสาหกรรมถึงร้อยละ 63.9 ในรัสเซีย</p>\r\n\r\n<p><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; อนึ่ง แม้ว่ารัสเซียจะห้ามนำเข้าเกลือจากประเทศต่างๆ ในปริมาณมากเช่นนี้ แต่คาดการณ์ว่าจะไม่กระทบต่อการบริโภคเกลือในประเทศ เนื่องจากผู้ผลิตรายใหญ่หลายรายในรัสเซียได้ออกมาขานรับมาตรการดังกล่าว โดยเร่งเพิ่มการผลิตเกลือในปี 2559 นี้อีกร้อยละ 15 ซึ่งทำให้มีเกลือเพียงพอต่อปริมาณความต้องการในประเทศ ทั้งนี้ รัสเซียมีความต้องการเกลือในการทำอาหารโดยเฉลี่ย 1.3 ล้านตัน/ปี และต้องการเกลือในอุตสาหกรรมโดยเฉลี่ย 4 ล้านตัน/ปี ในขณะที่กำลังการผลิตเกลือในประเทศมีราว 3.6 ล้านตัน/ปี</p>\r\n', 'รัสเซียห้ามการนำเข้าเกลือจาก EU และ ยูเครน', '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; พระราชกฤษฎีกาของรัสเซียว่าด้วยการห้ามนำเข้าเกลือจากต่างประเทศต่าง ที่มีมาตรการคว่ำบาตรรัสเซีย มีผลบังคับใช้แล้วตั้งแต่วันที่ 1 พฤศจิกายน 2559 โดยมาตรการตอบโต้ครั้งนี้ส่งผลกระทบต่อ 26 ประเทศที่ คิดเป็นปริมาณเกลือถึง 424,300 ตัน หรือร้อยละ 40.2 ของเกลือที่รัสเซียนำเข้าทั้งหมดตั้งแต่ต้นปีจนถึงเดือนสิงหาคม 2559 โดยเฉพาะอย่างยิ่ง เมื่อเทียบจากสถิติในปี 2558 จะส่งผลต่อสหภาพยุโรปซึ่งเป็นกลุ่มประเทศมีส่วนแบ่งตลาดเกลือบริโภคถึงร้อยละ 17.8 และส่วนแบ่งตลาดเกลือที่ใช้ในภาคอุตสาหกรรมถึงร้อยละ 63.9 ในรัสเซีย</p>\r\n\r\n<p><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; อนึ่ง แม้ว่ารัสเซียจะห้ามนำเข้าเกลือจากประเทศต่างๆ ในปริมาณมากเช่นนี้ แต่คาดการณ์ว่าจะไม่กระทบต่อการบริโภคเกลือในประเทศ เนื่องจากผู้ผลิตรายใหญ่หลายรายในรัสเซียได้ออกมาขานรับมาตรการดังกล่าว โดยเร่งเพิ่มการผลิตเกลือในปี 2559 นี้อีกร้อยละ 15 ซึ่งทำให้มีเกลือเพียงพอต่อปริมาณความต้องการในประเทศ ทั้งนี้ รัสเซียมีความต้องการเกลือในการทำอาหารโดยเฉลี่ย 1.3 ล้านตัน/ปี และต้องการเกลือในอุตสาหกรรมโดยเฉลี่ย 4 ล้านตัน/ปี ในขณะที่กำลังการผลิตเกลือในประเทศมีราว 3.6 ล้านตัน/ปี</p>\r\n', '2016-11-07', '-', 'ข่าวทั่วไป', '-', '', 999, '2016-11-07 01:52:33', '2016-11-07 01:52:33');
 
 -- --------------------------------------------------------
 
@@ -402,8 +432,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `users_firstname_th`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_active`, `users_lastname_th`, `users_firstname_en`, `users_lastname_en`, `users_dateofbirth`, `users_gender`, `users_addressname`, `users_street`, `users_district`, `users_city`, `users_province`, `users_postcode`, `users_mobilephone`, `users_phone`, `users_fax`, `users_imageprofile`, `users_latitude`, `users_longitude`, `users_contactperson`, `users_membertype`, `iwantto`, `users_idcard`, `users_qrcode`, `users_taxcode`, `users_company_th`, `users_company_en`) VALUES
-(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-06 08:55:27', 0, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'personal', 'sale', '15799900070848', '', '', '', ''),
-(5, '', 'tae_pe1@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-06 09:15:50', 1, '', '', '', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'company', 'sale', '', '', '1111111111111', 'มกอช', 'มกอช');
+(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-07 02:33:34', 1, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'personal', 'sale', '15799900070848', '', '', '', ''),
+(5, '', 'tae_pe1@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-06 21:28:48', 1, '', '', '', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'company', 'sale', '', '', '1111111111111', 'มกอช', 'มกอช');
 
 --
 -- Indexes for dumped tables
@@ -476,6 +506,12 @@ ALTER TABLE `medias`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -564,7 +600,12 @@ ALTER TABLE `medias`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `productcategorys`
 --

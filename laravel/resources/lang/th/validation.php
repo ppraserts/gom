@@ -189,6 +189,15 @@ return [
         'name' => 'ชื่อ - นามสกุล',
         'product_name_th'=> 'สินค้า (ไทย)',
         'product_name_en'=> 'สินค้า (อังกฤษ)',
+        'news_title_th'=> 'หัวข้อข่าว(ไทย)',
+        'news_title_en'=> 'หัวข้อข่าว(อังกฤษ)',
+        'news_created_at'=> 'วันที่',
+        'news_description_th'=> 'เนื้อหาข่าว(ไทย)',
+        'news_description_en'=> 'เนื้อหาข่าว(อังกฤษ)',
+        'news_place'=> 'สถานที่จัด',
+        'news_tags'=> 'ประเภทข่าว',
+        'news_sponsor'=> 'ผู้จัด',
+        'news_document_file'=> 'ไฟล์เอกสาร',
     ],
 
 ];

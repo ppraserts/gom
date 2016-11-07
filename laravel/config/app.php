@@ -11,6 +11,7 @@ return [
     'upload_document' => 'upload/documents/',
     'upload_contactus' => 'upload/contactus/',
     'upload_marketimage' => 'upload/market/',
+    'upload_news' => 'upload/news/',
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -83,4 +83,5 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('market','backend\MarketController');
     Route::resource('users','backend\UsersController');
     Route::resource('companys','backend\CompanysController');
+    Route::resource('news','backend\NewsController');
 });

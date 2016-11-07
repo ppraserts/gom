@@ -33,6 +33,7 @@ return [
     'menu_changepassword' => 'Change Password',
     'menu_product' => 'Product',
     'menu_user' => 'User',
+    'menu_news' => 'News',
     'flag_th' => 'TH',
     'flag_en' => 'EN',
     'menu_visit' => 'Visit',
