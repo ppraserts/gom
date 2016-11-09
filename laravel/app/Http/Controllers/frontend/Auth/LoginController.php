@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+     private $rules = [
+          'email' => 'required|email',
+          'password' => 'required',
+      ];
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -45,14 +49,15 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-
+        $this->validate($request, $this->rules);
         $email = $request->input('email');
         $password = $request->input('password');
+        $remember = $request->input('remember');
 
-        if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password , 'is_active' => 1 ]))
+        if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password , 'is_active' => 1 ], $remember))
         {
 
-            return redirect()->intended('home');
+            return redirect()->intended('user/userprofile');
         }
         else
         {

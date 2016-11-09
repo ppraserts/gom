@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\frontend;
 
 use DB;
 use Hash;
@@ -18,20 +18,20 @@ class UserProfileController extends Controller
 
   public function __construct()
   {
-      $this->middleware('admin');
+      //$this->middleware('auth');
   }
 
   public function index(Request $request)
   {
-      $item = auth()->guard('admin')->user();
-      return view('backend.userprofile',compact('item'));
+      $item = auth()->guard('user')->user();
+      return view('frontend.userprofile',compact('item'));
   }
 
   public function update(Request $request)
   {
     $this->validate($request, $this->rules);
 
-    $user = auth()->guard('admin')->user();
+    $user = auth()->guard('user')->user();
     $user->name = $request->input('name');
     $user->email = $request->input('email');
 

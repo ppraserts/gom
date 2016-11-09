@@ -60,4 +60,5 @@ return [
     'gender_female' => 'หญิง',
     'email_subject_newregister' => 'ยินดีต้อนรับสู่ Greenmart Online Market',
     'message_success_contactusform' => 'เราได้รับข้อมูลการติดต่อและจะรีบดำเนินการติดต่อกลับให้เร็วที่สุด.',
+    'inbox_message' => 'กล่องข้อความ',
 ];

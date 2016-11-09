@@ -11,7 +11,7 @@
 
 
        $user = auth()->guard('user')->user();
-       $linkProfile = "/admin/userprofile";
+       $linkProfile = "/user/userprofile";
 
 ?>
     <!DOCTYPE html>

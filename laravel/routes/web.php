@@ -55,17 +55,18 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('user/password/reset', 'frontend\Auth\ResetPasswordController@reset');
 });
 
-Route::group(['middleware' => ['user']], function () {
-    Route::post('user/logout', 'frontend\Auth\LoginController@getLogout');
-    Route::get('user/dashboard', 'frontend\UserController@dashboard');
+Route::group(['prefix' => 'user','middleware' => ['user']], function () {
+    Route::post('logout', 'frontend\Auth\LoginController@getLogout');
+    //Route::get('user/dashboard', 'frontend\UserController@dashboard');
 
-    Route::get('user/dashboard1/', function () {
-        return view('frontend.dashboard');
-    });
+    /*Route::get('user/userprofile/', function () {
+        return view('frontend.userprofile');
+    });*/
+    Route::resource('userprofile','frontend\UserProfileController');
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
-    Route::get('dashboard', 'backend\AdminController@dashboard');
+    //Route::get('dashboard', 'backend\AdminController@dashboard');
     Route::post('logout', 'backend\Auth\LoginController@getLogout');
     Route::get('/', 'backend\UserProfileController@index');
     Route::resource('userprofile','backend\UserProfileController');
