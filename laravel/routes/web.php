@@ -1,4 +1,7 @@
 <?php
+use App\Product;
+use App\Iwantto;
+use Illuminate\Support\Facades\Input;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +29,14 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('change/{locale}', function ($locale) {
     	Session::set('locale', $locale); // กำหนดค่าตัวแปรแบบ locale session ให้มีค่าเท่ากับตัวแปรที่ส่งเข้ามา
     	return Redirect::back(); // สั่งให้โหลดหน้าเดิม
+    });
+
+    Route::get('/information/create/ajax-state',function()
+    {
+        $productcategorys_id = Input::get('productcategorys_id');
+        $subcategories = Product::where('productcategory_id','=',$productcategorys_id)->get();
+        return $subcategories;
+
     });
 
 
@@ -62,7 +73,26 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     /*Route::get('user/userprofile/', function () {
         return view('frontend.userprofile');
     });*/
-    Route::resource('userprofile','frontend\UserProfileController');
+    Route::resource('userprofiles','frontend\UserProfileController');
+    Route::post('updateprofiles', 'frontend\UserProfileController@updateProfile');
+
+    Route::resource('changepasswords','frontend\ChangePasswordController');
+    Route::post('updatepasswords', 'frontend\ChangePasswordController@updatePassword');
+
+    Route::resource('inboxmessage','frontend\InboxMessageController');
+    Route::resource('iwanttobuy','frontend\IwanttoBuyController');
+    Route::resource('iwanttosale','frontend\IwanttoSaleController');
+    Route::resource('matchings','frontend\MatchingController');
+    Route::resource('productedit','frontend\ProductsEditController');
+
+    Route::get('/information/removeproduct/ajax-state',function()
+    {
+        $stateid = Input::get('stateid');
+        $Iwantto = Iwantto::find($stateid);
+        $Iwantto->delete();
+        return [];
+
+    });
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {

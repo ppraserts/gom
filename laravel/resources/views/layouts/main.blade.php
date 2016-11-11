@@ -11,7 +11,7 @@
 
 
        $user = auth()->guard('user')->user();
-       $linkProfile = "/user/userprofile";
+       $linkProfile = "/user/userprofiles";
 
 ?>
     <!DOCTYPE html>
@@ -74,7 +74,7 @@
                                 @if($user!=null)
                                   <li><a href="{{ $linkProfile }}" title="{{ trans('messages.menu_manageprofile') }}"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>  {{ trans('messages.menu_manageshop') }}</a></li>
                                   <li role="separator" class="divider"></li>
-                                  <li><a href="#"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>  {{ trans('messages.menu_matching') }}</a></li>
+                                  <li><a href="{{ url('user/matchings') }}"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>  {{ trans('messages.menu_matching') }}</a></li>
                                   <li role="separator" class="divider"></li>
                                 @endif
                                 <li><a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  {{ trans('messages.menu_search') }}</a></li>

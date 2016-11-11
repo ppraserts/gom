@@ -12,6 +12,8 @@ return [
     'upload_contactus' => 'upload/contactus/',
     'upload_marketimage' => 'upload/market/',
     'upload_news' => 'upload/news/',
+    'upload_imageprofile' => 'upload/imageprofiles/',
+    'upload_product' => 'upload/products/',
     /*
     |--------------------------------------------------------------------------
     | Application Name

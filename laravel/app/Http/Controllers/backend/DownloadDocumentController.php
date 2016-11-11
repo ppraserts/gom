@@ -48,7 +48,7 @@ class DownloadDocumentController extends Controller
         $data = array('mode' => 'create');
         $item = new DownloadDocument();
         $item->sequence = 999;
-        return view('admin.downloaddocumentedit',compact('item'))->with($data);
+        return view('backend.downloaddocumentedit',compact('item'))->with($data);
     }
 
     public function store(Request $request)

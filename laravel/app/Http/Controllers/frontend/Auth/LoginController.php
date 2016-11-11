@@ -57,7 +57,7 @@ class LoginController extends Controller
         if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password , 'is_active' => 1 ], $remember))
         {
 
-            return redirect()->intended('user/userprofile');
+            return redirect()->intended('user/userprofiles');
         }
         else
         {

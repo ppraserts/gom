@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2016 at 11:56 AM
+-- Generation Time: Nov 11, 2016 at 02:58 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -63,7 +63,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `usertype`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', '7LGNJ6p4lvZEEOrs6Nonn2uqN4rYBbEbsRSLUQq5zg6zcjCWIO6oVG8lwLl5', '2016-09-12 03:16:24', '2016-11-07 02:03:05');
+(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', 'EPnK5aoNba2cfY6PlaN3QPXEi77yx4PtkA5INgVG3SiD6K1Vu0PNdmiV20c7', '2016-09-12 03:16:24', '2016-11-10 08:39:20');
 
 -- --------------------------------------------------------
 
@@ -118,6 +118,13 @@ CREATE TABLE `contactusform` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `contactusform`
+--
+
+INSERT INTO `contactusform` (`id`, `contactusform_name`, `contactusform_surname`, `contactusform_email`, `contactusform_phone`, `contactusform_file`, `contactusform_subject`, `contactusform_messagebox`, `created_at`, `updated_at`) VALUES
+(1, 'test', 'test', 'tae_pe@hotmail.com', '1234', '', 'test', 'test', '2016-11-10 08:22:04', '2016-11-10 08:22:04');
 
 -- --------------------------------------------------------
 
@@ -193,6 +200,50 @@ INSERT INTO `faqcategorys` (`id`, `faqcategory_title_th`, `faqcategory_descripti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `iwantto`
+--
+
+CREATE TABLE `iwantto` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `iwantto` enum('buy','sale') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'buy',
+  `product_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `product_description` text COLLATE utf8_unicode_ci NOT NULL,
+  `guarantee` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `is_showprice` tinyint(1) NOT NULL DEFAULT '0',
+  `volumn` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `product1_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `product2_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `product3_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `productstatus` enum('open','soldout','close') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'open',
+  `pricerange_start` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `pricerange_end` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `volumnrange_start` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `volumnrange_end` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `units` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `province` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `productcategorys_id` int(10) UNSIGNED DEFAULT NULL,
+  `products_id` int(10) UNSIGNED DEFAULT NULL,
+  `users_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `iwantto`
+--
+
+INSERT INTO `iwantto` (`id`, `iwantto`, `product_title`, `product_description`, `guarantee`, `price`, `is_showprice`, `volumn`, `product1_file`, `product2_file`, `product3_file`, `productstatus`, `pricerange_start`, `pricerange_end`, `volumnrange_start`, `volumnrange_end`, `units`, `city`, `province`, `productcategorys_id`, `products_id`, `users_id`, `created_at`, `updated_at`) VALUES
+(1, 'sale', 'ผักบุ้งบ้านนา', 'ผักบุ้งมีชื่อเรียกอื่นว่าผักทอดยอด เป็นอาหารเพื่อสุขภาพที่เรามักจะคุ้นเคยกันมาตลอดว่ามีส่วนช่วยในการบำรุงสายตา แต่จริง ๆ แล้วผักชนิดนี้ยังมีประโยชน์มากกว่านั้น เพราะอุดมไปด้วยวิตามินและแร่ธาตุที่สำคัญ ๆ\n\nแต่ก่อนจะไปรู้ถึงประโยชน์มาดูกันก่อนว่าผักบุ้งที่นิยมนำมาใช้รับประทานนั้นมีสายพันธุ์อะไรบ้าง ซึ่งในประเทศไทยจะแบ่งออกเป็น 2 สายพันธุ์หลัก ๆ คือ ผักบุ้งไทยและผักบุ้งจีน สำหรับผักบุ้งไทยเป็นผักบุ้งสายพันธุ์ธรรมชาติที่ขึ้นเองตามแม่น้ำลำคลอง ซึ่งจะมียางมากกว่าผักบุ้งจีน ส่วนผักบุ้งจีนเป็นพันธุ์ที่นำเข้ามาจากต่างประเทศ (แต่ปลูกได้เองแล้วที่เมืองไทย) โดยส่วนมากที่นิยมปลูกขายก็คือผักบุ้งจีน เพราะลำต้นค่อนข้างขาว ใบเขียวอ่อน ดอกขาว มียางน้อยกว่าผักบุ้งไทย จึงได้รับความนิยมในการรับประทานมากกว่าผักบุ้งไทยนั่นเอง\n\nในผักบุ้ง 100 กรัมจะให้พลังงาน 22 กิโลแคลอรี ประกอบด้วยเส้นใย วิตามิน และแร่ธาตุอื่น ๆ อีกด้วย เช่น วิตามินเอ วิตามินซี วิตามินบี 1 วิตามินบี 2 วิตามินบี 3 ธาตุแคลเซียม ธาตุฟอสฟอรัส ธาตุเหล็ก เป็นต้น ผักบุ้งไทยนั้นจะมีวิตามินซีสูงและสรรพคุณทางยามากกว่าผักบุ้งจีน แต่จะมีแคลเซียมและเบตาแคโรทีน (วิตามินเอที่ช่วยบำรุงสายตา) น้อยกว่าผักบุ้งจีน หากรับประทานสด ๆ ได้ จะทำให้คุณค่าของวิตามินและแร่ธาตุเหล่านี้ไม่เสียไปกับความร้อนอีกด้วย\n\nผู้ที่เป็นโรคความดันโลหิตต่ำนั้นควรหลีกเลี่ยงการรับประทานผักบุ้ง เพราะผักบุ้งมีคุณสมบัติไปช่วยลดความดันโลหิต จะทำให้ความดันยิ่งต่ำลงไปใหญ่ อาจจะก่อให้เกิดอาการเป็นตะคริวได้ง่ายและบ่อยขึ้น ทำให้ร่างกายอ่อนแอ\n\nประโยชน์ของผักบุ้ง\nประโยชน์ของผักบุ้งข้อแรกคือมีส่วนช่วยให้ผิวพรรณเปล่งปลั่งสดใส มีน้ำมีนวล\nมีสารต่อต้านอนุมูลอิสระ ช่วยในการชะลอวัย ความแก่ชรา และชะลอการเกิดริ้วรอยแห่งวัย\nมีส่วนช่วยป้องกันการเกิดหรือลดอัตราการเกิดของโรคมะเร็งได้\nช่วยบำรุงสายตา รักษาอาการตาต้อ ตาฝ้าฟาง ตาแดง สายตาสั้น อาการคันนัยน์ตาบ่อย ๆ\nช่วยบำรุงธาตุ\nสรรพคุณของผักบุ้งต้นสดของผักบุ้งใช้เป็นยาดับร้อน แก้อาการร้อนใน\nต้นสดของผักบุ้งช่วยในการบำรุงโลหิต\nช่วยเสริมสร้างศักยภาพในด้านความจำและการเรียนรู้ให้ดีขึ้น\nยอดผักบุ้งช่วยแก้โรคประสาท\nช่วยแก้อาการเหงื่อออกมาก (รากผักบุ้ง)\nมีส่วนช่วยลดระดับน้ำตาลในเลือด ป้องกันการเกิดโรคเบาหวาน\nช่วยแก้อาการปวดศีรษะ อ่อนเพลีย\nต้นสดของผักบุ้งไทยต้นขาวช่วยบำรุงกระดูกและฟัน\nช่วยแก้อาการเหงือกบวม\nช่วยรักษาแผลร้อนในในปาก ด้วยการนำผักบุ้งสดมาผสมเกลือ อมไว้ในปากประมาณ 2 นาที วันละ 2 ครั้ง\nฟันเป็นรูปวด ให้ใช้รากสด 120 กรัม ผสมกับน้ำส้มสายชู คั้นเอาน้ำมาบ้วนปาก\nใช้แก้อาการไอเรื้อรัง (รากผักบุ้ง)\nแก้เลือดกำเดาไหลออกมากผิดปกติ ด้วยการใช้ต้นสดมาตำผสมน้ำตาลทรายแล้วนำมาชงน้ำร้อนดื่ม\nใช้แก้โรคหืด (รากผักบุ้ง)\nช่วยป้องกันการเกิดโรคกระเพาะอาหาร\nช่วยป้องกันการเกิดโรคแผลในกระเพาะอาหารจากผลของยาแอสไพริน\nช่วยป้องกันโรคท้องผูก\nยอดผักบุ้งมีส่วนช่วยแก้อาการเสื่อมสมรรถภาพ\nช่วยทำความสะอาดของเสียที่ตกค้างในลำไส้\nผักบุ้งจีนมีฤทธิ์ช่วยในการขับปัสสาวะ แก้ปัสสาวะเหลือง\nช่วยแก้อาการปัสสาวะเป็นเลือด ถ่ายออกมาเป็นเลือด ด้วยการใช้ลำต้นคั้นนำน้ำมาผสมกับน้ำผึ้งดื่ม\nช่วยแก้หนองใน ด้วยการใช้ลำต้นคั้นนำน้ำมาผสมกับน้ำผึ้งดื่ม\nช่วยแก้ริดสีดวงทวาร ด้วยการใช้ต้นสด 1 กิโล / น้ำ 1 ลิตร นำมาต้มให้เละ เอากากทิ้งแล้วใส่น้ำตาลทรายขาว 120 กรัม แล้วเคี่ยวจนข้นหนืด รับประทานครั้งละ 90 กรัม วันละ 2 ครั้ง เช้าและเย็น\nช่วยแก้อาการตกขาวมากของสตรี (รากผักบุ้ง)\nผักบุ้งรสเย็นมีสรรพคุณช่วยถอนพิษเบื่อเมา\nรากผักบุ้งรสจืดเฝื่อนมีสรรพคุณช่วยถอนพิษสำแดง\nผักบุ้งขาวหรือผักบุ้งจีนช่วยให้เจริญอาหาร\nช่วยต่อต้านเชื้อแบคทีเรีย\nช่วยแก้อาการฟกช้ำ (ผักบุ้งไทยต้นขาว)\nดอกของผักบุ้งไทยต้นขาวใช้เป็นยาแก้กลากเกลื้อน\nใช้ถอนพิษจากแมลงสัตว์กัดต่อย (ผักบุ้งไทยต้นขาว)\nแก้แผลมีหนองช้ำ ด้วยการใช้ต้นสดต้มน้ำให้เดือดนาน ๆ ทิ้งไว้พออุ่นแล้วเอาน้ำล้างแผลวันละครั้ง\nช่วยแก้พิษตะขาบกัด ด้วยการใช้ต้นสดเติมเกลือ นำมาตำแล้วพอกบริเวณที่ถูกกัด\nต้นสดของผักบุ้งไทยต้นขาวใช้รักษาแผลไฟไหม้ น้ำร้อนลวก\nต้นสดของผักบุ้งไทยต้นขาวช่วยลดการอักเสบ อาการปวดบวม\nช่วยขับสารพิษออกจากร่างกาย\nใช้บำบัดรักษาผู้ป่วยยาเสพติดหรือผู้ที่ได้รับสารพิษต่าง ๆ เช่น เกษตรกร เป็นต้น\nนำมาใช้ในการประกอบอาหารอย่างหลากหลาย ไม่ว่าจะผัด แกง ดอง ได้หมด เช่น ผัดผักบุ้งไฟแดง ส้มตำ แกงส้ม แกงเทโพ ยําผักบุ้งกรอบ เป็นต้น\nผักบุ้งนำมาใช้เป็นอาหารสัตว์ได้เหมือนกัน เช่น หมู เป็ด ไก่ ปลา เป็นต้น (มีหลายคนเข้าใจผิดว่ากระต่ายชอบกินผักบุ้ง แต่ความจริงแล้วไม่ใช่เลย เพราะอาจจะทำให้ท้องเสียได้ เพราะผักบุ้งมียาง ยกเว้นกระต่ายโต ถ้าจะให้กินไม่ควรให้บ่อยและให้ทีละนิด)\nผักบุ้ง ประโยชน์ข้อสุดท้ายนิยมนำมาแปรรูปเป็นผลิตภัณฑ์ต่าง ๆ เช่น ผักบุ้งแคปซูล ผงผักบุ้ง เป็นต้น', '', '10.00', 0, '1.00', '\\upload\\products\\11111\\shutterstock_166543490.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เขตหลักสี่', 'กรุงเทพมหานคร', 1, 1, 2, '2016-11-09 17:00:00', '2016-11-09 17:00:00'),
+(2, 'sale', 'คะน้าสวยๆ', 'คะน้าสวยๆ', '', '15.00', 0, '1.00', '\\upload\\products\\33333\\Chinese-font-b-Kale-b-font-Seed-200-Seeds-Of-Each-Pack-Brassica-Alboglabra-Cabbage-Mustard.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เมืองนนทบุรี', 'นนทบุรี', 1, 2, 2, '2016-11-09 17:00:00', '2016-11-09 17:00:00'),
+(3, 'sale', 'คะน้าบ้านนา', 'คะน้าบ้านนา', '', '13.00', 0, '1.00', '\\upload\\products\\44444\\h1.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เมือง', 'เชียงใหม่', 1, 2, 2, '2016-11-09 17:00:00', '2016-11-09 17:00:00'),
+(4, 'sale', 'ตำลึงปลูกเอง', 'ตำลึงปลูกเอง', '', '11.00', 0, '1.00', '\\upload\\products\\22222\\iStock_000043212934_Small.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เมือง', 'เชียงใหม่', 1, 3, 2, '2016-11-09 17:00:00', '2016-11-09 17:00:00'),
+(20, 'sale', 'ผักกาดขาว', '<p><strong>ผักกาดขาว&nbsp;</strong>มีชื่อเรียกอื่นว่า&nbsp;ผักกาดขาวปลี, แปะฉ่าย, แปะฉ่ายลุ้ย เป็นต้น</p>\r\n\r\n<p>สายพันธุ์ผักกาดขาวที่นิยมปลูกมีอยู่ 3 พันธุ์ คือ พันธุ์เข้าปลียาว (ลักษณะสูง เป็นรูปไข่), พันธุ์เข้าปลีกลมแน่น (ลักษณะสั้น อ้วนกลม) และพันธุ์เข้าปลีหลวมหรือไม่ห่อปลี (ปลูกได้ทั่วไป เช่น ผักกาดขาวธรรมดา ผักกาดขาวใหญ่)</p>\r\n\r\n<p>คุณค่าทางโภชนาการของผักกาดขาว 100 กรัม มีน้ำ 91.7 กรัม, กรดอะมิโน, โปรตีน 0.6 กรัม, คาร์โบไฮเดรต 5.7 กรัม, เส้นใย 0.8 กรัม, แคโรทีน 0.02 มิลลิกรัม, วิตามินบี 1 0.02 มิลลิกรัม, วิตามินบี 2 0.04 มิลลิกรัม, วิตามินซี 30 มิลลิกรัม, ธาตุแคลเซียม 49 มิลลิกรัม, ธาตุฟอสฟอรัส 34 มิลลิกรัม, ธาตุเหล็ก 0.5 มิลลิกรัม, ธาตุโพแทสเซียม 196 มิลลิกรัม, ธาตุซิลิกอน 0.024 มิลลิกรัม, ธาตุแมงกานีส 1.26 มิลลิกรัม, ธาตุทองแดง 0.21 มิลลิกรัม, ธาตุสังกะสี 3.21 มิลลิกรัม, ธาตุโมลิบดีนัม 0.125 มิลลิกรัม, ธาตุโบรอน 2.07 มิลลิกรัม, กรดนิโคตินิค (Nicotinic acid) 0.5 มิลลิกรัม</p>\r\n\r\n<p>ผักกาดขาวเป็นผักที่มีเส้นใยสูงมาก โดยเส้นใยที่ว่านี้เป็นเส้นใยที่ไม่ละลายน้ำ แต่จะพองตัวเมื่อมีน้ำ จึงมีความสามารถในการอุ้มน้ำได้เป็นอย่างดี ซึ่งการอุ้มน้ำได้ดีนี้จะช่วยเพิ่มปริมาตรของกากอาหาร ช่วยกระตุ้นการเคลื่อนไหวของลำไส้ ทำให้กากอาหารอ่อนนุ่ม ขับถ่ายสะดวก และยังช่วยแก้อาการท้องผูกอีกด้วย นอกจากนี้ยังช่วยเพิ่มความหนืด ทำให้ไม่ถูกย่อยได้ง่าย ช่วยดูดซับและแลกเปลี่ยนประจุ จึงช่วยป้องกันและกำจัดสารอนุมูลอิสระในร่างกาย ช่วยดึงเอาสารพิษที่ปนเปื้อนในอาหารที่รับประทาน ช่วยลดความหมักหมมของลำไส้ จึงมีผลทำให้ช่วยลดความเสี่ยงของการเกิดโรคมะเร็งลำไส้ได้เป็นอย่างดี !</p>\r\n\r\n<p>สำหรับสรรพคุณช่วยป้องกันโรคมะเร็งลำไส้นั้น ปัจจุบันยังไม่ทราบขนาดของเส้นใยอาหารที่ต้องรับประทานอย่างแน่นอน แต่ในสหรัฐฯ ได้กำหนดให้เพศชายวัยสูงอายุ ควรบริโภคเส้นใยอาหารประมาณ 18 กรัมต่อวัน และสำหรับวัยหนุ่มสาวควรรับประทาน 20-25 กรัมต่อวัน และการรับประทานที่มากกว่าปริมาณที่กำหนดก็ไม่ได้ช่วยลดอัตราความเสี่ยงของการเกิดโรคมะเร็งแต่อย่างใด แต่จะช่วยทำให้ระบบขับถ่ายทำงานได้ดีมากขึ้น อย่างเช่นในเรื่องของการขับถ่าย แก้อาการท้องผูก เป็นต้น</p>\r\n', '', '100.00', 0, '10.00', 'upload/products/1478829411/_.JPG', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เขตจตุจักร', 'กรุงเทพมหานคร', 1, 5, 2, '2016-11-10 18:56:52', '2016-11-10 18:56:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `markets`
 --
 
@@ -213,7 +264,7 @@ CREATE TABLE `markets` (
 --
 
 INSERT INTO `markets` (`id`, `market_title_th`, `market_description_th`, `market_title_en`, `market_description_en`, `marketimage_file`, `sequence`, `created_at`, `updated_at`) VALUES
-(1, 'ตลาดเกษตรอินทรีย์', 'สินค้าเกษตรปลอดสารพิษ', 'ตลาดเกษตรอินทรีย์', 'สินค้าเกษตรปลอดสารพิษ', 'upload/market/1478246940/01.jpg', 1, '2016-09-24 20:43:03', '2016-11-04 01:09:00'),
+(1, 'ตลาดเกษตรอินทรีย์', 'สินค้าเกษตรปลอดสารพิษ', 'ตลาดเกษตรอินทรีย์', 'สินค้าเกษตรปลอดสารพิษ', 'upload/market/1478246940/01.jpg', 1, '2016-09-24 20:43:03', '2016-11-10 08:38:18'),
 (2, 'ตลาดระบบตามสอบสินค้นเกษตร', 'สินค้าเกษตรที่มี QR Code ในการตรวจสอบ', 'ตลาดระบบตามสอบสินค้นเกษตร', 'สินค้าเกษตรที่มี QR Code ในการตรวจสอบ', 'upload/market/1478246986/02.jpg', 2, '2016-09-24 20:43:03', '2016-11-04 01:09:46'),
 (3, 'ตลาดแปลงใหญ่', 'สินค้าที่รวบรวมจากตลาดแปลงใหญ่', 'ตลาดแปลงใหญ่', 'สินค้าที่รวบรวมจากตลาดแปลงใหญ่', 'upload/market/1478247162/03.jpg', 3, '2016-09-24 20:43:03', '2016-11-04 01:12:42');
 
@@ -268,7 +319,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2016_11_06_023513_addcolumns_users_table', 3),
 (20, '2016_11_06_072902_addcolumns2_users_table', 4),
 (22, '2016_11_06_124806_create_products_table', 5),
-(24, '2016_11_07_062218_create_news_table', 6);
+(24, '2016_11_07_062218_create_news_table', 6),
+(26, '2016_11_10_043218_create_iwantto_table', 7);
 
 -- --------------------------------------------------------
 
@@ -432,8 +484,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `users_firstname_th`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_active`, `users_lastname_th`, `users_firstname_en`, `users_lastname_en`, `users_dateofbirth`, `users_gender`, `users_addressname`, `users_street`, `users_district`, `users_city`, `users_province`, `users_postcode`, `users_mobilephone`, `users_phone`, `users_fax`, `users_imageprofile`, `users_latitude`, `users_longitude`, `users_contactperson`, `users_membertype`, `iwantto`, `users_idcard`, `users_qrcode`, `users_taxcode`, `users_company_th`, `users_company_en`) VALUES
-(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-07 02:33:34', 1, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'personal', 'sale', '15799900070848', '', '', '', ''),
-(5, '', 'tae_pe1@hotmail.com', '$2y$10$x3aLtISzECc90g/MEozWGO1T.cSxc27/pmQGzbZj.t0fTYUwzLLB.', 'YWaZw2afVa1slH0gmL4moDZ0PanqY1L2Fr0mY9AL0Vmop8U7Mm5z14WpxUxV', '2016-11-06 01:03:28', '2016-11-06 21:28:48', 1, '', '', '', '2016-11-06', 'male', '', '', '', '', '', '', '', '', '', '', '0.00000000', '0.00000000', '', 'company', 'sale', '', '', '1111111111111', 'มกอช', 'มกอช');
+(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'kHG3aN1wCwdwhenIXES6sIg04NmaiSxmeAEfBV1TopbAnPJ6KoHRyy0cTOS2', '2016-11-06 01:03:28', '2016-11-10 17:09:47', 1, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478822987/Mens-short-hairstyle-7.jpg', '13.75272466', '100.50292369', '', 'personal', 'sale', '15799900070848', '', '', '', ''),
+(6, 'เจตพร', 'tae_pe1@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'FmXzZ02VyewYFAkYY1voNXYlgNIjAdd5yicXBUM0MzCsce9L9Hu5VHpqidEM', '2016-11-06 01:03:28', '2016-11-10 16:33:23', 1, 'หมาดสกุล', 'JETTAPORN', 'MADSAKUL', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478820481/Cool-haircut-for-men-1.jpg', '13.75272466', '100.50292369', '', 'personal', 'buy', '15799900070848', '', '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -489,6 +541,15 @@ ALTER TABLE `faq`
 --
 ALTER TABLE `faqcategorys`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `iwantto`
+--
+ALTER TABLE `iwantto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `iwantto_productcategorys_id_foreign` (`productcategorys_id`),
+  ADD KEY `iwantto_products_id_foreign` (`products_id`),
+  ADD KEY `iwantto_users_id_foreign` (`users_id`);
 
 --
 -- Indexes for table `markets`
@@ -570,7 +631,7 @@ ALTER TABLE `contactus`
 -- AUTO_INCREMENT for table `contactusform`
 --
 ALTER TABLE `contactusform`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `downloaddocuments`
 --
@@ -587,6 +648,11 @@ ALTER TABLE `faq`
 ALTER TABLE `faqcategorys`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `iwantto`
+--
+ALTER TABLE `iwantto`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
 -- AUTO_INCREMENT for table `markets`
 --
 ALTER TABLE `markets`
@@ -600,7 +666,7 @@ ALTER TABLE `medias`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `news`
 --
@@ -615,7 +681,7 @@ ALTER TABLE `productcategorys`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `slideimages`
 --
@@ -635,6 +701,14 @@ ALTER TABLE `users`
 --
 ALTER TABLE `faq`
   ADD CONSTRAINT `faq_faqcategory_id_foreign` FOREIGN KEY (`faqcategory_id`) REFERENCES `faqcategorys` (`id`);
+
+--
+-- Constraints for table `iwantto`
+--
+ALTER TABLE `iwantto`
+  ADD CONSTRAINT `iwantto_productcategorys_id_foreign` FOREIGN KEY (`productcategorys_id`) REFERENCES `productcategorys` (`id`),
+  ADD CONSTRAINT `iwantto_products_id_foreign` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `iwantto_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `products`
