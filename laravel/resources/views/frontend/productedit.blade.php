@@ -31,7 +31,7 @@
       if(confirm('{{ trans('messages.confirm_delete', ['attribute' => $item->product_title]) }}'))
       {
         $.get('{{ url('user/information') }}/removeproduct/ajax-state?stateid={{ $item->id }}', function(data) {
-            window.location.href = "{{ url('user/iwanttosale') }}";
+            window.location.href = "{{ url('user/'.$activemenu) }}";
         });
       }
   });

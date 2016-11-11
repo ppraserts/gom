@@ -5,5 +5,46 @@ Change Configuration
 - .env
 - config/app.php
 - ckupload.php
+- htdocs\vendor\unisharp\laravel-ckeditor\config.js
 
 SELECT GROUP_CONCAT(`product_name_th` SEPARATOR ',') AS order_summary FROM products
+
+
+SELECT matching.*
+,u.users_firstname_th
+,u.users_lastname_th
+FROM
+(   
+	    SELECT 'G' as Colors ,a.*
+            FROM `iwantto` a 
+            join `iwantto` b on b.users_id=6  
+		    and b.iwantto = 'buy'
+                    and a.productcategorys_id = b.productcategorys_id
+                    and a.products_id = b.products_id
+                    and a.`product_title` = b.product_title  
+                    and (a.`price` between b.`pricerange_start` and b.`pricerange_end`) 
+                    and (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`) 
+                    and a.city = b.city
+                    and a.province = b.province 
+            union
+            SELECT 'O' as Colors ,a.*
+            FROM `iwantto` a 
+            join `iwantto` b on b.users_id=6 
+		    and b.iwantto = 'buy'	
+                    and a.`product_title` like CONCAT('%', b.product_title, '%')  
+                    and (a.`price` between b.`pricerange_start` and b.`pricerange_end`) 
+                    and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`) 
+                    and a.city like CONCAT('%', b.city , '%')  
+                    and a.province like CONCAT('%', b.province , '%')  
+            union
+            SELECT 'R' as Colors ,a.*
+            FROM `iwantto` a 
+            join `iwantto` b on b.users_id=6 
+		    and b.iwantto = 'buy'
+                    and a.`product_title` like CONCAT('%', b.product_title, '%')  
+                    and (a.`price` between b.`pricerange_start` and b.`pricerange_end`) 
+                    and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`) 
+) as matching
+join users u on matching.users_id = u.id 
+group by matching.id
+order by matching.Colors 

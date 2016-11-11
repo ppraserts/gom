@@ -148,6 +148,7 @@ class ProductsEditController extends Controller
     $Iwantto->productstatus = $request->productstatus;
     if($useritem->iwantto == "buy")
     {
+      $Iwantto->productstatus = "open";
       $Iwantto->pricerange_start = $request->pricerange_start;
       $Iwantto->pricerange_end = $request->pricerange_end;
       $Iwantto->volumnrange_start = $request->volumnrange_start;

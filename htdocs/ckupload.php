@@ -1,5 +1,5 @@
 <?php
-  $rootURL = 'http://localhost/';
+  $rootURL = 'http://gomdev.agilethailand.com/';
 	$url = 'upload/files/'.time()."_".$_FILES['upload']['name'];
 
  //extensive suitability check before doing anything with the file...
