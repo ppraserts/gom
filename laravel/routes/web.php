@@ -84,6 +84,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('iwanttosale','frontend\IwanttoSaleController');
     Route::resource('matchings','frontend\MatchingController');
     Route::resource('productedit','frontend\ProductsEditController');
+    Route::resource('productview','frontend\ProductsViewController');
 
     Route::get('/information/removeproduct/ajax-state',function()
     {

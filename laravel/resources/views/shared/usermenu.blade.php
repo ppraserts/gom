@@ -1,5 +1,8 @@
 <?php
+       use App\Iwantto;
 	$user = auth()->guard('user')->user();
+
+       $Iwanttoobj = new Iwantto();
 ?>
 <ul class="nav nav-tabs">
   <li role="presentation" {{ ($setActive == "userprofiles")? 'class=active' : ''  }} ><a href="{{ url('user/userprofiles') }}">{{ trans('messages.userprofile') }}</a></li>
@@ -18,7 +21,14 @@
 	<li role="presentation" {{ ($setActive == "matchings")? 'class=active' : ''  }} >
 			<a href="{{ url('user/matchings') }}">
 				{{ trans('messages.menu_matching') }}
-				<span class="badge">0</span>
+				<span class="badge">
+                           @if($user->iwantto == "buy")
+                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id)) }}
+                          @endif
+                          @if($user->iwantto == "sale")
+                                  {{ count($Iwanttoobj->GetBuyMatchingWithSale($user->id)) }}
+                          @endif
+                           </span>
 			</a>
 	</li>
 </ul>

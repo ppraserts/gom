@@ -198,4 +198,9 @@ class ProductsEditController extends Controller
 
       return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);
   }
+
+  public function getshowproductview(Request $request, $id)
+  {
+    
+  }
 }
