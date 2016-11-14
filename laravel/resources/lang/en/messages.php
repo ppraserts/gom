@@ -37,6 +37,7 @@ return [
     'menu_product' => 'Product',
     'menu_user' => 'User',
     'menu_news' => 'News',
+    'menu_imageactivity' => 'Activity Image',
     'flag_th' => 'TH',
     'flag_en' => 'EN',
     'menu_visit' => 'Visit',
@@ -64,4 +65,7 @@ return [
     'email_subject_newregister' => 'Welcome to Greenmart Online Market',
     'message_success_contactusform' => 'We already get your contact and we will contact you as soon as posible, Thank you!!',
     'inbox_message' => 'Inbox Message',
+    'download' => 'Download',
+    'sitemap' => 'Sitemap',
+    'forgotpassword' => 'Forgot Password',
 ];

@@ -37,6 +37,7 @@ return [
     'menu_product' => 'สินค้า',
     'menu_user' => 'ผู้ใช้งาน',
     'menu_news' => 'ข่าวประชาสัมพันธ์',
+    'menu_imageactivity' => 'ภาพกิจกรรม',
     'flag_th' => 'ไทย',
     'flag_en' => 'อังกฤษ',
     'menu_visit' => 'เยี่ยมชม',
@@ -64,4 +65,7 @@ return [
     'email_subject_newregister' => 'ยินดีต้อนรับสู่ Greenmart Online Market',
     'message_success_contactusform' => 'เราได้รับข้อมูลการติดต่อและจะรีบดำเนินการติดต่อกลับให้เร็วที่สุด.',
     'inbox_message' => 'กล่องข้อความ',
+    'download' => 'ดาวน์โหลดเอกสาร',
+    'sitemap' => 'แผงผังเว็บไซต์',
+    'forgotpassword' => 'ลืมรหัสผ่าน',
 ];

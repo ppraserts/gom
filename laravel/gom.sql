@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2016 at 09:54 AM
+-- Generation Time: Nov 14, 2016 at 12:31 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -143,6 +143,13 @@ CREATE TABLE `downloaddocuments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `downloaddocuments`
+--
+
+INSERT INTO `downloaddocuments` (`id`, `downloaddocument_title_th`, `downloaddocument_description_th`, `downloaddocument_title_en`, `downloaddocument_description_en`, `downloaddocument_file`, `sequence`, `created_at`, `updated_at`) VALUES
+(1, 'การปฏิบัติทางการเกษตรที่ดีสำหรับฟาร์มปศุสัตว์ (GAP ฟาร์มปศุสัตว์)', '<p>การปฏิบัติทางการเกษตรที่ดีสำหรับฟาร์มปศุสัตว์ (GAP ฟาร์มปศุสัตว์)</p>\r\n', 'การปฏิบัติทางการเกษตรที่ดีสำหรับฟาร์มปศุสัตว์ (GAP ฟาร์มปศุสัตว์)', '<p>การปฏิบัติทางการเกษตรที่ดีสำหรับฟาร์มปศุสัตว์ (GAP ฟาร์มปศุสัตว์)</p>\r\n', 'upload/documents/1479119882/brochure_39.pdf', 999, '2016-11-14 03:38:02', '2016-11-14 03:38:02');
 
 -- --------------------------------------------------------
 
@@ -286,6 +293,14 @@ CREATE TABLE `medias` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `medias`
+--
+
+INSERT INTO `medias` (`id`, `media_name_en`, `media_name_th`, `media_urllink`, `sequence`, `created_at`, `updated_at`) VALUES
+(1, 'New Heart New World 2 : จิตร์ ตันฑเสถียร', 'New Heart New World 2 : จิตร์ ตันฑเสถียร', 'https://www.youtube.com/embed/nrNn3zJEk7k', 999, '2016-11-14 02:52:23', '2016-11-14 02:53:58'),
+(2, 'New Heart New World 2 : ธนญชัย ศรศรีวิชัย', 'New Heart New World 2 : ธนญชัย ศรศรีวิชัย', 'https://www.youtube.com/embed/LBYeyA1Z2IE', 999, '2016-11-14 02:57:49', '2016-11-14 02:57:49');
 
 -- --------------------------------------------------------
 
@@ -439,6 +454,22 @@ CREATE TABLE `slideimages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `slideimages`
+--
+
+INSERT INTO `slideimages` (`id`, `slideimage_name`, `slideimage_file`, `slideimage_type`, `slideimage_urllink`, `sequence`, `created_at`, `updated_at`) VALUES
+(1, 'Banner1', 'upload/slides/1479115079/banner1.jpg', 'B', '', 999, '2016-11-14 02:17:59', '2016-11-14 02:17:59'),
+(2, 'Banner2', 'upload/slides/1479115091/banner5.jpg', 'B', '', 999, '2016-11-14 02:18:11', '2016-11-14 02:18:11'),
+(3, 'Banner3', 'upload/slides/1479115102/banner9.jpg', 'B', '', 999, '2016-11-14 02:18:22', '2016-11-14 02:18:22'),
+(4, 'Banner4', 'upload/slides/1479115118/banner11.jpg', 'B', '', 999, '2016-11-14 02:18:38', '2016-11-14 02:18:38'),
+(5, 'Banner5', 'upload/slides/1479115128/survey_web.jpg', 'B', '', 999, '2016-11-14 02:18:48', '2016-11-14 02:18:48'),
+(6, 'Activity1', 'upload/slides/1479116659/acfs_31-10-59-1.jpg', 'AS', 'http://www.acfs.go.th/', 999, '2016-11-14 02:38:30', '2016-11-14 03:07:00'),
+(7, 'Activity2', 'upload/slides/1479116327/acfs_31-10-59-2.jpg', 'AS', '', 999, '2016-11-14 02:38:47', '2016-11-14 02:38:47'),
+(8, 'Activity3', 'upload/slides/1479116336/acfs_31-10-59-3.jpg', 'AS', '', 999, '2016-11-14 02:38:56', '2016-11-14 02:38:56'),
+(9, 'Activity4', 'upload/slides/1479116347/acfs_31-10-59-5.jpg', 'AS', '', 999, '2016-11-14 02:39:07', '2016-11-14 02:39:07'),
+(10, 'Activity5', 'upload/slides/1479116356/acfs_31-10-59-6.jpg', 'AS', '', 999, '2016-11-14 02:39:16', '2016-11-14 02:39:16');
 
 -- --------------------------------------------------------
 
@@ -640,7 +671,7 @@ ALTER TABLE `contactusform`
 -- AUTO_INCREMENT for table `downloaddocuments`
 --
 ALTER TABLE `downloaddocuments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `faq`
 --
@@ -665,7 +696,7 @@ ALTER TABLE `markets`
 -- AUTO_INCREMENT for table `medias`
 --
 ALTER TABLE `medias`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
@@ -690,7 +721,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `slideimages`
 --
 ALTER TABLE `slideimages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `users`
 --

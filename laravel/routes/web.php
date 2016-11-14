@@ -18,8 +18,11 @@ Auth::routes();
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
+    Route::get('/news', 'frontend\NewsController@index');
+    Route::get('/news/{id}', 'frontend\NewsController@edit');
     Route::resource('/contactus','ContactusController');
     Route::get('/faq', 'FaqController@index');
+    Route::get('/sitemap', 'frontend\SitemapController@index');
 
     Route::get('/clear-cache', function() {
         $exitCode = Artisan::call('cache:clear');

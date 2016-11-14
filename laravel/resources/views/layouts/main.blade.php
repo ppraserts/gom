@@ -77,11 +77,13 @@
                                   <li><a href="{{ url('user/matchings') }}"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>  {{ trans('messages.menu_matching') }}</a></li>
                                   <li role="separator" class="divider"></li>
                                 @endif
-                                <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>  {{ trans('messages.menu_announcement') }}</a></li>
+                                <li><a href="{{ url('/news') }}"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>  {{ trans('messages.menu_announcement') }}</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{ url('/faq') }}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>   {{ trans('messages.menu_faq') }}</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{ url('/contactus') }}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>  {{ trans('messages.menu_contactus') }}</a></li>
+                                <li role="separator" class="divider"></li>
+                                 <li><a href="{{ url('/sitemap') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>  {{ trans('messages.sitemap') }}</a></li>
                             </ul>
                         </li>
                         @if($user == null)
