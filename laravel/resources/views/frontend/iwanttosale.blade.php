@@ -32,7 +32,7 @@ $url = "user/iwanttosale";
     {!! Form::close() !!}
     <div class="col-md-2">
       <div class="pull-right">
-           <a class="btn btn-success" href="{{ url('user/productedit/0') }}">
+           <a class="btn btn-success" href="{{ url('user/productsaleedit/0') }}">
              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
              {{ trans('messages.button_add')}}</a>
       </div>
@@ -70,7 +70,7 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a href="{{ url('user/productedit/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>

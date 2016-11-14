@@ -23,6 +23,8 @@ Route::group(['middleware' => ['guest']], function () {
     Route::resource('/contactus','ContactusController');
     Route::get('/faq', 'FaqController@index');
     Route::get('/sitemap', 'frontend\SitemapController@index');
+    Route::get('/result', 'frontend\SearchController@index');
+    Route::get('/market', 'frontend\MarketController@index');
 
     Route::get('/clear-cache', function() {
         $exitCode = Artisan::call('cache:clear');
@@ -86,7 +88,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('iwanttobuy','frontend\IwanttoBuyController');
     Route::resource('iwanttosale','frontend\IwanttoSaleController');
     Route::resource('matchings','frontend\MatchingController');
-    Route::resource('productedit','frontend\ProductsEditController');
+    Route::resource('productsaleedit','frontend\ProductsSaleEditController');
+    Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
 
     Route::get('/information/removeproduct/ajax-state',function()

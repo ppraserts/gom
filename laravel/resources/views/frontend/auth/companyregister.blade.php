@@ -29,16 +29,12 @@
                             <label for="iwantto" class="col-md-4 control-label">{{ Lang::get('validation.attributes.iwantto') }}</label>
 
                             <div class="col-md-6">
-                              <select id="iwantto" class="form-control" name="iwantto">
-                                <option value="sale">{{ trans('messages.i_want_to_sale') }}</option>
-                                <option value="buy">{{ trans('messages.i_want_to_buy') }}</option>
-                              </select>
-
-                                @if ($errors->has('iwantto'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('iwantto') }}</strong>
-                                    </span>
-                                @endif
+                              <label class="radio-inline">
+                                  <input type="checkbox" name="iwantto[]" id="iwanttosale" value="sale" > {{ trans('messages.i_want_to_sale') }}
+                              </label>
+                              <label class="radio-inline">
+                                  <input type="checkbox" name="iwantto[]" id="iwanttobuy" value="buy"> {{ trans('messages.i_want_to_buy') }}
+                              </label>
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_taxcode') ? ' has-error' : '' }}">

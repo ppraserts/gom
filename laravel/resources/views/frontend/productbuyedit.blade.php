@@ -1,9 +1,3 @@
-<?php
-  if($useritem->iwantto == "sale")
-      $activemenu = "iwanttosale";
-  else
-      $activemenu = "iwanttobuy";
-?>
 @extends('layouts.main')
 @push('scripts')
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
@@ -31,7 +25,7 @@
       if(confirm('{{ trans('messages.confirm_delete', ['attribute' => $item->product_title]) }}'))
       {
         $.get('{{ url('user/information') }}/removeproduct/ajax-state?stateid={{ $item->id }}', function(data) {
-            window.location.href = "{{ url('user/'.$activemenu) }}";
+            window.location.href = "{{ url('user/iwanttobuy') }}";
         });
       }
   });
@@ -45,9 +39,9 @@
 </script>
 @endpush
 @section('content')
-@include('shared.usermenu', array('setActive'=>$activemenu))
+@include('shared.usermenu', array('setActive'=>'iwanttobuy'))
 <br/>
-<form enctype="multipart/form-data" class="form-horizontal" role="form" method="post" action="{{ url('user/productedit/'.$item->id) }}">
+<form enctype="multipart/form-data" class="form-horizontal" role="form" method="post" action="{{ url('user/productbuyedit/'.$item->id) }}">
 {{ csrf_field() }}
 {{ Form::hidden('product1_file_temp', $item->product1_file) }}
 {{ Form::hidden('product2_file_temp', $item->product2_file) }}

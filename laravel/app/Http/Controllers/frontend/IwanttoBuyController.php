@@ -23,7 +23,8 @@ class IwanttoBuyController extends Controller
   public function index(Request $request)
   {
       $item = auth()->guard('user')->user();
-      if($item->iwantto == "sale" )
+
+      if($item->iwanttobuy != 'buy' )
       {
         return redirect()->action('frontend\UserProfileController@index');
       }
@@ -34,7 +35,8 @@ class IwanttoBuyController extends Controller
       $search = \Request::get('search');
       $category = \Request::get('category');
 
-      $query = Iwantto::where('users_id', $item->id);
+      $query = Iwantto::where('users_id', $item->id)
+                      ->where('iwantto', 'buy');
       if($category != "")
         $query = $query->where('productcategorys_id', $category);
 
@@ -57,10 +59,10 @@ class IwanttoBuyController extends Controller
                                               ->orWhere('city','like','%'.$search.'%')
                                               ->orWhere('province','like','%'.$search.'%');
               }
-    
+
       }
 
-     
+
 
       $items = $query->orderBy('created_at','desc')
                      ->paginate(config('app.paginate'));

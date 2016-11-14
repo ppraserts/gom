@@ -21,7 +21,7 @@ class User extends Authenticatable
         ,'users_city','users_province','users_postcode','users_mobilephone'
         ,'users_phone','users_fax','users_imageprofile'
         ,'users_latitude','users_longitude','users_contactperson'
-        ,'users_membertype','iwantto','users_idcard'
+        ,'users_membertype','iwanttosale','iwanttobuy','users_idcard'
         ,'is_active'
         , 'email'
         , 'password'
@@ -62,7 +62,8 @@ class User extends Authenticatable
                     'users_longitude' => 0,
                     'users_contactperson' => '',
                     'users_membertype' => 'personal',
-                    'iwantto' => $input['iwantto'],
+                    'iwanttosale' => (in_array("sale", $input['iwantto']))? "sale" : "",
+                    'iwanttobuy' => (in_array("buy", $input['iwantto']))? "sale" : "",
                     'users_idcard' => $input['users_idcard'],
                     'is_active' => 0,
                     'email' => $input['email'],
@@ -96,7 +97,8 @@ class User extends Authenticatable
                     'users_longitude' => 0,
                     'users_contactperson' => '',
                     'users_membertype' => 'company',
-                    'iwantto' => $input['iwantto'],
+                    'iwanttosale' => (in_array("sale", $input['iwantto']))? "sale" : "",
+                    'iwanttobuy' => (in_array("buy", $input['iwantto']))? "sale" : "",
                     'users_idcard' => '',
                     'is_active' => 0,
                     'email' => $input['email'],

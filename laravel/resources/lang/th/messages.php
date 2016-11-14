@@ -68,4 +68,6 @@ return [
     'download' => 'ดาวน์โหลดเอกสาร',
     'sitemap' => 'แผงผังเว็บไซต์',
     'forgotpassword' => 'ลืมรหัสผ่าน',
+    'menu_matching_buy' => 'จับคู่ซื้อ',
+    'menu_matching_sale' => 'จับคู่ขาย',
 ];

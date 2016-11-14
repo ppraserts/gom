@@ -23,7 +23,7 @@ class IwanttoSaleController extends Controller
   public function index(Request $request)
   {
       $item = auth()->guard('user')->user();
-      if($item->iwantto == "buy" )
+      if($item->iwanttosale != 'sale' )
       {
         return redirect()->action('frontend\UserProfileController@index');
       }
@@ -34,7 +34,9 @@ class IwanttoSaleController extends Controller
       $search = \Request::get('search');
       $category = \Request::get('category');
 
-      $query = Iwantto::where('users_id', $item->id);
+      $query = Iwantto::where('users_id', $item->id)
+                      ->where('iwantto', 'sale');
+
       if($category != "")
         $query = $query->where('productcategorys_id', $category);
 

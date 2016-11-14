@@ -13,7 +13,7 @@ use App\Model\frontend\User;
 use App\Iwantto;
 use App\ProductCategory;
 
-class ProductsEditController extends Controller
+class ProductsSaleEditController extends Controller
 {
   private $rules = [
      'productcategorys_id' => 'required',
@@ -74,11 +74,11 @@ class ProductsEditController extends Controller
       $item = new Iwantto();
       $item->id = 0;
       $item->productstatus ='open';
-      $item->iwantto = $useritem->iwantto;
+      $item->iwantto = $useritem->iwanttosale;
     }
     else {
       $item = Iwantto::find($id);
-      if($useritem->iwantto != $item->iwantto )
+      if($useritem->iwanttosale != $item->iwantto )
       {
         return redirect()->action('frontend\UserProfileController@index');
       }
@@ -87,7 +87,7 @@ class ProductsEditController extends Controller
     $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                 ->get();
 
-    return view('frontend.productedit',compact('item','useritem','productCategoryitem'));
+    return view('frontend.productsaleedit',compact('item','useritem','productCategoryitem'));
   }
 
 
@@ -104,56 +104,39 @@ class ProductsEditController extends Controller
       $Iwantto = Iwantto::find($id);
     }
 
-    if($useritem->iwantto == "sale")
-    {
-      if($id==0)
-        $this->validate($request, $this->rules);
-      else
-        $this->validate($request, $this->rules3);
+    if($id==0)
+      $this->validate($request, $this->rules);
+    else
+      $this->validate($request, $this->rules3);
 
-      if($request->product1_file != "")
-      {
-        $uploadImage1 = $this->UploadImage($request, 'product1_file');
-        $this->RemoveFolderImage($Iwantto->product1_file);
-        $Iwantto->product1_file = $uploadImage1["imageName"];
-      }
-      if($request->product2_file != "")
-      {
-        $uploadImage2 = $this->UploadImage($request, 'product2_file');
-        $this->RemoveFolderImage($Iwantto->product2_file);
-        $Iwantto->product2_file = $uploadImage2["imageName"];
-      }
-      if($request->product3_file != "")
-      {
-        $uploadImage3 = $this->UploadImage($request, 'product3_file');
-        $this->RemoveFolderImage($Iwantto->product3_file);
-        $Iwantto->product3_file = $uploadImage3["imageName"];
-      }
-    }
-    elseif($useritem->iwantto == "buy")
+    if($request->product1_file != "")
     {
-      $this->validate($request, $this->rules2);
+      $uploadImage1 = $this->UploadImage($request, 'product1_file');
+      $this->RemoveFolderImage($Iwantto->product1_file);
+      $Iwantto->product1_file = $uploadImage1["imageName"];
+    }
+    if($request->product2_file != "")
+    {
+      $uploadImage2 = $this->UploadImage($request, 'product2_file');
+      $this->RemoveFolderImage($Iwantto->product2_file);
+      $Iwantto->product2_file = $uploadImage2["imageName"];
+    }
+    if($request->product3_file != "")
+    {
+      $uploadImage3 = $this->UploadImage($request, 'product3_file');
+      $this->RemoveFolderImage($Iwantto->product3_file);
+      $Iwantto->product3_file = $uploadImage3["imageName"];
     }
 
-    $Iwantto->iwantto = $useritem->iwantto;
+
+    $Iwantto->iwantto = $useritem->iwanttosale;
     $Iwantto->product_title = $request->product_title;
     $Iwantto->product_description = $request->product_description;
-    if($useritem->iwantto == "sale")
-    {
-      $Iwantto->guarantee = $request->guarantee;
-      $Iwantto->price = $request->price;
-      $Iwantto->is_showprice = $request->is_showprice == ""? 0 : 1;
-      $Iwantto->volumn = $request->volumn;
-    }
+    $Iwantto->guarantee = $request->guarantee;
+    $Iwantto->price = $request->price;
+    $Iwantto->is_showprice = $request->is_showprice == ""? 0 : 1;
+    $Iwantto->volumn = $request->volumn;
     $Iwantto->productstatus = $request->productstatus;
-    if($useritem->iwantto == "buy")
-    {
-      $Iwantto->productstatus = "open";
-      $Iwantto->pricerange_start = $request->pricerange_start;
-      $Iwantto->pricerange_end = $request->pricerange_end;
-      $Iwantto->volumnrange_start = $request->volumnrange_start;
-      $Iwantto->volumnrange_end = $request->volumnrange_end;
-    }
     $Iwantto->units = $request->units;
     $Iwantto->city = $request->city;
     $Iwantto->province = $request->province;
@@ -169,7 +152,7 @@ class ProductsEditController extends Controller
     else {
       $Iwantto->update();
     }
-    return redirect()->route('productedit.show', ['id' => $id])
+    return redirect()->route('productsaleedit.show', ['id' => $id])
                     ->with('success',trans('messages.message_update_success'));
   }
 
@@ -197,10 +180,5 @@ class ProductsEditController extends Controller
       $imageName = config('app.upload_product').$fileTimeStamp."/".$imageName;
 
       return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);
-  }
-
-  public function getshowproductview(Request $request, $id)
-  {
-    
   }
 }

@@ -76,7 +76,7 @@
             <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.iwantto') }}
                 :
-                <strong>{{ $item->iwantto }}</strong>
+                <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
             </div>
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.email') }}

@@ -9,6 +9,11 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('user/authenticate') }}">
                         {{ csrf_field() }}
+                          @if (session('status'))
+                            <div class="alert alert-danger">
+                                 {{ session('status') }}
+                            </div>
+                           @endif
                            @if (count($errors) > 0)
                                 <div class="alert alert-danger">
                                     <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}

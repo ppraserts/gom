@@ -1,22 +1,18 @@
-<?php
-$url = "user/iwanttosale";
-?>
 @extends('layouts.main')
 @section('content')
-@include('shared.usermenu', array('setActive'=>'matchings'))
+@include('shared.search')
 @if(count((array)$itemsbuy)>0)
 <br/>
-<h3>{{ trans('messages.menu_matching_buy') }}</h3>
+<h3>{{ trans('messages.i_want_to_sale') }}</h3>
 <div class="row">
 <?php
-$arr = (array)$itemsbuy;
+$arr = (array)$itemssale;
 foreach(array_chunk($arr, 3, true) as $div_item)
 {
     foreach ($div_item as $col_md_4_items)
     {
         $col_md_4_item = (array)$col_md_4_items;
 ?>
-        @if($userItem->iwanttobuy == "buy")
         <div class="col-md-4">
             <div class="col-item">
                 <div class="photo">
@@ -31,7 +27,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                             <br/><br/>
                         </div>
                         <div class="rating hidden-sm col-md-4">
-                            <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
+
                         </div>
                     </div>
                     <div class="separator clear-left">
@@ -47,27 +43,24 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                 </div>
             </div>
         </div>
-        @endif
 <?php
     }
 }
 ?>
 </div>
 @endif
-
 @if(count((array)$itemssale)>0)
 <br/>
-<h3>{{ trans('messages.menu_matching_sale') }}</h3>
+<h3>{{ trans('messages.i_want_to_buy') }}</h3>
 <div class="row">
 <?php
-$arr = (array)$itemssale;
+$arr = (array)$itemsbuy;
 foreach(array_chunk($arr, 3, true) as $div_item)
 {
     foreach ($div_item as $col_md_4_items)
     {
         $col_md_4_item = (array)$col_md_4_items;
 ?>
-        @if($userItem->iwanttosale == "sale")
         <div class="col-md-4">
             <div class="col-item">
                 <div class="info">
@@ -79,7 +72,6 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                             <br/><br/>
                         </div>
                         <div class="rating hidden-sm col-md-3">
-                            <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
                         </div>
                     </div>
                     <div class="separator clear-left">
@@ -95,7 +87,6 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                 </div>
             </div>
         </div>
-        @endif
 <?php
     }
 }

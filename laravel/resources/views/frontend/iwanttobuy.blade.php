@@ -32,7 +32,7 @@ $url = "user/iwanttobuy";
     {!! Form::close() !!}
     <div class="col-md-2">
       <div class="pull-right">
-           <a class="btn btn-success" href="{{ url('user/productedit/0') }}">
+           <a class="btn btn-success" href="{{ url('user/productbuyedit/0') }}">
              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
              {{ trans('messages.button_add')}}</a>
       </div>
@@ -56,8 +56,8 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                             <span class="glyphicon glyphicon-map-marker"></span>
                             {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
                             <br/><br/>
-                       
-                             
+
+
                         </div>
                     </div>
                     <div class="separator clear-left">
@@ -66,7 +66,7 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a href="{{ url('user/productedit/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>

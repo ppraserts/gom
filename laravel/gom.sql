@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2016 at 12:31 PM
+-- Generation Time: Nov 14, 2016 at 08:37 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -63,7 +63,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `usertype`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', 'EPnK5aoNba2cfY6PlaN3QPXEi77yx4PtkA5INgVG3SiD6K1Vu0PNdmiV20c7', '2016-09-12 03:16:24', '2016-11-10 08:39:20');
+(1, 'admin admin', 'ppraserts@gmail.com', '$2y$10$RqioPwsdr0I.C01EyrulAe6Ari8.rSQR6MNyFGmHYZblpXGMfEBlu', 'W', 'SeCopuTy2bkhQ9qxm1oglIzHD3nK0uwJl5dBVcZNCCAAtCwhpNyNzvmfgQxm', '2016-09-12 03:16:24', '2016-11-14 07:46:09');
 
 -- --------------------------------------------------------
 
@@ -249,7 +249,8 @@ INSERT INTO `iwantto` (`id`, `iwantto`, `product_title`, `product_description`, 
 (20, 'sale', 'ผักกาดขาว', '<p><strong>ผักกาดขาว&nbsp;</strong>มีชื่อเรียกอื่นว่า&nbsp;ผักกาดขาวปลี, แปะฉ่าย, แปะฉ่ายลุ้ย เป็นต้น</p>\r\n\r\n<p>สายพันธุ์ผักกาดขาวที่นิยมปลูกมีอยู่ 3 พันธุ์ คือ พันธุ์เข้าปลียาว (ลักษณะสูง เป็นรูปไข่), พันธุ์เข้าปลีกลมแน่น (ลักษณะสั้น อ้วนกลม) และพันธุ์เข้าปลีหลวมหรือไม่ห่อปลี (ปลูกได้ทั่วไป เช่น ผักกาดขาวธรรมดา ผักกาดขาวใหญ่)</p>\r\n\r\n<p>คุณค่าทางโภชนาการของผักกาดขาว 100 กรัม มีน้ำ 91.7 กรัม, กรดอะมิโน, โปรตีน 0.6 กรัม, คาร์โบไฮเดรต 5.7 กรัม, เส้นใย 0.8 กรัม, แคโรทีน 0.02 มิลลิกรัม, วิตามินบี 1 0.02 มิลลิกรัม, วิตามินบี 2 0.04 มิลลิกรัม, วิตามินซี 30 มิลลิกรัม, ธาตุแคลเซียม 49 มิลลิกรัม, ธาตุฟอสฟอรัส 34 มิลลิกรัม, ธาตุเหล็ก 0.5 มิลลิกรัม, ธาตุโพแทสเซียม 196 มิลลิกรัม, ธาตุซิลิกอน 0.024 มิลลิกรัม, ธาตุแมงกานีส 1.26 มิลลิกรัม, ธาตุทองแดง 0.21 มิลลิกรัม, ธาตุสังกะสี 3.21 มิลลิกรัม, ธาตุโมลิบดีนัม 0.125 มิลลิกรัม, ธาตุโบรอน 2.07 มิลลิกรัม, กรดนิโคตินิค (Nicotinic acid) 0.5 มิลลิกรัม</p>\r\n\r\n<p>ผักกาดขาวเป็นผักที่มีเส้นใยสูงมาก โดยเส้นใยที่ว่านี้เป็นเส้นใยที่ไม่ละลายน้ำ แต่จะพองตัวเมื่อมีน้ำ จึงมีความสามารถในการอุ้มน้ำได้เป็นอย่างดี ซึ่งการอุ้มน้ำได้ดีนี้จะช่วยเพิ่มปริมาตรของกากอาหาร ช่วยกระตุ้นการเคลื่อนไหวของลำไส้ ทำให้กากอาหารอ่อนนุ่ม ขับถ่ายสะดวก และยังช่วยแก้อาการท้องผูกอีกด้วย นอกจากนี้ยังช่วยเพิ่มความหนืด ทำให้ไม่ถูกย่อยได้ง่าย ช่วยดูดซับและแลกเปลี่ยนประจุ จึงช่วยป้องกันและกำจัดสารอนุมูลอิสระในร่างกาย ช่วยดึงเอาสารพิษที่ปนเปื้อนในอาหารที่รับประทาน ช่วยลดความหมักหมมของลำไส้ จึงมีผลทำให้ช่วยลดความเสี่ยงของการเกิดโรคมะเร็งลำไส้ได้เป็นอย่างดี !</p>\r\n\r\n<p>สำหรับสรรพคุณช่วยป้องกันโรคมะเร็งลำไส้นั้น ปัจจุบันยังไม่ทราบขนาดของเส้นใยอาหารที่ต้องรับประทานอย่างแน่นอน แต่ในสหรัฐฯ ได้กำหนดให้เพศชายวัยสูงอายุ ควรบริโภคเส้นใยอาหารประมาณ 18 กรัมต่อวัน และสำหรับวัยหนุ่มสาวควรรับประทาน 20-25 กรัมต่อวัน และการรับประทานที่มากกว่าปริมาณที่กำหนดก็ไม่ได้ช่วยลดอัตราความเสี่ยงของการเกิดโรคมะเร็งแต่อย่างใด แต่จะช่วยทำให้ระบบขับถ่ายทำงานได้ดีมากขึ้น อย่างเช่นในเรื่องของการขับถ่าย แก้อาการท้องผูก เป็นต้น</p>\r\n', '', '10.00', 0, '10.00', 'upload/products/1479034385/8.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เขตจตุจักร', 'ลำปาง', 1, 5, 2, '2016-11-10 18:56:52', '2016-11-13 03:53:06'),
 (22, 'buy', 'ผักกาด', '<p>ผักกาด</p>\r\n', '', '0.00', 0, '0.00', '', '', '', 'open', '10.00', '100000.00', '1.00', '10.00', 'มัด', 'เมืองลำปาง', 'ลำปาง', 1, 5, 6, '2016-11-10 20:28:55', '2016-11-12 01:43:23'),
 (23, 'buy', 'ตำลึง', '<p>ตำลึง</p>\r\n', '', '0.00', 0, '0.00', '', '', '', 'open', '10.00', '100000.00', '1.00', '10.00', 'มัด', 'เมือง', 'เชียงใหม่', 1, 3, 6, '2016-11-10 20:28:55', '2016-11-12 01:25:29'),
-(24, 'sale', 'ผักกาด', '<p>ผักกาด</p>\r\n', '', '30.00', 1, '10.00', 'upload/products/1478939691/1444793515_123.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เมือง', 'เชียงใหม่', 1, 5, 7, '2016-11-12 01:34:52', '2016-11-12 02:09:27');
+(24, 'sale', 'ผักกาด', '<p>ผักกาด</p>\r\n', '', '30.00', 1, '10.00', 'upload/products/1478939691/1444793515_123.jpg', '', '', 'open', '0.00', '0.00', '0.00', '0.00', 'กำ', 'เมือง', 'เชียงใหม่', 1, 5, 7, '2016-11-12 01:34:52', '2016-11-12 02:09:27'),
+(28, 'buy', 'ผักกาด', '<p>ผักกาดขาว</p>\r\n', '', '0.00', 0, '0.00', '', '', '', 'open', '1.00', '100.00', '1.00', '100.00', 'กำ', 'เมือง', 'เชียงใหม่', 1, 5, 2, '2016-11-14 09:18:17', '2016-11-14 09:41:32');
 
 -- --------------------------------------------------------
 
@@ -338,7 +339,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2016_11_06_072902_addcolumns2_users_table', 4),
 (22, '2016_11_06_124806_create_products_table', 5),
 (24, '2016_11_07_062218_create_news_table', 6),
-(26, '2016_11_10_043218_create_iwantto_table', 7);
+(26, '2016_11_10_043218_create_iwantto_table', 7),
+(27, '2016_11_14_143240_removecolumn_users_table', 8);
 
 -- --------------------------------------------------------
 
@@ -505,22 +507,25 @@ CREATE TABLE `users` (
   `users_longitude` decimal(11,8) NOT NULL,
   `users_contactperson` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `users_membertype` enum('personal','company') COLLATE utf8_unicode_ci NOT NULL,
-  `iwantto` enum('buy','sale') COLLATE utf8_unicode_ci NOT NULL,
   `users_idcard` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `users_qrcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `users_taxcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `users_company_th` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `users_company_en` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `users_company_en` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `iwanttosale` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `iwanttobuy` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `users_firstname_th`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_active`, `users_lastname_th`, `users_firstname_en`, `users_lastname_en`, `users_dateofbirth`, `users_gender`, `users_addressname`, `users_street`, `users_district`, `users_city`, `users_province`, `users_postcode`, `users_mobilephone`, `users_phone`, `users_fax`, `users_imageprofile`, `users_latitude`, `users_longitude`, `users_contactperson`, `users_membertype`, `iwantto`, `users_idcard`, `users_qrcode`, `users_taxcode`, `users_company_th`, `users_company_en`) VALUES
-(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'Kthz0qDiSRcuxchEeygVthPXqAiLF8BnS0tFKzYaWABLOIbMvUDmIKBXchQa', '2016-11-06 01:03:28', '2016-11-13 05:29:06', 1, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1479038595/Mens-short-hairstyle-7.jpg', '13.75272466', '100.50292369', '', 'personal', 'sale', '15799900070848', '', '', '', ''),
-(6, 'เจตพร', 'tae_pe1@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'i4RNSr4EBc3o6G7NcAP1fFUzjO1OWLMnLlVSGR0LXHUxZtWjPKVMaoK0ybRV', '2016-11-06 01:03:28', '2016-11-13 05:14:22', 1, 'หมาดสกุล', 'JETTAPORN', 'MADSAKUL', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478820481/Cool-haircut-for-men-1.jpg', '13.75272466', '100.50292369', '', 'personal', 'buy', '15799900070848', '', '', '', ''),
-(7, 'ทดสอบ', 'tae_pe2@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'lUrHkr346bUVwg0f8yo6aFUGrXpalPC9he01MjVMJrHe6uwk6ZNymUHPMeqH', '2016-11-06 01:03:28', '2016-11-12 01:55:34', 1, 'นะจ๊ะ', 'Prathompong', 'Prasert', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478939618/mens-hairstyles-undercut-6.jpg', '13.75272466', '100.50292369', '', 'personal', 'sale', '15799900070848', '', '', '', '');
+INSERT INTO `users` (`id`, `users_firstname_th`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_active`, `users_lastname_th`, `users_firstname_en`, `users_lastname_en`, `users_dateofbirth`, `users_gender`, `users_addressname`, `users_street`, `users_district`, `users_city`, `users_province`, `users_postcode`, `users_mobilephone`, `users_phone`, `users_fax`, `users_imageprofile`, `users_latitude`, `users_longitude`, `users_contactperson`, `users_membertype`, `users_idcard`, `users_qrcode`, `users_taxcode`, `users_company_th`, `users_company_en`, `iwanttosale`, `iwanttobuy`) VALUES
+(2, 'ปฐมพงษ์', 'tae_pe@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'xPypptvr84UD37lNaaieHWYRuHzHHC5OfTuMfv4V79mBB1JoGuGQX0QJO4gC', '2016-11-06 01:03:28', '2016-11-14 11:50:55', 1, 'ประเสริฐ', 'Prathompong', 'Prasert', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1479038595/Mens-short-hairstyle-7.jpg', '13.75272466', '100.50292369', '', 'personal', '15799900070848', '', '', '', '', 'sale', 'buy'),
+(6, 'เจตพร', 'tae_pe1@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', 'DmivwEAq8TLOsxmUP4C9VBkIaFIoKlajkpP39iBswaKgC407BcnByXVC0ppL', '2016-11-06 01:03:28', '2016-11-14 09:55:52', 1, 'หมาดสกุล', 'JETTAPORN', 'MADSAKUL', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478820481/Cool-haircut-for-men-1.jpg', '13.75272466', '100.50292369', '', 'personal', '15799900070848', '', '', '', '', '', 'buy'),
+(7, 'ทดสอบ', 'tae_pe2@hotmail.com', '$2y$10$VrmXotJEJWwEH7A1NSMhn.eaQyJfyA43GsN65EKpYtO3HG5HvFX4m', '0xskUjwoJt4lRIBcpqts3l1xR5WmzmX43Sv3lFIRVE3wJ5ugp1fTA0qTe8T0', '2016-11-06 01:03:28', '2016-11-14 09:24:47', 1, 'นะจ๊ะ', 'Prathompong', 'Prasert', '2016-11-06', 'male', 'เลขที่ 50', 'ถนนพหลโยธิน', 'แขวงลาดยาว', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '', '+662- 561-2277', '', 'upload/imageprofiles/1478939618/mens-hairstyles-undercut-6.jpg', '13.75272466', '100.50292369', '', 'personal', '15799900070848', '', '', '', '', 'sale', ''),
+(8, 'aaaaaa', 'tae_pe3@hotmail.com', '$2y$10$t712KPEyX9b8QmPlOsfunukNO7doZEXRbMXdTdQjkHjk0xwv90xLO', 'bCK4GmI1dlYppbvXYhI1G6Op3X9Y1YjeveR7nBJUNrIjx4qvcQvpkvHeueAe', '2016-11-14 08:24:08', '2016-11-14 08:35:11', 1, 'aaaaaa', 'bbbbbb', 'bbbbbb', '2016-11-14', 'male', '', 'ถนนพหลโยธิน', '', 'เขตจตุจักร', 'กรุงเทพมหานคร', '10900', '025612277', '25612277', '', '', '0.00000000', '0.00000000', '', 'personal', '1111111111111', '', '', '', '', 'sale', ''),
+(9, '', 'tae_pe6@hotmail.com', '$2y$10$YYGsfzlY88PabRyPQeM6WeRqg5yDpqR9Yn3p1XMIWlI8rgvPjZ6X2', 'a2kILWBdgH59wnwnPvHsaK6NnzX4bRKbCCWPc9O9wB244le8FVTtGBzSENHO', '2016-11-14 10:00:41', '2016-11-14 10:02:30', 1, '', '', '', '1976-01-01', 'male', '', '111', '111', '111', '111', '1111', '1111', '1111', '1111', '', '0.00000000', '0.00000000', '', 'company', '', '', '1111111111111', 'test', 'test', 'sale', '');
 
 --
 -- Indexes for dumped tables
@@ -686,7 +691,7 @@ ALTER TABLE `faqcategorys`
 -- AUTO_INCREMENT for table `iwantto`
 --
 ALTER TABLE `iwantto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `markets`
 --
@@ -701,7 +706,7 @@ ALTER TABLE `medias`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `news`
 --
@@ -726,7 +731,7 @@ ALTER TABLE `slideimages`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Constraints for dumped tables
 --

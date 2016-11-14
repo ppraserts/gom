@@ -68,4 +68,6 @@ return [
     'download' => 'Download',
     'sitemap' => 'Sitemap',
     'forgotpassword' => 'Forgot Password',
+    'menu_matching_buy' => 'Matching with Buy',
+    'menu_matching_sale' => 'Matching with Sale',
 ];

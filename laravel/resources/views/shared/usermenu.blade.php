@@ -12,20 +12,23 @@
   		<span class="badge">0</span>
   		</a>
   </li>
-  @if($user->iwantto == "buy")
+  @if($user->iwanttobuy == "buy")
   	<li role="presentation" {{ ($setActive == "iwanttobuy")? 'class=active' : ''  }}><a href="{{ url('user/iwanttobuy') }}"> {{ trans('messages.i_want_to_buy') }}</a></li>
   @endif
-  @if($user->iwantto == "sale")
+  @if($user->iwanttosale == "sale")
   	<li role="presentation" {{ ($setActive == "iwanttosale")? 'class=active' : ''  }}><a href="{{ url('user/iwanttosale') }}"> {{ trans('messages.i_want_to_sale') }}</a></li>
   @endif
 	<li role="presentation" {{ ($setActive == "matchings")? 'class=active' : ''  }} >
 			<a href="{{ url('user/matchings') }}">
 				{{ trans('messages.menu_matching') }}
 				<span class="badge">
-                           @if($user->iwantto == "buy")
+                           @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
+                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id)) + count($Iwanttoobj->GetBuyMatchingWithSale($user->id)) }}
+                          @endif
+                          @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
                                   {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id)) }}
                           @endif
-                          @if($user->iwantto == "sale")
+                          @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
                                   {{ count($Iwanttoobj->GetBuyMatchingWithSale($user->id)) }}
                           @endif
                            </span>
