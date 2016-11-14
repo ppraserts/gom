@@ -22,9 +22,13 @@ class ProductsViewController extends Controller
 
 	  public function show($id)
 	  {
-	  	$item = Iwantto::find($id);
+	  	//$item = Iwantto::find($id);
+			$item = DB::select(DB::raw("select *
+																	from iwantto i
+																	join users u on i.users_id = u.id
+																	where i.id = $id
+																	"));
 	  	$useritem = auth()->guard('user')->user();
-	  	$productCategoryitem = ProductCategory::orderBy('sequence','ASC')->get();
-	  	return view('frontend.productview',compact('item','useritem','productCategoryitem'));
+	  	return view('frontend.productview',compact('item','useritem'));
 	  }
 }

@@ -77,8 +77,6 @@
                                   <li><a href="{{ url('user/matchings') }}"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>  {{ trans('messages.menu_matching') }}</a></li>
                                   <li role="separator" class="divider"></li>
                                 @endif
-                                <li><a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  {{ trans('messages.menu_search') }}</a></li>
-                                <li role="separator" class="divider"></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>  {{ trans('messages.menu_announcement') }}</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{ url('/faq') }}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>   {{ trans('messages.menu_faq') }}</a></li>

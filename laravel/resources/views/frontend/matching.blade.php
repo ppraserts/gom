@@ -38,7 +38,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a target="_blank" href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>
@@ -67,7 +67,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a target="_blank" href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>
