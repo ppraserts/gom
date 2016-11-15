@@ -35,8 +35,8 @@ class SearchController extends Controller
                     ->get();
 
         $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, $search, $qrcode);
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, $search, $qrcode);
+        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, $search, '');
+        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, $search, '');
         return view('frontend.result',compact('productCategoryitem','itemssale', 'itemsbuy'));
     }
 }
