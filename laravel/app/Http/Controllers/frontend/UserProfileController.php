@@ -49,6 +49,7 @@ class UserProfileController extends Controller
       $user->users_lastname_en = $request->input('users_lastname_en');
       $user->users_dateofbirth = $request->input('users_dateofbirth');
       $user->users_gender = $request->input('users_gender');
+      $user->users_qrcode = $request->input('users_qrcode');
     }
 
     if($user->users_membertype == "company")
@@ -57,6 +58,7 @@ class UserProfileController extends Controller
       $user->users_company_th = $request->input('users_company_th');
       $user->users_company_th = $request->input('users_company_th');
       $user->users_fax = $request->input('users_fax');
+      $user->users_qrcode = $request->input('users_qrcode');
     }
 
     if($request->users_imageprofile != "")

@@ -13,7 +13,7 @@ $pagetitle = trans('messages.menu_user');
              <ul class="nav nav-tabs">
                 <li >
                         <a href="{{ url ('admin/users') }}" >
-                              {{ trans('messages.membertype_individual') }} 
+                              {{ trans('messages.membertype_individual') }}
                               <span class="badge">{{ $countinactiveusers }}</span>
                         </a>
                 </li>
@@ -64,7 +64,7 @@ $pagetitle = trans('messages.menu_user');
                 @foreach ($items as $key => $item)
                       <tr class="{{ $item->is_active == 0? 'danger' : '' }}">
                           <td>{{ ++$i }}</td>
-                          <td>{{ $item->iwantto }}</td>
+                          <td>{{ $item->iwanttosale }} {{ $item->iwanttobuy}}</td>
                           <td>{{ $item->users_company_th }}</td>
                           <td>{{ $item->users_company_en }}</td>
                           <td>{{ $item->email }}</td>

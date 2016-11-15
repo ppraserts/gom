@@ -103,6 +103,9 @@
                          <li {{ (Request::is('*admin/news*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/news') }}"><i class="glyphicon glyphicon-bullhorn"></i> {{ trans('messages.menu_news') }}</a>
                         </li>
+                        <li {{ (Request::is('*admin/report*') ? 'class=active' : '') }}>
+                           <a href="{{ url ('admin/reportuser') }}"><i class="glyphicon glyphicon-stats"></i> {{ trans('messages.menu_report') }}</a>
+                       </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

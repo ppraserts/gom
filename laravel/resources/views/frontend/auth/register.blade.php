@@ -5,6 +5,35 @@
         $('#datetimepicker1').datetimepicker({
             format: 'YYYY-MM-DD'
         });
+
+        $('#iwanttosale').bind('change', function() {
+            if (this.checked)
+            {
+               $('#users_qrcode_section').show();
+            }
+            else {
+              if($('#iwanttobuy').is(':checked'))
+              {
+                $('#users_qrcode_section').hide();
+              }
+            }
+        });
+
+        $('#iwanttobuy').bind('change', function() {
+            if (this.checked)
+            {
+               if($('#iwanttosale').is(':checked'))
+               {
+                 $('#users_qrcode_section').show();
+               }
+               else {
+                 $('#users_qrcode_section').hide();
+               }
+            }
+            else {
+                $('#users_qrcode_section').show();
+            }
+        });
     });
 </script>
 @endpush
@@ -59,7 +88,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('users_qrcode') ? ' has-error' : '' }}">
+                        <div id="users_qrcode_section" class="form-group{{ $errors->has('users_qrcode') ? ' has-error' : '' }}">
                             <label for="users_qrcode" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_qrcode') }}</label>
 
                             <div class="col-md-6">

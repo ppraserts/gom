@@ -41,7 +41,7 @@ $controllerAction = "companys.update";
             <ul class="nav nav-tabs">
                 <li >
                         <a href="{{ url ('admin/users') }}" >
-                              {{ trans('messages.membertype_individual') }} 
+                              {{ trans('messages.membertype_individual') }}
                               <span class="badge">{{ $countinactiveusers }}</span>
                         </a>
                 </li>
@@ -95,12 +95,17 @@ $controllerAction = "companys.update";
             <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.iwantto') }}
                 :
-                <strong>{{ $item->iwantto }}</strong>
+                <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy}}</strong>
             </div>
             <div class="form-group {{ $errors->has('users_taxcode') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_taxcode') }}
                 :
                 <strong>{{ $item->users_taxcode }}</strong>
+            </div>
+            <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
+                {{ Lang::get('validation.attributes.users_qrcode') }}
+                :
+                <strong>{{ $item->users_qrcode }}</strong>
             </div>
             <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_company_th') }}

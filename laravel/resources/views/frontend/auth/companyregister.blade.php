@@ -1,4 +1,38 @@
 @extends('layouts.main')
+@push('scripts')
+<script type="text/javascript">
+    $(function () {
+        $('#iwanttosale').bind('change', function() {
+            if (this.checked)
+            {
+               $('#users_qrcode_section').show();
+            }
+            else {
+              if($('#iwanttobuy').is(':checked'))
+              {
+                $('#users_qrcode_section').hide();
+              }
+            }
+        });
+
+        $('#iwanttobuy').bind('change', function() {
+            if (this.checked)
+            {
+               if($('#iwanttosale').is(':checked'))
+               {
+                 $('#users_qrcode_section').show();
+               }
+               else {
+                 $('#users_qrcode_section').hide();
+               }
+            }
+            else {
+                $('#users_qrcode_section').show();
+            }
+        });
+    });
+</script>
+@endpush
 @section('content')
 <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
 <div class="container">
@@ -46,6 +80,19 @@
                                 @if ($errors->has('users_taxcode'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('users_taxcode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div id="users_qrcode_section" class="form-group{{ $errors->has('users_qrcode') ? ' has-error' : '' }}">
+                            <label for="users_qrcode" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_qrcode') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="users_qrcode" type="text" class="form-control" name="users_qrcode" value="{{ old('users_qrcode') }}" autofocus>
+
+                                @if ($errors->has('users_qrcode'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('users_qrcode') }}</strong>
                                     </span>
                                 @endif
                             </div>

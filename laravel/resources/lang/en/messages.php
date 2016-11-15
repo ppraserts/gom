@@ -56,6 +56,7 @@ return [
     'menu_market2' => 'ตลาดระบบตามสอบสินค้นเกษตร',
     'menu_market3' => 'ตลาดแปลงใหญ่',
     'menu_market' => 'Market',
+    'menu_report' => 'Report',
     'membertype_individual' => 'Individual',
     'membertype_company' => 'Company',
     'i_want_to_buy' => 'I want to buy',
@@ -70,4 +71,10 @@ return [
     'forgotpassword' => 'Forgot Password',
     'menu_matching_buy' => 'Matching with Buy',
     'menu_matching_sale' => 'Matching with Sale',
+    'tablehead_amount' => 'Amount',
+    'reportuser_head' => 'รายงานข้อมูลสมาชิกจำแนกตาม',
+    'reportuser_member' => 'ประเภทสมาชิก',
+    'reportuser_buysale' => 'ประเภทการซื้อขาย',
+    'reportuser_matching' => 'รายงานการจับคู่ความต้องการระหว่างผู้ซื้อและผู้ขาย',
+    'reportuser_print' => 'ออกรายงาน',
 ];

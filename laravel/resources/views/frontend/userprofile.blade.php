@@ -143,6 +143,11 @@
                     :
                     <strong>{{ $item->users_taxcode }}</strong>
                 </div>
+                <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
+                    <strong>{{ Lang::get('validation.attributes.users_qrcode') }}
+                    :</strong>
+                    {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => Lang::get('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
+                </div>
                 <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
                     <strong>{{ Lang::get('validation.attributes.users_company_th') }}
                     :</strong>

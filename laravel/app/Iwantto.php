@@ -96,7 +96,6 @@ class Iwantto extends Model
                                                               and b.iwantto = 'buy'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
-                                                              and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)
                                                               and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`)
                                                               and a.productstatus = 'open'
                                           ) as matching
