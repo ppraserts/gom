@@ -52,7 +52,7 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                 <div class="info">
                     <div class="row">
                         <div class="price col-md-12">
-                            <h4>{{ $col_md_4_item['product_title'] }} : {{ $col_md_4_item['volumnrange_start'] }} - {{ $col_md_4_item['volumnrange_end'] }} {{ $col_md_4_item['units'] }}</h4>
+                            <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
                             <span class="glyphicon glyphicon-map-marker"></span>
                             {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
                             <br/><br/>
@@ -62,7 +62,7 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                     </div>
                     <div class="separator clear-left">
                         <p class="btn-add">
-                            <span class="hidden-sm">THB  {{ $col_md_4_item['pricerange_start'] }} - {{ $col_md_4_item['pricerange_end'] }}</span>
+                            <span class="hidden-sm">THB  {{ floatval($col_md_4_item['pricerange_start']) }} - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>

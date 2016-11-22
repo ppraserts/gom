@@ -204,7 +204,7 @@ return [
         'product_title'=> 'Product Title',
         'product_description'=> 'Description',
         'guarantee'=> 'Guarantee',
-        'price'=> 'Total Price',
+        'price'=> 'Price',
         'is_showprice'=> 'Show Price',
         'volumn'=> 'Volumn',
         'product1_file'=> 'Image File1',

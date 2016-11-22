@@ -49,8 +49,8 @@ return [
     'menu_search' => 'Search',
     'menu_announcement' => 'Announcement',
     'menu_login' => 'login',
-    'menu_loginmarket' => 'Enter Market',
-    'menu_openshop' => 'Open Shop',
+    'menu_loginmarket' => 'Login',
+    'menu_openshop' => 'Register',
     'menu_register' => 'Register',
     'menu_market1' => 'ตลาดเกษตรอินทรีย์',
     'menu_market2' => 'ตลาดระบบตามสอบสินค้นเกษตร',
@@ -59,8 +59,8 @@ return [
     'menu_report' => 'Report',
     'membertype_individual' => 'Individual',
     'membertype_company' => 'Company',
-    'i_want_to_buy' => 'I want to buy',
-    'i_want_to_sale' => 'I want to sale',
+    'i_want_to_buy' => 'Demand',
+    'i_want_to_sale' => 'Supply',
     'gender_male' => 'Male',
     'gender_female' => 'Female',
     'email_subject_newregister' => 'Welcome to Greenmart Online Market',
@@ -77,4 +77,5 @@ return [
     'reportuser_buysale' => 'ประเภทการซื้อขาย',
     'reportuser_matching' => 'รายงานการจับคู่ความต้องการระหว่างผู้ซื้อและผู้ขาย',
     'reportuser_print' => 'ออกรายงาน',
+    'product_no_price' => 'สอบถามราคา'
 ];

@@ -31,16 +31,18 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                             <br/><br/>
                         </div>
                         <div class="rating hidden-sm col-md-4">
+                            @if($col_md_4_item['Colors']!="white")
                             <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
+                            @endif
                         </div>
                     </div>
                     <div class="separator clear-left">
                         <p class="btn-add">
-                            <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? $col_md_4_item['price'] : '-' }}</span>
+                            <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? $col_md_4_item['price'] : trans('messages.product_no_price')  }}</span>
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a target="_blank" href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>
@@ -73,22 +75,24 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                 <div class="info">
                       <div class="row">
                         <div class="price col-md-9">
-                             <h4>{{ $col_md_4_item['product_title'] }} : {{ $col_md_4_item['volumnrange_start'] }} - {{ $col_md_4_item['volumnrange_end'] }} {{ $col_md_4_item['units'] }}</h4>
+                             <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
                             <span class="glyphicon glyphicon-map-marker"></span>
                             {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
                             <br/><br/>
                         </div>
                         <div class="rating hidden-sm col-md-3">
+                            @if($col_md_4_item['Colors']!="white")
                             <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
+                            @endif
                         </div>
                     </div>
                     <div class="separator clear-left">
                         <p class="btn-add">
-                            <span class="hidden-sm">THB  {{ $col_md_4_item['pricerange_start'] }} - {{ $col_md_4_item['pricerange_end'] }}</span>
+                            <span class="hidden-sm">THB  {{ floatval($col_md_4_item['pricerange_start']) }} - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>
-                            <a target="_blank" href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                     </div>
                     <div class="clearfix">
                     </div>

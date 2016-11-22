@@ -100,7 +100,7 @@
   </div>
   <div class="col-md-6">
       {!! $contactusItem->{ "contactus_address_".Lang::locale()} !!}
-      <div id="map" style="width: 100%; height: 300px;"></div>
+      <div style="display:none;" id="map" style="width: 100%; height: 300px;"></div>
   </div>
 </div>
  @stop

@@ -2,10 +2,10 @@
 @section('content')
 
 <h3>
-	<span class="glyphicon glyphicon-list-alt"></span> {{ $item->{ "news_title_".Lang::locale()} }}  
+	<span class="glyphicon glyphicon-list-alt"></span> {{ $item->{ "news_title_".Lang::locale()} }}
 	( <span class="glyphicon glyphicon-tag">{{ $item->news_tags}}</span> )
 </h3>
-	
+
 {!! $item->{"news_description_".Lang::locale()} !!}
 
 <div class="row">
@@ -21,9 +21,9 @@
 	<div class="col-md-3">
 		<h4>
 		@if($item->news_document_file != "")
-	        	<a href="{{ $item->news_document_file }}" target="_blank">
+	        	<a href="{{ url($item->news_document_file) }}" target="_blank">
 	        	@endif
-		<span class="glyphicon glyphicon-save"></span> 
+		<span class="glyphicon glyphicon-save"></span>
 			{{ trans('messages.download') }}
 		@if($item->news_document_file != "")
 	          	</a>

@@ -119,11 +119,14 @@ class NewsController extends Controller
 
     private function RemoveFolderImage($rawfile)
     {
-        $rawfileArr = explode("/", $rawfile);
-        $indexFile = count($rawfileArr) - 1;
-        $indexFolder = count($rawfileArr) - 2;
-        File::delete($rawfile);
-        File::deleteDirectory(config('app.upload_news').$rawfileArr[$indexFolder]);
+        if($rawfile != "")
+        {
+          $rawfileArr = explode("/", $rawfile);
+          $indexFile = count($rawfileArr) - 1;
+          $indexFolder = count($rawfileArr) - 2;
+          File::delete($rawfile);
+          File::deleteDirectory(config('app.upload_news').$rawfileArr[$indexFolder]);
+        }
     }
 
     private function UploadImage(Request $request)

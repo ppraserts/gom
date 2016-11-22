@@ -208,17 +208,17 @@
                     {!! Form::text('users_fax', $item->users_fax, array('placeholder' => Lang::get('validation.attributes.users_fax'),'class' => 'form-control')) !!}
                 </div>
             @endif
-            <div class="form-group {{ $errors->has('users_latitude') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('users_latitude') ? 'has-error' : '' }}" style="display:none;">
                 <strong>{{ Lang::get('validation.attributes.users_latitude') }}
                 :</strong>
                 {!! Form::text('users_latitude', $item->users_latitude, array('placeholder' => Lang::get('validation.attributes.users_latitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
             </div>
-            <div class="form-group {{ $errors->has('users_longitude') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('users_longitude') ? 'has-error' : '' }}" style="display:none;">
                 <strong>{{ Lang::get('validation.attributes.users_longitude') }}
                 :</strong>
                 {!! Form::text('users_longitude', $item->users_longitude, array('placeholder' => Lang::get('validation.attributes.users_longitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
             </div>
-            <div class="form-group" style="margin-top:10px; margin-bottom:20px">
+            <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
                   <div id="map" style="width: 100%; height: 300px;"></div>
             </div>
         </div>

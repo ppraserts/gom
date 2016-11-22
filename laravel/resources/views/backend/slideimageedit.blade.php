@@ -65,6 +65,10 @@ else
             <div class="form-group {{ $errors->has('slideimage_file') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.slideimage_file') }}:</strong>
                 {!! Form::file('slideimage_file', null, array('placeholder' => Lang::get('validation.attributes.slideimage_file'),'class' => 'form-control')) !!}
+                <label style="color:red;">
+                    Banner Slide: 165 x 56 <br/>
+                    Activity Slide: 540 x 360 <br/>
+                </label>
             </div>
         </div>
 

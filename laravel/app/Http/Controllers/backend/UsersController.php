@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
+use App\Iwantto;
 
 class UsersController extends Controller
 {
@@ -62,7 +63,7 @@ class UsersController extends Controller
                                                     $query->where('users_membertype','=', 'company')
                                                                 ->where('is_active','=', 0);
                                                 })->count();
-        
+
         $data = array('mode' => 'edit');
         $item = User::find($id);
         return view('backend.usersedit',compact('item','countinactiveusers','countinactivecompanyusers'))->with($data);
@@ -99,6 +100,8 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
+        Iwantto::where('users_id', '=', $id)->delete();
+
         $deleteItem = User::find($id);
         $deleteItem->delete();
         return redirect()->route('users.index')

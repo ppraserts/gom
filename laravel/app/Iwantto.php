@@ -70,33 +70,34 @@ class Iwantto extends Model
                                                       FROM `iwantto` a
                                                       join `iwantto` b on b.users_id=$userid
                                                           and b.iwantto = 'buy'
+                                                          AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
-                                                              and a.`product_title` = b.product_title
+
                                                               and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)
-                                                              and (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`)
-                                                              and a.city = b.city
-                                                              and a.province = b.province
-                                                              and a.productstatus = 'open'
-                                                      union
-                                                      SELECT 'orange' as Colors ,a.*
-                                                      FROM `iwantto` a
-                                                      join `iwantto` b on b.users_id=$userid
-                                                              and b.iwantto = 'buy'
-                                                              and a.productcategorys_id = b.productcategorys_id
-                                                              and a.products_id = b.products_id
-                                                              and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)
-                                                              and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`)
-                                                              and a.province like CONCAT('%', b.province , '%')
+
                                                               and a.productstatus = 'open'
                                                       union
                                                       SELECT 'red' as Colors ,a.*
                                                       FROM `iwantto` a
                                                       join `iwantto` b on b.users_id=$userid
                                                               and b.iwantto = 'buy'
+                                                              AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
+
                                                               and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`)
+                                                              and a.province like CONCAT('%', b.province , '%')
+                                                              and a.productstatus = 'open'
+                                                      union
+                                                      SELECT 'white' as Colors ,a.*
+                                                      FROM `iwantto` a
+                                                      join `iwantto` b on b.users_id=$userid
+                                                              and b.iwantto = 'buy'
+                                                              AND a.iwantto =  'sale'
+                                                              and a.productcategorys_id = b.productcategorys_id
+                                                              and a.products_id = b.products_id
+
                                                               and a.productstatus = 'open'
                                           ) as matching
                                           join users u on matching.users_id = u.id
@@ -148,23 +149,23 @@ class Iwantto extends Model
                                                       JOIN iwantto sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
+                                                            AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-                                                            and buy.`product_title` = sale.product_title
+
                                                             and buy.pricerange_start <= sale.price and buy.pricerange_end>=sale.price
-                                                            and buy.volumnrange_start <= sale.volumn and buy.volumnrange_end>=sale.volumn
-                                                            and buy.city = sale.city
-                                                            and buy.province = sale.province
+
                                                       union
                                                     SELECT
-                                                      'orange' as Colors, buy.*
+                                                      'red' as Colors, buy.*
                                                       FROM  iwantto buy
                                                       JOIN iwantto sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
+                                                            AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-                                                            and buy.pricerange_start <= sale.price and buy.pricerange_end>=sale.price
+
                                                             and buy.volumnrange_start <= sale.volumn and buy.volumnrange_end>=sale.volumn
                                                             and buy.province like CONCAT('%', sale.province , '%')
                                                       union
@@ -174,10 +175,10 @@ class Iwantto extends Model
                                                       JOIN iwantto sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
+                                                            AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-                                                            and buy.pricerange_start <= sale.price and buy.pricerange_end>=sale.price
-                                                            and buy.volumnrange_start <= sale.volumn and buy.volumnrange_end>=sale.volumn
+
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id

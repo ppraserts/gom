@@ -66,7 +66,7 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
                     </div>
                     <div class="separator clear-left">
                         <p class="btn-add">
-                            <span class="hidden-sm">  {{ $col_md_4_item['price'] }}</span>
+                            <span class="hidden-sm">  {{ floatval($col_md_4_item['price']) }}</span>
                         </p>
                         <p class="btn-details">
                             <i class="fa fa-list"></i>

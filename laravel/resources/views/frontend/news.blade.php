@@ -30,7 +30,7 @@
 	        	@if($slide->slideimage_urllink != "")
 	        	<a href="{{ $slide->slideimage_urllink }}" target="_blank">
 	        	@endif
-	          	<img src="{{ url($slide->slideimage_file) }}" >
+	          	<img src="{{ url($slide->slideimage_file) }}" style="width:100%;" >
 	          	@if($slide->slideimage_urllink != "")
 	          	</a>
 	          	@endif
@@ -109,7 +109,7 @@
 @foreach ($newsItem as $news)
 	<a href="{{ url('news/'.$news->id) }}">
 	<span class="glyphicon glyphicon-list-alt"></span> {{ $news->{"news_title_".Lang::locale()} }} - {{ $news->news_created_at }}
-	</a>
+</a><br/>
 @endforeach
 <br/>
 <br/>
@@ -117,7 +117,7 @@
 @foreach ($downloadDocumentitem as $downloaddocument)
 	<a href="{{ url($downloaddocument->downloaddocument_file) }}">
 	<span class="glyphicon glyphicon-list-alt"></span> {{ $downloaddocument->{"downloaddocument_title_".Lang::locale()} }}
-	</a>
+	</a><br/>
 @endforeach
 <br/>
 <br/>
@@ -128,7 +128,7 @@
 @if($banner->slideimage_urllink != "")
 <a href="{{ $banner->slideimage_urllink }}" target="_blank">
 @endif
-<img src="{{ url($banner->slideimage_file) }}" >
+<img style="width:165px; height:56px;" src="{{ url($banner->slideimage_file) }}" >
 @if($banner->slideimage_urllink != "")
 </a>
 @endif

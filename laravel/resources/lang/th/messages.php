@@ -41,7 +41,7 @@ return [
     'flag_th' => 'ไทย',
     'flag_en' => 'อังกฤษ',
     'menu_visit' => 'เยี่ยมชม',
-    'menu_travel' => 'เที่ยวชม',
+    'menu_travel' => 'หน้าหลัก',
     'menu_index' => 'หน้าหลัก',
     'menu_manageprofile' => 'ข้อมูลส่วนตัว',
     'menu_manageshop' => 'จัดร้าน',
@@ -49,8 +49,8 @@ return [
     'menu_search' => 'ค้นหา',
     'menu_announcement' => 'ประชาสัมพันธ์',
     'menu_login' => 'เข้าสู่ระบบ',
-    'menu_loginmarket' => 'เข้าตลาด',
-    'menu_openshop' => 'เปิดร้าน',
+    'menu_loginmarket' => 'เข้าตลาด(ล็อกอิน)',
+    'menu_openshop' => 'ลงทะเบียน',
     'menu_register' => 'สมัครสมาชิก',
     'menu_market1' => 'ตลาดเกษตรอินทรีย์',
     'menu_market2' => 'ตลาดระบบตามสอบสินค้นเกษตร',
@@ -77,4 +77,5 @@ return [
     'reportuser_buysale' => 'ประเภทการซื้อขาย',
     'reportuser_matching' => 'รายงานการจับคู่ความต้องการระหว่างผู้ซื้อและผู้ขาย',
     'reportuser_print' => 'Print',
+    'product_no_price' => 'สอบถามราคา'
 ];

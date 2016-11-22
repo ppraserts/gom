@@ -89,7 +89,7 @@ $controllerAction = "contactus.update";
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="display:none;">
             <div class="form-group {{ $errors->has('contactus_latitude') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
                   <strong>{{ Lang::get('validation.attributes.contactus_latitude') }}:</strong>
@@ -100,7 +100,7 @@ $controllerAction = "contactus.update";
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="display:none;">
             <div class="form-group {{ $errors->has('contactus_longitude') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
                   <strong>{{ Lang::get('validation.attributes.contactus_longitude') }}:</strong>
@@ -110,7 +110,7 @@ $controllerAction = "contactus.update";
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; margin-bottom:20px">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; margin-bottom:20px; display:none;">
               <div id="map" style="width: 100%; height: 300px;"></div>
         </div>
 

@@ -104,7 +104,7 @@
                                                     {{ csrf_field() }}
                                                 </form>
                                         @else
-                                                    <a title="{{ trans('messages.menu_register') }}" class="btn btn-success btn-small navbar-btn" href="{{ url('/user/chooseregister') }}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ trans('messages.menu_openshop') }}</a>
+                                                    <a title="{{ trans('messages.menu_register') }}" class="btn btn-success btn-small navbar-btn" href="{{ url('/user/chooseregister') }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {{ trans('messages.menu_openshop') }}</a>
                                         @endif
                                 </div>
                         </li>
