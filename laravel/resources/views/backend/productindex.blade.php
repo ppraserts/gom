@@ -75,7 +75,7 @@ $pagetitle = trans('messages.menu_product')." ($productcategoryItem->productcate
                 </table>
               </div>
 
-              {!! $items->render() !!}
+              {!! $items->appends(['productcategory' => Request::input('productcategory')])->render() !!}
         </div>
 		  </div>
     </div>

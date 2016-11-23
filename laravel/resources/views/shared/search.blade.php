@@ -14,7 +14,7 @@
              </select>
          </div>
          <div class="form-group">
-             <input value="{{ Request::input('search') }}" type="text" class="form-control"  id="search" name="search">
+             <input value="{{ Request::input('search') }}" type="text" class="form-control"  id="search" name="search" autocomplete="off">
          </div>
          <button type="submit" class="btn btn-info">{{ trans('messages.menu_search') }}</button>
      {!! Form::close() !!}

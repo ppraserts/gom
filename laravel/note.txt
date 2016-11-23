@@ -48,3 +48,6 @@ FROM
 join users u on matching.users_id = u.id 
 group by matching.id
 order by matching.Colors 
+
+https://scotch.io/tutorials/implementing-smart-search-with-laravel-and-typeahead-js
+https://github.com/biggora/bootstrap-ajax-typeahead
