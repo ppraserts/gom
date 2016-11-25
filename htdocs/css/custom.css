@@ -270,3 +270,13 @@ html, body {
     float: left;
     padding-left: 10px;
 }
+
+.btn-circle {
+    width: 245px !important;
+    height: 245px !important;
+    text-align: center !important;
+    padding: 75px 0 !important;
+    font-size: 100px !important;
+    line-height: 10.00 !important;
+    border-radius: 150px !important;
+}

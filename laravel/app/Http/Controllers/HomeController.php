@@ -57,7 +57,73 @@ class HomeController extends Controller
          $marketItem = Market::orderBy('sequence','ASC')
                     ->get();
 
+        return view('choosemarket',compact('aboutusItem'
+                                        ,'bannerItem'
+                                        ,'slideItem'
+                                        ,'mediaItem'
+                                        ,'productCategoryitem'
+                                        ,'marketItem'));
+    }
+
+    public function index2(Request $request)
+    {
+        //echo Hash::check('12345', $user->password);
+        //echo $user = auth()->authenticate();
+        //echo auth()->user()->password;
+        $aboutusItem = AboutUs::find(1);
+        $bannerItem = SlideImage::where('slideimage_type','=','B')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $slideItem = SlideImage::where('slideimage_type','=','AS')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $mediaItem = Media::orderBy('sequence','ASC')
+                    ->get();
+
+        $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
+                    ->get();
+
+         $marketItem = Market::orderBy('sequence','ASC')
+                    ->get();
+
         return view('welcome',compact('aboutusItem'
+                                        ,'bannerItem'
+                                        ,'slideItem'
+                                        ,'mediaItem'
+                                        ,'productCategoryitem'
+                                        ,'marketItem'));
+    }
+
+    public function index3(Request $request)
+    {
+        //echo Hash::check('12345', $user->password);
+        //echo $user = auth()->authenticate();
+        //echo auth()->user()->password;
+        $aboutusItem = AboutUs::find(1);
+        $bannerItem = SlideImage::where('slideimage_type','=','B')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $slideItem = SlideImage::where('slideimage_type','=','AS')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $mediaItem = Media::orderBy('sequence','ASC')
+                    ->get();
+
+        $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
+                    ->get();
+
+         $marketItem = Market::orderBy('sequence','ASC')
+                    ->get();
+
+        return view('category',compact('aboutusItem'
                                         ,'bannerItem'
                                         ,'slideItem'
                                         ,'mediaItem'

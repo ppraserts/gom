@@ -12,6 +12,10 @@ use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
 use App\Iwantto;
 use App\ProductCategory;
+use App\Units;
+use App\Amphur;
+use App\Province;
+use App\District;
 
 class ProductsBuyEditController extends Controller
 {
@@ -68,6 +72,8 @@ class ProductsBuyEditController extends Controller
   public function show($id)
   {
     $useritem = auth()->guard('user')->user();
+    $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
+                ->get();
 
     if($id == 0)
     {
@@ -87,7 +93,10 @@ class ProductsBuyEditController extends Controller
     $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                 ->get();
 
-    return view('frontend.productbuyedit',compact('item','useritem','productCategoryitem'));
+    $unitsItem = Units::orderBy('sequence','ASC')
+                ->get();
+
+    return view('frontend.productbuyedit',compact('item','useritem','productCategoryitem','unitsItem', 'provinceItem'));
   }
 
 

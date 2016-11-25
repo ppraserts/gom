@@ -7,6 +7,48 @@
         format: 'YYYY-MM-DD'
     });
 
+    $('#users_province').on('change', function(e){
+        console.log(e);
+        var state_id = e.target.value;
+
+        $.get('{{ url('information') }}/create/ajax-state?province_id=' + state_id, function(data) {
+            console.log(data);
+            var option = '';
+            $('#users_city').empty();
+            $('#users_district').empty();
+
+            //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+            $.each(data, function(index,subCatObj){
+              option += '<option value="'+ subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
+            });
+            $('#users_city').append(option);
+            $( "#users_city" ).val('{{ $item->users_city==""? old('users_city'):$item->users_city}}');
+            $( "#users_city" ).trigger( "change" );
+        });
+    });
+
+    $('#users_city').on('change', function(e){
+        console.log(e);
+        var state_id = e.target.value;
+
+        $.get('{{ url('information') }}/create/ajax-state?city_id=' + state_id, function(data) {
+            console.log(data);
+            var option = '';
+            $('#users_district').empty();
+
+            //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+            $.each(data, function(index,subCatObj){
+              option += '<option value="'+ subCatObj.DISTRICT_NAME + '">' + subCatObj.DISTRICT_NAME + '</option>';
+            });
+            $('#users_district').append(option);
+            $( "#users_district" ).val('{{ $item->users_district==""? old('users_district'):$item->users_district}}');
+        });
+    });
+    setTimeout(function(){
+        var itemprovince = '{{ $item->users_province==""? old('users_province') : $item->users_province }}';
+        if(itemprovince != "")
+          $( "#users_province" ).val('{{ $item->users_province==""? old('users_province') : $item->users_province }}').change();
+    },500);
     var myLatLng = {lat: <?php echo $item->users_latitude; ?>, lng: <?php echo $item->users_longitude; ?>};
 
      var map = new google.maps.Map(document.getElementById('map'), {
@@ -169,28 +211,39 @@
                 :</strong>
                 {!! Form::text('users_street', $item->users_street, array('placeholder' => Lang::get('validation.attributes.users_street'),'class' => 'form-control')) !!}
             </div>
-            <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.users_district') }}
+            <div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">
+                <strong>{{ Lang::get('validation.attributes.users_province') }}
                 :</strong>
-                {!! Form::text('users_district', $item->users_district, array('placeholder' => Lang::get('validation.attributes.users_district'),'class' => 'form-control')) !!}
+                <select id="users_province" name="users_province" class="form-control">
+                    <option value="">{{ trans('messages.allprovince') }}</option>
+                    @foreach ($provinceItem as $key => $province)
+                      @if($item->users_province == $province->PROVINCE_NAME)
+                        <option selected value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                      @else
+                        <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                      @endif
+                    @endforeach
+                </select>
             </div>
             <div class="form-group {{ $errors->has('users_city') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.users_city') }}
                 :</strong>
-                {!! Form::text('users_city', $item->users_city, array('placeholder' => Lang::get('validation.attributes.users_city'),'class' => 'form-control')) !!}
+                <select id="users_city" name="users_city" class="form-control">
+                </select>
             </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:30px;">
-            <div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.users_province') }}
+            <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
+                <strong>{{ Lang::get('validation.attributes.users_district') }}
                 :</strong>
-                {!! Form::text('users_province', $item->users_province, array('placeholder' => Lang::get('validation.attributes.users_province'),'class' => 'form-control')) !!}
+                <select id="users_district" name="users_district" class="form-control">
+                </select>
             </div>
             <div class="form-group {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.users_postcode') }}
                 :</strong>
                 {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => Lang::get('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
             </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:30px;">
             <div class="form-group {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.users_mobilephone') }}
                 :</strong>

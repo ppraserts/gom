@@ -52,10 +52,12 @@ $pagetitle = trans('messages.menu_user');
                     <thead>
                       <tr>
                           <th>{{ trans('messages.no') }}</th>
-                          <th>{{ Lang::get('validation.attributes.iwantto') }}</th>
+                          <th>{{ trans('messages.i_sale') }}</th>
+                          <th>{{ trans('messages.i_buy') }}</th>
                           <th>{{ Lang::get('validation.attributes.users_firstname_th') }} - {{ Lang::get('validation.attributes.users_lastname_th') }}</th>
                           <th>{{ Lang::get('validation.attributes.users_firstname_en') }} - {{ Lang::get('validation.attributes.users_lastname_en') }}</th>
                           <th>{{ Lang::get('validation.attributes.email') }}</th>
+                          <th>{{ trans('messages.userstatus') }}</th>
                           <th width="130px" style="text-align:center;">
                           </th>
                       </tr>
@@ -64,10 +66,12 @@ $pagetitle = trans('messages.menu_user');
                 @foreach ($items as $key => $item)
                       <tr class="{{ $item->is_active == 0? 'danger' : '' }}">
                           <td>{{ ++$i }}</td>
-                          <td>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</td>
+                          <td>{{ $item->iwanttosale }}</td>
+                          <td>{{ $item->iwanttobuy }}</td>
                           <td>{{ $item->users_firstname_th }} {{ $item->users_lastname_th }}</td>
                           <td>{{ $item->users_firstname_en }} {{ $item->users_lastname_en }}</td>
                           <td>{{ $item->email }}</td>
+                          <td>{{ $item->is_active==0? trans('messages.waitapprove') : trans('messages.approve') }}</td>
                           <td style="text-align:center;">
                               <a class="btn btn-primary" href="{{ route('users.edit',$item->id) }}">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

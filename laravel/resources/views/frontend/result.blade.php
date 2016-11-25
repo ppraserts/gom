@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 @include('shared.search')
-@if(count((array)$itemsbuy)>0)
+@if(count((array)$itemssale)>0)
 <br/>
 <h3>{{ trans('messages.i_want_to_sale') }}</h3>
 <div class="row">
@@ -49,7 +49,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
 ?>
 </div>
 @endif
-@if(count((array)$itemssale)>0)
+@if(count((array)$itemsbuy)>0)
 <br/>
 <h3>{{ trans('messages.i_want_to_buy') }}</h3>
 <div class="row">

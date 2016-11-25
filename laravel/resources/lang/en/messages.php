@@ -77,5 +77,15 @@ return [
     'reportuser_buysale' => 'Type of Buy & Sale Report',
     'reportuser_matching' => 'Matching Report',
     'reportuser_print' => 'Export Report',
-    'product_no_price' => 'สอบถามราคา'
+    'product_no_price' => 'สอบถามราคา',
+    'allprovince'  => 'ทุกจังหวัด',
+    'registercomplete'  => 'ท่านได้ทำการสมัครสมาชิกเรียบร้อยแล้ว และโปรดรอเจ้าหน้าที่ตรวจสอบข้อมูลของท่านอย่างน้อย 2-3 วัน',
+    'i_buy' => 'ผู้ซื้อ',
+    'i_sale' => 'ผู้ขาย',
+    'userstatus' => 'สถานะ',
+    'approve' => 'อนุมัติ',
+    'waitapprove' => 'รออนุมัติ',
+    'green_condition' => 'Green Condition คือ กลุ่มสินค้า, ชนิดสินค้า, ราคาต่อหน่วย ต้องตรงกัน',
+    'red_condition' => 'Red Condition คือ กลุ่มสินค้า, ชนิดสินค้า, ปริมาณ และจังหวัด ต้องตรงกัน',
+    'whtie_condition' => 'Whtie Condition คือ กลุ่มสินค้า, ชนิดสินค้า ต้องตรงกัน'
 ];

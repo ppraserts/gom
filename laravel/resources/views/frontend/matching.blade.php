@@ -32,7 +32,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                         </div>
                         <div class="rating hidden-sm col-md-4">
                             @if($col_md_4_item['Colors']!="white")
-                            <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
+                            <span title="{{ $col_md_4_item['Colors'] == 'green' ? trans('messages.green_condition') : trans('messages.red_condition') }}" class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
                             @endif
                         </div>
                     </div>
@@ -82,7 +82,7 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                         </div>
                         <div class="rating hidden-sm col-md-3">
                             @if($col_md_4_item['Colors']!="white")
-                            <span class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
+                            <span title="{{ $col_md_4_item['Colors'] == 'green' ? trans('messages.green_condition') : trans('messages.red_condition') }}" class="glyphicon glyphicon-record" aria-hidden="true" style=" color: {{ $col_md_4_item['Colors']  }};"></span>
                             @endif
                         </div>
                     </div>

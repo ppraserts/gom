@@ -11,6 +11,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use App\Amphur;
+use App\Province;
+use App\District;
 
 class RegisterController extends Controller
 {
@@ -46,12 +49,16 @@ class RegisterController extends Controller
 
     public function getRegisterForm()
     {
-        return view('frontend/auth/register');
+        $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
+                    ->get();
+        return view('frontend/auth/register',compact('provinceItem'));
     }
 
     public function getCompanyRegisterForm()
     {
-        return view('frontend/auth/companyregister');
+      $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
+                  ->get();
+        return view('frontend/auth/companyregister',compact('provinceItem'));
     }
 
     public function getChooseRegisterForm()
@@ -104,7 +111,7 @@ class RegisterController extends Controller
         });
 
         if($user->id){
-            return redirect('user/login')->with('status', 'User register successfully');
+            return redirect('user/login')->with('status', trans('messages.registercomplete'));
         }else{
             return redirect('user/register')->with('status', 'User not register. Please try again');
         }

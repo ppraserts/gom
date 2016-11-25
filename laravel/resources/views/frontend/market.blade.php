@@ -2,7 +2,7 @@
 @section('content')
 @include('shared.search')
 @if(Request::input('iwantto') == 'sale')
-  @if(count((array)$itemsbuy)>0)
+  @if(count((array)$itemssale)>0)
   <br/>
   <h3>{{ trans('messages.i_want_to_sale') }} ({{ $marketItem->{"market_title_".Lang::locale()} }})</h3>
   <div class="row">
@@ -52,7 +52,7 @@
   @endif
 @endif
 @if(Request::input('iwantto') == 'buy')
-  @if(count((array)$itemssale)>0)
+  @if(count((array)$itemsbuy)>0)
   <br/>
   <h3>{{ trans('messages.i_want_to_buy') }} ({{ $marketItem->{"market_title_".Lang::locale()} }})</h3>
   <div class="row">

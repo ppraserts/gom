@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
+use App\Amphur;
+use App\Province;
+use App\District;
 
 class UserProfileController extends Controller
 {
@@ -34,7 +37,9 @@ class UserProfileController extends Controller
   public function index(Request $request)
   {
       $item = auth()->guard('user')->user();
-      return view('frontend.userprofile',compact('item'));
+      $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
+                  ->get();
+      return view('frontend.userprofile',compact('item','provinceItem'));
   }
 
   public function updateProfile(Request $request)

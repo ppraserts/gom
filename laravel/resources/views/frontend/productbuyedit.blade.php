@@ -29,11 +29,34 @@
         });
       }
   });
+  $('#province').on('change', function(e){
+      console.log(e);
+      var state_id = e.target.value;
+
+      $.get('{{ url('information') }}/create/ajax-state?province_id=' + state_id, function(data) {
+          console.log(data);
+          var option = '';
+          $('#city').empty();
+
+          //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+          $.each(data, function(index,subCatObj){
+            option += '<option value="'+ subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
+          });
+          $('#city').append(option);
+          $( "#city" ).val('{{ $item->city==""? old('city'):$item->city}}');
+          $( "#city" ).trigger( "change" );
+      });
+  });
+
   setTimeout(function(){
       console.log('show productcategorys_id');
       var itemcategory = '{{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}';
       if(itemcategory != "")
         $( "#productcategorys_id" ).val({{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}).change();
+
+      var itemprovince = '{{ $item->province==""? old('province') : $item->province }}';
+      if(itemprovince != "")
+        $( "#province" ).val('{{ $item->province==""? old('province') : $item->province }}').change();
   },500);
 
 </script>
@@ -114,75 +137,28 @@
         <strong>{{ Lang::get('validation.attributes.product_description') }}:</strong>
         {!! Form::textarea('product_description', $item->product_description, array('placeholder' => Lang::get('validation.attributes.product_description'),'class' => 'form-control','style'=>'height:100px')) !!}
     </div>
-    @if($item->iwantto == "sale")
-          <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.price') }}
-              :</strong>
-              {!! Form::text('price', $item->price, array('placeholder' => Lang::get('validation.attributes.price'),'class' => 'form-control')) !!}
-          </div>
-          <div class="form-group {{ $errors->has('is_showprice') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.is_showprice') }}
-              :</strong>
-              <input value="1" type="checkbox" id="is_showprice" name="is_showprice" {{ $item->is_showprice == 0? '' : 'checked' }}>
-          </div>
-          <div class="form-group {{ $errors->has('guarantee') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.guarantee') }}
-              :</strong>
-              {!! Form::text('guarantee', $item->guarantee, array('placeholder' => Lang::get('validation.attributes.guarantee'),'class' => 'form-control')) !!}
-          </div>
-          <div class="form-group {{ $errors->has('volumn') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.volumn') }}
-              :</strong>
-              {!! Form::text('volumn', $item->volumn, array('placeholder' => Lang::get('validation.attributes.volumn'),'class' => 'form-control')) !!}
-          </div>
-          <div class="form-group {{ $errors->has('units') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.units') }}
-              :</strong>
-              {!! Form::text('units', $item->units, array('placeholder' => Lang::get('validation.attributes.units'),'class' => 'form-control')) !!}
-          </div>
-    @endif
-    <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.city') }}
-        :</strong>
-        {!! Form::text('city', $item->city, array('placeholder' => Lang::get('validation.attributes.city'),'class' => 'form-control')) !!}
-    </div>
     <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
         <strong>{{ Lang::get('validation.attributes.province') }}
         :</strong>
-        {!! Form::text('province', $item->province, array('placeholder' => Lang::get('validation.attributes.province'),'class' => 'form-control')) !!}
+        <select id="province" name="province" class="form-control">
+            <option value="">{{ trans('messages.allprovince') }}</option>
+            @foreach ($provinceItem as $key => $province)
+              @if($item->province == $province->PROVINCE_NAME)
+                <option selected value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+              @else
+                <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+              @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
+        <strong>{{ Lang::get('validation.attributes.city') }}
+        :</strong>
+        <select id="city" name="city" class="form-control">
+        </select>
     </div>
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:30px;">
-      @if($item->iwantto == "sale")
-          <div class="form-group {{ $errors->has('productstatus') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.productstatus') }}
-              :</strong>
-                  <input type="radio" name="productstatus" id="productstatus1" value="open" {{ $item->productstatus == 'open'? 'checked="checked"' : '' }}> Open
-                  <input type="radio" name="productstatus" id="productstatus2" value="soldout" {{ $item->productstatus == 'soldout'? 'checked="checked"' : '' }}> Soldout
-                  <input type="radio" name="productstatus" id="productstatus3" value="close" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> Close
-          </div>
-          <div class="form-group {{ $errors->has('product1_file') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.product1_file') }}:</strong>
-              {!! Form::file('product1_file', null, array('placeholder' => Lang::get('validation.attributes.product1_file'),'class' => 'form-control')) !!}
-          </div>
-          <div class="form-group {{ $errors->has('product2_file') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.product2_file') }}:</strong>
-              {!! Form::file('product2_file', null, array('placeholder' => Lang::get('validation.attributes.product2_file'),'class' => 'form-control')) !!}
-          </div>
-          <div class="form-group {{ $errors->has('product3_file') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.product3_file') }}:</strong>
-              {!! Form::file('product3_file', null, array('placeholder' => Lang::get('validation.attributes.product3_file'),'class' => 'form-control')) !!}
-          </div>
-          @if($item->product1_file != "")
-              <img style="height:260px; width:350px;"  src="{{ url($item->product1_file) }}" alt="" class="img-thumbnail">
-          @endif
-          @if($item->product2_file != "")
-              <img style="height:260px; width:350px;"  src="{{ url($item->product2_file) }}" alt="" class="img-thumbnail">
-          @endif
-          @if($item->product3_file != "")
-              <img style="height:260px; width:350px;"  src="{{ url($item->product3_file) }}" alt="" class="img-thumbnail">
-          @endif
-      @endif
       @if($item->iwantto == "buy")
           <div class="form-group {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
               <strong>{{ Lang::get('validation.attributes.pricerange_start') }} - {{ Lang::get('validation.attributes.pricerange_end') }}
@@ -211,7 +187,16 @@
           <div class="form-group {{ $errors->has('units') ? 'has-error' : '' }}">
               <strong>{{ Lang::get('validation.attributes.units') }}
               :</strong>
-              {!! Form::text('units', $item->units, array('placeholder' => Lang::get('validation.attributes.units'),'class' => 'form-control')) !!}
+              <select id="units" name="units" class="form-control">
+                  <option value="">{{ Lang::get('validation.attributes.units') }}</option>
+                  @foreach ($unitsItem as $key => $unit)
+                    @if($item->units == $unit->{ "units_".Lang::locale()})
+                      <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                    @else
+                      <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                    @endif
+                  @endforeach
+              </select>
           </div>
       @endif
   </div>

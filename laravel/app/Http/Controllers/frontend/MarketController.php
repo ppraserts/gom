@@ -32,6 +32,7 @@ class MarketController extends Controller
     {
         $iwantto = $request->input('iwantto');
         $id = $request->input('id');
+        $category = $request->input('category');
         $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                     ->get();
 
@@ -44,8 +45,8 @@ class MarketController extends Controller
         }
 
         $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale','', '',$qrcode);
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy','', '',$qrcode);
+        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, '',$qrcode);
+        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, '',$qrcode);
 
         return view('frontend.market',compact('productCategoryitem'
                                                   ,'marketItem'

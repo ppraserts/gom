@@ -1,6 +1,9 @@
 <?php
 use App\Product;
 use App\Iwantto;
+use App\Amphur;
+use App\Province;
+use App\District;
 use Illuminate\Support\Facades\Input;
 
 /*
@@ -18,6 +21,8 @@ Auth::routes();
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
+    Route::get('/choosemarket', 'HomeController@index2');
+    Route::get('/choosecategory', 'HomeController@index3');
     Route::get('/news', 'frontend\NewsController@index');
     Route::get('/news/{id}', 'frontend\NewsController@edit');
     Route::resource('/contactus','ContactusController');
@@ -39,7 +44,32 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/information/create/ajax-state',function()
     {
         $productcategorys_id = Input::get('productcategorys_id');
-        $subcategories = Product::where('productcategory_id','=',$productcategorys_id)->get();
+        if($productcategorys_id != "")
+        {
+            $subcategories = Product::where('productcategory_id','=',$productcategorys_id)->get();
+        }
+
+        $province_id = Input::get('province_id');
+        if($province_id != "")
+        {
+            $province = Province::where('PROVINCE_NAME','=',$province_id)->get();
+            $subcategories = Amphur::where('PROVINCE_ID','=',$province[0]->PROVINCE_ID)->get();
+        }
+
+        $city_id = Input::get('city_id');
+        if($city_id != "")
+        {
+            $city = Amphur::where('AMPHUR_NAME','=',$city_id)->get();
+            $subcategories = District::where('AMPHUR_ID','=',$city[0]->AMPHUR_ID)->get();
+        }
+
+        $search = Input::get('query');
+        if($search != "")
+        {
+            $subcategories = Product::where('product_name_th','like','%'.$search.'%')
+                              ->select('id','product_name_th as name')
+                              ->get();
+        }
         return $subcategories;
 
     });

@@ -1,3 +1,22 @@
+@push('scripts')
+<script type="text/javascript">
+$(document).ready(function(){
+  var $input = $('#search');
+  $input.typeahead({
+      displayText: function (item) {
+        return item.name;
+      }
+      , display: 'product_title', val: 'product_title'
+      ,source: function(search, response){
+        $.get('{{ url('information') }}/create/ajax-state?query=' + search, function(data) {
+            response(data);
+        });
+      },
+      autoSelect: true
+  });
+});
+</script>
+@endpush
 <!-- Search -->
  <div class="row searchboxs">
      {!! Form::open(['method'=>'GET','url'=>'result','class'=>'form-inline','role'=>'search'])  !!}

@@ -7,6 +7,7 @@ function renderHTML($text)
 ?>
 @extends('layouts.main')
 @section('content')
+@include('shared.usermenu', array('setActive'=>'matchings'))
 <br/>
 <div class="row">
   <div class="col-md-4" style="padding-right:30px; text-align:center;">
