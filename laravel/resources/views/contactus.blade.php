@@ -44,7 +44,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <form  role="form" method="POST" action="{{ url('/contactus') }}">
+    <form enctype="multipart/form-data"  role="form" method="POST" action="{{ url('/contactus') }}">
        {{ csrf_field() }}
            <div class="form-group {{ $errors->has('contactusform_name') ? 'has-error' : '' }}">
                <strong>{{ Lang::get('validation.attributes.contactusform_name') }}:</strong>
@@ -75,7 +75,10 @@
                <strong>{{ Lang::get('validation.attributes.contactusform_messagebox') }}:</strong>
                {!! Form::textarea('contactusform_messagebox', null, array('placeholder' => Lang::get('validation.attributes.contactusform_messagebox'),'class' => 'form-control','style'=>'height:100px')) !!}
            </div>
-
+           <div class="form-group {{ $errors->has('contactusform_file') ? 'has-error' : '' }}">
+               <strong>{{ Lang::get('validation.attributes.contactusform_file') }}:</strong>
+               {!! Form::file('contactusform_file', null, array('placeholder' => Lang::get('validation.attributes.contactusform_file'),'class' => 'form-control')) !!}
+           </div>
            <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
               <div class="col-md-4">
                 <label class="control-label">Captcha</label>

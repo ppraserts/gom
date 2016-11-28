@@ -49,14 +49,14 @@ else
     <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group {{ $errors->has('slideimage_type') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.slideimage_type') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.slideimage_type') }}:</strong>
                 {!! Form::select('slideimage_type', $slideType, null, array('placeholder' => Lang::get('validation.attributes.slideimage_type'),'class' => 'form-control')); !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('slideimage_name') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.slideimage_name') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.slideimage_name') }}:</strong>
                 {!! Form::text('slideimage_name', null, array('placeholder' => Lang::get('validation.attributes.slideimage_name'),'class' => 'form-control')) !!}
             </div>
         </div>
@@ -82,7 +82,7 @@ else
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('sequence') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.sequence') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.sequence') }}:</strong>
                 </label>
                 <div class="col-sm-2" style="padding-left: 0px;">
                 {!! Form::number('sequence', null, array('placeholder' => Lang::get('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}

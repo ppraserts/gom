@@ -37,21 +37,21 @@
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('now_password') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.now_password') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.now_password') }}:</strong>
                 {!! Form::text('now_password', null, array('placeholder' => Lang::get('validation.attributes.now_password'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('new_password') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.new_password') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.new_password') }}:</strong>
                 {!! Form::text('new_password', null, array('placeholder' => Lang::get('validation.attributes.new_password'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.password_confirmation') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.password_confirmation') }}:</strong>
                 {!! Form::text('password_confirmation', null, array('placeholder' => Lang::get('validation.attributes.password_confirmation'),'class' => 'form-control')) !!}
             </div>
         </div>

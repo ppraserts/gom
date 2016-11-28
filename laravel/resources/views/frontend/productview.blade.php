@@ -29,6 +29,9 @@ function renderHTML($text)
           {{ renderHTML($item[0]->users_fax) }}
           {{ renderHTML($item[0]->email) }}
           <br/><br/><button type="button" class="btn btn-primary">{{ trans('messages.inbox_message') }}</button>
+          <br/><br/><button class="btn btn-default" type="button" onclick="window.history.back();">
+            {{ trans('messages.backtoresult') }}
+          </button>
         </div>
       </div>
   </div>

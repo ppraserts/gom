@@ -107,7 +107,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6" style="padding-right:30px;">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="padding-right:30px;">
             @if($item->users_imageprofile != "")
                 <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt="" class="img-circle">
             @endif
@@ -137,7 +137,7 @@
                     {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => Lang::get('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
                 </div>
                 <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
-                    <strong>{{ Lang::get('validation.attributes.users_firstname_th') }} -
+                    <strong>* {{ Lang::get('validation.attributes.users_firstname_th') }} -
                     {{ Lang::get('validation.attributes.users_lastname_th') }}
                     :</strong>
                     <div class="row">
@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">
-                    <strong>{{ Lang::get('validation.attributes.users_dateofbirth') }}
+                    <strong>* {{ Lang::get('validation.attributes.users_dateofbirth') }}
                     :</strong>
                     <div class='input-group date' id='datetimepicker1'>
                       {!! Form::text('users_dateofbirth', $item->users_dateofbirth, array('placeholder' => Lang::get('validation.attributes.users_dateofbirth'),'class' => 'form-control')) !!}
@@ -242,8 +242,6 @@
                 :</strong>
                 {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => Lang::get('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
             </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:30px;">
             <div class="form-group {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.users_mobilephone') }}
                 :</strong>

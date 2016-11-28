@@ -49,21 +49,21 @@ else
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('media_name_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.media_name_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.media_name_th') }}:</strong>
                 {!! Form::text('media_name_th', null, array('placeholder' => Lang::get('validation.attributes.media_name_th'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('media_name_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.media_name_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.media_name_en') }}:</strong>
                 {!! Form::text('media_name_en', null, array('placeholder' => Lang::get('validation.attributes.media_name_en'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('media_urllink') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.media_urllink') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.media_urllink') }}:</strong>
                 {!! Form::text('media_urllink', null, array('placeholder' => Lang::get('validation.attributes.media_urllink'),'class' => 'form-control')) !!}
             </div>
         </div>
@@ -71,7 +71,7 @@ else
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('sequence') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.sequence') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.sequence') }}:</strong>
                 </label>
                 <div class="col-sm-2" style="padding-left: 0px;">
                 {!! Form::number('sequence', null, array('placeholder' => Lang::get('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}

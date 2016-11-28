@@ -30,7 +30,7 @@
 	        	@if($slide->slideimage_urllink != "")
 	        	<a href="{{ $slide->slideimage_urllink }}" target="_blank">
 	        	@endif
-	          	<img src="{{ url($slide->slideimage_file) }}" style="width:100%;" >
+	          	<img src="{{ url($slide->slideimage_file) }}" style="width:100%; height:304px;" >
 	          	@if($slide->slideimage_urllink != "")
 	          	</a>
 	          	@endif

@@ -45,8 +45,8 @@ class MarketController extends Controller
         }
 
         $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, '',$qrcode);
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, '',$qrcode);
+        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, '',$qrcode, '', '', '');
+        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, '',$qrcode, '', '', '');
 
         return view('frontend.market',compact('productCategoryitem'
                                                   ,'marketItem'

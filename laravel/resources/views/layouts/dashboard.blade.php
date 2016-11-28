@@ -8,6 +8,7 @@
           $enActive = "active";
           $thActive = "";
         }
+        $adminteam = auth()->guard('admin')->user();
 ?>
 @extends('layouts.plane')
 @section('body')
@@ -73,39 +74,66 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+                        @if(strpos($adminteam->allow_menu, 'menu_user') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/users*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/users') }}"><i class="fa fa-user fa-fw"></i> {{ trans('messages.menu_user') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_market') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/market*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/market') }}"><i class="glyphicon glyphicon-shopping-cart"></i> {{ trans('messages.menu_market') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_product_category') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/product*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/productcategory') }}"><i class="glyphicon glyphicon-inbox fa-fw"></i> {{ trans('messages.menu_product_category') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_slide_image') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/slideimage*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/slideimage') }}"><i class="glyphicon glyphicon-picture fa-fw"></i> {{ trans('messages.menu_slide_image') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_download_document') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/downloaddocument*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/downloaddocument') }}"><i class="glyphicon glyphicon-book fa-fw"></i> {{ trans('messages.menu_download_document') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_aboutus') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/aboutus*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/aboutus') }}"><i class="glyphicon glyphicon-edit"></i> {{ trans('messages.menu_aboutus') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_contactus') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/contactus*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/contactus') }}"><i class="glyphicon glyphicon-edit"></i> {{ trans('messages.menu_contactus') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_faq') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/faq*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/faqcategory') }}"><i class="glyphicon glyphicon-question-sign"></i> {{ trans('messages.menu_faq') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_media') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/media*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/media') }}"><i class="glyphicon glyphicon-facetime-video"></i> {{ trans('messages.menu_media') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_news') !== false||$adminteam->is_superadmin)
                          <li {{ (Request::is('*admin/news*') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/news') }}"><i class="glyphicon glyphicon-bullhorn"></i> {{ trans('messages.menu_news') }}</a>
                         </li>
+                        @endif
+                        @if(strpos($adminteam->allow_menu, 'menu_report') !== false||$adminteam->is_superadmin)
                         <li {{ (Request::is('*admin/report*') ? 'class=active' : '') }}>
                            <a href="{{ url ('admin/reportuser') }}"><i class="glyphicon glyphicon-stats"></i> {{ trans('messages.menu_report') }}</a>
                        </li>
+                       @endif
+                       @if($adminteam->is_superadmin)
+                       <li {{ (Request::is('*admin/admin*') ? 'class=active' : '') }}>
+                           <a href="{{ url ('admin/adminteam') }}"><i class="glyphicon glyphicon-user"></i> {{ trans('messages.menu_adminteam') }}</a>
+                      </li>
+                      @endif
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

@@ -30,6 +30,45 @@
                 $('#users_qrcode_section').show();
             }
         });
+
+        $('#users_province').on('change', function(e){
+            console.log(e);
+            var state_id = e.target.value;
+
+            $.get('{{ url('information') }}/create/ajax-state?province_id=' + state_id, function(data) {
+                console.log(data);
+                var option = '';
+                $('#users_city').empty();
+                $('#users_district').empty();
+
+                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+                $.each(data, function(index,subCatObj){
+                  option += '<option value="'+ subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
+                });
+                $('#users_city').append(option);
+                $( "#users_city" ).val({{ old('users_city') }});
+                $( "#users_city" ).trigger( "change" );
+            });
+        });
+
+        $('#users_city').on('change', function(e){
+            console.log(e);
+            var state_id = e.target.value;
+
+            $.get('{{ url('information') }}/create/ajax-state?city_id=' + state_id, function(data) {
+                console.log(data);
+                var option = '';
+                $('#users_district').empty();
+
+                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+                $.each(data, function(index,subCatObj){
+                  option += '<option value="'+ subCatObj.DISTRICT_NAME + '">' + subCatObj.DISTRICT_NAME + '</option>';
+                });
+                $('#users_district').append(option);
+                $( "#users_district" ).val({{ old('users_district') }});
+            });
+        });
+
     });
 </script>
 @endpush
@@ -60,7 +99,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('user/savecompanyregister') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
-                            <label for="iwantto" class="col-md-4 control-label">{{ Lang::get('validation.attributes.iwantto') }}</label>
+                            <label for="iwantto" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.iwantto') }}</label>
 
                             <div class="col-md-6">
                               <label class="radio-inline">
@@ -72,7 +111,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_taxcode') ? ' has-error' : '' }}">
-                            <label for="users_taxcode" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_taxcode') }}</label>
+                            <label for="users_taxcode" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_taxcode') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_taxcode" type="text" class="form-control" name="users_taxcode" value="{{ old('users_taxcode') }}" autofocus>
@@ -98,7 +137,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_company_th') ? ' has-error' : '' }}">
-                            <label for="users_company_th" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_company_th') }}</label>
+                            <label for="users_company_th" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_company_th') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_company_th" type="text" class="form-control" name="users_company_th" value="{{ old('users_company_th') }}" autofocus>
@@ -112,7 +151,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('users_company_en') ? ' has-error' : '' }}">
-                            <label for="users_company_en" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_company_en') }}</label>
+                            <label for="users_company_en" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_company_en') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_company_en" type="text" class="form-control" name="users_company_en" value="{{ old('users_company_en') }}" autofocus>
@@ -190,15 +229,23 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
-                            <label for="users_district" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_district') }}</label>
+                        <div class="form-group{{ $errors->has('users_province') ? ' has-error' : '' }}">
+                            <label for="users_province" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_province') }}</label>
 
                             <div class="col-md-6">
-                                <input id="users_district" type="text" class="form-control" name="users_district" value="{{ old('users_district') }}" autofocus>
-
-                                @if ($errors->has('users_district'))
+                                <select id="users_province" name="users_province" class="form-control">
+                                    <option value="">{{ trans('messages.allprovince') }}</option>
+                                    @foreach ($provinceItem as $key => $province)
+                                      @if(old('users_province') == $province->PROVINCE_NAME)
+                                        <option selected value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                      @else
+                                        <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                      @endif
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('users_province'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('users_district') }}</strong>
+                                        <strong>{{ $errors->first('users_province') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -207,8 +254,8 @@
                             <label for="users_city" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_city') }}</label>
 
                             <div class="col-md-6">
-                                <input id="users_city" type="text" class="form-control" name="users_city" value="{{ old('users_city') }}" autofocus>
-
+                                <select id="users_city" name="users_city" class="form-control">
+                                </select>
                                 @if ($errors->has('users_city'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('users_city') }}</strong>
@@ -216,15 +263,15 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('users_province') ? ' has-error' : '' }}">
-                            <label for="users_province" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_province') }}</label>
+                        <div class="form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
+                            <label for="users_district" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_district') }}</label>
 
                             <div class="col-md-6">
-                                <input id="users_province" type="text" class="form-control" name="users_province" value="{{ old('users_province') }}" autofocus>
-
-                                @if ($errors->has('users_province'))
+                                <select id="users_district" name="users_district" class="form-control">
+                                </select>
+                                @if ($errors->has('users_district'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('users_province') }}</strong>
+                                        <strong>{{ $errors->first('users_district') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -243,7 +290,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ Lang::get('validation.attributes.email') }}</label>
+                            <label for="email" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" >
@@ -257,7 +304,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">{{ Lang::get('validation.attributes.password') }}</label>
+                            <label for="password" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" >
@@ -285,7 +332,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
-                           <label class="col-md-4 control-label">Captcha</label>
+                           <label class="col-md-4 control-label">* Captcha</label>
 
                            <div class="col-md-6">
                                {!! captcha_image_html('ContactCaptcha') !!}

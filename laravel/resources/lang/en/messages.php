@@ -87,5 +87,13 @@ return [
     'waitapprove' => 'รออนุมัติ',
     'green_condition' => 'Green Condition คือ กลุ่มสินค้า, ชนิดสินค้า, ราคาต่อหน่วย ต้องตรงกัน',
     'red_condition' => 'Red Condition คือ กลุ่มสินค้า, ชนิดสินค้า, ปริมาณ และจังหวัด ต้องตรงกัน',
-    'whtie_condition' => 'Whtie Condition คือ กลุ่มสินค้า, ชนิดสินค้า ต้องตรงกัน'
+    'whtie_condition' => 'Whtie Condition คือ กลุ่มสินค้า, ชนิดสินค้า ต้องตรงกัน',
+    'noresultsearch' => 'ไม่พบข้อมูล',
+    'backtoresult' => 'ย้อนกลับ',
+    'orderbyprice' => 'เรียงลำดับตามราคา',
+    'orderbyunit' => 'เรียงลำดับตามปริมาณ',
+    'orderbyprovince' => 'เรียงลำดับตามจังหวัด',
+    'searchprice' => 'ราคา',
+    'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
+    'menu_adminteam' => 'ผู้ดูแลระบบ'
 ];

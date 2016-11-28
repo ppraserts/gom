@@ -20,7 +20,7 @@ else
 @push('scripts')
 <script type="text/javascript">
     $(function() {
-            $(document).on("keypress", "form", function(event) { 
+            $(document).on("keypress", "form", function(event) {
                 return event.keyCode != 13;
             });
 
@@ -33,7 +33,7 @@ else
 @section('section')
 {!! Form::model($item, ['method' => $method,'files' => true ,'route' => [$controllerAction, $formModelId]]) !!}
 {{ Form::hidden('news_document_file_temp', $item->news_document_file) }}
-<div class="col-sm-12">
+<div class="col-sm-12" style="margin-bottom:15px !important;">
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -63,10 +63,10 @@ else
         </div>
     @endif
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="display:none;">
             <div class="form-group {{ $errors->has('news_tags') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.news_tags') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.news_tags') }}:</strong>
                 </label>
                 <div class="col-sm-4" style="padding-left: 0px;">
                 {!! Form::text('news_tags', null, array('placeholder' => Lang::get('validation.attributes.news_tags'),'class' => 'form-control', 'data-role'=> 'tagsinput')) !!}
@@ -76,32 +76,32 @@ else
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_title_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.news_title_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.news_title_th') }}:</strong>
                 {!! Form::text('news_title_th', null, array('placeholder' => Lang::get('validation.attributes.news_title_th'),'class' => 'form-control' )) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_description_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.news_description_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.news_description_th') }}:</strong>
                 {!! Form::textarea('news_description_th', null, array('placeholder' => Lang::get('validation.attributes.news_description_th'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_title_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.news_title_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.news_title_en') }}:</strong>
                 {!! Form::text('news_title_en', null, array('placeholder' => Lang::get('validation.attributes.news_title_en'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_description_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.news_description_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.news_description_en') }}:</strong>
                 {!! Form::textarea('news_description_en', null, array('placeholder' => Lang::get('validation.attributes.news_description_en'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
-        
+
          <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_document_file') ? 'has-error' : '' }}">
                 <strong>{{ Lang::get('validation.attributes.news_document_file') }}:</strong>
@@ -112,7 +112,7 @@ else
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_created_at') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.news_created_at') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.news_created_at') }}:</strong>
                 </label>
                 <div class="col-sm-4" style="padding-left: 0px;">
                         <div class='input-group date' id='datetimepicker1'>
@@ -128,7 +128,7 @@ else
          <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_place') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.news_place') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.news_place') }}:</strong>
                 </label>
                 <div class="col-sm-4" style="padding-left: 0px;">
                 {!! Form::text('news_place', null, array('placeholder' => Lang::get('validation.attributes.news_place'),'class' => 'form-control')) !!}
@@ -139,7 +139,7 @@ else
          <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('news_sponsor') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.news_sponsor') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.news_sponsor') }}:</strong>
                 </label>
                 <div class="col-sm-4" style="padding-left: 0px;">
                 {!! Form::text('news_sponsor', null, array('placeholder' => Lang::get('validation.attributes.news_sponsor'),'class' => 'form-control')) !!}
@@ -157,9 +157,24 @@ else
                 </div>
             </div>
         </div>
+        @for($i=1;$i<=5;$i++)
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <div class="form-group {{ $errors->has('news_sponsor') ? 'has-error' : '' }}">
+            <label class="col-sm-2 control-label" style="padding-left: 0px;">
+              <strong>Default Image {{ $i }}:</strong>
+            </label>
+            <div class="col-sm-4" style="padding-left: 0px;">
+              <input type="text" class="form-control" value="{{ url('/upload/defaultnews/'.$i.'.png') }}">
+            </div>
+            <div class="col-sm-4" style="padding-left: 0px;">
+              <a target="_new" href="{{ url('/upload/defaultnews/'.$i.'.png') }}">View</a>
+            </div>
+          </div>
+        </div>
+        @endfor
 
         @if($item->news_document_file!="")
-                <div class="col-xs-12 col-sm-12 col-md-12">    
+                <div class="col-xs-12 col-sm-12 col-md-12">
                 <a class="btn btn-success btn-small navbar-btn" href="{{ url($item->news_document_file) }}"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> {{  Lang::get('validation.attributes.news_document_file') }}</a>
                 </div>
         @endif

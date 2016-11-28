@@ -24,8 +24,10 @@ class MatchingController extends Controller
       $userItem = auth()->guard('user')->user();
       $Iwanttoobj = new Iwantto();
 
-      $itemsbuy = $Iwanttoobj->GetSaleMatchingWithBuy($userItem->id);
-      $itemssale = $Iwanttoobj->GetBuyMatchingWithSale($userItem->id);
+      $orderby = $request->input('orderby');
+
+      $itemsbuy = $Iwanttoobj->GetSaleMatchingWithBuy($userItem->id, $orderby);
+      $itemssale = $Iwanttoobj->GetBuyMatchingWithSale($userItem->id, $orderby);
 
       return view('frontend.matching',compact('itemsbuy','itemssale','userItem'));
   }

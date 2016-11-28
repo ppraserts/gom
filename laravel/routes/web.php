@@ -23,6 +23,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/home', 'HomeController@index');
     Route::get('/choosemarket', 'HomeController@index2');
     Route::get('/choosecategory', 'HomeController@index3');
+    Route::get('/advancesearch', 'HomeController@index4');
     Route::get('/news', 'frontend\NewsController@index');
     Route::get('/news/{id}', 'frontend\NewsController@edit');
     Route::resource('/contactus','ContactusController');
@@ -153,4 +154,5 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('companys','backend\CompanysController');
     Route::resource('news','backend\NewsController');
     Route::resource('reportuser','backend\ReportController');
+    Route::resource('adminteam','backend\AdminteamController');
 });

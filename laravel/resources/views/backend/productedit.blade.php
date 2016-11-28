@@ -52,14 +52,14 @@ else
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('product_name_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.product_name_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.product_name_th') }}:</strong>
                 {!! Form::text('product_name_th', null, array('placeholder' => Lang::get('validation.attributes.product_name_th'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('product_name_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.product_name_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.product_name_en') }}:</strong>
                 {!! Form::text('product_name_en', null, array('placeholder' => Lang::get('validation.attributes.product_name_en'),'class' => 'form-control')) !!}
             </div>
         </div>

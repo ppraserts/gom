@@ -3,7 +3,7 @@
 
 <h3>
 	<span class="glyphicon glyphicon-list-alt"></span> {{ $item->{ "news_title_".Lang::locale()} }}
-	( <span class="glyphicon glyphicon-tag">{{ $item->news_tags}}</span> )
+
 </h3>
 
 {!! $item->{"news_description_".Lang::locale()} !!}

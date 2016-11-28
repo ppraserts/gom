@@ -36,6 +36,7 @@ $(document).ready(function(){
              <input value="{{ Request::input('search') }}" type="text" class="form-control"  id="search" name="search" autocomplete="off">
          </div>
          <button type="submit" class="btn btn-info">{{ trans('messages.menu_search') }}</button>
+         <a href="{{ url('/advancesearch') }}">ค้นหาขั้นสูง</a>
      {!! Form::close() !!}
  </div>
  <!-- End Search -->

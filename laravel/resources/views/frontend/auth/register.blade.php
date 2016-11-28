@@ -102,7 +102,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('user/saveregister') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
-                            <label for="iwantto" class="col-md-4 control-label">{{ Lang::get('validation.attributes.iwantto') }}</label>
+                            <label for="iwantto" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.iwantto') }}</label>
 
                             <div class="col-md-6">
                               <label class="radio-inline">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_idcard') ? ' has-error' : '' }}">
-                            <label for="users_idcard" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_idcard') }}</label>
+                            <label for="users_idcard" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_idcard') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_idcard" type="text" class="form-control" name="users_idcard" value="{{ old('users_idcard') }}" autofocus>
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_firstname_th') ? ' has-error' : '' }}">
-                            <label for="users_firstname_th" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_firstname_th') }}</label>
+                            <label for="users_firstname_th" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_firstname_th') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_firstname_th" type="text" class="form-control" name="users_firstname_th" value="{{ old('users_firstname_th') }}" autofocus>
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_lastname_th') ? ' has-error' : '' }}">
-                            <label for="users_lastname_th" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_lastname_th') }}</label>
+                            <label for="users_lastname_th" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_lastname_th') }}</label>
 
                             <div class="col-md-6">
                                 <input id="users_lastname_th" type="text" class="form-control" name="users_lastname_th" value="{{ old('users_lastname_th') }}" autofocus>
@@ -169,7 +169,7 @@
                             <label for="users_firstname_en" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_firstname_en') }}</label>
 
                             <div class="col-md-6">
-                                <input id="users_firstname_th" type="text" class="form-control" name="users_firstname_en" value="{{ old('users_firstname_en') }}" autofocus>
+                                <input id="users_firstname_en" type="text" class="form-control" name="users_firstname_en" value="{{ old('users_firstname_en') }}" autofocus>
 
                                 @if ($errors->has('users_firstname_en'))
                                     <span class="help-block">
@@ -210,7 +210,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_dateofbirth') ? ' has-error' : '' }}">
-                            <label for="users_dateofbirth" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_dateofbirth') }}</label>
+                            <label for="users_dateofbirth" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_dateofbirth') }}</label>
 
                             <div class="col-md-6">
                                 <div class='input-group date' id='datetimepicker1'>
@@ -339,7 +339,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ Lang::get('validation.attributes.email') }}</label>
+                            <label for="email" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" >
@@ -353,7 +353,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">{{ Lang::get('validation.attributes.password') }}</label>
+                            <label for="password" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" >
@@ -381,7 +381,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
-                           <label class="col-md-4 control-label">Captcha</label>
+                           <label class="col-md-4 control-label">* Captcha</label>
 
                            <div class="col-md-6">
                                {!! captcha_image_html('ContactCaptcha') !!}

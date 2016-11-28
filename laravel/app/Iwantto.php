@@ -31,8 +31,16 @@ class Iwantto extends Model
                         ];
 
 
-      public function GetSaleMatchingWithBuy($userid)
+      public function GetSaleMatchingWithBuy($userid,$orderby)
       {
+                  $orderbycondition = "";
+                  if($orderby == "province")
+                    $orderbycondition = ",matching.province";
+                  else if($orderby == "unit")
+                    $orderbycondition = ",matching.units";
+                  else if($orderby == "price")
+                    $orderbycondition = ",matching.pricerange_start";
+
                   $results = DB::select(
                         DB::raw("SELECT matching.*
                                           ,u.users_firstname_th
@@ -102,14 +110,22 @@ class Iwantto extends Model
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id
-                                          order by matching.Colors")
+                                          order by matching.Colors ".$orderbycondition)
                   );
 
                   return $results;
       }
 
-      public function GetBuyMatchingWithSale($userid)
+      public function GetBuyMatchingWithSale($userid,$orderby)
       {
+                  $orderbycondition = "";
+                  if($orderby == "province")
+                    $orderbycondition = ",matching.province";
+                  else if($orderby == "unit")
+                    $orderbycondition = ",matching.units";
+                  else if($orderby == "price")
+                    $orderbycondition = ",matching.price";
+
                   $results = DB::select(
                         DB::raw("SELECT matching.*
                                           ,u.users_firstname_th
@@ -182,13 +198,13 @@ class Iwantto extends Model
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id
-                                          order by matching.Colors")
+                                          order by matching.Colors ".$orderbycondition)
                   );
 
                   return $results;
       }
 
-      public function GetSearchIwantto($iwantto, $category, $search, $qrcode)
+      public function GetSearchIwantto($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
       {
         $sqlcondition = "";
         $sqlcondition .= " and a.productstatus = 'open' ";
@@ -211,7 +227,33 @@ class Iwantto extends Model
                                           , u.users_firstname_th
                                           , u.users_lastname_th
                                           , u.users_firstname_en
-                                          , u.users_lastname_en)  like '%$search%' )";
+                                          , u.users_lastname_en
+                                          , b.product_name_th
+                                          , b.product_name_en)  like '%$search%' )";
+        }
+
+        if($province!="")
+        {
+          $sqlcondition .= " and a.productstatus = 'open'";
+          $sqlcondition .= " and (CONCAT(a.`product_title`
+                                          , a.city
+                                          , a.province
+                                          , u.users_firstname_th
+                                          , u.users_lastname_th
+                                          , u.users_firstname_en
+                                          , u.users_lastname_en
+                                          , b.product_name_th
+                                          , b.product_name_en)  like '%$search%' )";
+        }
+
+        if(is_numeric($price))
+        {
+          $sqlcondition .= " and (a.`price` between $price and $price)";
+        }
+
+        if(is_numeric($volumn))
+        {
+          $sqlcondition .= " and (a.`volumn` between $volumn and $volumn)";
         }
 
         $results = DB::select(
@@ -247,6 +289,7 @@ class Iwantto extends Model
                             ,u.users_company_en
                             FROM `iwantto` a
                             join users u on a.`users_id` =u.id
+                            join products b on a.products_id = b.id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition
               "));

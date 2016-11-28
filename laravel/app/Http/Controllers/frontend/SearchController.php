@@ -31,12 +31,15 @@ class SearchController extends Controller
     {
         $category = $request->input('category');
         $search = $request->input('search');
+        $province= $request->input('province');
+        $price = $request->input('price');
+        $volumn = $request->input('volumn');
         $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                     ->get();
 
         $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, $search, '');
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, $search, '');
+        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, $search, '', $province, $price, $volumn);
+        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, $search, '', $province, $price, $volumn);
         return view('frontend.result',compact('productCategoryitem','itemssale', 'itemsbuy'));
     }
 }

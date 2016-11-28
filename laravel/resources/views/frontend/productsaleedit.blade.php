@@ -108,7 +108,7 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6" style="padding-right:30px;">
     <div class="form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.productcategorys_id') }}
+        <strong>* {{ Lang::get('validation.attributes.productcategorys_id') }}
         :</strong>
         <select id="productcategorys_id" name="productcategorys_id" class="form-control">
             <option value="">{{ trans('messages.menu_product_category') }}</option>
@@ -122,13 +122,13 @@
         </select>
     </div>
     <div class="form-group {{ $errors->has('products_id') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.products_id') }}
+        <strong>* {{ Lang::get('validation.attributes.products_id') }}
         :</strong>
         <select id="products_id" name="products_id" class="form-control">
         </select>
     </div>
     <div class="form-group {{ $errors->has('product_title') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.product_title') }}
+        <strong>* {{ Lang::get('validation.attributes.product_title') }}
         :</strong>
         {!! Form::text('product_title', $item->product_title, array('placeholder' => Lang::get('validation.attributes.product_title'),'class' => 'form-control')) !!}
     </div>
@@ -138,7 +138,7 @@
     </div>
     @if($item->iwantto == "sale")
           <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.price') }}
+              <strong>* {{ Lang::get('validation.attributes.price') }}
               :</strong>
               {!! Form::text('price', $item->price, array('placeholder' => Lang::get('validation.attributes.price'),'class' => 'form-control')) !!}
           </div>
@@ -153,12 +153,12 @@
               {!! Form::text('guarantee', $item->guarantee, array('placeholder' => Lang::get('validation.attributes.guarantee'),'class' => 'form-control')) !!}
           </div>
           <div class="form-group {{ $errors->has('volumn') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.volumn') }}
+              <strong>* {{ Lang::get('validation.attributes.volumn') }}
               :</strong>
               {!! Form::text('volumn', $item->volumn, array('placeholder' => Lang::get('validation.attributes.volumn'),'class' => 'form-control')) !!}
           </div>
           <div class="form-group {{ $errors->has('units') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.units') }}
+              <strong>* {{ Lang::get('validation.attributes.units') }}
               :</strong>
               <select id="units" name="units" class="form-control">
                   <option value="">{{ Lang::get('validation.attributes.units') }}</option>
@@ -173,7 +173,7 @@
           </div>
     @endif
     <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.province') }}
+        <strong>* {{ Lang::get('validation.attributes.province') }}
         :</strong>
         <select id="province" name="province" class="form-control">
             <option value="">{{ trans('messages.allprovince') }}</option>
@@ -187,7 +187,7 @@
         </select>
     </div>
     <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.city') }}
+        <strong>* {{ Lang::get('validation.attributes.city') }}
         :</strong>
         <select id="city" name="city" class="form-control">
         </select>
@@ -203,7 +203,7 @@
                   <input type="radio" name="productstatus" id="productstatus3" value="close" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> Close
           </div>
           <div class="form-group {{ $errors->has('product1_file') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.product1_file') }}:</strong>
+              <strong>* {{ Lang::get('validation.attributes.product1_file') }}:</strong>
               {!! Form::file('product1_file', null, array('placeholder' => Lang::get('validation.attributes.product1_file'),'class' => 'form-control')) !!}
           </div>
           <div class="form-group {{ $errors->has('product2_file') ? 'has-error' : '' }}">

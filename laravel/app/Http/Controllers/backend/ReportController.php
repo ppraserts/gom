@@ -45,8 +45,8 @@ class ReportController extends Controller
                   WHERE iwanttobuy <> '' and iwanttosale <> ''"));
 
     $Iwanttoobj = new Iwantto();
-    $itemssale = $Iwanttoobj->GetSearchIwantto('sale','', '', '');
-    $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy','', '', '');
+    $itemssale = $Iwanttoobj->GetSearchIwantto('sale','', '', '', '', '', '');
+    $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy','', '', '', '', '', '');
       return view('backend.reportuser',compact('resultsG1'
                                                 ,'resultsG2'
                                                 ,'resultsG3'

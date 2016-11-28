@@ -30,18 +30,18 @@ $controllerAction = "userprofile.update";
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.name') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.name') }}:</strong>
                 {!! Form::text('name', null, array('placeholder' => Lang::get('validation.attributes.name'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.email') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.email') }}:</strong>
                 {!! Form::text('email', null, array('placeholder' => Lang::get('validation.attributes.email'),'class' => 'form-control')) !!}
             </div>
         </div>
-        
+
         <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; margin-bottom:20px">
                 <button type="submit" class="btn btn-primary">
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

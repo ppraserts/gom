@@ -77,14 +77,14 @@ $controllerAction = "contactus.update";
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('contactus_address_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.contactus_address_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.contactus_address_th') }}:</strong>
                 {!! Form::textarea('contactus_address_th', null, array('placeholder' => Lang::get('validation.attributes.contactus_address_th'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('contactus_address_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.contactus_address_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.contactus_address_en') }}:</strong>
                 {!! Form::textarea('contactus_address_en', null, array('placeholder' => Lang::get('validation.attributes.contactus_address_en'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>

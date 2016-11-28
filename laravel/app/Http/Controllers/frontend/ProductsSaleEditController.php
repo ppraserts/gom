@@ -7,6 +7,7 @@ use DB;
 use Hash;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
@@ -163,8 +164,42 @@ class ProductsSaleEditController extends Controller
     else {
       $Iwantto->update();
     }
+
+    $itemsbuy = $Iwantto->GetSaleMatchingWithBuy($useritem->id, '');
+    $itemssale = $Iwantto->GetBuyMatchingWithSale($useritem->id, '');
+
+    foreach($itemsbuy as $div_item)
+    {
+        $this->SendEmailMatching($div_item);
+    }
+
+    foreach($itemssale as $div_item)
+    {
+        $this->SendEmailMatching($div_item);
+    }
+
+
     return redirect()->route('productsaleedit.show', ['id' => $id])
                     ->with('success',trans('messages.message_update_success'));
+  }
+
+  private function SendEmailMatching($div_item)
+  {
+    $sendemailTo = $div_item->email;
+    $sendemailFrom = env('MAIL_USERNAME');
+
+    $data = array(
+        'fullname' => $div_item->users_firstname_th." ".$div_item->users_lastname_th
+    );
+    sleep(0.1);
+    Mail::send('emails.matching', $data, function ($message) use($sendemailTo, $sendemailFrom)
+    {
+        $message->from($sendemailFrom
+                , "Greenmart Online Market");
+        $message->to($sendemailTo)
+                ->subject("Greenmart Online Market : ".trans('messages.email_subject_matching'));
+
+    });
   }
 
   private function RemoveFolderImage($rawfile)

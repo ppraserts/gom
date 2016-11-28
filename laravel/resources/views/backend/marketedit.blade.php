@@ -50,43 +50,44 @@ else
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('market_title_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.market_title_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.market_title_th') }}:</strong>
                 {!! Form::text('market_title_th', null, array('placeholder' => Lang::get('validation.attributes.market_title_th'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('market_description_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.market_description_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.market_description_th') }}:</strong>
                 {!! Form::textarea('market_description_th', null, array('placeholder' => Lang::get('validation.attributes.market_description_th'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('market_title_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.market_title_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.market_title_en') }}:</strong>
                 {!! Form::text('market_title_en', null, array('placeholder' => Lang::get('validation.attributes.market_title_en'),'class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('market_description_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.market_description_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.market_description_en') }}:</strong>
                 {!! Form::textarea('market_description_en', null, array('placeholder' => Lang::get('validation.attributes.market_description_en'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('marketimage_file') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.marketimage_file') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.marketimage_file') }}:</strong>
                 {!! Form::file('marketimage_file', null, array('placeholder' => Lang::get('validation.attributes.marketimage_file'),'class' => 'form-control')) !!}
+                <strong style="color:red;">Image Size: 340*157</strong>
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('sequence') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                  <strong>{{ Lang::get('validation.attributes.sequence') }}:</strong>
+                  <strong>* {{ Lang::get('validation.attributes.sequence') }}:</strong>
                 </label>
                 <div class="col-sm-2" style="padding-left: 0px;">
                 {!! Form::number('sequence', null, array('placeholder' => Lang::get('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}

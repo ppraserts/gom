@@ -109,7 +109,7 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6" style="padding-right:30px;">
     <div class="form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.productcategorys_id') }}
+        <strong>* {{ Lang::get('validation.attributes.productcategorys_id') }}
         :</strong>
         <select id="productcategorys_id" name="productcategorys_id" class="form-control">
             <option value="">{{ trans('messages.menu_product_category') }}</option>
@@ -123,13 +123,13 @@
         </select>
     </div>
     <div class="form-group {{ $errors->has('products_id') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.products_id') }}
+        <strong>* {{ Lang::get('validation.attributes.products_id') }}
         :</strong>
         <select id="products_id" name="products_id" class="form-control">
         </select>
     </div>
     <div class="form-group {{ $errors->has('product_title') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.product_title') }}
+        <strong>* {{ Lang::get('validation.attributes.product_title') }}
         :</strong>
         {!! Form::text('product_title', $item->product_title, array('placeholder' => Lang::get('validation.attributes.product_title'),'class' => 'form-control')) !!}
     </div>
@@ -138,7 +138,7 @@
         {!! Form::textarea('product_description', $item->product_description, array('placeholder' => Lang::get('validation.attributes.product_description'),'class' => 'form-control','style'=>'height:100px')) !!}
     </div>
     <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.province') }}
+        <strong>* {{ Lang::get('validation.attributes.province') }}
         :</strong>
         <select id="province" name="province" class="form-control">
             <option value="">{{ trans('messages.allprovince') }}</option>
@@ -152,7 +152,7 @@
         </select>
     </div>
     <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-        <strong>{{ Lang::get('validation.attributes.city') }}
+        <strong>* {{ Lang::get('validation.attributes.city') }}
         :</strong>
         <select id="city" name="city" class="form-control">
         </select>
@@ -161,7 +161,7 @@
   <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:30px;">
       @if($item->iwantto == "buy")
           <div class="form-group {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.pricerange_start') }} - {{ Lang::get('validation.attributes.pricerange_end') }}
+              <strong>* {{ Lang::get('validation.attributes.pricerange_start') }} - {{ Lang::get('validation.attributes.pricerange_end') }}
               :</strong>
               <div class="row">
                 <div class="col-sm-6">
@@ -173,7 +173,7 @@
               </div>
           </div>
           <div class="form-group {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.volumnrange_start') }} - {{ Lang::get('validation.attributes.volumnrange_end') }}
+              <strong>* {{ Lang::get('validation.attributes.volumnrange_start') }} - {{ Lang::get('validation.attributes.volumnrange_end') }}
               :</strong>
               <div class="row">
                 <div class="col-sm-6">
@@ -185,7 +185,7 @@
               </div>
           </div>
           <div class="form-group {{ $errors->has('units') ? 'has-error' : '' }}">
-              <strong>{{ Lang::get('validation.attributes.units') }}
+              <strong>* {{ Lang::get('validation.attributes.units') }}
               :</strong>
               <select id="units" name="units" class="form-control">
                   <option value="">{{ Lang::get('validation.attributes.units') }}</option>

@@ -42,14 +42,14 @@ $controllerAction = "aboutus.update";
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('aboutus_description_th') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.aboutus_description_th') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.aboutus_description_th') }}:</strong>
                 {!! Form::textarea('aboutus_description_th', null, array('placeholder' => Lang::get('validation.attributes.aboutus_description_th'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group {{ $errors->has('aboutus_description_en') ? 'has-error' : '' }}">
-                <strong>{{ Lang::get('validation.attributes.aboutus_description_en') }}:</strong>
+                <strong>* {{ Lang::get('validation.attributes.aboutus_description_en') }}:</strong>
                 {!! Form::textarea('aboutus_description_en', null, array('placeholder' => Lang::get('validation.attributes.aboutus_description_en'),'class' => 'form-control','style'=>'height:100px')) !!}
             </div>
         </div>

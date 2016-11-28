@@ -15,6 +15,7 @@ use App\ProductCategory;
 use App\Market;
 use App\Contactus;
 use App\ContactUsForm;
+use App\Province;
 
 class HomeController extends Controller
 {
@@ -129,5 +130,42 @@ class HomeController extends Controller
                                         ,'mediaItem'
                                         ,'productCategoryitem'
                                         ,'marketItem'));
+    }
+
+    public function index4(Request $request)
+    {
+        //echo Hash::check('12345', $user->password);
+        //echo $user = auth()->authenticate();
+        //echo auth()->user()->password;
+        $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
+                    ->get();
+
+        $aboutusItem = AboutUs::find(1);
+        $bannerItem = SlideImage::where('slideimage_type','=','B')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $slideItem = SlideImage::where('slideimage_type','=','AS')
+                    ->orderBy('slideimage_type','ASC')
+                    ->orderBy('sequence','ASC')
+                    ->get();
+
+        $mediaItem = Media::orderBy('sequence','ASC')
+                    ->get();
+
+        $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
+                    ->get();
+
+         $marketItem = Market::orderBy('sequence','ASC')
+                    ->get();
+
+        return view('advancesearch',compact('aboutusItem'
+                                        ,'bannerItem'
+                                        ,'slideItem'
+                                        ,'mediaItem'
+                                        ,'productCategoryitem'
+                                        ,'marketItem'
+                                        ,'provinceItem'));
     }
 }

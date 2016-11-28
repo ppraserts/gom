@@ -41,13 +41,14 @@ $url = "user/iwanttobuy";
 <br/>
 
 <div class="row">
+@if(count($items->toArray()['data'])>0)
 <?php
 foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
 {
     foreach ($div_item as $col_md_4_item)
     {
 ?>
-        <div class="col-md-4">
+        <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
             <div class="col-item">
                 <div class="info">
                     <div class="row">
@@ -77,6 +78,14 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
     }
 }
 ?>
+@else
+<div style="text-align:center; padding:20px;">
+  <h1>
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    {{ trans('messages.noresultsearch') }}
+  </h1>
+</div>
+@endif
 </div>
 {!! $items->render() !!}
 @stop

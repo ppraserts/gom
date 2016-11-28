@@ -12,7 +12,7 @@ use App\News;
 class NewsController extends Controller
 {
     private $rules = [
-       'news_tags' => 'required',
+       //'news_tags' => 'required',
        'news_title_th' => 'required',
        'news_description_th' => 'required',
        'news_title_en' => 'required',

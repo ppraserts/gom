@@ -23,13 +23,13 @@
 				{{ trans('messages.menu_matching') }}
 				<span class="badge">
                            @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
-                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id)) + count($Iwanttoobj->GetBuyMatchingWithSale($user->id)) }}
+                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) + count($Iwanttoobj->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
                           @endif
                           @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
-                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id)) }}
+                                  {{ count($Iwanttoobj->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) }}
                           @endif
                           @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
-                                  {{ count($Iwanttoobj->GetBuyMatchingWithSale($user->id)) }}
+                                  {{ count($Iwanttoobj->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
                           @endif
                            </span>
 			</a>
