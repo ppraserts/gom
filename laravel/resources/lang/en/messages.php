@@ -95,5 +95,6 @@ return [
     'orderbyprovince' => 'เรียงลำดับตามจังหวัด',
     'searchprice' => 'ราคา',
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
-    'menu_adminteam' => 'ผู้ดูแลระบบ'
+    'menu_adminteam' => 'ผู้ดูแลระบบ',
+    'theme' => 'Theme Shop',
 ];

@@ -122,6 +122,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
+    Route::resource('theme','frontend\ThemeController');
+
 
     Route::get('/information/removeproduct/ajax-state',function()
     {

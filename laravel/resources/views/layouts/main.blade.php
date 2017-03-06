@@ -26,11 +26,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- Bootstrap -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.css" rel="stylesheet">
         <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
         <link href="/css/custom.css" rel="stylesheet">
         <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
         <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
+        <link href="/css/custom-modal.css" rel="stylesheet">
+        <link href="/css/image-hover-effects.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

@@ -34,4 +34,6 @@
                            </span>
 			</a>
 	</li>
+
+    <li role="presentation" {{ ($setActive == "theme")? 'class=active' : ''  }}><a href="{{ url('user/theme') }}"> {{ trans('messages.theme') }}</a></li>
 </ul>
