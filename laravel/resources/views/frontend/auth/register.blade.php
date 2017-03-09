@@ -279,7 +279,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_province') ? ' has-error' : '' }}">
-                            <label for="users_province" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_province') }}</label>
+                            <label for="users_province" class="col-md-4 control-label">*  {{ Lang::get('validation.attributes.users_province') }}</label>
 
                             <div class="col-md-6">
                                 <select id="users_province" name="users_province" class="form-control">
@@ -300,7 +300,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
-                            <label for="users_city" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_city') }}</label>
+                            <label for="users_city" class="col-md-4 control-label">*  {{ Lang::get('validation.attributes.users_city') }}</label>
 
                             <div class="col-md-6">
                                 <select id="users_city" name="users_city" class="form-control">
@@ -313,7 +313,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
-                            <label for="users_district" class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_district') }}</label>
+                            <label for="users_district" class="col-md-4 control-label">*  {{ Lang::get('validation.attributes.users_district') }}</label>
 
                             <div class="col-md-6">
                                 <select id="users_district" name="users_district" class="form-control">
