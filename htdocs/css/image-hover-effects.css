@@ -39,11 +39,11 @@
   text-decoration: none;
   padding: 7px 14px;
   text-transform: uppercase;
-  color: #fff;
+  color: #FFF;
   border: 1px solid #fff;
-  margin: 50px 0 0 0;
-  border-radius: 0px;
-  background-color: transparent;
+  margin: 110px 0 0 0;
+  border-radius: 5px;
+  background-color: #127cd6;
 }
 
 .hover button.info:hover {
@@ -103,7 +103,7 @@ cursor: pointer;
   -o-transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .ehover1 button.info {

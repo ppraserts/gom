@@ -17,16 +17,7 @@ use App\District;
 class ThemeController extends Controller
 {
   private $rules = [
-    'users_firstname_th' => 'required|max:255',
-    'users_lastname_th' => 'required|max:255',
-    'users_dateofbirth' => 'required|date_format:Y-m-d',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-  ];
-
-  private $rulescompany = [
-    'users_company_th' => 'required|max:255',
-    'users_company_en' => 'required|max:255',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
+    'theme' => 'required',
   ];
 
   public function __construct()
@@ -36,13 +27,15 @@ class ThemeController extends Controller
 
   public function index(Request $request)
   {
-      $item = auth()->guard('user')->user();
-      $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
-                  ->get();
+      return view('frontend.theme');
+  }
 
 
-
-      return view('frontend.theme',compact('item','provinceItem'));
+  public function create(Request $request){
+      $user = auth()->guard('user')->user();
+      $user->theme = $request->theme;
+      $user->update();
+      return redirect('user/userprofiles');
   }
 
 
