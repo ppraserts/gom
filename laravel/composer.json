@@ -12,7 +12,8 @@
         "ckeditor/ckeditor": "^4.5",
         "unisharp/laravel-ckeditor": "^4.5",
         "doctrine/dbal": "^2.5",
-        "paragonie/random_compat": "~1.4.0"
+        "paragonie/random_compat": "~1.4.0",
+        "xethron/migrations-generator": "v2.0.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

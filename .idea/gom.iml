@@ -78,6 +78,8 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/unisharp/laravel-ckeditor" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/xethron/laravel-4-generators" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/xethron/migrations-generator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -182,6 +184,8 @@
           <root url="file://$MODULE_DIR$/laravel/vendor/unisharp/laravel-ckeditor" />
           <root url="file://$MODULE_DIR$/laravel/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/laravel/vendor/webmozart/assert" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/laravel-4-generators" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/migrations-generator" />
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/laravel/vendor/barryvdh/laravel-ide-helper" />
@@ -260,6 +264,8 @@
           <root url="file://$MODULE_DIR$/laravel/vendor/unisharp/laravel-ckeditor" />
           <root url="file://$MODULE_DIR$/laravel/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/laravel/vendor/webmozart/assert" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/laravel-4-generators" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/migrations-generator" />
         </SOURCES>
       </library>
     </orderEntry>
