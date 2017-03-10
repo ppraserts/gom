@@ -31,8 +31,8 @@
         <link href="/css/custom.css" rel="stylesheet">
         <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
         <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
-        <link href="{{asset('css/custom-modal.css')}}" rel="stylesheet">
-        <link href="{{asset('css/image-hover-effects.css')}}" rel="stylesheet">
+        <link href="/css/custom-modal.css" rel="stylesheet">
+        <link href="/css/image-hover-effects.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
