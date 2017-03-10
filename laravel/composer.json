@@ -12,8 +12,7 @@
         "ckeditor/ckeditor": "^4.5",
         "unisharp/laravel-ckeditor": "^4.5",
         "doctrine/dbal": "^2.5",
-        "paragonie/random_compat": "~1.4.0",
-        "xethron/migrations-generator": "v2.0.1"
+        "paragonie/random_compat": "~1.4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -21,7 +20,8 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-        "barryvdh/laravel-ide-helper": "^2.3"
+        "barryvdh/laravel-ide-helper": "^2.3",
+        "xethron/migrations-generator": "^2.0"
     },
     "autoload": {
         "classmap": [
