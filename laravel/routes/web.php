@@ -124,7 +124,6 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('productview','frontend\ProductsViewController');
     Route::resource('theme','frontend\ThemeController');
 
-
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
@@ -157,4 +156,11 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('news','backend\NewsController');
     Route::resource('reportuser','backend\ReportController');
     Route::resource('adminteam','backend\AdminteamController');
+});
+
+
+Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
+
+    Route::resource('cart','frontend\ShoppingCartController');
+
 });
