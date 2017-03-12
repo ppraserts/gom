@@ -23,8 +23,8 @@ class ProductsSaleEditController extends Controller
   private $rules = [
      'productcategorys_id' => 'required',
      'products_id' => 'required',
-     'product_title' => 'required',
-     'product_description' => 'required',
+     //'product_title' => 'required',
+     //'product_description' => 'required',
      'price' => 'required|numeric',
      'volumn' => 'required|numeric',
      'units' => 'required',
@@ -38,8 +38,8 @@ class ProductsSaleEditController extends Controller
   private $rules2 = [
      'productcategorys_id' => 'required',
      'products_id' => 'required',
-     'product_title' => 'required',
-     'product_description' => 'required',
+     //'product_title' => 'required',
+     //'product_description' => 'required',
      'pricerange_start' => 'required|numeric',
      'pricerange_end' => 'required|numeric',
      'volumnrange_start' => 'required|numeric',
@@ -52,8 +52,8 @@ class ProductsSaleEditController extends Controller
   private $rules3 = [
      'productcategorys_id' => 'required',
      'products_id' => 'required',
-     'product_title' => 'required',
-     'product_description' => 'required',
+     //'product_title' => 'required',
+     //'product_description' => 'required',
      'price' => 'required|numeric',
      'volumn' => 'required|numeric',
      'units' => 'required',
