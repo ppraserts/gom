@@ -4,7 +4,8 @@
 <script type="text/javascript">
   $(function() {
     $('#datetimepicker1').datetimepicker({
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD',
+        locale: 'th'
     });
 
     $('#users_province').on('change', function(e){
