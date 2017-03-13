@@ -13,6 +13,12 @@
        $user = auth()->guard('user')->user();
        $linkProfile = "/user/userprofiles";
 
+        $carts = session('carts');
+        $cart_items = 0;
+        if(is_array($carts)){
+            $cart_items = count($carts);
+        }
+
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -62,6 +68,13 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        @if($cart_items > 0)
+                            <li>
+                                <div class="btn-nav">
+                                     <a href="{{url('shop/cart')}}" class="btn btn-primary btn-small navbar-btn"><span class="badge">{{$cart_items}}</span>  <i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
+                                </div>
+                            </li>
+                        @endif
                         <li class="langBox">
                             <a href="{{ url('/change/th') }}" class="{{ $thActive }}"><img src="{{ url('images/thai-flag.png') }}" alt=""> {{ trans('messages.flag_th') }}</a>
                         </li>

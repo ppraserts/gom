@@ -36,10 +36,19 @@ class ShoppingCartController extends Controller
                 array_push($orders, $order2);
                 session(['orders' => $orders]);*/
 
+        $carts = array();
+        $session_carts = session('carts');
+        if(is_array($session_carts)){
+            foreach($session_carts as $item){
+                $cart = array(
+                    "iwantto" => Iwantto::find($item['iwantto_id']),
+                    "item" => 1
+                );
+                array_push($carts , $cart);
+            }
+        }
 
-        $orders = session('orders');
-
-        return view('frontend.shopping.shopping_cart', compact('orders'));
+        return view('frontend.shopping.shopping_cart', compact('carts'));
     }
 
     /**
@@ -113,35 +122,34 @@ class ShoppingCartController extends Controller
         $request_iwantto_id = $request->input('iwantto_id');
         $iwantto = Iwantto::find($request_iwantto_id);
 
-        //$request->session()->forget('carts');
+        $response = array(
+            "status" => "failed",
+            "iwantto" > null
+        );
 
-        $carts_in_session = session('carts');
+        if($iwantto != null){
 
-        if($carts_in_session != null && count($carts_in_session) > 0 ){
-            $arr_exist_cart = array();
-            for($i= 0 ; $i < count($carts_in_session) ; $i++){
+            $carts_in_session = session('carts');
 
-                if($carts_in_session[$i]['iwantto_id'] == $request_iwantto_id) {
-                    array_replace($carts_in_session[$i] , array());
-                }
-            }
+            if ($carts_in_session == null)
+                $carts_in_session = array();
 
-        }else{
-            // add new cart to session
-            $carts_in_session = array();
             $new_carts = array(
-                             "iwantto_id" => $iwantto->id,
-                             "item_count" => 1);
+                "iwantto_id" => $iwantto->id,
+                "item_count" => 1);
 
             array_push($carts_in_session, $new_carts);
+
+            session(['carts' => $carts_in_session]); // Save to session
+
+            $response = array("status" => "success", "iwantto" => $iwantto);
         }
 
-       session(['carts' => $carts_in_session]); // Save to session
-
-        $response = array(
-            "status" => "success",
-            "iwantto" => $iwantto
-        );
         return response()->json($response);
     }
+
+    public function clearCart($resuest){
+        $resuest->session()->forget('carts');
+    }
+
 }

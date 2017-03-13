@@ -148,10 +148,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
-    <?php
-       $carts = session('carts');
-       dump($carts);
-    ?>
+
 @stop
 
 @push('scripts')

@@ -1,25 +1,9 @@
 @extends('layouts.main')
 @section('content')
 
-    <style>
-        .
-
-    </style>
-
-    {{--<link href="{{asset('css/custom-font-awesome.css')}}" rel="stylesheet">--}}
-
-    {{--@if(isset($orders))--}}
-    {{--@foreach($orders as $order)--}}
-    {{--<pre>{{$order->id}}</pre>--}}
-
-    {{--@endforeach--}}
-    {{--@endif--}}
-
     <div style="background-color: white">
         <div class="container">
-
             <div class="row">
-
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
                     <h2>ตะกร้าของฉัน</h2>
                 </div>
@@ -29,72 +13,51 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
+                            <th >Product</th>
+                            <th class="text-center">Quantity</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">Total</th>
                             <th> </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="col-sm-7 col-md-6">
-                                <div class="media">
-                                    <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
-                                        <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                             style="width: 60px; height: 60px;">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                        <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                        <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+
+                        @if(isset($carts))
+
+                            @foreach($carts as $cart)
+
+                            <tr>
+                                <td class="col-sm-7 col-md-6">
+                                    <div class="media">
+                                        <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
+                                            <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}"
+                                                 style="width: 60px; height: 60px;">
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
+                                            <h5 class="media-heading"> <a href="#"></a></h5>
+                                            <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="col-sm-2 col-md-2" >
-                                <div class="input-append text-left">
-                                    <a href="#"> <i class="fa fa-minus"></i></a>
-                                    <input class="text-center" style="max-width:34px;" placeholder="1" id="appendedInputButtons" size="16" type="text">
-                                    <a href="#"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                            <td class="col-sm-1 col-md-1">
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-sm-7 col-md-6">
-                                <div class="media">
-                                    <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
-                                        <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                             style="width: 60px; height: 60px;">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                        <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                        <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                </td>
+                                <td class="col-sm-2 col-md-2" >
+                                    <div class="input-append text-left">
+                                        <a href="#" class="btn btn-default"> <i class="fa fa-minus"></i></a>
+                                        <input class="text-center" style="max-width: 40px; height: 35px"  value="{{$cart["item"]}}" id="appendedInputButtons" size="16" type="text">
+                                        <a href="#" class="btn btn-default"><i class="fa fa-plus"></i></a>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="col-sm-2 col-md-2" style="text-align: center">
-                                <div class="input-append text-left">
-                                    <a href="#"> <i class="fa fa-minus"></i></a>
-                                    <input class="text-center" style="max-width:34px;" placeholder="1" id="appendedInputButtons" size="16" type="text">
-                                    <a href="#"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                            <td class="col-sm-1 col-md-1">
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
-                                </button>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong> <span id="">{{$cart['iwantto']['price']}}</span></strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                <td class="col-sm-1 col-md-1">
+                                    <button id="btn_remove" type="button" class="btn btn-danger delete-button">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            @endforeach
+                        @endif
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
@@ -138,10 +101,33 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-
-
-    </script>
-
-
 @stop
+
+@push('scripts')
+<script>
+    var BASE_URL = '<?php echo url('/')?>';
+
+    $(document).ready(function () {
+
+        //remove row
+        $('table').on('click','.delete-button',function(){
+            $(this).parents('tr').remove();
+        });
+    })
+
+    jQuery('.delbtn').on('click', function() {
+        var $row = jQuery(this).closest('tr');
+        var $columns = $row.find('td');
+
+        $columns.addClass('row-highlight');
+        var values = "";
+
+        jQuery.each($columns, function(i, item) {
+            values = values + 'td' + (i + 1) + ':' + item.innerHTML + '<br/>';
+            alert(values);
+        });
+        console.log(values);
+    });
+
+</script>
+@endpush
