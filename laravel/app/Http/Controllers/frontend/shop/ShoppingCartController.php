@@ -113,36 +113,30 @@ class ShoppingCartController extends Controller
         $request_iwantto_id = $request->input('iwantto_id');
         $iwantto = Iwantto::find($request_iwantto_id);
 
-       // $request->session()->forget('carts');
+        //$request->session()->forget('carts');
 
         $carts_in_session = session('carts');
 
         if($carts_in_session != null && count($carts_in_session) > 0 ){
             $arr_exist_cart = array();
-
             for($i= 0 ; $i < count($carts_in_session) ; $i++){
-               // print_r($carts_in_session[$i]);
-                $key = array_keys($carts_in_session[$i][0]);
 
-                if($request_iwantto_id == $key){
-                    echo "OK";
+                if($carts_in_session[$i]['iwantto_id'] == $request_iwantto_id) {
+                    array_replace($carts_in_session[$i] , array());
                 }
             }
 
         }else{
             // add new cart to session
             $carts_in_session = array();
-
             $new_carts = array(
-                          $request_iwantto_id => array(
-                                     "iwantto_id" => $iwantto->id,
-                                     "item_count" => 1)
-                          );
+                             "iwantto_id" => $iwantto->id,
+                             "item_count" => 1);
 
             array_push($carts_in_session, $new_carts);
         }
 
-       // session(['carts' => $carts_in_session]); // Save to session
+       session(['carts' => $carts_in_session]); // Save to session
 
         $response = array(
             "status" => "success",
