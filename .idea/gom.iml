@@ -96,9 +96,11 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
+          <root url="phar://$MODULE_DIR$/composer.phar/" />
           <root url="phar://$MODULE_DIR$/laravel/composer.phar/" />
         </CLASSES>
         <SOURCES>
+          <root url="phar://$MODULE_DIR$/composer.phar/" />
           <root url="phar://$MODULE_DIR$/laravel/composer.phar/" />
         </SOURCES>
       </library>
@@ -182,6 +184,8 @@
           <root url="file://$MODULE_DIR$/laravel/vendor/unisharp/laravel-ckeditor" />
           <root url="file://$MODULE_DIR$/laravel/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/laravel/vendor/webmozart/assert" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/laravel-4-generators" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/migrations-generator" />
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/laravel/vendor/barryvdh/laravel-ide-helper" />
@@ -260,8 +264,12 @@
           <root url="file://$MODULE_DIR$/laravel/vendor/unisharp/laravel-ckeditor" />
           <root url="file://$MODULE_DIR$/laravel/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/laravel/vendor/webmozart/assert" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/laravel-4-generators" />
+          <root url="file://$MODULE_DIR$/laravel/vendor/xethron/migrations-generator" />
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
+    <orderEntry type="library" name="jQuery UI-1.10.2" level="application" />
   </component>
 </module>

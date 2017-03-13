@@ -161,6 +161,6 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 
 Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
 
-    Route::resource('cart','frontend\ShoppingCartController');
-
+    Route::resource('cart','frontend\shop\ShoppingCartController');
+    Route::post('cart/addToCart', 'frontend\shop\ShoppingCartController@addToCart');
 });
