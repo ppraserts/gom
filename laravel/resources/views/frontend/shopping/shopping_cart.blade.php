@@ -26,35 +26,34 @@
 
                             @foreach($carts as $cart)
 
-                            <tr>
-                                <td class="col-sm-7 col-md-6">
-                                    <div class="media">
-                                        <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
-                                            <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}"
-                                                 style="width: 60px; height: 60px;">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
-                                            <h5 class="media-heading"> <a href="#"></a></h5>
-                                            <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                <tr>
+                                    <td class="col-sm-7 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
+                                                <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}" style="width: 60px; height: 60px;">
+                                            </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
+                                                <h5 class="media-heading"> <a href="#"></a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="col-sm-2 col-md-2" >
-                                    <div class="input-append text-left">
-                                        <a href="#" class="btn btn-default"> <i class="fa fa-minus"></i></a>
-                                        <input class="text-center" style="max-width: 40px; height: 35px"  value="{{$cart["item"]}}" id="appendedInputButtons" size="16" type="text">
-                                        <a href="#" class="btn btn-default"><i class="fa fa-plus"></i></a>
-                                    </div>
-                                </td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong> <span id="">{{$cart['iwantto']['price']}}</span></strong></td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                                <td class="col-sm-1 col-md-1">
-                                    <button id="btn_remove" type="button" class="btn btn-danger delete-button">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="col-sm-2 col-md-2" >
+                                        <div class="input-append text-left">
+                                            <a href="#" class="btn btn-default minus"> <i class="fa fa-minus"></i></a>
+                                            <input class="text-center product_quantity" style="max-width: 40px; height: 35px"  value="{{$cart["item"]}}" id="appendedInputButtons" size="16" type="text">
+                                            <a href="#" class="btn btn-default plus"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong> <span class="product_price">{{$cart['iwantto']['price']}}</span></strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong><span class="total">{{ number_format (intval($cart["item"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button id="btn_remove" type="button" class="btn btn-danger delete-button">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
 
                             @endforeach
                         @endif
@@ -113,21 +112,60 @@
         $('table').on('click','.delete-button',function(){
             $(this).parents('tr').remove();
         });
-    })
 
-    jQuery('.delbtn').on('click', function() {
-        var $row = jQuery(this).closest('tr');
-        var $columns = $row.find('td');
+        eventAddOrMinusQuantity();
 
-        $columns.addClass('row-highlight');
-        var values = "";
+        calculateTotal();
 
-        jQuery.each($columns, function(i, item) {
-            values = values + 'td' + (i + 1) + ':' + item.innerHTML + '<br/>';
-            alert(values);
-        });
-        console.log(values);
     });
+    
+    
+    function calculateTotal() {
+        $('.product_quantity').change(function(){
+            var $row = $(this).closest("tr");
+            var qty = parseInt($row.find('.product_quantity').val());
+            var price = parseFloat($.trim($row.find(".product_price").text()));
+            var total = qty * price;
+            $row.find('.total').text(total.toFixed(2));
+//            console.log(qty)
+//            console.log(price)
+        })
+    }
+    
+    function eventAddOrMinusQuantity() {
+        $('.plus').click(function(){
+            var $row = $(this).closest("tr");
+            var qty = $row.find('.product_quantity').val();
+            if(qty != ''){
+                qty = parseInt(qty)+1;
+            }else {
+                qty = 1;
+            }
+            $row.find('.product_quantity').val(qty);
+        });
+
+        $('.minus').click(function(){
+            alert('minus');
+        });
+    }
+    
+    function handlerProductQuantity() {
+        
+    }
+
+//    jQuery('.delbtn').on('click', function() {
+    //        var $row = jQuery(this).closest('tr');
+    //        var $columns = $row.find('td');
+    //
+    //        $columns.addClass('row-highlight');
+    //        var values = "";
+    //
+    //        jQuery.each($columns, function(i, item) {
+    //            values = values + 'td' + (i + 1) + ':' + item.innerHTML + '<br/>';
+    //            alert(values);
+    //        });
+    //        console.log(values);
+    //    });
 
 </script>
 @endpush
