@@ -157,6 +157,12 @@
 
     var BASE_URL = '<?php echo url('/')?>';
 
+    $(document).ready(function () {
+        $('#modal_add_to_cart').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    });
+
     function addToCart(iwanttoId) {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = BASE_URL + '/shop/cart/addToCart';
@@ -168,7 +174,8 @@
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'success') {
-                    console.log(response.iwantto);
+                    //console.log(response.iwantto);
+                    // location.reload();
                     showProductAdded(response.iwantto);
                 }
             },
@@ -177,6 +184,7 @@
             }
         });
     }
+
 
     function showProductAdded(iwantto) {
         if (iwantto != null) {

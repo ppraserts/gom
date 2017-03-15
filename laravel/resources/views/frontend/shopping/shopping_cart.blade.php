@@ -13,7 +13,7 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th >Product</th>
+                            <th>Product</th>
                             <th class="text-center">Quantity</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">Total</th>
@@ -34,20 +34,24 @@
                                             </a>
                                             <div class="media-body">
                                                 <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
-                                                <h5 class="media-heading"> <a href="#"></a></h5>
+                                                <h5 class="media-heading"><a href="#"></a></h5>
                                                 <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="col-sm-2 col-md-2" >
+                                    <td class="col-sm-2 col-md-2">
                                         <div class="input-append text-left">
                                             <a href="#" class="btn btn-default minus"> <i class="fa fa-minus"></i></a>
-                                            <input class="text-center product_quantity" style="max-width: 40px; height: 35px"  value="{{$cart["item"]}}" id="appendedInputButtons" size="16" type="text">
+                                            <input class="text-center product_quantity" style="max-width: 40px; height: 35px" value="{{$cart["item"]}}"
+                                                   id="appendedInputButtons" size="16" type="text">
                                             <a href="#" class="btn btn-default plus"><i class="fa fa-plus"></i></a>
                                         </div>
                                     </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong> <span class="product_price">{{$cart['iwantto']['price']}}</span></strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong><span class="total">{{ number_format (intval($cart["item"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong> <span class="product_price">{{$cart['iwantto']['price']}}</span></strong>
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong><span
+                                                    class="total">{{ number_format (intval($cart["item"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong>
+                                    </td>
                                     <td class="col-sm-1 col-md-1">
                                         <button id="btn_remove" type="button" class="btn btn-danger delete-button">
                                             <i class="fa fa-trash"></i>
@@ -83,7 +87,7 @@
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
-                                <button type="button" class="btn btn-default">
+                                <button onclick="window.history.back()" type="button" class="btn btn-default">
                                     <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                 </button>
                             </td>
@@ -108,52 +112,68 @@
 
     $(document).ready(function () {
 
-        //remove row
-        $('table').on('click','.delete-button',function(){
-            $(this).parents('tr').remove();
-        });
+        handleRemoveCart();
 
-        eventAddOrMinusQuantity();
+        handlerPlusOrMinusQuantity();
 
-        calculateTotal();
+        handlerProductQuantity();
 
     });
-    
-    
-    function calculateTotal() {
-        $('.product_quantity').change(function(){
+
+    function handleRemoveCart() {
+        //remove row
+        $('table').on('click', '.delete-button', function () {
+            $(this).parents('tr').remove();
+        });
+    }
+
+    function handlerPlusOrMinusQuantity() {
+        $('.plus').click(function () {
             var $row = $(this).closest("tr");
+            var qty = $row.find('.product_quantity').val();
+            if (qty != '') {
+                qty = parseInt(qty) + 1;
+            } else {
+                qty = 1;
+            }
+            $row.find('.product_quantity').val(qty);
+            calculateTotal($row);
+        });
+
+        $('.minus').click(function () {
+            var $row = $(this).closest("tr");
+            var qty = $row.find('.product_quantity').val();
+            if (qty != '') {
+                qty = parseInt(qty) - 1;
+                if (qty > 0) {
+                    $row.find('.product_quantity').val(qty);
+                }
+            }
+            calculateTotal($row);
+        });
+    }
+
+    function handlerProductQuantity() {
+        $('.product_quantity').change(function () {
+            var $row = $(this).closest("tr");
+            calculateTotal($row);
+        })
+    }
+
+    function calculateTotal($row) {
+        if ($row != null) {
             var qty = parseInt($row.find('.product_quantity').val());
             var price = parseFloat($.trim($row.find(".product_price").text()));
             var total = qty * price;
             $row.find('.total').text(total.toFixed(2));
-//            console.log(qty)
-//            console.log(price)
-        })
+        }
     }
     
-    function eventAddOrMinusQuantity() {
-        $('.plus').click(function(){
-            var $row = $(this).closest("tr");
-            var qty = $row.find('.product_quantity').val();
-            if(qty != ''){
-                qty = parseInt(qty)+1;
-            }else {
-                qty = 1;
-            }
-            $row.find('.product_quantity').val(qty);
-        });
-
-        $('.minus').click(function(){
-            alert('minus');
-        });
-    }
-    
-    function handlerProductQuantity() {
+    function calculateSubTotal() {
         
     }
 
-//    jQuery('.delbtn').on('click', function() {
+    //    jQuery('.delbtn').on('click', function() {
     //        var $row = jQuery(this).closest('tr');
     //        var $columns = $row.find('td');
     //
