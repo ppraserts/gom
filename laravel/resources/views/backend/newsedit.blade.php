@@ -25,7 +25,8 @@ else
             });
 
             $('#datetimepicker1').datetimepicker({
-                format: 'YYYY-MM-DD'
+                format: 'YYYY-MM-DD',
+                locale: 'th'
             });
     });
 </script>

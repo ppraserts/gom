@@ -129,7 +129,7 @@
         </select>
     </div>
     <div class="form-group {{ $errors->has('product_title') ? 'has-error' : '' }}">
-        <strong>* {{ Lang::get('validation.attributes.product_title') }}
+        <strong>{{ Lang::get('validation.attributes.product_title') }}
         :</strong>
         {!! Form::text('product_title', $item->product_title, array('placeholder' => Lang::get('validation.attributes.product_title'),'class' => 'form-control')) !!}
     </div>

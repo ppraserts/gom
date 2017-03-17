@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
+use App\Product;
 
 class ProductCategoryController extends Controller
 {
@@ -73,8 +74,18 @@ class ProductCategoryController extends Controller
 
     public function destroy($id)
     {
-        ProductCategory::find($id)->delete();
-        return redirect()->route('productcategory.index')
-                        ->with('success',trans('messages.message_delete_success'));
+        $countProduct = Product::where('productcategory_id','=',$id)->count();
+
+        if($countProduct > 0)
+        {
+            return redirect()->route('productcategory.index')
+                          ->with('error',trans('messages.message_delete_inuse'));
+        }
+        else
+        {
+            ProductCategory::find($id)->delete();
+            return redirect()->route('productcategory.index')
+                            ->with('success',trans('messages.message_delete_success'));
+        }
     }
 }

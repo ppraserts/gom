@@ -15,6 +15,11 @@ $pagetitle = trans('messages.menu_product_category');
               <p>{{ $message }}</p>
           </div>
       @endif
+      @if ($message = Session::get('error'))
+          <div class="alert alert-danger">
+              <p>{{ $message }}</p>
+          </div>
+      @endif
       <div class="panel panel-default">
         <div class="panel-body">
               {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
