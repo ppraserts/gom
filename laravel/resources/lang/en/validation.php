@@ -220,6 +220,10 @@ return [
         'province'=> 'Province',
         'productcategorys_id'=> 'Product Category',
         'products_id'=> 'Product',
+        'shop_title'=> 'Title',
+        'shop_subtitle'=> 'Sub Title',
+        'shop_description'=> 'Description',
+        'shop_slide_image' => 'Shop Image',
     ],
 
 ];

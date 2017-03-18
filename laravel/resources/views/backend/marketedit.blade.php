@@ -16,7 +16,7 @@ else
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
-@section('page_heading_image','<i class="glyphicon glyphicon-shopping-cart"></i>')
+@section('page_heading_image','shop')
 @section('section')
 <div class="col-sm-12">
     <div class="row">

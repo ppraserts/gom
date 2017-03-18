@@ -122,8 +122,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
-    Route::resource('theme','frontend\ThemeController');
-
+    Route::resource('shopsetting','frontend\ShopSettingController');
+    Route::resource('shoppingcart','frontend\ShoppingCartController');
+    Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
+    Route::post('cart/addToCart', 'frontend\ShoppingCartController@addToCart');
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
@@ -161,6 +163,5 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 
 Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
 
-    Route::resource('cart','frontend\shop\ShoppingCartController');
-    Route::post('cart/addToCart', 'frontend\shop\ShoppingCartController@addToCart');
+
 });

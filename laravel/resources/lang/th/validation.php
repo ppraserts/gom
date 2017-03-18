@@ -221,6 +221,10 @@ return [
         'productcategorys_id'=> 'กลุ่มสินค้า',
         'products_id'=> 'สินค้า',
         'users_id'=> 'ผู้ใช้งาน',
+        'shop_title'=> 'หัวเรื่อง',
+        'shop_subtitle'=> 'หัวเรื่องย่อย',
+        'shop_description'=> 'รายละเอียด',
+        'shop_slide_image' => 'รูปไสด์ร้านค้า',
     ],
 
 ];

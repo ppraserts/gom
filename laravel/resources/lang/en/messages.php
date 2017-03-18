@@ -96,5 +96,11 @@ return [
     'searchprice' => 'ราคา',
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
     'menu_adminteam' => 'ผู้ดูแลระบบ',
-    'theme' => 'Theme Shop',
+    'shop_setting' => 'Shop Setting',
+    'title' => 'Title',
+    'sub_title' => 'Sub Title',
+    'Description' => 'Description',
+    'shop_theme' => 'Shop Theme',
+    'apply' => 'Apply',
+    'preview' => 'Preview',
 ];

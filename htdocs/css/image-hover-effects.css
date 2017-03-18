@@ -62,6 +62,35 @@
   box-shadow: none;
 }
 
+.hover a.info {
+  display: inline-block;
+  text-decoration: none;
+  padding: 7px 14px;
+  text-transform: uppercase;
+  color: #FFF;
+  border: 1px solid #fff;
+  margin: 110px 0 0 0;
+  border-radius: 5px;
+  background-color: #127cd6;
+}
+
+.hover a.info:hover {
+  box-shadow: 0 0 5px #fff;
+  cursor: pointer;
+}
+
+/* styling to remove box shadow and border from buttons for last few effects */
+
+.hover a.nullbutton {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.hover a.nullbutton:hover {
+  box-shadow: none;
+}
+
 /* remove the blue line that shows on modal buttons after you have open and close a modal */
 
 .modal-open .modal, button:focus {
@@ -141,9 +170,9 @@ cursor: pointer;
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
- 
+
  /* effect hover 2 */
- 
+
 .ehover2 img {
   transition: all 0.2s ease-in;
 }
@@ -175,10 +204,10 @@ cursor: pointer;
   transform: translateY(0px);
   transition-delay: 0.3s;
 }
- 
- 
+
+
  /* effect hover 3 */
- 
+
 .ehover3 img {
   transition: all 0.4s ease-in;
 }
@@ -199,10 +228,10 @@ cursor: pointer;
   opacity: 1;
   transform: scale(1);
 }
- 
- 
+
+
  /* effect hover 4 */
- 
+
 .ehover4 h2 {
   transform: translateY(55px);
   transition: all 0.4s ease-in-out;
@@ -235,9 +264,9 @@ cursor: pointer;
   opacity: 1;
   transform: scale(1);
 }
-  
+
  /* effect 4 transitionV2 */
- 
+
 .ehover42 h2 {
   transform: translateY(55px);
   transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
@@ -270,8 +299,8 @@ cursor: pointer;
   opacity: 1;
   transform: scale(1);
 }
- 
- 
+
+
 
 /* effect hover 1 v2 */
 
@@ -330,9 +359,9 @@ cursor: pointer;
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
- 
+
  /* effect hover 5 */
- 
+
 .ehover5 h2, .ehover5 img {
   transition: all 0.4s ease-in-out;
 }
@@ -378,7 +407,7 @@ cursor: pointer;
 }
 
  /* effect hover 6 */
- 
+
 .ehover6 .rotate {
   transform: rotate(-45deg);
   width: 100%;
@@ -752,7 +781,7 @@ filter: brightness(0.7);
 
 /* effect hover 9 */
 
-.ehover9 .overlay { 
+.ehover9 .overlay {
 	background-color: rgba(255, 255, 255, 0.7);
 	top: -200px;
 	opacity: 0;
@@ -764,24 +793,24 @@ filter: brightness(0.7);
 	transition-delay: 0.3s;
 }
 
-.ehover9 button.info { 
+.ehover9 button.info {
     transform: translateY(-200px);
 	color: #000;
 	border: 1px solid #000;
 	transition:  all ease-in-out 0.3s;
-} 
+}
 
-.ehover9:hover .overlay { 
-	opacity: 1; 
-	top: 0px; 
+.ehover9:hover .overlay {
+	opacity: 1;
+	top: 0px;
 	transition-delay: 0s
-}																						
-.ehover9:hover h2 { 
+}
+.ehover9:hover h2 {
     transform: translateY(0px);
 	transition-delay: 0.3s;
 }
 
-.ehover9:hover button.info { 
+.ehover9:hover button.info {
     transform: translateY(0px);
     box-shadow: 0 0 5px #000;
 	color: #000;
@@ -1057,7 +1086,7 @@ filter: brightness(0.6);
 	opacity: 1;
 	-webkit-transform: scale(1);
 	transform: scale(1);
-	
+
 }
 
 .ehover13 button {

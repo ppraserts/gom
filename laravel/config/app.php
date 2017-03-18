@@ -15,6 +15,7 @@ return [
     'upload_imageprofile' => 'upload/imageprofiles/',
     'upload_product' => 'upload/products/',
     'upload_mailfile' => 'upload/mailfile/',
+    'upload_shopimage' => 'upload/shopimage/',
     /*
     |--------------------------------------------------------------------------
     | Application Name

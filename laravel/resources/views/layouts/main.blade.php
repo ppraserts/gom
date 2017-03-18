@@ -148,6 +148,7 @@
         <script src="/js/typeahead.bundle.min.js"></script>
         <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
         <script src="/js/jssor.slider.mini.js"></script>
+        <script src="/js/bootstrap-filestyle.min.js"></script>
         @stack('scripts')
     </body>
 

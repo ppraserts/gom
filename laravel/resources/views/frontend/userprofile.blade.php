@@ -95,17 +95,17 @@
         </div>
     @endif
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-            </div>
-            <div class="pull-right">
-                {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
-                 <button type="submit" class="btn btn-primary">
-                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                   {{ trans('messages.button_save')}}</button>
+            <div class="col-lg-12 margin-tb">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                        {{ trans('messages.button_save')}}</button>
+                </div>
             </div>
         </div>
-    </div>
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12" style="padding-right:30px;">
