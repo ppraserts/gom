@@ -96,6 +96,7 @@ return [
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
     'menu_adminteam' => 'ผู้ดูแลระบบ',
     'shop_setting' => 'ตั้งค่าร้านค้า',
+    'shop_image' => 'รูปภาพไสด์โชว์',
     'title' => 'หัวเรื่อง',
     'sub_title' => 'หัวเรื่องย่อย',
     'Description' => 'รายละเอียด',
