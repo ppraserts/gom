@@ -30,7 +30,9 @@
                                 <br/><br/>
                             </div>
                             <div class="rating hidden-sm col-md-4">
-                                <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="#" class="btn btn-primary addtocart"><i class="fa fa-shopping-cart"></i>
+                                  <input type="hidden" value="{{$col_md_4_item['id']}}">
+                                </a>
                             </div>
                         </div>
                         <div class="separator clear-left">
@@ -141,7 +143,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="{{url('shop/cart') }}" type="button" class="btn btn-success">คะกร้าสินค้า</a>
+                        <a href="{{url('shop/shoppingcart') }}" type="button" class="btn btn-success">คะกร้าสินค้า</a>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                     </div>
                 </div>
@@ -161,12 +163,22 @@
         $('#modal_add_to_cart').on('hidden.bs.modal', function () {
             location.reload();
         });
+
+        $(".addtocart").one('click', function (event) {
+            event.preventDefault();
+
+            var iwanttoId = $(this).find("input").val();
+
+            addToCart(iwanttoId);
+
+            $(this).prop('disabled', true);
+        });
+
     });
 
     function addToCart(iwanttoId) {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var targetUrl = BASE_URL + '/shop/cart/addToCart';
-        //   alert(targetUrl);
+        var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
         $.ajax({
             type: 'POST',
             url: targetUrl,
@@ -174,8 +186,6 @@
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'success') {
-                    //console.log(response.iwantto);
-                    // location.reload();
                     showProductAdded(response.iwantto);
                 }
             },
@@ -184,7 +194,6 @@
             }
         });
     }
-
 
     function showProductAdded(iwantto) {
         if (iwantto != null) {

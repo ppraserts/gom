@@ -69,6 +69,7 @@ class LoginController extends Controller
     public function getLogout()
     {
         auth()->guard('user')->logout();
+        session()->flush();
         return redirect()->intended('user/login');
     }
 

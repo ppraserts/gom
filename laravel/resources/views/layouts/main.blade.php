@@ -71,7 +71,7 @@
                         @if($cart_items > 0)
                             <li>
                                 <div class="btn-nav">
-                                     <a href="{{url('shop/cart')}}" class="btn btn-primary btn-small navbar-btn"><span class="badge">{{$cart_items}}</span>  <i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
+                                     <a href="{{url('shop/shoppingcart')}}" class="btn btn-primary btn-small navbar-btn"><span class="badge">{{$cart_items}}</span>  <i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
                                 </div>
                             </li>
                         @endif
@@ -149,6 +149,7 @@
         <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
         <script src="/js/jssor.slider.mini.js"></script>
         <script src="/js/bootstrap-filestyle.min.js"></script>
+        <script src="/js/bootbox.min.js"></script>
         @stack('scripts')
     </body>
 

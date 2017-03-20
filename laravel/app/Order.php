@@ -9,12 +9,13 @@ class Order extends Model
 
     protected $table = "orders";
 
-    public $fillable = ['order_date',
+    public $fillable = ['user_id',
+                        'order_date',
                         'order_status',
                         'total_amount',
-                        'grand_amount'];
+                        'order_type'];
 
-    public function orders_items(){
+    public function orderItems(){
         return $this->hasMany('App\OrderItem');
     }
 

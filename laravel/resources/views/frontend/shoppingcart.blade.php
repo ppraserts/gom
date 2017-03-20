@@ -1,108 +1,115 @@
 @extends('layouts.main')
 @section('content')
 
-    <div style="background-color: white">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-10 col-md-offset-1">
-                    <h2>ตะกร้าของฉัน</h2>
+    <form id="form_shopping_cart">
+        <div style="background-color: white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-10 col-md-offset-1">
+                        <h2>ตะกร้าของฉัน</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-10 col-md-offset-1">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th class="text-center">Quantity</th>
-                            <th class="text-center">Price</th>
-                            <th class="text-center">Total</th>
-                            <th> </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        @if(isset($carts))
-
-                            @foreach($carts as $cart)
-
-                                <tr>
-                                    <td class="col-sm-7 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#" style="margin-right: 10px">
-                                                <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}" style="width: 60px; height: 60px;">
-                                            </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
-                                                <h5 class="media-heading"><a href="#"></a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                <div class="row">
+                    <div class="col-sm-12 col-md-10 col-md-offset-1">
+                        <table id="table_cart" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Total</th>
+                                <th> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(isset($carts))
+                                @foreach($carts as $cart)
+                                    <tr class="data">
+                                        <td class="col-sm-7 col-md-6">
+                                            <div class="media">
+                                                <a class=" pull-left" href="#" style="margin-right: 10px">
+                                                    <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}"
+                                                         style="width: 60px; height: 60px;">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
+                                                    <h5 class="media-heading"><a href="#"></a></h5>
+                                                    <span class="text-success">
+                                                        <strong><span class="glyphicon glyphicon-map-marker"></span>
+                                                            {{ $cart['iwantto']['city'] }} {{ $cart['iwantto']['province'] }}</strong>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="col-sm-2 col-md-2">
-                                        <div class="input-append text-left">
-                                            <a href="#" class="btn btn-default minus"> <i class="fa fa-minus"></i></a>
-                                            <input class="text-center product_quantity" style="max-width: 40px; height: 35px" value="{{$cart["item"]}}"
-                                                   id="appendedInputButtons" size="16" type="text">
-                                            <a href="#" class="btn btn-default plus"><i class="fa fa-plus"></i></a>
-                                        </div>
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong> <span class="product_price">{{$cart['iwantto']['price']}}</span></strong>
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong><span
-                                                    class="total">{{ number_format (intval($cart["item"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong>
-                                    </td>
-                                    <td class="col-sm-1 col-md-1">
-                                        <button id="btn_remove" type="button" class="btn btn-danger delete-button">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-
-                            @endforeach
-                        @endif
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><h5>Subtotal</h5></td>
-                            <td class="text-right"><h5><strong>$24.59</strong></h5></td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><h5>Estimated shipping</h5></td>
-                            <td class="text-right"><h5><strong>$6.94</strong></h5></td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><h3>Total</h3></td>
-                            <td class="text-right"><h3><strong>$31.53</strong></h3></td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <button onclick="window.history.back()" type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success">
-                                    Checkout <span class="glyphicon glyphicon-play"></span>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                        </td>
+                                        <td class="col-sm-2 col-md-2">
+                                            <div class="input-append text-left">
+                                                <a href="#" class="btn btn-default minus"> <i class="fa fa-minus"></i></a>
+                                                <input class="text-center product_quantity" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
+                                                       id="appendedInputButtons" size="16" type="text">
+                                                <a href="#" class="btn btn-default plus"><i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>
+                                                <span class="product_price">{{$cart['iwantto']['price']}}</span>
+                                            </strong></td>
+                                        <td class="col-sm-1 col-md-1 text-center">
+                                            <strong><span
+                                                        class="total">{{ number_format (intval($cart["qty"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1">
+                                            <div class="text-center">
+                                                <button id="btn_remove" type="button" class="btn btn-danger delete-button ">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td style="display:none;"><input type="hidden" value="{{$cart['iwantto']['id']}}"></td>
+                                        <td style="display:none;"><input type="hidden" value="{{$cart['iwantto']['products_id']}}"></td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            {{--<tr>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td><h5>Subtotal</h5></td>--}}
+                            {{--<td class="text-right"><h5><strong>$24.59</strong></h5></td>--}}
+                            {{--</tr>--}}
+                            {{--<tr>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td>&nbsp;</td>--}}
+                            {{--<td><h5>Estimated shipping</h5></td>--}}
+                            {{--<td class="text-right"><h5><strong>$6.94</strong></h5></td>--}}
+                            {{--</tr>--}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><h3>มูลค่าสินค้า</h3></td>
+                                <td class="text-right"><span id="order_total"></span></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <button onclick="window.history.back()" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> เลือกซื้อสินค้าต่อ
+                                    </button>
+                                </td>
+                                <td>
+                                    <button id="btn_save" type="submit" class="btn btn-success"><i class="fa fa-money"></i> ดำเนินการชำระเงิน </span>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
 @stop
 
@@ -114,20 +121,24 @@
 
         handleRemoveCart();
 
-        handlerPlusOrMinusQuantity();
+        handlePlusOrMinusQuantity();
 
-        handlerProductQuantity();
+        handleProductQuantity();
 
+        calculateOrderTotal();
+
+        checkout();
     });
 
     function handleRemoveCart() {
         //remove row
         $('table').on('click', '.delete-button', function () {
             $(this).parents('tr').remove();
+            calculateOrderTotal();
         });
     }
 
-    function handlerPlusOrMinusQuantity() {
+    function handlePlusOrMinusQuantity() {
         $('.plus').click(function () {
             var $row = $(this).closest("tr");
             var qty = $row.find('.product_quantity').val();
@@ -137,7 +148,7 @@
                 qty = 1;
             }
             $row.find('.product_quantity').val(qty);
-            calculateTotal($row);
+            calculateTotalEachRow($row);
         });
 
         $('.minus').click(function () {
@@ -149,43 +160,96 @@
                     $row.find('.product_quantity').val(qty);
                 }
             }
-            calculateTotal($row);
+            calculateTotalEachRow($row);
         });
     }
 
-    function handlerProductQuantity() {
+    function handleProductQuantity() {
         $('.product_quantity').change(function () {
             var $row = $(this).closest("tr");
-            calculateTotal($row);
+            calculateTotalEachRow($row);
         })
     }
 
-    function calculateTotal($row) {
+    function calculateTotalEachRow($row) {
         if ($row != null) {
             var qty = parseInt($row.find('.product_quantity').val());
             var price = parseFloat($.trim($row.find(".product_price").text()));
             var total = qty * price;
             $row.find('.total').text(total.toFixed(2));
+            calculateOrderTotal();
         }
     }
-    
-    function calculateSubTotal() {
-        
+
+    function calculateOrderTotal() {
+        var orderTotal = 0;
+        $('.total').each(function () {
+            orderTotal += parseFloat($(this).text());
+        });
+
+        $('#order_total').html('<h3><strong>' + orderTotal.toFixed(2) + ' บาท </h3></strong');
     }
 
-    //    jQuery('.delbtn').on('click', function() {
-    //        var $row = jQuery(this).closest('tr');
-    //        var $columns = $row.find('td');
-    //
-    //        $columns.addClass('row-highlight');
-    //        var values = "";
-    //
-    //        jQuery.each($columns, function(i, item) {
-    //            values = values + 'td' + (i + 1) + ':' + item.innerHTML + '<br/>';
-    //            alert(values);
-    //        });
-    //        console.log(values);
-    //    });
+    function checkout() {
+        $('#form_shopping_cart').on('submit', function (e) {
+            e.preventDefault();
+
+            var cart_items = [];
+            $('#table_cart').find('tbody tr.data').each(function (i, el) {
+                var $tds = $(this).find('td');
+                var quantity = $tds.eq(1).find('input').val();
+                var unit_price = $tds.eq(2).text().trim();
+                var total = $tds.eq(3).text().trim();
+                var id = $tds.eq(5).find('input').val();
+                var product_id = $tds.eq(6).find('input').val();
+                var cart_item = {
+                    id: id,
+                    unit_price: unit_price,
+                    quantity: quantity,
+                    total: total,
+                    product_id: product_id
+                };
+                // add to list
+                cart_items.push(cart_item);
+            });
+
+            var totalOrder = 0;
+            $('.total').each(function () {
+                totalOrder += parseFloat($(this).text());
+            });
+
+            var targetUrl = BASE_URL + '/shop/shoppingcart/checkout';
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            console.log(cart_items);
+
+            $.ajax({
+                type: 'POST',
+                url: targetUrl,
+                data: {_token: CSRF_TOKEN, cart_items : cart_items , total_amount: totalOrder},
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == 'success') {
+                        bootbox.alert({
+                            message: "บันทึกข้อมูลสำเร็จ",
+                            size: 'small',
+                            callback: function () {
+                                window.location.href = '{{url("/result")}}';
+                            }
+                        });
+                    }else{
+                        bootbox.alert({
+                            message: "พบข้อผิดพลาดในการบันทึกข้อมูล",
+                            size: 'small'
+                        });
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+    }
 
 </script>
 @endpush

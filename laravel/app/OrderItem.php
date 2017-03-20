@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    protected $table = "orders_items";
+    protected $table = "order_items";
 
     public $fillable = ['order_id',
         'product_id',
@@ -15,4 +15,9 @@ class OrderItem extends Model
         'discount',
         'total',
         'order_item_status'];
+
+
+    public function order(){
+        return $this->belongsTo('App\Order');
+    }
 }

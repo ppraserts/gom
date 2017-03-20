@@ -3,42 +3,29 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Iwantto;
+use App\Order;
+use App\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Order;
-use phpDocumentor\Reflection\Types\Array_;
+
 
 class ShoppingCartController extends Controller
 {
 
-    public function index()
+    function __construct()
     {
 
-        // Load list of product from session
+    }
 
-        /*        $orders = array();
-
-                $order1 = new Order();
-                $order1->id = 1;
-                $order1->order_status = 2;
-                $order1->total_amount = 1000;
-
-                $order2 = new Order();
-                $order2->id = 2;
-                $order2->order_status = 3;
-                $order2->total_amount = 555;
-
-                array_push($orders, $order1);
-                array_push($orders, $order2);
-                session(['orders' => $orders]);*/
-
+    public function index()
+    {
         $carts = array();
         $session_carts = session('carts');
         if(is_array($session_carts)){
             foreach($session_carts as $item){
                 $cart = array(
                     "iwantto" => Iwantto::find($item['iwantto_id']),
-                    "item" => 1
+                    "qty" => 1
                 );
                 array_push($carts , $cart);
             }
@@ -47,37 +34,45 @@ class ShoppingCartController extends Controller
         return view('frontend.shoppingcart', compact('carts'));
     }
 
-
-    public function create()
+    public function checkout(Request $request)
     {
-        //
+        $response = array("status" => "success");
+
+        $user = auth()->guard('user')->user();
+
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->total_amount = $request->input('total_amount');
+        $order->order_status = 1;
+        $order->order_type = "retail";
+        $order->order_date = date('Y-m-d H:i:s');
+        $order->save();
+
+        $order_items = array();
+        $cart_items  = $request->input('cart_items');
+        if($cart_items != null && $cart_items != ''){
+            foreach ($cart_items as $item){
+                $order_item = new OrderItem();
+                $order_item->iwantto_id = $item['id'];
+                $order_item->unit_price = $item['unit_price'];
+                $order_item->product_id = $item['product_id'];
+                $order_item->quantity = $item['quantity'];
+                $order_item->total = $item['total'];
+                array_push( $order_items , $order_item);
+            }
+        }
+
+        if($order->orderItems()->saveMany($order_items)){
+            $response['status'] = "success";
+        }
+
+        //clear session
+        $this->clearCart($request);
+
+        return response()->json($response);
     }
-
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
 
     public function update(Request $request, $id)
-    {
-        //
-    }
-
-
-    public function destroy($id)
     {
         //
     }
@@ -87,21 +82,16 @@ class ShoppingCartController extends Controller
         $request_iwantto_id = $request->input('iwantto_id');
         $iwantto = Iwantto::find($request_iwantto_id);
 
-        $response = array(
-            "status" => "failed",
-            "iwantto" > null
-        );
+        $response = array("status" => "failed", "iwantto" > null);
 
         if($iwantto != null){
-
             $carts_in_session = session('carts');
-
             if ($carts_in_session == null)
                 $carts_in_session = array();
 
             $new_carts = array(
                 "iwantto_id" => $iwantto->id,
-                "item_count" => 1);
+                "qty" => 1);
 
             array_push($carts_in_session, $new_carts);
 
