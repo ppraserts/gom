@@ -1,9 +1,111 @@
 <?php
+use App\Http\Controllers\frontend\MarketController;
+
 $url = "user/iwanttosale";
 ?>
 @extends('layouts.main')
 @section('content')
 @include('shared.usermenu', array('setActive'=>'iwanttosale'))
+@push('scripts')
+<script type="text/javascript">
+$(function()
+{
+	 var query_url = '';
+	 var products;
+
+	query_url = '/information/create/ajax-state';
+
+	products = new Bloodhound({
+		datumTokenizer: function (datum) {
+			alert(datum);
+			return Bloodhound.tokenizers.obj.whitespace(datum.id);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		remote: {
+			url: query_url+'?search=true&product_name_th=%QUERY',
+			filter: function (products) {
+				// Map the remote source JSON array to a JavaScript object array
+				return $.map(products, function (product) {
+					return {
+						id: product.id,
+						value: product.product_name_th
+					};
+				});
+			},
+			wildcard: "%QUERY"
+		}
+	});
+	
+	products.initialize();
+
+	$('.typeahead').typeahead({
+		hint: false,
+		highlight: true,
+		minLength: 1,
+		autoSelect: true
+		}, {
+		limit: 60,
+		name: 'product_id',
+		displayKey: 'value',
+		source: products.ttAdapter(),
+		templates: {
+			header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+		}
+	});
+
+	 $('#productcategorys_id').on('change', function(e){
+		product_category_value = e.target.value;
+
+		query_url = '/information/create/ajax-state?search=true&productcategorys_id='+product_category_value;
+
+		products = new Bloodhound({
+			datumTokenizer: function (datum) {
+				alert(datum);
+				return Bloodhound.tokenizers.obj.whitespace(datum.id);
+			},
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: query_url+'&product_name_th=%QUERY',
+				filter: function (products) {
+					// Map the remote source JSON array to a JavaScript object array
+					return $.map(products, function (product) {
+						return {
+							id: product.id,
+							value: product.product_name_th
+						};
+					});
+				},
+				wildcard: "%QUERY"
+			}
+		});
+		
+		products.initialize();
+
+		$('.typeahead').typeahead('destroy');
+		$('.typeahead').typeahead({
+			hint: false,
+			highlight: true,
+			minLength: 1,
+			autoSelect: true
+			}, {
+			limit: 60,
+			name: 'product_id',
+			displayKey: 'value',
+			source: products.ttAdapter(),
+			templates: {
+				header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+			}
+		});
+	 });
+
+
+	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
+		$('#products_id').val(suggestion.id);
+	});
+
+});
+</script>
+@endpush
 <br/>
 <div class="row">
     {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
@@ -21,7 +123,7 @@ $url = "user/iwanttosale";
     </div>
     <div class="col-md-8">
         <div class="input-group custom-search-form">
-            <input value="{{ isset($_GET['search'])? $_GET['search'] : '' }}" type="text" id="search" name="search" class="form-control" placeholder="{{ trans('messages.search') }}">
+            <input value="{{ isset($_GET['search'])? $_GET['search'] : '' }}" type="text" id="productcategorys_id" name="search" class="form-control typeahead" placeholder="{{ trans('messages.search') }}">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">
                     <i class="fa fa-search"></i>
@@ -47,37 +149,46 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
 {
     foreach ($div_item as $col_md_4_item)
     {
+		$product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+
+		  $imageName_temp = iconv('UTF-8', 'tis620',$col_md_4_item['product1_file']);
+		  if(!file_exists($imageName_temp))
+   		  {
+		 	   $col_md_4_item['product1_file'] = '/images/default.jpg';
+		  }
 ?>
-        <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
-            <div class="col-item">
-                <div class="photo">
-                    <img style="height:150px; width:350px;" src="{{ url($col_md_4_item['product1_file']) }}" class="img-responsive" alt="a">
-                </div>
-                <div class="info">
-                    <div class="row">
-                        <div class="price col-md-8">
-                            <h4>{{ $col_md_4_item['product_title'] }}</h4>
-                            <span class="glyphicon glyphicon-map-marker"></span>
-                            {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
-                            <br/><br/>
-                        </div>
-                        <div class="rating hidden-sm col-md-4">
-                            {{ $col_md_4_item['productstatus'] }}
-                        </div>
-                    </div>
-                    <div class="separator clear-left">
-                        <p class="btn-add">
-                            <span class="hidden-sm">  {{ floatval($col_md_4_item['price']) }}</span>
-                        </p>
-                        <p class="btn-details">
-                            <i class="fa fa-list"></i>
-                            <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
-                    </div>
-                    <div class="clearfix">
-                    </div>
-                </div>
-            </div>
-        </div>
+          <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+              <div class="col-item">
+                  <div class="photo crop-height">
+						<img src="{{ url($col_md_4_item['product1_file']) }}" class="scale" alt="a">
+                  </div>
+                  <div class="info">
+                      <div class="row">
+                          <div class="price col-md-8">
+                              <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?></h4>
+							  <span class="glyphicon glyphicon-tag"></span>
+							  <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
+                              <span class="glyphicon glyphicon-map-marker"></span>
+                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              <br/><br/>
+                          </div>
+                          <div class="rating hidden-sm col-md-4">
+
+                          </div>
+                      </div>
+                      <div class="separator clear-left">
+                          <p class="btn-add">
+                              <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? floatval($col_md_4_item['price']) : trans('messages.product_no_price') }}</span>
+                          </p>
+                          <p class="btn-details">
+                              <i class="fa fa-list"></i>
+                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                      </div>
+                      <div class="clearfix">
+                      </div>
+                  </div>
+              </div>
+          </div>
 <?php
     }
 }

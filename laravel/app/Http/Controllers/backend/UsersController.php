@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
 use App\Iwantto;
+use DateFuncs;
 
 class UsersController extends Controller
 {

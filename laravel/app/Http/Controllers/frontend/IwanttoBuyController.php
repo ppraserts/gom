@@ -54,17 +54,19 @@ class IwanttoBuyController extends Controller
                                                     });
               }
               else {
-                     $query = $query->Where('product_title','like','%'.$search.'%')
+                     $query = $query->join('products', 'iwantto.products_id', '=', 'products.id')
+											  ->Where('product_title','like','%'.$search.'%')
                                               ->orWhere('units','like','%'.$search.'%')
                                               ->orWhere('city','like','%'.$search.'%')
-                                              ->orWhere('province','like','%'.$search.'%');
+                                              ->orWhere('province','like','%'.$search.'%')
+											  ->orWhere('product_name_th','like','%'.$search.'%');
               }
 
       }
 
 
 
-      $items = $query->orderBy('created_at','desc')
+      $items = $query->orderBy('iwantto.created_at','desc')
                      ->paginate(config('app.paginate'));
                      //dd($items);
 

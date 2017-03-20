@@ -1,11 +1,27 @@
 @extends('layouts.main')
 @push('scripts')
 <script type="text/javascript">
+	var is_first_time = false;
     $(function () {
-        $('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD',
-            locale: 'th'
+        $('#datetimepicker1').datepicker({
+            format: 'yyyy-mm-dd',
+            language:'th-th',
+			autoclose: true,
+	        toggleActive: false,
+			todayHighlight: false,
+			todayBtn: false,
+			startView: 2,
+			maxViewMode: 2
         });
+
+		//$('#datetimepicker1').datepicker("update", new Date('1950-01-01'));		
+		$('#datetimepicker1').datepicker().on('show', function(e) {
+			if(!is_first_time)
+			{
+				is_first_time = true;
+				$('#datetimepicker1').datepicker("update", new Date('1950-01-01'));
+			}
+	    });
 
         $('#users_province').on('change', function(e){
             console.log(e);
@@ -215,9 +231,9 @@
 
                             <div class="col-md-6">
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input id="users_dateofbirth" type="text" class="form-control" name="users_dateofbirth" value="{{ old('users_dateofbirth') }}" autofocus>
+                                    <input id="users_dateofbirth" type="text" class="form-control" name="users_dateofbirth" style="cursor: pointer;" value="{{ old('users_dateofbirth') }}" autofocus readonly>
                                     <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        <span class="glyphicon glyphicon-calendar" style="cursor: pointer;"></span>
                                     </span>
                                 </div>
                                 @if ($errors->has('users_lastname_en'))

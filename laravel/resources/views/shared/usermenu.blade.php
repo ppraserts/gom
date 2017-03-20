@@ -34,6 +34,4 @@
                            </span>
 			</a>
 	</li>
-
-    <li role="presentation" {{ ($setActive == "shopsetting")? 'class=active' : ''  }}><a href="{{ url('user/shopsetting') }}"> {{ trans('messages.shop_setting') }}</a></li>
 </ul>

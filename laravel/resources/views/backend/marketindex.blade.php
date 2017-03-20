@@ -4,7 +4,7 @@ $pagetitle = trans('messages.menu_market');
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
-@section('page_heading_image','shop')
+@section('page_heading_image','<i class="glyphicon glyphicon-shopping-cart"></i>')
 @section('section')
 
 <div class="col-sm-12">

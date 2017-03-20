@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\ProductCategory;
 use App\Iwantto;
 use App\Market;
+use App\Product;
 
 class MarketController extends Controller
 {
@@ -53,4 +54,10 @@ class MarketController extends Controller
                                                   ,'itemssale'
                                                   ,'itemsbuy'));
     }
+
+	public static function get_product_name($products_id)
+	{
+		$product_name = Product::where('id', '=', $products_id)->select('product_name_th')->value('product_name_th');
+		return $product_name;
+	}
 }

@@ -42,17 +42,20 @@ class IwanttoSaleController extends Controller
 
       if($search != "")
       {
-        $query = $query->where('product_title','like','%'.$search.'%')
+        $query = $query
+					  ->join('products', 'iwantto.products_id', '=', 'products.id')
+					  ->where('product_title','like','%'.$search.'%')
                       ->orWhere('price','like','%'.$search.'%')
                       ->orWhere('guarantee','like','%'.$search.'%')
                       ->orWhere('volumn','like','%'.$search.'%')
                       ->orWhere('productstatus','like','%'.$search.'%')
                       ->orWhere('units','like','%'.$search.'%')
                       ->orWhere('city','like','%'.$search.'%')
-                      ->orWhere('province','like','%'.$search.'%');
+                      ->orWhere('province','like','%'.$search.'%')
+					  ->orWhere('product_name_th','like','%'.$search.'%');
       }
 
-      $items = $query->orderBy('created_at','desc')
+      $items = $query->orderBy('iwantto.created_at','desc')
                      ->paginate(config('app.paginate'));
 
       return view('frontend.iwanttosale',compact('items','productCategoryitem'))

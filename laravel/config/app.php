@@ -15,7 +15,6 @@ return [
     'upload_imageprofile' => 'upload/imageprofiles/',
     'upload_product' => 'upload/products/',
     'upload_mailfile' => 'upload/mailfile/',
-    'upload_shopimage' => 'upload/shopimage/',
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -193,8 +192,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
-        Way\Generators\GeneratorsServiceProvider::class,
-        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+
+		/*
+		* Helper Service Providers
+		*/
+		App\Providers\HelperServiceProvider::class,
     ],
 
     /*
@@ -243,6 +245,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+		'DateFuncs' => App\Helpers\DateFuncs::class,
     ],
 
 ];
