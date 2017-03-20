@@ -14,6 +14,11 @@ class ShopSettingController extends Controller
         'shop_title' => 'required'
     ];
 
+    public function __construct()
+    {
+        $this->middleware('user');
+    }
+
     public function index()
     {
         $user = auth()->guard('user')->user();

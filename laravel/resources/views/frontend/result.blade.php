@@ -190,7 +190,8 @@
                 }
             },
             error: function (request, status, error) {
-                alert(request.responseText);
+                window.location = '{{url('user/login')}}';
+                //alert(request.responseText);
             }
         });
     }

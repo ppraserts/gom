@@ -11,10 +11,9 @@ use App\Http\Controllers\Controller;
 
 class ShoppingCartController extends Controller
 {
-
-    function __construct()
+    public function __construct()
     {
-
+        $this->middleware('user');
     }
 
     public function index()
