@@ -224,6 +224,7 @@ return [
         'shop_subtitle'=> 'Sub Title',
         'shop_description'=> 'Description',
         'shop_slide_image' => 'Shop Image',
+        'shop_name' => 'Shop name'
     ],
 
 ];

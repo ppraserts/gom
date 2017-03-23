@@ -43,6 +43,15 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
+                        <strong>* {{ Lang::get('validation.attributes.shop_name') }}:</strong>
+                        {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' )) !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
                         <strong>* {{ Lang::get('validation.attributes.shop_title') }}:</strong>
                         {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => Lang::get('validation.attributes.shop_title'),'class' => 'form-control' )) !!}

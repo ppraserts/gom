@@ -9,6 +9,7 @@ class Shop extends Model
     //
     protected $table = "shops";
     public $fillable = ['user_id',
+                        'shop_name',
                         'shop_title',
                         'shop_subtitle',
                         'shop_description',

@@ -11,7 +11,8 @@ class ShopSettingController extends Controller
 {
 
     private $shop_rules = [
-        'shop_title' => 'required'
+        'shop_title' => 'required',
+        'shop_name' => 'required'
     ];
 
     public function __construct()
@@ -39,6 +40,7 @@ class ShopSettingController extends Controller
         $this->validate($request, $this->shop_rules);
 
         $shop->user_id = $user->id;
+        $shop->shop_name = $request->input('shop_name');
         $shop->shop_title = $request->input('shop_title');
         $shop->shop_subtitle = $request->input('shop_subtitle');
         $shop->shop_description = $request->input('shop_description');
