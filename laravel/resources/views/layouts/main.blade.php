@@ -32,6 +32,8 @@
         <link href="/css/custom.css" rel="stylesheet">
         <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
 		<link href="/css/lightbox.min.css" rel="stylesheet">
+        <link href="/css/custom-modal.css" rel="stylesheet">
+        <link href="/css/image-hover-effects.css" rel="stylesheet">
         <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -139,6 +141,8 @@
 		<script src="/js/typeahead.bundle.min.js"></script>
         <script src="/js/jssor.slider.mini.js"></script>
 		<script src="/js/lightbox.min.js"></script>
+        <script src="/js/bootstrap-filestyle.min.js"></script>
+        <script src="/js/bootbox.min.js"></script>
 		<script>
 			lightbox.option({
 				'resizeDuration': 0,
