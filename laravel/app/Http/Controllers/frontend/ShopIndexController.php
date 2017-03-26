@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User;
 use App\Http\Controllers\Controller;
+use App\Shop;
+
 
 class ShopIndexController extends Controller
 {
@@ -28,12 +30,14 @@ class ShopIndexController extends Controller
      */
     public function index()
     {
-        if(session('shop') != null && isset(session('shop')['theme'])){
-            $theme = session('shop')['theme'];
+        $user = auth()->guard('user')->user();
+        $shop = Shop::where('user_id', $user->id)->first();
+        if($shop != null && $shop->theme != null && $shop->theme != ''){
+            $theme = $shop->theme;
         }else{
             $theme = "main";
         }
 
-        return view('frontend.index' , compact('theme'));
+        return view('frontend.index' , compact('theme' ))->with('shop' , $shop);
     }
 }
