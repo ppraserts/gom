@@ -54,15 +54,15 @@
             <div class="carousel-inner" role="listbox">
 
                 <div class="item active">
-                    <img src="{{url($shop->image_file_1)}}" />
+                    <img src="{{url( ($shop->image_file_1 !=null)? $shop->image_file_1:'')}}" />
                 </div>
 
                 <div class="item">
-                    <img src="{{url($shop->image_file_2)}}" />
+                    <img src="{{url( ($shop->image_file_2 !=null)? $shop->image_file_2:'')}}" />
                 </div>
 
                 <div class="item">
-                    <img src="{{url($shop->image_file_3)}}" />
+                    <img src="{{url( ($shop->image_file_3 !=null)? $shop->image_file_3:'')}}" />
                 </div>
             </div>
 

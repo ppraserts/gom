@@ -33,7 +33,7 @@ class ShopIndexController extends Controller
         $user = auth()->guard('user')->user();
         $shop = Shop::where('user_id', $user->id)->first();
         if($shop != null && $shop->theme != null && $shop->theme != ''){
-            $theme = $shop->theme;
+            $theme = trim($shop->theme);
         }else{
             $theme = "main";
         }
