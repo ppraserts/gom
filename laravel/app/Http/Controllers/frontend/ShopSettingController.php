@@ -12,7 +12,7 @@ class ShopSettingController extends Controller
 
     private $shop_rules = [
         'shop_title' => 'required',
-        'shop_name' => 'required'
+        'shop_name' => 'required|regex:/^[A-Za-z][A-Za-z0-9]*$/'
     ];
 
     public function __construct()
@@ -69,7 +69,7 @@ class ShopSettingController extends Controller
             $shop->update();
         }
 
-       return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
+        return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }
 
     public function uploadImage($request, $file_name)
@@ -93,8 +93,7 @@ class ShopSettingController extends Controller
             $indexFile = count($rawfileArr) - 1;
             $indexFolder = count($rawfileArr) - 2;
 
-            if (File::exists($rawfile))
-            {
+            if (File::exists($rawfile)) {
                 File::delete($rawfile);
                 File::deleteDirectory(config('app.upload_shopimage') . $rawfileArr[$indexFolder]);
             }
@@ -110,14 +109,24 @@ class ShopSettingController extends Controller
         return false;
     }
 
-    public function setTheme($theme_name){
+    public function setTheme($theme_name)
+    {
         $user = auth()->guard('user')->user();
         $shop = Shop::where('user_id', $user->id)->first();
-        if($shop != null && $theme_name != ''){
+        if ($shop != null && $theme_name != '') {
             $shop->theme = $theme_name;
             $shop->update();
+
+            $shop_setting = session('shop');
+            if ($shop_setting == null)
+                $shop_setting = array();
+
+            $shop_setting["theme"] = $theme_name;
+            $shop_setting["shop_name"] = $shop->shop_name;
+            session(['shop' => $shop_setting]); // Save to session
+
         }
-        return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
+         return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }
 
 }

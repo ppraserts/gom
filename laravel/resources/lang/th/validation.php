@@ -225,7 +225,6 @@ return [
         'shop_subtitle'=> 'หัวเรื่องย่อย',
         'shop_description'=> 'รายละเอียด',
         'shop_slide_image' => 'รูปไสด์ร้านค้า',
-        'shop_name' => 'ชื่อร้านค้า'
     ],
 
 ];

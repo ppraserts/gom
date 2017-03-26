@@ -162,6 +162,17 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 
 
 Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
-    Route::resource('shoppingcart','frontend\ShoppingCartController');
+    Route::resource('{shop}/shoppingcart','frontend\ShoppingCartController');
     Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
 });
+
+
+Route::group(['prefix' => '{shop_name}', 'as' => session('shop')['shop_name'] , 'middleware' => ['user']], function()
+{
+    Route::resource('/', 'frontend\ShopIndexController' , ['as' => 'shop_name']);
+//    Route::post('logout', 'frontend\Auth\LoginController@getLogout', ['as' => 'shop_name/logout']);
+//    Route::resource('userprofiles','frontend\UserProfileController', ['as' => 'shop_name/userprofiles']);
+
+});
+
+

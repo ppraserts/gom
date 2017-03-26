@@ -42,20 +42,23 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.shop_name') }}:</strong>
-                        {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' )) !!}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
+                            <strong>* {{ Lang::get('validation.attributes.shop_name') }}:</strong>
+                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' )) !!}
+                        </div>
                     </div>
-                </div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
+                            <strong>* {{ Lang::get('validation.attributes.shop_title') }}:</strong>
+                            {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => Lang::get('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
+                        </div>
+                    </div>
             </div>
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.shop_title') }}:</strong>
-                        {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => Lang::get('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
-                    </div>
+
                 </div>
             </div>
 
@@ -160,6 +163,9 @@
                                         <a href="{{ url('user/settheme' , 'theme1' ) }}" class="info">{{ trans('messages.apply')}}</a>
                                     </div>
                                 </div>
+                                @if($shop->theme=="theme1")
+                                <div class="text-center"><i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i></div>
+                                @endif
                             </div>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="hover ehover1 classWithPad">
@@ -170,6 +176,9 @@
                                         <a href="{{ url('user/settheme' , 'theme2'  ) }}" class="info">{{ trans('messages.apply')}}</a>
                                     </div>
                                 </div>
+                                @if($shop->theme=="theme2")
+                                <div class="text-center"><i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i></div>
+                                @endif
                             </div>
 
 
@@ -182,6 +191,9 @@
                                         <a href="{{ url('user/settheme' , 'theme3' ) }}" class="info">{{ trans('messages.apply')}}</a>
                                     </div>
                                 </div>
+                                @if($shop->theme=="theme3")
+                                <div class="text-center"><i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i>
+                                @endif
                             </div>
                         </div>
 
