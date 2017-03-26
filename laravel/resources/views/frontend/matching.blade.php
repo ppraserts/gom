@@ -28,6 +28,13 @@ foreach(array_chunk($arr, 3, true) as $div_item)
     foreach ($div_item as $col_md_4_items)
     {
         $col_md_4_item = (array)$col_md_4_items;
+		$product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+
+		$imageName_temp = iconv('UTF-8', 'tis620',$col_md_4_item['product1_file']);
+		if(!file_exists($imageName_temp))
+   		{
+			$col_md_4_item['product1_file'] = '/images/default.jpg';
+		}
 ?>
         @if($userItem->iwanttobuy == "buy")
         <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
@@ -38,10 +45,12 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                 <div class="info">
                     <div class="row">
                         <div class="price col-md-8">
-                            <h4>{{ $col_md_4_item['product_title'] }}</h4>
-                            <span class="glyphicon glyphicon-map-marker"></span>
-                            {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
-                            <br/><br/>
+                            <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?></h4>
+							  <span class="glyphicon glyphicon-tag"></span>
+							  <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
+                              <span class="glyphicon glyphicon-map-marker"></span>
+                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              <br/><br/>
                         </div>
                         <div class="rating hidden-sm col-md-4">
                             @if($col_md_4_item['Colors']!="white")
@@ -88,6 +97,13 @@ foreach(array_chunk($arr, 3, true) as $div_item)
     foreach ($div_item as $col_md_4_items)
     {
         $col_md_4_item = (array)$col_md_4_items;
+		$product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+
+		$imageName_temp = iconv('UTF-8', 'tis620',$col_md_4_item['product1_file']);
+		if(!file_exists($imageName_temp))
+   		{
+			$col_md_4_item['product1_file'] = '/images/default.jpg';
+		}
 ?>
         @if($userItem->iwanttosale == "sale")
         <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
@@ -95,7 +111,11 @@ foreach(array_chunk($arr, 3, true) as $div_item)
                 <div class="info">
                       <div class="row">
                         <div class="price col-md-9">
-                             <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
+                            <h4>{{ $product_name }}</h4>
+							จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}
+							<br>
+							<span class="glyphicon glyphicon-tag"></span>
+							<i>{{ $col_md_4_item['product_title'] }}</i><br>
                             <span class="glyphicon glyphicon-map-marker"></span>
                             {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
                             <br/><br/>

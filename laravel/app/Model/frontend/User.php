@@ -41,12 +41,23 @@ class User extends Authenticatable
     ];
 
     public static function registeruser($input = array()) {
+
+			$date_temp = explode('-', $input['users_dateofbirth']);
+			if(isset($date_temp[2]))
+			{
+				$date = ($date_temp['0']-543) .'-'. $date_temp['1'] .'-'. $date_temp['2'];
+			}
+			else
+			{
+				$date = '';
+			}
+
             return User::create([
                     'users_firstname_th' => $input['users_firstname_th'],
                     'users_lastname_th' => $input['users_lastname_th'],
                     'users_firstname_en' => $input['users_firstname_en'],
                     'users_lastname_en' => $input['users_lastname_en'],
-                    'users_dateofbirth' => $input['users_dateofbirth'],
+                    'users_dateofbirth' => $date,
                     'users_gender' => $input['users_gender'],
                     'users_addressname' => $input['users_addressname'],
                     'users_street' => $input['users_street'],

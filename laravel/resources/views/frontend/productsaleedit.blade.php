@@ -3,7 +3,9 @@
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
 <script>
+  var product_category_value = 0;
   CKEDITOR.replace( 'product_description' );
+  /*
   $('#productcategorys_id').on('change', function(e){
       console.log(e);
       var state_id = e.target.value;
@@ -21,6 +23,7 @@
           $( "#products_id" ).val({{ $item->id==0? old('products_id') : $item->products_id }});
       });
   });
+  */
   $('#btnDelete').on('click', function(e){
       if(confirm('{{ trans('messages.confirm_delete', ['attribute' => $item->product_title]) }}'))
       {
@@ -58,6 +61,102 @@
         $( "#province" ).val('{{ $item->province==""? old('province') : $item->province }}').change();
   },500);
 
+$(function()
+{
+	 var query_url = '';
+	 var products;
+
+	query_url = '/information/create/ajax-state';
+
+	products = new Bloodhound({
+		datumTokenizer: function (datum) {
+			alert(datum);
+			return Bloodhound.tokenizers.obj.whitespace(datum.id);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		remote: {
+			url: query_url+'?search=true&product_name_th=%QUERY',
+			filter: function (products) {
+				// Map the remote source JSON array to a JavaScript object array
+				return $.map(products, function (product) {
+					return {
+						id: product.id,
+						value: product.product_name_th
+					};
+				});
+			},
+			wildcard: "%QUERY"
+		}
+	});
+	
+	products.initialize();
+
+	$('.typeahead').typeahead({
+		hint: false,
+		highlight: true,
+		minLength: 1,
+		autoSelect: true
+		}, {
+		limit: 60,
+		name: 'product_id',
+		displayKey: 'value',
+		source: products.ttAdapter(),
+		templates: {
+			header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+		}
+	});
+
+	 $('#productcategorys_id').on('change', function(e){
+		product_category_value = e.target.value;
+
+		query_url = '/information/create/ajax-state?search=true&productcategorys_id='+product_category_value;
+
+		products = new Bloodhound({
+			datumTokenizer: function (datum) {
+				alert(datum);
+				return Bloodhound.tokenizers.obj.whitespace(datum.id);
+			},
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: query_url+'&product_name_th=%QUERY',
+				filter: function (products) {
+					// Map the remote source JSON array to a JavaScript object array
+					return $.map(products, function (product) {
+						return {
+							id: product.id,
+							value: product.product_name_th
+						};
+					});
+				},
+				wildcard: "%QUERY"
+			}
+		});
+		
+		products.initialize();
+
+		$('.typeahead').typeahead('destroy');
+		$('.typeahead').typeahead({
+			hint: false,
+			highlight: true,
+			minLength: 1,
+			autoSelect: true
+			}, {
+			limit: 60,
+			name: 'product_id',
+			displayKey: 'value',
+			source: products.ttAdapter(),
+			templates: {
+				header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+			}
+		});
+	 });
+
+
+	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
+		$('#products_id').val(suggestion.id);
+	});
+
+});
 </script>
 @endpush
 @section('content')
@@ -124,8 +223,8 @@
     <div class="form-group {{ $errors->has('products_id') ? 'has-error' : '' }}">
         <strong>* {{ Lang::get('validation.attributes.products_id') }}
         :</strong>
-        <select id="products_id" name="products_id" class="form-control">
-        </select>
+		{!! Form::text('fake_products_id', $product_name->product_name_th, array('placeholder' => Lang::get('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
+		<input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
     </div>
     <div class="form-group {{ $errors->has('product_title') ? 'has-error' : '' }}">
         <strong>{{ Lang::get('validation.attributes.product_title') }}

@@ -54,20 +54,26 @@ function renderHTML($text)
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             @if($item[0]->product1_file != "")
-            <div class="item active">
-              <img src="{{ url($item[0]->product1_file) }}" style="width:100%;" >
+            <div class="item crop-height-slide active">
+              <a href="{{ url($item[0]->product1_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product1_file') }}">
+				<img class="scale" src="{{ url($item[0]->product1_file) }}">
+			  </a>
               <div class="carousel-caption"></div>
             </div>
             @endif
             @if($item[0]->product2_file != "")
-            <div class="item">
-              <img src="{{ url($item[0]->product2_file) }}" style="width:100%;">
+            <div class="item crop-height-slide">
+              <a href="{{ url($item[0]->product2_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product2_file') }}">
+				<img class="scale" src="{{ url($item[0]->product2_file) }}">
+			  </a>
               <div class="carousel-caption"></div>
             </div>
             @endif
             @if($item[0]->product3_file != "")
-            <div class="item">
-              <img src="{{ url($item[0]->product2_file) }}" style="width:100%;">
+            <div class="item crop-height-slide">
+              <a href="{{ url($item[0]->product3_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product3_file') }}">
+				<img class="scale" src="{{ url($item[0]->product3_file) }}">
+			  </a>
               <div class="carousel-caption"></div>
             </div>
             @endif

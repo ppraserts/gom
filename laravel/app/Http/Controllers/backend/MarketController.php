@@ -92,7 +92,10 @@ class MarketController extends Controller
         $imageTempName = $request->file('marketimage_file')->getPathname();
 
         $imageName = $request->marketimage_file->getClientOriginalName();
-        $request->marketimage_file->move(config('app.upload_marketimage').$fileTimeStamp."/", $imageName);
+        //$imageName_temp = iconv('UTF-8', 'tis620',$imageName);
+		$imageName_temp = $imageName;
+
+        $request->marketimage_file->move(config('app.upload_marketimage').$fileTimeStamp."/", $imageName_temp);
         $imageName = config('app.upload_marketimage').$fileTimeStamp."/".$imageName;
 
         return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);

@@ -45,9 +45,17 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/information/create/ajax-state',function()
     {
         $productcategorys_id = Input::get('productcategorys_id');
-        if($productcategorys_id != "")
+		$product_name_th = Input::get('product_name_th');
+        if($product_name_th != "")
         {
-            $subcategories = Product::where('productcategory_id','=',$productcategorys_id)->get();
+			if($productcategorys_id != '')
+			{
+	            $subcategories = Product::where('productcategory_id','=',$productcategorys_id)->where('product_name_th','like','%'.$product_name_th.'%')->limit(10)->get();
+			}
+			else
+			{
+				$subcategories = Product::where('product_name_th','like','%'.$product_name_th.'%')->limit(10)->get();
+			}
         }
 
         $province_id = Input::get('province_id');
@@ -122,10 +130,12 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
+
     Route::resource('shopsetting','frontend\ShopSettingController');
 //    Route::resource('shoppingcart','frontend\ShoppingCartController');
     Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
     Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
+
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
@@ -160,7 +170,6 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('adminteam','backend\AdminteamController');
 });
 
-
 Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
     Route::resource('{shop}/shoppingcart','frontend\ShoppingCartController');
     Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
@@ -171,8 +180,6 @@ Route::group(['prefix' => '{shop_name}', 'as' => session('shop')['shop_name'] , 
 {
     Route::resource('/', 'frontend\ShopIndexController' , ['as' => 'shop_name']);
 //    Route::post('logout', 'frontend\Auth\LoginController@getLogout', ['as' => 'shop_name/logout']);
-//    Route::resource('userprofiles','frontend\UserProfileController', ['as' => 'shop_name/userprofiles']);
 
 });
-
 

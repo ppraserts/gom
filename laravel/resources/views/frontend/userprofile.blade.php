@@ -3,10 +3,16 @@
 <script src="//maps.google.com/maps/api/js?key=AIzaSyCTyLJemFK5wu_ONI1iZobLGK9pP1EVReo"></script>
 <script type="text/javascript">
   $(function() {
-    $('#datetimepicker1').datetimepicker({
-        format: 'YYYY-MM-DD',
-        locale: 'th'
-    });
+	$('#datetimepicker1').datepicker({
+		format: 'yyyy-mm-dd',
+		language:'th-th',
+		autoclose: true,
+		toggleActive: false,
+		todayHighlight: false,
+		todayBtn: false,
+		startView: 2,
+		maxViewMode: 2
+	});	
 
     $('#users_province').on('change', function(e){
         console.log(e);
@@ -95,17 +101,17 @@
         </div>
     @endif
     <div class="row">
-            <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
-                </div>
-                <div class="pull-right">
-                    {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                        {{ trans('messages.button_save')}}</button>
-                </div>
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+            </div>
+            <div class="pull-right">
+                {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
+                 <button type="submit" class="btn btn-primary">
+                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                   {{ trans('messages.button_save')}}</button>
             </div>
         </div>
+    </div>
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12" style="padding-right:30px;">
@@ -167,7 +173,7 @@
                     <strong>* {{ Lang::get('validation.attributes.users_dateofbirth') }}
                     :</strong>
                     <div class='input-group date' id='datetimepicker1'>
-                      {!! Form::text('users_dateofbirth', $item->users_dateofbirth, array('placeholder' => Lang::get('validation.attributes.users_dateofbirth'),'class' => 'form-control')) !!}
+                      {!! Form::text('users_dateofbirth', DateFuncs::thai_date($item->users_dateofbirth), array('placeholder' => Lang::get('validation.attributes.users_dateofbirth'),'class' => 'form-control')) !!}
                       <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>

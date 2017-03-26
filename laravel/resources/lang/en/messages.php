@@ -95,13 +95,5 @@ return [
     'orderbyprovince' => 'เรียงลำดับตามจังหวัด',
     'searchprice' => 'ราคา',
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
-    'menu_adminteam' => 'ผู้ดูแลระบบ',
-    'shop_setting' => 'Shop Setting',
-    'shop_image' => 'Shop Slideshow',
-    'title' => 'Title',
-    'sub_title' => 'Sub Title',
-    'Description' => 'Description',
-    'shop_theme' => 'Shop Theme',
-    'apply' => 'Apply',
-    'preview' => 'Preview',
+    'menu_adminteam' => 'ผู้ดูแลระบบ'
 ];

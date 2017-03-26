@@ -130,7 +130,7 @@ $controllerAction = "users.update";
             <div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_dateofbirth') }}
                 :
-                <strong>{{ $item->users_dateofbirth }}</strong>
+                <strong>{{ DateFuncs::thai_date($item->users_dateofbirth) }}</strong>
             </div>
             <div class="form-group {{ $errors->has('users_gender') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_gender') }}

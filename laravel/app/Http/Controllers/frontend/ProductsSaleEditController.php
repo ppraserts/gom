@@ -17,6 +17,7 @@ use App\Units;
 use App\Amphur;
 use App\Province;
 use App\District;
+use App\Product;
 
 class ProductsSaleEditController extends Controller
 {
@@ -82,9 +83,15 @@ class ProductsSaleEditController extends Controller
       $item->id = 0;
       $item->productstatus ='open';
       $item->iwantto = $useritem->iwanttosale;
+	  $item->products_id = '';
+	  $product_name = (object)array();
+	  $product_name->product_name_th = '';
     }
     else {
       $item = Iwantto::find($id);
+	  
+	  $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
+
       if($useritem->iwanttosale != $item->iwantto )
       {
         return redirect()->action('frontend\UserProfileController@index');
@@ -99,7 +106,7 @@ class ProductsSaleEditController extends Controller
 
     return view('frontend.productsaleedit',compact('item'
                         ,'useritem','productCategoryitem'
-                        ,'unitsItem','provinceItem'));
+                        ,'unitsItem','provinceItem','product_name'));
   }
 
 
@@ -216,13 +223,17 @@ class ProductsSaleEditController extends Controller
   }
 
   private function UploadImage(Request $request, $imagecolumnname)
-  {
-      sleep(1);
+  {      
+	  sleep(1);
       $fileTimeStamp = time();
       $imageTempName = $request->file($imagecolumnname)->getPathname();
 
       $imageName = $request->{ $imagecolumnname }->getClientOriginalName();
-      $request->{ $imagecolumnname }->move(config('app.upload_product').$fileTimeStamp."/", $imageName);
+	  
+	  //$imageName_temp = iconv('UTF-8', 'tis620',$imageName);
+	  $imageName_temp = $imageName;
+
+      $request->{ $imagecolumnname }->move(config('app.upload_product').$fileTimeStamp."/", $imageName_temp);
       $imageName = config('app.upload_product').$fileTimeStamp."/".$imageName;
 
       return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);

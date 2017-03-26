@@ -13,12 +13,6 @@
        $user = auth()->guard('user')->user();
        $linkProfile = "/user/userprofiles";
 
-        $carts = session('carts');
-        $cart_items = 0;
-        if(is_array($carts)){
-            $cart_items = count($carts);
-        }
-
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -32,13 +26,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- Bootstrap -->
-        <link href="/css/bootstrap.css" rel="stylesheet">
-        <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/typeaheadjs.css" rel="stylesheet">
+        <link href="/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
         <link href="/css/custom.css" rel="stylesheet">
         <link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
+		<link href="/css/lightbox.min.css" rel="stylesheet">
         <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
-        <link href="/css/custom-modal.css" rel="stylesheet">
-        <link href="/css/image-hover-effects.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -68,13 +62,6 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        @if($cart_items > 0)
-                            <li>
-                                <div class="btn-nav">
-                                     <a href="{{url('shop/shoppingcart')}}" class="btn btn-primary btn-small navbar-btn"><span class="badge">{{$cart_items}}</span>  <i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
-                                </div>
-                            </li>
-                        @endif
                         <li class="langBox">
                             <a href="{{ url('/change/th') }}" class="{{ $thActive }}"><img src="{{ url('images/thai-flag.png') }}" alt=""> {{ trans('messages.flag_th') }}</a>
                         </li>
@@ -146,10 +133,19 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/typeahead.bundle.min.js"></script>
-        <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+        <script src="/js/bootstrap-datepicker.min.js"></script>
+        <script src="/js/bootstrap-datepicker-thai.js"></script>
+		<script src="/js/bootstrap-datepicker.th.min.js"></script>	
+		<script src="/js/typeahead.bundle.min.js"></script>
         <script src="/js/jssor.slider.mini.js"></script>
-        <script src="/js/bootstrap-filestyle.min.js"></script>
-        <script src="/js/bootbox.min.js"></script>
+		<script src="/js/lightbox.min.js"></script>
+		<script>
+			lightbox.option({
+				'resizeDuration': 0,
+				'wrapAround': true,
+				'albumLabel': '{{ Lang::get('validation.attributes.slideimage_name') }} %1 / %2'
+			})
+		</script>
         @stack('scripts')
     </body>
 

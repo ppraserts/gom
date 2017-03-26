@@ -104,6 +104,8 @@ class RegisterController extends Controller
         $data = array(
             'fullname' => $request->users_firstname_th." ".$request->users_lastname_th
         );
+
+		/*
         Mail::send('emails.register', $data, function ($message) use($request, $sendemailTo, $sendemailFrom)
         {
             $message->from($sendemailFrom
@@ -112,6 +114,7 @@ class RegisterController extends Controller
                     ->subject("Greenmart Online Market : ".trans('messages.email_subject_newregister'));
 
         });
+		*/
 
         if($user->id){
             return redirect('user/login')->with('status', trans('messages.registercomplete'));

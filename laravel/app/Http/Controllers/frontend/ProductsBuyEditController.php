@@ -17,6 +17,7 @@ use App\Units;
 use App\Amphur;
 use App\Province;
 use App\District;
+use App\Product;
 
 class ProductsBuyEditController extends Controller
 {
@@ -82,9 +83,13 @@ class ProductsBuyEditController extends Controller
       $item->id = 0;
       $item->productstatus ='open';
       $item->iwantto = $useritem->iwanttobuy;
+	  $product_name = (object)array();
+	  $product_name->product_name_th = '';
     }
     else {
       $item = Iwantto::find($id);
+  	  $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
+
       if($useritem->iwanttobuy != $item->iwantto )
       {
         return redirect()->action('frontend\UserProfileController@index');
@@ -97,7 +102,7 @@ class ProductsBuyEditController extends Controller
     $unitsItem = Units::orderBy('sequence','ASC')
                 ->get();
 
-    return view('frontend.productbuyedit',compact('item','useritem','productCategoryitem','unitsItem', 'provinceItem'));
+    return view('frontend.productbuyedit',compact('item','useritem','productCategoryitem','unitsItem', 'provinceItem','product_name'));
   }
 
 

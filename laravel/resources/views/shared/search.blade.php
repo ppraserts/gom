@@ -1,19 +1,100 @@
 @push('scripts')
 <script type="text/javascript">
-$(document).ready(function(){
-  var $input = $('#search');
-  $input.typeahead({
-      displayText: function (item) {
-        return item.name;
-      }
-      , display: 'product_title', val: 'product_title'
-      ,source: function(search, response){
-        $.get('{{ url('information') }}/create/ajax-state?query=' + search, function(data) {
-            response(data);
-        });
-      },
-      autoSelect: true
-  });
+$(function()
+{
+	 var query_url = '';
+	 var products;
+
+	query_url = '/information/create/ajax-state';
+
+	products = new Bloodhound({
+		datumTokenizer: function (datum) {
+			alert(datum);
+			return Bloodhound.tokenizers.obj.whitespace(datum.id);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		remote: {
+			url: query_url+'?search=true&product_name_th=%QUERY',
+			filter: function (products) {
+				// Map the remote source JSON array to a JavaScript object array
+				return $.map(products, function (product) {
+					return {
+						id: product.id,
+						value: product.product_name_th
+					};
+				});
+			},
+			wildcard: "%QUERY"
+		}
+	});
+	
+	products.initialize();
+
+	$('.typeahead').typeahead({
+		hint: false,
+		highlight: true,
+		minLength: 1,
+		autoSelect: true
+		}, {
+		limit: 60,
+		name: 'product_id',
+		displayKey: 'value',
+		source: products.ttAdapter(),
+		templates: {
+			header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+		}
+	});
+
+	 $('#productcategorys_id').on('change', function(e){
+		product_category_value = e.target.value;
+
+		query_url = '/information/create/ajax-state?search=true&productcategorys_id='+product_category_value;
+
+		products = new Bloodhound({
+			datumTokenizer: function (datum) {
+				alert(datum);
+				return Bloodhound.tokenizers.obj.whitespace(datum.id);
+			},
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: query_url+'&product_name_th=%QUERY',
+				filter: function (products) {
+					// Map the remote source JSON array to a JavaScript object array
+					return $.map(products, function (product) {
+						return {
+							id: product.id,
+							value: product.product_name_th
+						};
+					});
+				},
+				wildcard: "%QUERY"
+			}
+		});
+		
+		products.initialize();
+
+		$('.typeahead').typeahead('destroy');
+		$('.typeahead').typeahead({
+			hint: false,
+			highlight: true,
+			minLength: 1,
+			autoSelect: true
+			}, {
+			limit: 60,
+			name: 'product_id',
+			displayKey: 'value',
+			source: products.ttAdapter(),
+			templates: {
+				header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+			}
+		});
+	 });
+
+
+	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
+		$('#products_id').val(suggestion.id);
+	});
+
 });
 </script>
 @endpush
@@ -21,7 +102,7 @@ $(document).ready(function(){
  <div class="row searchboxs">
      {!! Form::open(['method'=>'GET','url'=>'result','class'=>'form-inline','role'=>'search'])  !!}
          <div class="form-group">
-             <select class="form-control" id="category" name="category">
+             <select class="form-control" id="productcategorys_id" name="category">
                  <option value="">{{ trans('messages.menu_product_category') }}</option>
                  @foreach ($productCategoryitem as $key => $item)
                    @if(Request::input('category') == $item->id)
@@ -33,7 +114,7 @@ $(document).ready(function(){
              </select>
          </div>
          <div class="form-group">
-             <input value="{{ Request::input('search') }}" type="text" class="form-control"  id="search" name="search" autocomplete="off">
+             <input value="{{ Request::input('search') }}" type="text" class="form-control typeahead"  id="search" name="search" autocomplete="off">
          </div>
          <button type="submit" class="btn btn-info">{{ trans('messages.menu_search') }}</button>
          <a href="{{ url('/advancesearch') }}">ค้นหาขั้นสูง</a>
