@@ -104,4 +104,8 @@ return [
     'shop_theme' => 'Shop Theme',
     'apply' => 'Apply',
     'preview' => 'Preview',
+    'menu_adminteam' => 'ผู้ดูแลระบบ',
+    'menu_add_product' => 'เพิ่มชนิดสินค้า',
+    'product_exist' => '%s มีอยู่ในระบบแล้ว',
+    'cannot_delete_product_with_order' => 'ไม่สามารถลบชนิดสินค้าได้เนื่องจากสินค้านี้ได้ทำรายการสั่งซื้อไปแล้ว'
 ];

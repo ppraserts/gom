@@ -144,6 +144,9 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
         return [];
 
     });
+    Route::resource('product','frontend\ProductController');
+    Route::resource('product/create','frontend\ProductController@create');
+    Route::resource('userproduct','frontend\ProductController');
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {

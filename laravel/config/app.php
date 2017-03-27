@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://gom.localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,6 +199,7 @@ return [
 		* Helper Service Providers
 		*/
 		App\Providers\HelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -248,6 +249,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

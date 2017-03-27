@@ -9,6 +9,8 @@ class Product extends Model
     public $fillable = ['product_name_th',
                         'product_name_en',
                         'productcategory_id',
+                        'user_id',
+                        'inactive',
                         'sequence'];
 
 }

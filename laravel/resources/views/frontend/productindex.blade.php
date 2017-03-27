@@ -1,0 +1,88 @@
+<?php
+use App\ProductCategory;
+$url = "userproduct/index";
+$pagetitle = Lang::get('message.menu_add_product');
+?>
+@extends('layouts.main')
+@section('page_heading',$pagetitle)
+@section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
+@section('content')
+    @include('shared.usermenu', array('setActive'=>'addproduct'))
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 margin-tb">
+                <div class="pull-left">
+                    <h3>{{ trans('messages.addeditform') }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-lg-12 margin-tb">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
+                            <br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ trans('messages.no') }}</th>
+                        <th>{{ Lang::get('validation.attributes.product_name_th') }}</th>
+                        <th>{{ Lang::get('validation.attributes.product_name_en') }}</th>
+                        <th>{{ Lang::get('validation.attributes.sequence') }}</th>
+                        <th width="130px" style="text-align:center;">
+                            <a class="btn btn-success" href="{{ url ('user/product/create') }}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($items as $key => $item)
+                        <tr>
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $item->product_name_th }}</td>
+                            <td>{{ $item->product_name_en }}</td>
+                            <td>{{ $item->sequence }}</td>
+                            <td style="text-align:center;">
+                                <a class="btn btn-primary"
+                                   href="{{ url ('user/product/'.$item->id.'/edit') }}">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                                <?php
+                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->product_question_th]);
+                                ?>
+                                {!! Form::open(['method' => 'DELETE','route' => ['userproduct.destroy', $item->id],'style'=>'display:inline']) !!}
+                                <button onclick="return confirm('{{$confirmdelete}}');"
+                                        class="btn btn-danger" type="submit">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
