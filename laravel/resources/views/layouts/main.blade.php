@@ -35,6 +35,10 @@
         <link href="/css/custom-modal.css" rel="stylesheet">
         <link href="/css/image-hover-effects.css" rel="stylesheet">
         <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
+        <link href="/css/custom-style-redesign.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700" rel="stylesheet">
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -60,7 +64,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">Greenmart Online Market</a>
+                    <a class="navbar-brand" href="{{ url('/') }}"> <i class="fa fa-home" aria-hidden="true"></i><span>DGT</span>Farm</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -108,7 +112,7 @@
                                                     {{ csrf_field() }}
                                                 </form>
                                         @else
-                                                    <a title="{{ trans('messages.menu_register') }}" class="btn btn-success btn-small navbar-btn" href="{{ url('/user/chooseregister') }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {{ trans('messages.menu_openshop') }}</a>
+                                                        <a title="{{ trans('messages.menu_register') }}" class="btn btn-success btn-small navbar-btn" href="{{ url('/user/chooseregister') }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {{ trans('messages.menu_register') }}</a>
                                         @endif
                                 </div>
                         </li>

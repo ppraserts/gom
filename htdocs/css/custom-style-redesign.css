@@ -1,0 +1,121 @@
+body {
+    background-color: #f2f2f2;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 300;
+}
+
+.navbar-inverse {
+    background-color: #f2f2f2;
+    border-color: #d9d9d9;
+    box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.75);
+}
+
+.navbar-btn {
+    background-color: #aec54b;
+    border-color: #aec54b;
+    font-weight: 300;
+}
+
+.navbar-btn:hover {
+    background-color: #425b61;
+    border-color: #425b61;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #aec54b;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #584c40;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {}
+
+.form-control {
+    color: #584c40;
+    border-color: #ebebeb;
+    box-shadow: none;
+}
+
+.searchboxs .btn-info {
+    background-color: #aec54b;
+    border-color: #aec54b;
+    font-weight: 300;
+}
+
+.searchboxs .btn-info:hover {
+    background-color: #5a741d;
+    border-color: #5a741d;
+}
+
+a, a:focus {
+    color: #425b61;
+}
+
+a:hover {
+    color: #aec54b;
+    text-decoration: none;
+}
+
+.starter-template {
+    /*padding-top: 108px;*/
+}
+
+.btn-circle {
+    border-radius: 5px!important;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 115px!important;
+    line-height: normal!important;
+    padding-top: 35px!important;
+    padding-bottom: 35px!important;
+    height: auto!important;
+}
+
+.btn-circle h1 {
+    font-weight: 300;
+    font-size: 30px;
+    margin-top: 32px;
+}
+
+.btn-info, .btn-info:focus {
+    background-color: #aec54b;
+    border-color: #aec54b;
+}
+
+.btn-info:hover {
+    background-color: #5a741d;
+    border-color: #5a741d;
+}
+
+.btn-success, .btn-success:focus {
+    background-color: #425b61;
+    border-color: #425b61;
+}
+
+.btn-success:hover {
+    background-color: #5a741d;
+    border-color: #5a741d;
+}
+
+.btn-circle img {
+    width: 105px;
+}
+
+.navbar-brand i {
+    padding-right: 5px;
+}
+
+.navbar-brand span {
+    color: #aec54b;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #584c40;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.navbar-brand:hover i {
+    color: #aec54b;
+}

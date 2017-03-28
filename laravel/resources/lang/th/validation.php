@@ -176,7 +176,7 @@ return [
         'users_city' => 'อำเภอ',
         'users_province' => 'จังหวัด',
         'users_postcode' => 'รหัสไปรษณีย์',
-        'users_qrcode' => 'เลขระบบสอบติดตามสอบกลับสินค้าเกษตร',
+        'users_qrcode' => 'รหัสผู้ประกอบการระบบ QR Trace ของ มกอช',
         'users_taxcode' => 'เลขประจำตัวผู้เสียภาษี',
         'users_company_th' => 'ชื่อบริษัท(ไทย)',
         'users_company_en' => 'ชื่อบริษัท(อังกฤษ)',
