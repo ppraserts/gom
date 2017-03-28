@@ -19,8 +19,9 @@ use Illuminate\Support\Facades\Input;
 
 Auth::routes();
 Route::group(['middleware' => ['guest']], function () {
+    //Route::get('/', 'HomeController@index');
     Route::get('/', 'HomeController@index');
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', 'HomeController@index1');
     Route::get('/choosemarket', 'HomeController@index2');
     Route::get('/choosecategory', 'HomeController@index3');
     Route::get('/advancesearch', 'HomeController@index4');

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\frontend\MarketController;
 $url = "user/iwanttosale";
 ?>
 @extends('layouts.main')

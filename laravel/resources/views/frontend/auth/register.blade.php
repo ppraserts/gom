@@ -96,7 +96,7 @@
 <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans('messages.menu_register') }} ({{ trans('messages.membertype_individual') }})</div>
                 <div class="panel-body">
