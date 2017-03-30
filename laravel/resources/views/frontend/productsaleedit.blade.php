@@ -61,6 +61,19 @@
         $( "#province" ).val('{{ $item->province==""? old('province') : $item->province }}').change();
   },500);
 
+var products_array = [];
+
+function validate()
+{
+	if(jQuery.inArray($('input[name=fake_products_id]').val(), products_array) == -1)
+	{
+		alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
+		$('input[name=fake_products_id]').focus();
+		return false;
+	}
+	return true;
+}
+
 $(function()
 {
 	 var query_url = '';
@@ -120,8 +133,10 @@ $(function()
 			remote: {
 				url: query_url+'&product_name_th=%QUERY',
 				filter: function (products) {
+					products_array = [];
 					// Map the remote source JSON array to a JavaScript object array
 					return $.map(products, function (product) {
+						products_array[product.id] = product.product_name_th;
 						return {
 							id: product.id,
 							value: product.product_name_th
@@ -192,7 +207,7 @@ $(function()
         </div>
         <div class="pull-right">
 
-             <button type="submit" class="btn btn-primary">
+             <button type="submit" class="btn btn-primary" onclick="return validate();">
                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                {{ trans('messages.button_save')}}</button>
              @if($item->id != 0)
