@@ -8,7 +8,10 @@
   <div class="col-md-2 col-sm-4">
       <div class="thumbnail">
           <div class="caption">
-              <h4><span class="glyphicon glyphicon-search"></span> {{ $item->{ "productcategory_title_".Lang::locale()}  }}</h4>
+              <h4>
+                  <p><i class="{{$item->productcategory_icon}} fa-2x" ></i></p>
+                  <p>{{ $item->{ "productcategory_title_".Lang::locale()}  }}</p>
+              </h4>
           </div>
       </div>
   </div>
@@ -16,3 +19,5 @@
   @endforeach
 </div>
 @stop
+
+
