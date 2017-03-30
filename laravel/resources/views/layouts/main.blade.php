@@ -128,7 +128,7 @@
             </div>
         </div>
 
-        <footer class="footer">
+        <footer class="footer navbar-fixed-bottom">
             <div class="container">
                 <p class="text-muted">{{ trans('messages.copyright') }}</p>
             </div>
