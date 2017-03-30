@@ -1,6 +1,6 @@
 <?php
 use App\ProductCategory;
-$url = "user/userproduct/index";
+$url = "user/userproduct/all";
 $pagetitle = Lang::get('message.menu_add_product');
 ?>
 @extends('layouts.main')
@@ -40,8 +40,8 @@ $pagetitle = Lang::get('message.menu_add_product');
         </div>
         <div class="row">
             <div class="form-group">
-                <a href="{{ url('user/userproduct') }}" type="button" class="btn btn-primary">{{ trans('messages.only_me') }}</a>
-                <a href="{{ url('user/userproduct/all') }}" class="btn btn-default">{{ trans('messages.all_product') }}</a>
+                <a href="{{ url('user/userproduct') }}" type="button" class="btn btn-default">{{ trans('messages.only_me') }}</a>
+                <a href="{{ url('user/userproduct/all') }}" class="btn btn-primary">{{ trans('messages.all_product') }}</a>
                 {{--<label class="radio-inline">
                     <input type="radio" name="user">{{ trans('messages.only_me') }}
                 </label>
@@ -114,6 +114,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                     </tbody>
                 </table>
                 {!! $items->render() !!}
+
             </div>
         </div>
     </div>
