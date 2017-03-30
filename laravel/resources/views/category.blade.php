@@ -9,7 +9,8 @@
       <div class="thumbnail">
           <div class="caption">
               <h4>
-                  <i class="{{$item->productcategory_icon}}"></i> {{ $item->{ "productcategory_title_".Lang::locale()}  }}
+                  <p><i class="{{$item->productcategory_icon}} fa-2x" ></i></p>
+                  <p>{{ $item->{ "productcategory_title_".Lang::locale()}  }}</p>
               </h4>
           </div>
       </div>
