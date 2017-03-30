@@ -91,7 +91,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                             <td>{{ $item->sequence }}</td>
                             <td style="text-align:center;">
                                 <?php
-                                if (count($item->productOrderItem) === 0 && $item->user_id === $user_id) { ?>
+                                if (count($item->productOrderItem) == 0 && $item->user_id == $user_id) { ?>
                                 <a class="btn btn-primary"
                                    href="{{ url ('user/userproduct/'.$item->id.'/edit') }}">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

@@ -40,7 +40,11 @@ class ProductController extends Controller
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
-//        return response($items, 200);
+        /*$json = array(
+            'items' => $items,
+            'data' => $data
+        );
+        return response($json, 200);*/
         return view('frontend.productindex', compact('items'))
             ->with($data);
     }

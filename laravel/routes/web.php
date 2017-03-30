@@ -146,8 +146,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
 
     });
     Route::get('userproduct/all','frontend\ProductController@all');
-    Route::resource('userproduct','frontend\ProductController@index');
-    Route::resource('userproduct/create','frontend\ProductController@create');
+    Route::resource('userproduct','frontend\ProductController');
 
 });
 
