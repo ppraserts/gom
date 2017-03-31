@@ -67,7 +67,7 @@ $pagetitle = trans('messages.menu_market');
                 </table>
               </div>
 
-              {!! $items->render() !!}
+            {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

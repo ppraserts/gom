@@ -93,7 +93,7 @@ $pagetitle = trans('messages.menu_user');
                 </table>
               </div>
 
-              {!! $items->render() !!}
+              {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

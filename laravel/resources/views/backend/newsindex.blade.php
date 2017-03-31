@@ -85,7 +85,7 @@ $pagetitle = trans('messages.menu_news');
                 </table>
               </div>
 
-              {!! $items->render() !!}
+            {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

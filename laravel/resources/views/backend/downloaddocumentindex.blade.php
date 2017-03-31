@@ -75,7 +75,7 @@ $pagetitle = trans('messages.menu_download_document');
                 </table>
               </div>
 
-              {!! $items->render() !!}
+            {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

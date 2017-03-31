@@ -202,5 +202,5 @@ foreach(array_chunk($items->toArray()['data'], 3, true) as $div_item)
 </div>
 @endif
 </div>
-{!! $items->render() !!}
+{!! $items->appends(Request::all()) !!}
 @stop
