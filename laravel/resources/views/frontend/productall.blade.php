@@ -63,7 +63,8 @@ $pagetitle = Lang::get('message.menu_add_product');
             </div>
             {!! Form::close() !!}
         </div>
-        <div class="row">
+
+        <div class="row" style="margin-top: 10px">
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
@@ -113,7 +114,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                     @endforeach
                     </tbody>
                 </table>
-                {!! $items->render() !!}
+                {!! $items->appends(Request::all()) !!}
 
             </div>
         </div>
