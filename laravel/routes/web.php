@@ -18,6 +18,16 @@ use Illuminate\Support\Facades\Input;
 */
 
 Auth::routes();
+
+Route::get('/image', function() {
+    $img = Image::make('images/theme3.png');
+    $img->fit(1024, 450);
+    echo $img->mime();
+
+    $img->save('images/test1.png');
+    //   return $img->response('jpg');
+});
+
 Route::group(['middleware' => ['guest']], function () {
     //Route::get('/', 'HomeController@index');
     Route::get('/', 'HomeController@index');
@@ -184,6 +194,5 @@ Route::group(['prefix' => '{shop_name}', 'as' => session('shop')['shop_name'] , 
 {
     Route::resource('/', 'frontend\ShopIndexController' , ['as' => 'shop_name']);
 //    Route::post('logout', 'frontend\Auth\LoginController@getLogout', ['as' => 'shop_name/logout']);
-
 });
 

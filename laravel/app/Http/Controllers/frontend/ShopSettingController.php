@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shop;
 use File;
+use Image;
 
 class ShopSettingController extends Controller
 {
@@ -48,19 +49,19 @@ class ShopSettingController extends Controller
         if ($image_file_1 = $request->file('image_file_1')) {
             $this->RemoveFolderImage($shop->image_file_1);
             $uploadImage1 = $this->UploadImage($request, 'image_file_1');
-            $shop->image_file_1 = $uploadImage1["imageName"];
+            $shop->image_file_1 = $uploadImage1["image_path_filename"];
         }
 
         if ($image_file_2 = $request->file('image_file_2')) {
             $uploadImage2 = $this->UploadImage($request, 'image_file_2');
             $this->RemoveFolderImage($shop->image_file_2);
-            $shop->image_file_2 = $uploadImage2["imageName"];
+            $shop->image_file_2 = $uploadImage2["image_path_filename"];
         }
 
         if ($image_file_3 = $request->file('image_file_3')) {
             $uploadImage3 = $this->UploadImage($request, 'image_file_3');
             $this->RemoveFolderImage($shop->image_file_3);
-            $shop->image_file_3 = $uploadImage3["imageName"];
+            $shop->image_file_3 = $uploadImage3["image_path_filename"];
         }
 
         if (!$is_exist_shop) {
@@ -72,17 +73,21 @@ class ShopSettingController extends Controller
         return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }
 
-    public function uploadImage($request, $file_name)
+    public function uploadImage($request, $filename)
     {
         sleep(1);
-        $fileTimeStamp = time();
-        $imageTempName = $request->file($file_name)->getPathname();
+        $image_path = $request->file($filename)->getPathname();
+        $image_filename = $request->{$filename}->getClientOriginalName();
+        $image_directory = config('app.upload_shopimage'). time();
+        $image_path_filename = $image_directory."/".$image_filename;
+        File::makeDirectory($image_directory, 0777, true, true);
 
-        $imageName = $request->{$file_name}->getClientOriginalName();
-        $request->{$file_name}->move(config('app.upload_shopimage') . $fileTimeStamp . "/", $imageName);
-        $imageName = config('app.upload_shopimage') . $fileTimeStamp . "/" . $imageName;
+        $img = Image::make($image_path);
+        $img->fit(1920, 630);
+        $img->save($image_path_filename);
+        $img->destroy();
 
-        return array('imageTempName' => $imageTempName, 'imageName' => $imageName);
+        return array('image_path_filename' => $image_path_filename);
     }
 
     private function RemoveFolderImage($rawfile)

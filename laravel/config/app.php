@@ -200,6 +200,7 @@ return [
 		*/
 		App\Providers\HelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -250,6 +251,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

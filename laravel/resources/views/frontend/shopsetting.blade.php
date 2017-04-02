@@ -86,11 +86,6 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            {{--<div>--}}
-                            {{--<label style="color:red;">--}}
-                            {{--Shop Slide: 540 x 360 <br/>--}}
-                            {{--</label>--}}
-                            {{--</div>--}}
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-10">
@@ -139,7 +134,6 @@
                                     @endif
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -293,7 +287,7 @@
     });
 
     function setupFileStyle() {
-        $(":file").filestyle({buttonText: " Choose", size: 'sm'});
+        $(":file").filestyle({buttonText: " Choose", size: 'sm' , icon: false});
     }
 
     function hideSuccessMessage() {
