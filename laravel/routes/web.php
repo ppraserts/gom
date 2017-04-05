@@ -192,7 +192,12 @@ Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
 
 Route::group(['prefix' => '{shop_name}', 'as' => session('shop')['shop_name'] , 'middleware' => ['user']], function()
 {
-    Route::resource('/', 'frontend\ShopIndexController' , ['as' => 'shop_name']);
+    Route::resource('/', 'frontend\ShopIndexController@index' , ['as' => 'shop_name']);
+    Route::resource('/xx', 'frontend\ShopIndexController@index' , ['as' => 'shop_name']);
 //    Route::post('logout', 'frontend\Auth\LoginController@getLogout', ['as' => 'shop_name/logout']);
+
+//    Route::any('foo', function () {
+//        return 'Hello World';
+//    });
 });
 

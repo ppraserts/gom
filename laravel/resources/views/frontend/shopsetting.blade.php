@@ -157,7 +157,7 @@
                                         <a href="{{ url('user/settheme' , 'theme1' ) }}" class="info">{{ trans('messages.apply')}}</a>
                                     </div>
                                 </div>
-                                @if($shop->theme=="theme1")
+                                @if($shop->theme=="theme")
                                 <div class="text-center"><i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i></div>
                                 @endif
                             </div>

@@ -83,7 +83,7 @@ class ShopSettingController extends Controller
         File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);
-        $img->fit(1920, 630);
+        $img->fit(1800, 700);
         $img->save($image_path_filename);
         $img->destroy();
 

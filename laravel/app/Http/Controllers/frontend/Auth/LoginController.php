@@ -5,6 +5,7 @@ use App\Model\frontend\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Shop;
 
 class LoginController extends Controller
 {
@@ -56,6 +57,11 @@ class LoginController extends Controller
 
         if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password , 'is_active' => 1 ], $remember))
         {
+            $user = auth()->guard('user')->user();
+            $shop = Shop::where('user_id', $user->id)->first();
+            $shop_setting["theme"] = $shop->theme   ;
+            $shop_setting["shop_name"] = $shop->shop_name;
+            session(['shop' => $shop_setting]); // Save to session
 
             return redirect()->intended('user/userprofiles');
         }

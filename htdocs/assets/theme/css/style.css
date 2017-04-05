@@ -1,0 +1,242 @@
+/*!
+ * Start Bootstrap - Stylish Portfolio (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+/* Global Styles */
+html,
+body {
+  width: 100%;
+  height: 100%; }
+
+.theme-section {
+  font-family: "Trirong", serif;
+  letter-spacing: 0.020em; }
+  .theme-section h1, .theme-section h2, .theme-section h3, .theme-section h4, .theme-section h5, .theme-section h6 {
+    font-family: "Kanit", sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 0.095em; }
+  .theme-section a, .theme-section :focus {
+    color: #3d3d3d; }
+    .theme-section a:hover, .theme-section :focus:hover {
+      color: #a6bd5b;
+      text-decoration: none; }
+
+.header-image {
+  display: table;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover; }
+  .header-image h2 {
+    font-size: 3.000em;
+    margin-bottom: 15px; }
+    .header-image h2 span {
+      color: #a6bd5b; }
+  .header-image h1 {
+    font-family: "Trirong", serif;
+    margin: 0;
+    padding: 0;
+    font-size: 5.143em;
+    margin-bottom: 15px; }
+  .header-image p {
+    font-size: 1.286em; }
+
+.header-theme-one {
+  text-shadow: 0px 1px 1px white; }
+
+.header-theme-two {
+  color: #FFF;
+  text-shadow: none; }
+
+.text-vertical-center {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle; }
+
+.promotions {
+  padding-top: 115px; }
+
+.promotion-item {
+  margin-bottom: 25px; }
+
+.img-promotion {
+  margin: 0 auto; }
+
+.btn-primary {
+  background-color: #a6bd5b; }
+
+hr.small {
+  max-width: 45px; }
+
+hr {
+  border-top: 2px solid #a6bd5b; }
+
+.products {
+  padding-top: 50px; }
+  .products p {
+    margin-bottom: 45px; }
+  .products .thumbnail {
+    border-radius: 0;
+    padding: 10px;
+    padding-bottom: 30px; }
+  .products .btn-primary {
+    border-color: #a6bd5b;
+    font-family: "Kanit", sans-serif;
+    text-transform: uppercase;
+    border-radius: 0;
+    color: #FFF; }
+    .products .btn-primary:hover {
+      background-color: #5a741d;
+      border-color: #5a741d;
+      color: #FFF; }
+
+.product-title h4 {
+  text-transform: capitalize;
+  margin-bottom: 0; }
+
+.product-price {
+  font-family: "Kanit", sans-serif;
+  color: #a6bd5b;
+  font-size: 24px;
+  font-weight: 200;
+  margin-bottom: 15px; }
+
+.img-product {
+  width: 100%; }
+
+.contact {
+  padding-top: 50px; }
+  .contact hr {
+    margin-bottom: 50px; }
+
+.contact-detail {
+  background-color: #f3f3f3;
+  padding: 30px;
+  color: #999999; }
+  .contact-detail h3 {
+    margin-top: 0;
+    color: #000; }
+  .contact-detail a {
+    text-decoration: underline;
+    color: #000; }
+  .contact-detail strong {
+    color: #000; }
+
+.comments {
+  padding-top: 50px; }
+
+/*theme-two*/
+.img-header-shadow {
+  margin: 0 auto;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%; }
+
+.header-theme-two .headline {
+  position: relative;
+  z-index: 1; }
+
+.theme-section-two .products {
+  background: url(../css/images/product-bg.png) no-repeat center center scroll #333333;
+  color: #FFF;
+  margin-top: 60px;
+  padding-bottom: 60px; }
+  .theme-section-two .products h2 {
+    margin-bottom: 60px; }
+  .theme-section-two .products h4 {
+    color: #FFF;
+    margin-top: 20px; }
+  .theme-section-two .products ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 55px; }
+    .theme-section-two .products ul li {
+      display: inline-block;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 1.429em; }
+      .theme-section-two .products ul li a {
+        color: #FFF; }
+      .theme-section-two .products ul li a:hover {
+        text-decoration: underline;
+        color: #a6bd5b; }
+    .theme-section-two .products ul li.active a {
+      color: #a6bd5b;
+      text-decoration: underline; }
+  .theme-section-two .products .thumbnail {
+    padding: 0;
+    background-color: transparent;
+    border-width: 0; }
+.theme-section-two .contact-detail {
+  background-color: transparent;
+  padding: 0; }
+
+/*theme-three*/
+/* Custom Button Styles */
+.btn-dark {
+  border-radius: 0;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7); }
+
+.btn-light {
+  border-radius: 0;
+  color: #333;
+  background-color: white; }
+
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active {
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.8); }
+
+.map {
+  height: 500px; }
+
+.map iframe {
+  pointer-events: none; }
+
+@media screen and (max-width: 1170px) {
+  .header-image .headline {
+    font-size: 80%; } }
+@media screen and (max-width: 992px) {
+  .headline-detail {
+    background-color: rgba(0, 0, 0, 0.65);
+    padding: 15px;
+    border-radius: 5px; }
+
+  .img-header-shadow {
+    display: none; } }
+@media screen and (max-width: 768px) {
+  .map {
+    height: 75%; }
+
+  .header-image p br {
+    display: none; } }
+@media screen and (max-width: 660px) {
+  .header-image p br {
+    display: none; }
+  .header-image h1 {
+    font-size: 3em; }
+  .header-image h2 {
+    font-size: 2em; } }
+@media screen and (max-width: 320px) {
+  .header-image h1 {
+    font-size: 3em; }
+  .header-image h2 {
+    font-size: 2em; } }
+
+/*# sourceMappingURL=style.css.map */
