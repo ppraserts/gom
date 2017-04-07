@@ -32,10 +32,7 @@ class ShopIndexController extends Controller
             ->select('*');
 
         $products = $query->get();
-//        foreach ($products as $item){
-//            echo "==== ".$item->iwantto;
-//        }
-        return view('frontend.index', compact('theme' , 'products' ))->with('shop', $shop);
+        return view('frontend.shopindex', compact('theme' , 'products' ))->with('shop', $shop);
     }
 
     /**

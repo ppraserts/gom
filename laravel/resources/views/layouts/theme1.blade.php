@@ -22,17 +22,20 @@
 
 <body class="theme theme-section theme-section-one">
 
-<?php //dump($shop)?>
+
 <?php
+
+$shop_name = session('shop')['shop_name'];
+
 if ($shop != null && isset($shop->image_file_1)) {
     $image_header = $shop->image_file_1;
 } else {
-    $image_header = 'assets/theme/images/header-1.jpg)';
+    $image_header = $shop_name.'/assets/theme/images/header-1.jpg)';
 }
 ?>
 
 
-<header class="header header-image header-theme-one" style="background: url({{$image_header}}) no-repeat center center scroll; background-size: cover;">
+<header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
     <div class="text-vertical-center">
         <div class="headline">
             <div class="container">
@@ -52,14 +55,14 @@ if ($shop != null && isset($shop->image_file_1)) {
                     <div class="col-md-6">
                         <div class="promotion-item">
                             <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_01.jpg">
+                                <img class="img-promotion img-responsive" src="{{asset("assets/theme/images/theme-one_01.jpg")}}">
                             </a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="promotion-item">
                             <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_02.jpg">
+                                <img class="img-promotion img-responsive" src="{{asset('assets/theme/images/theme-one_02.jpg')}}">
                             </a>
                         </div>
                     </div>
@@ -99,7 +102,7 @@ if ($shop != null && isset($shop->image_file_1)) {
     </div>
 </section>
 
-{{--@yield('product')--}}
+
 <section class="products">
     <div class="container">
         <div class="row text-center">
@@ -107,152 +110,7 @@ if ($shop != null && isset($shop->image_file_1)) {
                 <h2>best sellers</h2>
                 <hr class="small">
                 {{--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer adipiscing erat eget risus <br> sollicitudin pellentesque et non erat. Maecenas nibh dolor, malesuada et bibendum</p>--}}
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_01.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Carrot</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $55.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_02.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Eggplant</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $68.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_03.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Figs</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $35.90
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_04.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Red onion</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $13.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_05.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Onion</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $18.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_06.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Pepper</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $30.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_07.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Potato</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $24.90
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_one_08.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Tomato</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $59.90
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @yield('product')
             </div>
         </div>
     </div>

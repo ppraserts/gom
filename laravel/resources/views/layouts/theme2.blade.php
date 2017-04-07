@@ -103,142 +103,30 @@ if ($shop != null && isset($shop->image_file_2)) {
                         <li><a href="#">Discount</a></li>
                         <li><a href="#">Seasonal</a></li>
                     </ul>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_01.jpg" alt="">
-                                    <div class="product-price">
-                                        $55.00
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Carrot</h4></a>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_02.jpg" alt="">
-                                    <div class="product-price">
-                                        $68.00
+                    <div class="row">
+                    @if($products != null)
+                            @foreach($products as $product)
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="products-item">
+                                        <div class="thumbnail">
+                                            <div class="product-image">
+                                                <img class="img-product img-responsive" src="{{asset($product->product1_file)}}" alt="">
+                                                <div class="product-price">
+                                                    {{$product->price}}
+                                                </div>
+                                            </div>
+                                            <div class="product-detail">
+                                                <div class="product-title">
+                                                    <a href="#"><h4>  {{$product->product_title}}</h4></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Eggplant</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_03.jpg" alt="">
-                                    <div class="product-price">
-                                        $35.90
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Figs</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_04.jpg" alt="">
-                                    <div class="product-price">
-                                        $13.00
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Red onion</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_05.jpg" alt="">
-                                    <div class="product-price">
-                                        $18.00
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Onion</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_06.jpg" alt="">
-                                    <div class="product-price">
-                                        $30.00
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Pepper</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_07.jpg" alt="">
-                                    <div class="product-price">
-                                        $24.90
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Potato</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_two_08.jpg" alt="">
-                                    <div class="product-price">
-                                        $59.90
-                                    </div>
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Tomato</h4></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                    @endif
                     </div>
                 </div>
             </div>

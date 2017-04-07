@@ -19,15 +19,6 @@ use Illuminate\Support\Facades\Input;
 
 Auth::routes();
 
-Route::get('/image', function() {
-    $img = Image::make('images/theme3.png');
-    $img->fit(1024, 450);
-    echo $img->mime();
-
-    $img->save('images/test1.png');
-    //   return $img->response('jpg');
-});
-
 Route::group(['middleware' => ['guest']], function () {
     //Route::get('/', 'HomeController@index');
     Route::get('/', 'HomeController@index');
@@ -185,19 +176,21 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 });
 
 Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
-    Route::resource('{shop}/shoppingcart','frontend\ShoppingCartController');
+    Route::resource('shop/shoppingcart','frontend\ShoppingCartController');
     Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
 });
 
+Route::group(['prefix' => '{shop}', 'middleware' => ['user' , 'shop']], function () {
 
-Route::group(['prefix' => '{shop_name}', 'as' => session('shop')['shop_name'] , 'middleware' => ['user']], function()
-{
-    Route::resource('/', 'frontend\ShopIndexController@index' , ['as' => 'shop_name']);
-    Route::resource('/xx', 'frontend\ShopIndexController@index' , ['as' => 'shop_name']);
-//    Route::post('logout', 'frontend\Auth\LoginController@getLogout', ['as' => 'shop_name/logout']);
+    Route::get('/', function ($shop)    {
+        $shop_name = session('shop')['shop_name'] ;
+        if(trim( strtolower($shop_name) == trim(strtolower($shop)))  ){
+            return redirect($shop.'');
+        }
+        return abort(404);
+    });
 
-//    Route::any('foo', function () {
-//        return 'Hello World';
-//    });
+    Route::resource('/', 'frontend\ShopIndexController@index');
 });
+
 

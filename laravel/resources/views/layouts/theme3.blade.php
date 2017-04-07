@@ -75,64 +75,34 @@ if ($shop != null && isset($shop->image_file_3)) {
         <div class="row text-center">
             <div class="col-lg-12">
                 <h2>Popular <span>products</span></h2>
-                {{--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer adipiscing erat eget risus <br> sollicitudin pellentesque et non erat. Maecenas nibh dolor, malesuada et bibendum</p>--}}
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer adipiscing erat eget risus <br> sollicitudin pellentesque et non erat. Maecenas nibh dolor, malesuada et bibendum</p>
                 <hr class="small">
+
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_three_01.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Chili Pepper Box</h4></a>
+                    @if($products != null)
+                        @foreach($products as $product)
+                            <div class="col-md-4">
+                                <div class="products-item">
+                                    <div class="thumbnail">
+                                        <div class="product-image">
+                                            <img class="img-product img-responsive" src="{{asset($product->product1_file)}}" alt="">
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-title">
+                                                <a href="#"><h4>{{$product->product_title}}</h4></a>
+                                            </div>
+                                            <div class="product-price">
+                                                {{$product->price}}
+                                            </div>
+                                            <a href="#" class="btn btn-primary">Add to cart</a>
+                                        </div>
                                     </div>
-                                    <div class="product-price">
-                                        $55.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_three_02.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Fresh Mushrooms</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $68.00
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="products-item">
-                            <div class="thumbnail">
-                                <div class="product-image">
-                                    <img class="img-product img-responsive" src="assets/theme/images/product_three_03.jpg" alt="">
-                                </div>
-                                <div class="product-detail">
-                                    <div class="product-title">
-                                        <a href="#"><h4>Fresh Pumpkins</h4></a>
-                                    </div>
-                                    <div class="product-price">
-                                        $35.90
-                                    </div>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
+
             </div>
         </div>
     </div>
