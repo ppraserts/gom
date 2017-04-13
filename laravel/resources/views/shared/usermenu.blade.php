@@ -35,5 +35,6 @@
 			</a>
 	</li>
     <li role="presentation" {{ ($setActive == "addproduct")? 'class=active' : ''  }}><a href="{{ url('user/userproduct') }}"> {{ trans('messages.menu_add_product') }}</a></li>
+    <li role="presentation" {{ ($setActive == "promotion")? 'class=active' : ''  }}><a href="{{ url('user/promotion') }}"> {{ trans('messages.menu_promotion') }}</a></li>
     <li role="presentation" {{ ($setActive == "shopsetting")? 'class=active' : ''  }}><a href="{{ url('user/shopsetting') }}"> {{ trans('messages.shop_setting') }}</a></li>
 </ul>

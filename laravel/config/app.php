@@ -16,6 +16,7 @@ return [
     'upload_product' => 'upload/products/',
     'upload_mailfile' => 'upload/mailfile/',
     'upload_shopimage' => 'upload/shopimage/',
+    'upload_promotion' => 'upload/promotion/',
 
     /*
     |--------------------------------------------------------------------------
@@ -203,6 +204,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
+
     ],
 
     /*

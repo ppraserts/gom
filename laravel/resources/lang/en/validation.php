@@ -224,7 +224,12 @@ return [
         'shop_subtitle'=> 'Sub Title',
         'shop_description'=> 'Description',
         'shop_slide_image' => 'Shop Image',
-        'shop_name' => 'Shop name'
+        'shop_name' => 'Shop name',
+        'promotion_title' => 'โปรโมรชั่น',
+        'promotion_description' => 'รายละเอียดโปรโมรชั่น',
+        'promotion_start_date' => 'วันเริ่มต้นโปรโมรชั่น',
+        'promotion_end_date' => 'วันสิ้นสุดโปรโมรชั่น',
+        'promotion_image' => 'รูปภาพโปรโมรชั่น'
     ],
 
 ];
