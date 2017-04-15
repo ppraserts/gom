@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 
 class MatchingController extends Controller
 {
@@ -22,7 +22,7 @@ class MatchingController extends Controller
   public function index(Request $request)
   {
       $userItem = auth()->guard('user')->user();
-      $Iwanttoobj = new Iwantto();
+      $Iwanttoobj = new ProductRequest();
 
       $orderby = $request->input('orderby');
 

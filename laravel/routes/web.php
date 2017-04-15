@@ -1,6 +1,6 @@
 <?php
 use App\Product;
-use App\Iwantto;
+use App\ProductRequest;
 use App\Amphur;
 use App\Province;
 use App\District;
@@ -141,7 +141,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
-        $Iwantto = Iwantto::find($stateid);
+        $Iwantto = ProductRequest::find($stateid);
         $Iwantto->delete();
         return [];
 

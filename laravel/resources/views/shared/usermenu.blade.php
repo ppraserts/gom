@@ -1,8 +1,8 @@
 <?php
-       use App\Iwantto;
+       use App\ProductRequest;
 	$user = auth()->guard('user')->user();
 
-       $Iwanttoobj = new Iwantto();
+       $Iwanttoobj = new ProductRequest();
 ?>
 <ul class="nav nav-tabs">
   <li role="presentation" {{ ($setActive == "userprofiles")? 'class=active' : ''  }} ><a href="{{ url('user/userprofiles') }}">{{ trans('messages.userprofile') }}</a></li>

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 
 class ProductsViewController extends Controller
@@ -22,7 +22,7 @@ class ProductsViewController extends Controller
 
 	  public function show($id)
 	  {
-	  	//$item = Iwantto::find($id);
+	  	//$item = ProductRequest::find($id);
 			$item = DB::select(DB::raw("select *
 																	from iwantto i
 																	join users u on i.users_id = u.id

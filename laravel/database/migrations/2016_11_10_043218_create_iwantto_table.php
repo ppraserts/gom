@@ -13,7 +13,7 @@ class CreateIwanttoTable extends Migration
      */
     public function up()
     {
-        Schema::create('Iwantto', function (Blueprint $table) {
+        Schema::create('ProductRequest', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('iwantto', ['buy', 'sale'])->default("buy");
             $table->string('product_title')->default("");
@@ -43,7 +43,7 @@ class CreateIwanttoTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('Iwantto', function($table) {
+        Schema::table('ProductRequest', function($table) {
             $table->foreign('productcategorys_id')->references('id')->on('productcategorys');
             $table->foreign('products_id')->references('id')->on('products');
             $table->foreign('users_id')->references('id')->on('users');
@@ -57,6 +57,6 @@ class CreateIwanttoTable extends Migration
      */
     public function down()
     {
-        Schema::drop("Iwantto");
+        Schema::drop("ProductRequest");
     }
 }

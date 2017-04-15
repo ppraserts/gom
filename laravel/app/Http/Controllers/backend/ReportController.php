@@ -8,7 +8,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Iwantto;
+use App\ProductRequest;
 
 class ReportController extends Controller
 {
@@ -44,9 +44,9 @@ class ReportController extends Controller
                   FROM users
                   WHERE iwanttobuy <> '' and iwanttosale <> ''"));
 
-    $Iwanttoobj = new Iwantto();
-    $itemssale = $Iwanttoobj->GetSearchIwantto('sale','', '', '', '', '', '');
-    $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy','', '', '', '', '', '');
+    $Iwanttoobj = new ProductRequest();
+    $itemssale = $Iwanttoobj->GetSearchProductRequests('sale','', '', '', '', '', '');
+    $itemsbuy = $Iwanttoobj->GetSearchProductRequests('buy','', '', '', '', '', '');
       return view('backend.reportuser',compact('resultsG1'
                                                 ,'resultsG2'
                                                 ,'resultsG3'

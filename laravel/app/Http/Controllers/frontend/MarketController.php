@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
-use App\Iwantto;
+use App\ProductRequest;
 use App\Market;
 use App\Product;
 
@@ -45,9 +45,9 @@ class MarketController extends Controller
           $qrcode = $id;
         }
 
-        $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, '',$qrcode, '', '', '');
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, '',$qrcode, '', '', '');
+        $productRequest = new ProductRequest();
+        $itemssale = $productRequest->GetSearchProductRequests('sale',$category, '',$qrcode, '', '', '');
+        $itemsbuy = $productRequest->GetSearchProductRequests('buy',$category, '',$qrcode, '', '', '');
 
         return view('frontend.market',compact('productCategoryitem'
                                                   ,'marketItem'

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 use App\Units;
 use App\Amphur;
@@ -79,7 +79,7 @@ class ProductsBuyEditController extends Controller
 
     if($id == 0)
     {
-      $item = new Iwantto();
+      $item = new ProductRequest();
       $item->id = 0;
       $item->productstatus ='open';
       $item->iwantto = $useritem->iwanttobuy;
@@ -87,7 +87,7 @@ class ProductsBuyEditController extends Controller
 	  $product_name->product_name_th = '';
     }
     else {
-      $item = Iwantto::find($id);
+      $item = ProductRequest::find($id);
   	  $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
 
       if($useritem->iwanttobuy != $item->iwantto )
@@ -112,42 +112,42 @@ class ProductsBuyEditController extends Controller
 
     if($id==0)
     {
-      $Iwantto = new Iwantto();
-      $Iwantto->id = 0;
+      $productRequest = new ProductRequest();
+      $productRequest->id = 0;
     }
     else {
-      $Iwantto = Iwantto::find($id);
+      $productRequest = ProductRequest::find($id);
     }
 
 
     $this->validate($request, $this->rules2);
-    $Iwantto->iwantto = $useritem->iwanttobuy;
-    $Iwantto->product_title = $request->product_title;
-    $Iwantto->product_description = $request->product_description;
-    $Iwantto->productstatus = $request->productstatus;
-    $Iwantto->productstatus = "open";
-    $Iwantto->pricerange_start = $request->pricerange_start;
-    $Iwantto->pricerange_end = $request->pricerange_end;
-    $Iwantto->volumnrange_start = $request->volumnrange_start;
-    $Iwantto->volumnrange_end = $request->volumnrange_end;
-    $Iwantto->units = $request->units;
-    $Iwantto->city = $request->city;
-    $Iwantto->province = $request->province;
-    $Iwantto->productcategorys_id = $request->productcategorys_id;
-    $Iwantto->products_id = $request->products_id;
-    $Iwantto->users_id = $useritem->id;
+    $productRequest->iwantto = $useritem->iwanttobuy;
+    $productRequest->product_title = $request->product_title;
+    $productRequest->product_description = $request->product_description;
+    $productRequest->productstatus = $request->productstatus;
+    $productRequest->productstatus = "open";
+    $productRequest->pricerange_start = $request->pricerange_start;
+    $productRequest->pricerange_end = $request->pricerange_end;
+    $productRequest->volumnrange_start = $request->volumnrange_start;
+    $productRequest->volumnrange_end = $request->volumnrange_end;
+    $productRequest->units = $request->units;
+    $productRequest->city = $request->city;
+    $productRequest->province = $request->province;
+    $productRequest->productcategorys_id = $request->productcategorys_id;
+    $productRequest->products_id = $request->products_id;
+    $productRequest->users_id = $useritem->id;
 
     if($id==0)
     {
-      $Iwantto->save();
-      $id = $Iwantto->id;
+      $productRequest->save();
+      $id = $productRequest->id;
     }
     else {
-      $Iwantto->update();
+      $productRequest->update();
     }
 
-    $itemsbuy = $Iwantto->GetSaleMatchingWithBuy($useritem->id, '');
-    $itemssale = $Iwantto->GetBuyMatchingWithSale($useritem->id, '');
+    $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
+    $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
 
     foreach($itemsbuy as $div_item)
     {

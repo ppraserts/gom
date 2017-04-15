@@ -4,9 +4,9 @@ namespace App;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Iwantto extends Model
+class ProductRequest extends Model
 {
-    protected $table = "iwantto";
+    protected $table = "product_requests";
     public $fillable = ['iwantto',
                         'product_title',
                         'product_description',
@@ -75,8 +75,8 @@ class Iwantto extends Model
                                           FROM
                                           (
                                                     SELECT 'green' as Colors ,a.*
-                                                      FROM `iwantto` a
-                                                      join `iwantto` b on b.users_id=$userid
+                                                      FROM `product_requests` a
+                                                      join `product_requests` b on b.users_id=$userid
                                                           and b.iwantto = 'buy'
                                                           AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
@@ -87,8 +87,8 @@ class Iwantto extends Model
                                                               and a.productstatus = 'open'
                                                       union
                                                       SELECT 'red' as Colors ,a.*
-                                                      FROM `iwantto` a
-                                                      join `iwantto` b on b.users_id=$userid
+                                                      FROM `product_requests` a
+                                                      join `product_requests` b on b.users_id=$userid
                                                               and b.iwantto = 'buy'
                                                               AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
@@ -99,8 +99,8 @@ class Iwantto extends Model
                                                               and a.productstatus = 'open'
                                                       union
                                                       SELECT 'white' as Colors ,a.*
-                                                      FROM `iwantto` a
-                                                      join `iwantto` b on b.users_id=$userid
+                                                      FROM `product_requests` a
+                                                      join `product_requests` b on b.users_id=$userid
                                                               and b.iwantto = 'buy'
                                                               AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
@@ -161,8 +161,8 @@ class Iwantto extends Model
                                           (
                                                     SELECT
                                                       'green' as Colors, buy.*
-                                                      FROM  iwantto buy
-                                                      JOIN iwantto sale on
+                                                      FROM product_requests buy
+                                                      JOIN product_requests sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
                                                             AND buy.iwantto =  'buy'
@@ -174,8 +174,8 @@ class Iwantto extends Model
                                                       union
                                                     SELECT
                                                       'red' as Colors, buy.*
-                                                      FROM  iwantto buy
-                                                      JOIN iwantto sale on
+                                                      FROM product_requests buy
+                                                      JOIN product_requests sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
                                                             AND buy.iwantto =  'buy'
@@ -187,8 +187,8 @@ class Iwantto extends Model
                                                       union
                                                     SELECT
                                                       'red' as Colors, buy.*
-                                                      FROM  iwantto buy
-                                                      JOIN iwantto sale on
+                                                      FROM  product_requests buy
+                                                      JOIN  product_requests sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
                                                             AND buy.iwantto =  'buy'
@@ -204,7 +204,7 @@ class Iwantto extends Model
                   return $results;
       }
 
-      public function GetSearchIwantto($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
+      public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
       {
         $sqlcondition = "";
         $sqlcondition .= " and a.productstatus = 'open' ";
@@ -287,7 +287,7 @@ class Iwantto extends Model
                             ,u.users_taxcode
                             ,u.users_company_th
                             ,u.users_company_en
-                            FROM `iwantto` a
+                            FROM `product_requests` a
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
                             where a.`iwantto` = '$iwantto'

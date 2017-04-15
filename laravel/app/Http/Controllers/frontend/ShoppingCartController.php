@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Iwantto;
+use App\ProductRequest;
 use App\Order;
 use App\OrderItem;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class ShoppingCartController extends Controller
         if(is_array($session_carts)){
             foreach($session_carts as $item){
                 $cart = array(
-                    "iwantto" => Iwantto::find($item['iwantto_id']),
+                    "iwantto" => ProductRequest::find($item['iwantto_id']),
                     "qty" => 1
                 );
                 array_push($carts , $cart);
@@ -79,7 +79,7 @@ class ShoppingCartController extends Controller
     public function addToCart(Request $request)
     {
         $request_iwantto_id = $request->input('iwantto_id');
-        $iwantto = Iwantto::find($request_iwantto_id);
+        $iwantto = ProductRequest::find($request_iwantto_id);
 
         $response = array("status" => "failed", "iwantto" > null);
 

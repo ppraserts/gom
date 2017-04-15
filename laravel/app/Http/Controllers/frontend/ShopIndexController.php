@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Shop;
-use App\Iwantto;
+use App\ProductRequest;
 use Illuminate\Support\Facades\DB;
 
 class ShopIndexController extends Controller
@@ -26,7 +26,7 @@ class ShopIndexController extends Controller
             $theme = "main";
         }
 
-        $query = DB::table('iwantto')
+        $query = DB::table('product_requests')
             ->where('users_id', $user->id)
             ->where('iwantto', 'sale')
             ->select('*');

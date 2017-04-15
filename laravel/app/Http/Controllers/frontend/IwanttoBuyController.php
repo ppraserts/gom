@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 
 class IwanttoBuyController extends Controller
@@ -35,7 +35,7 @@ class IwanttoBuyController extends Controller
       $search = \Request::get('search');
       $category = \Request::get('category');
 
-      $query = Iwantto::where('users_id', $item->id)
+      $query = ProductRequest::where('users_id', $item->id)
                       ->where('iwantto', 'buy');
       if($category != "")
         $query = $query->where('productcategorys_id', $category);
@@ -54,7 +54,7 @@ class IwanttoBuyController extends Controller
                                                     });
               }
               else {
-                     $query = $query->join('products', 'iwantto.products_id', '=', 'products.id')
+                     $query = $query->join('products', 'product_requests.products_id', '=', 'products.id')
 											  ->Where('product_title','like','%'.$search.'%')
                                               ->orWhere('units','like','%'.$search.'%')
                                               ->orWhere('city','like','%'.$search.'%')
@@ -66,7 +66,7 @@ class IwanttoBuyController extends Controller
 
 
 
-      $items = $query->orderBy('iwantto.created_at','desc')
+      $items = $query->orderBy('product_requests.created_at','desc')
                      ->paginate(config('app.paginate'));
                      //dd($items);
 

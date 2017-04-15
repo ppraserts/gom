@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 use App\Units;
 use App\Amphur;
@@ -79,7 +79,7 @@ class ProductsSaleEditController extends Controller
 
     if($id == 0)
     {
-      $item = new Iwantto();
+      $item = new ProductRequest();
       $item->id = 0;
       $item->productstatus ='open';
       $item->iwantto = $useritem->iwanttosale;
@@ -88,7 +88,7 @@ class ProductsSaleEditController extends Controller
 	  $product_name->product_name_th = '';
     }
     else {
-      $item = Iwantto::find($id);
+      $item = ProductRequest::find($id);
 	  
 	  $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
 
@@ -116,11 +116,11 @@ class ProductsSaleEditController extends Controller
 
     if($id==0)
     {
-      $Iwantto = new Iwantto();
-      $Iwantto->id = 0;
+        $productRequest = new ProductRequest();
+        $productRequest->id = 0;
     }
     else {
-      $Iwantto = Iwantto::find($id);
+        $productRequest = ProductRequest::find($id);
     }
 
     if($id==0)
@@ -131,49 +131,49 @@ class ProductsSaleEditController extends Controller
     if($request->product1_file != "")
     {
       $uploadImage1 = $this->UploadImage($request, 'product1_file');
-      $this->RemoveFolderImage($Iwantto->product1_file);
-      $Iwantto->product1_file = $uploadImage1["imageName"];
+      $this->RemoveFolderImage($productRequest->product1_file);
+        $productRequest->product1_file = $uploadImage1["imageName"];
     }
     if($request->product2_file != "")
     {
       $uploadImage2 = $this->UploadImage($request, 'product2_file');
-      $this->RemoveFolderImage($Iwantto->product2_file);
-      $Iwantto->product2_file = $uploadImage2["imageName"];
+      $this->RemoveFolderImage($productRequest->product2_file);
+        $productRequest->product2_file = $uploadImage2["imageName"];
     }
     if($request->product3_file != "")
     {
       $uploadImage3 = $this->UploadImage($request, 'product3_file');
-      $this->RemoveFolderImage($Iwantto->product3_file);
-      $Iwantto->product3_file = $uploadImage3["imageName"];
+      $this->RemoveFolderImage($productRequest->product3_file);
+        $productRequest->product3_file = $uploadImage3["imageName"];
     }
 
 
-    $Iwantto->iwantto = $useritem->iwanttosale;
-    $Iwantto->product_title = $request->product_title;
-    $Iwantto->product_description = $request->product_description;
-    $Iwantto->guarantee = $request->guarantee;
-    $Iwantto->price = $request->price;
-    $Iwantto->is_showprice = $request->is_showprice == ""? 0 : 1;
-    $Iwantto->volumn = $request->volumn;
-    $Iwantto->productstatus = $request->productstatus;
-    $Iwantto->units = $request->units;
-    $Iwantto->city = $request->city;
-    $Iwantto->province = $request->province;
-    $Iwantto->productcategorys_id = $request->productcategorys_id;
-    $Iwantto->products_id = $request->products_id;
-    $Iwantto->users_id = $useritem->id;
+      $productRequest->iwantto = $useritem->iwanttosale;
+      $productRequest->product_title = $request->product_title;
+      $productRequest->product_description = $request->product_description;
+      $productRequest->guarantee = $request->guarantee;
+      $productRequest->price = $request->price;
+      $productRequest->is_showprice = $request->is_showprice == ""? 0 : 1;
+      $productRequest->volumn = $request->volumn;
+      $productRequest->productstatus = $request->productstatus;
+      $productRequest->units = $request->units;
+      $productRequest->city = $request->city;
+      $productRequest->province = $request->province;
+      $productRequest->productcategorys_id = $request->productcategorys_id;
+      $productRequest->products_id = $request->products_id;
+      $productRequest->users_id = $useritem->id;
 
     if($id==0)
     {
-      $Iwantto->save();
-      $id = $Iwantto->id;
+        $productRequest->save();
+      $id = $productRequest->id;
     }
     else {
-      $Iwantto->update();
+        $productRequest->update();
     }
 
-    $itemsbuy = $Iwantto->GetSaleMatchingWithBuy($useritem->id, '');
-    $itemssale = $Iwantto->GetBuyMatchingWithSale($useritem->id, '');
+    $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
+    $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
 
     foreach($itemsbuy as $div_item)
     {
