@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Input;
 Auth::routes();
 
 Route::group(['middleware' => ['guest']], function () {
-    //Route::get('/', 'HomeController@index');
+
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index1');
     Route::get('/choosemarket', 'HomeController@index2');
@@ -114,11 +114,6 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('logout', 'frontend\Auth\LoginController@getLogout');
-    //Route::get('user/dashboard', 'frontend\UserController@dashboard');
-
-    /*Route::get('user/userprofile/', function () {
-        return view('frontend.userprofile');
-    });*/
     Route::resource('userprofiles','frontend\UserProfileController');
     Route::post('updateprofiles', 'frontend\UserProfileController@updateProfile');
 
@@ -132,11 +127,12 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
-
+    //Shop
     Route::resource('shopsetting','frontend\ShopSettingController');
-//    Route::resource('shoppingcart','frontend\ShoppingCartController');
+    Route::resource('shoppingcart','frontend\ShoppingCartController');
     Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
     Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
+    Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
 
     Route::get('/information/removeproduct/ajax-state',function()
     {
@@ -154,7 +150,6 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
-    //Route::get('dashboard', 'backend\AdminController@dashboard');
     Route::post('logout', 'backend\Auth\LoginController@getLogout');
     Route::get('/', 'backend\UserProfileController@index');
     Route::resource('userprofile','backend\UserProfileController');
@@ -177,10 +172,6 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('adminteam','backend\AdminteamController');
 });
 
-Route::group(['prefix' => 'shop','middleware' => ['user']], function () {
-    Route::resource('shop/shoppingcart','frontend\ShoppingCartController');
-    Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
-});
 
 Route::group(['prefix' => '{shop}', 'middleware' => ['user' , 'shop']], function () {
 
