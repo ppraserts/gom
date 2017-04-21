@@ -28,7 +28,7 @@ class AddNewForeignKeysToOrderItemsTable extends Migration
         //Add
         Schema::table('order_items', function (Blueprint $table) {
             $table->integer('id')->unsigned()->change();
-            $table->integer('product_request_id')->unsigned()->nullable(false)->after('order_id');
+            $table->integer('product_request_id')->unsigned()->nullable()->after('order_id');
         });
 
         //Foreign key
@@ -46,6 +46,8 @@ class AddNewForeignKeysToOrderItemsTable extends Migration
     {
         Schema::table('order_items', function (Blueprint $table) {
             //
+            $table->dropColumn('product_request_id');
+
         });
     }
 }
