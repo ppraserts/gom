@@ -28,15 +28,15 @@
                                         <td class="col-sm-7 col-md-6">
                                             <div class="media">
                                                 <a class=" pull-left" href="#" style="margin-right: 10px">
-                                                    <img class="media-object" src="{{url($cart['iwantto']['product1_file'])}}"
+                                                    <img class="media-object" src="{{url($cart['product_request']['product1_file'])}}"
                                                          style="width: 60px; height: 60px;">
                                                 </a>
                                                 <div class="media-body">
-                                                    <h4 class="media-heading"><a href="#">{{$cart['iwantto']['product_title']}}</a></h4>
+                                                    <h4 class="media-heading"><a href="#">{{$cart['product_request']['product_title']}}</a></h4>
                                                     <h5 class="media-heading"><a href="#"></a></h5>
                                                     <span class="text-success">
                                                         <strong><span class="glyphicon glyphicon-map-marker"></span>
-                                                            {{ $cart['iwantto']['city'] }} {{ $cart['iwantto']['province'] }}</strong>
+                                                            {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}</strong>
                                                     </span>
                                                 </div>
                                             </div>
@@ -50,11 +50,11 @@
                                             </div>
                                         </td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>
-                                                <span class="product_price">{{$cart['iwantto']['price']}}</span>
+                                                <span class="product_price">{{$cart['product_request']['price']}}</span>
                                             </strong></td>
                                         <td class="col-sm-1 col-md-1 text-center">
                                             <strong><span
-                                                        class="total">{{ number_format (intval($cart["qty"])*floatval($cart['iwantto']['price']), 2 ) }}</span></strong>
+                                                        class="total">{{ number_format (intval($cart["qty"])*floatval($cart['product_request']['price']), 2 ) }}</span></strong>
                                         </td>
                                         <td class="col-sm-1 col-md-1">
                                             <div class="text-center">
@@ -63,8 +63,8 @@
                                                 </button>
                                             </div>
                                         </td>
-                                        <td style="display:none;"><input type="hidden" value="{{$cart['iwantto']['id']}}"></td>
-                                        <td style="display:none;"><input type="hidden" value="{{$cart['iwantto']['products_id']}}"></td>
+                                        <td style="display:none;"><input type="hidden" value="{{$cart['product_request']['id']}}"></td>
+                                        <td style="display:none;"><input type="hidden" value="{{$cart['product_request']['products_id']}}"></td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -226,7 +226,7 @@
             $.ajax({
                 type: 'POST',
                 url: targetUrl,
-                data: {_token: CSRF_TOKEN, cart_items : cart_items , total_amount: totalOrder},
+                data: {_token: CSRF_TOKEN, cart_items: cart_items, total_amount: totalOrder},
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == 'success') {
@@ -237,7 +237,7 @@
                                 window.location.href = '{{url("/result")}}';
                             }
                         });
-                    }else{
+                    } else {
                         bootbox.alert({
                             message: "พบข้อผิดพลาดในการบันทึกข้อมูล",
                             size: 'small'

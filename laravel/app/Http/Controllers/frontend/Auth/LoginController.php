@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\frontend\Auth;
+
 use App\Model\frontend\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,10 +10,10 @@ use App\Shop;
 
 class LoginController extends Controller
 {
-     private $rules = [
-          'email' => 'required|email',
-          'password' => 'required',
-      ];
+    private $rules = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -55,18 +56,19 @@ class LoginController extends Controller
         $password = $request->input('password');
         $remember = $request->input('remember');
 
-        if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password , 'is_active' => 1 ], $remember))
-        {
+        if (auth()->guard('user')->attempt(['email' => $email, 'password' => $password, 'is_active' => 1], $remember)) {
             $user = auth()->guard('user')->user();
-            $shop = Shop::where('user_id', $user->id)->first();
-            $shop_setting["theme"] = $shop->theme   ;
-            $shop_setting["shop_name"] = $shop->shop_name;
-            session(['shop' => $shop_setting]); // Save to session
 
-            return redirect()->intended('user/userprofiles');
-        }
-        else
-        {
+            $shop = Shop::where('user_id', $user->id)->first();
+
+            if ($shop != null) {
+                $shop_setting["theme"] = $shop->theme;
+                $shop_setting["shop_name"] = $shop->shop_name;
+                session(['shop' => $shop_setting]); // Save to session
+            }
+
+             return redirect()->intended('user/userprofiles');
+        } else {
             return redirect()->intended('user/login')->with('status', 'Invalid Login Credentials !');
         }
     }

@@ -23,7 +23,7 @@ class ShoppingCartController extends Controller
         if(is_array($session_carts)){
             foreach($session_carts as $item){
                 $cart = array(
-                    "iwantto" => ProductRequest::find($item['iwantto_id']),
+                    "product_request" => ProductRequest::find($item['product_request_id']),
                     "qty" => 1
                 );
                 array_push($carts , $cart);
@@ -78,25 +78,25 @@ class ShoppingCartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $request_iwantto_id = $request->input('iwantto_id');
-        $iwantto = ProductRequest::find($request_iwantto_id);
+        $response = array("status" => "failed", "product_request" > null);
 
-        $response = array("status" => "failed", "iwantto" > null);
+        $request_product_request_id = $request->input('product_request_id');
+        $product_request = ProductRequest::find($request_product_request_id);
 
-        if($iwantto != null){
+        if($product_request != null){
             $carts_in_session = session('carts');
             if ($carts_in_session == null)
                 $carts_in_session = array();
 
             $new_carts = array(
-                "iwantto_id" => $iwantto->id,
+                "product_request_id" => $product_request->id,
                 "qty" => 1);
 
             array_push($carts_in_session, $new_carts);
 
             session(['carts' => $carts_in_session]); // Save to session
 
-            $response = array("status" => "success", "iwantto" => $iwantto);
+            $response = array("status" => "success", "product_request" => $product_request);
         }
 
         return response()->json($response);
