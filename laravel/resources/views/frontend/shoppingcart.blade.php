@@ -84,10 +84,8 @@
                             {{--</tr>--}}
                             <tr>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><h3>มูลค่าสินค้า</h3></td>
-                                <td class="text-right"><span id="order_total"></span></td>
+                                <td colspan="2"><h3>มูลค่าสินค้า</h3></td>
+                                <td colspan="2" class="text-right"><span id="order_total"></span></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
@@ -99,7 +97,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <button id="btn_save" type="submit" class="btn btn-success"><i class="fa fa-money"></i> ดำเนินการชำระเงิน </span>
+                                    <button id="btn_save" type="submit" class="btn btn-success"><i class="fa fa-sticky-note-o"></i> สั่งซื้อสินค้า </span>
                                     </button>
                                 </td>
                             </tr>
@@ -218,7 +216,7 @@
                 totalOrder += parseFloat($(this).text());
             });
 
-            var targetUrl = BASE_URL + '/shop/shoppingcart/checkout';
+            var targetUrl = BASE_URL + '/ีuser/shoppingcart/checkout';
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
             console.log(cart_items);
@@ -234,7 +232,7 @@
                             message: "บันทึกข้อมูลสำเร็จ",
                             size: 'small',
                             callback: function () {
-                                window.location.href = '{{url("/result")}}';
+                                window.location.href = '{{url("/iwanttosale")}}';
                             }
                         });
                     } else {

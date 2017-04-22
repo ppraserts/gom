@@ -238,7 +238,7 @@ $url = "user/iwanttosale";
                         </div>
                         <div class="modal-footer">
                             <a href="{{url('user/shoppingcart') }}" type="button"
-                               class="btn btn-success">คะกร้าสินค้า</a>
+                               class="btn btn-success"><i class="fa fa-shopping-cart"></i> คะกร้าสินค้า</a>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                         </div>
                     </div>
