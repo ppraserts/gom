@@ -200,7 +200,7 @@ return [
 		* Helper Service Providers
 		*/
 		App\Providers\HelperServiceProvider::class,
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class
     ],
 
@@ -251,7 +251,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
-//        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class
     ],
 

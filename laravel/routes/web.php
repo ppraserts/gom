@@ -195,4 +195,4 @@ Route::group(['prefix' => '{shop}', 'middleware' => ['user' , 'shop']], function
     Route::resource('/', 'frontend\ShopIndexController@index');
 });
 
-
+Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');

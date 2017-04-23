@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Promotions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -31,8 +32,19 @@ class ShopIndexController extends Controller
             ->where('iwantto', 'sale')
             ->select('*');
 
+        $dateSt = date('Y-m-d');
+        $promotions = Promotions::where('shop_id',$shop->id)
+            ->where('is_active', 1)
+            ->where('start_date','<=', $dateSt)
+            ->where('end_date','>=', $dateSt)
+            ->orderBy('sequence','desc')
+            ->limit(5)
+            ->get();
+     //  echo json_encode($promotions); exit();
+
         $products = $query->get();
-        return view('frontend.shopindex', compact('theme' , 'products' ))->with('shop', $shop);
+        return view('frontend.shopindex', compact('theme' , 'products','promotions'))
+            ->with('shop', $shop);
     }
 
     /**
@@ -99,5 +111,16 @@ class ShopIndexController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function promotion($shop,$id){
+//        Shop::where('user_id', $shop) todo check shop name
+
+        $promotion = Promotions::find($id);
+//        var_dump($promotion);
+        if ($promotion!=null)
+        {
+            return view('frontend.promotiondetail')->with('promotion',$promotion);
+        }
     }
 }

@@ -47,60 +47,60 @@ if ($shop != null && isset($shop->image_file_1)) {
     </div>
 </header>
 
-<section class="promotions">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="{{asset("assets/theme/images/theme-one_01.jpg")}}">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="{{asset('assets/theme/images/theme-one_02.jpg')}}">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_03.jpg">
-                                    </a>
-                                </div>
-                                <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_05.jpg">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_04.jpg">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/theme-one_06.jpg">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{{--<section class="promotions">--}}
+    {{--<div class="container">--}}
+        {{--<div class="row">--}}
+            {{--<div class="col-lg-12 text-center">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-6">--}}
+                        {{--<div class="promotion-item">--}}
+                            {{--<a href="#">--}}
+                                {{--<img class="img-promotion img-responsive" src="{{asset("assets/theme/images/theme-one_01.jpg")}}">--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-6">--}}
+                        {{--<div class="promotion-item">--}}
+                            {{--<a href="#">--}}
+                                {{--<img class="img-promotion img-responsive" src="{{asset('assets/theme/images/theme-one_02.jpg')}}">--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-12">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-6">--}}
+                                {{--<div class="promotion-item">--}}
+                                    {{--<a href="#">--}}
+                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_03.jpg">--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
+                                {{--<div class="promotion-item">--}}
+                                    {{--<a href="#">--}}
+                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_05.jpg">--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-6">--}}
+                                {{--<div class="promotion-item">--}}
+                                    {{--<a href="#">--}}
+                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_04.jpg">--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-12">--}}
+                        {{--<div class="promotion-item">--}}
+                            {{--<a href="#">--}}
+                                {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_06.jpg">--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
 
 
 <section class="products">
