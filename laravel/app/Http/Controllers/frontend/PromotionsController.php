@@ -41,18 +41,25 @@ class PromotionsController extends Controller
         $user = auth()->guard('user')->user();
         $shop = Shop::where('user_id', $user->id)->first();
 
-        $items = Promotions::where('shop_id', $shop->id)->Where(function ($query) {
-            $search = \Request::get('search');
-            $query->where('promotion_title', 'like', '%' . $search . '%')
-                ->orWhere('promotion_description', 'like', '%' . $search . '%');
-        })
-            ->orderBy('sequence', 'ASC')
-            ->paginate(config('app.paginate'));
-        $data = array('user_id' => $user->id,
-            'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
+        $items = array();
+        if ($shop!=null){
+            $items = Promotions::where('shop_id', $shop->id)->Where(function ($query) {
+                $search = \Request::get('search');
+                $query->where('promotion_title', 'like', '%' . $search . '%')
+                    ->orWhere('promotion_description', 'like', '%' . $search . '%');
+            })
+                ->orderBy('sequence', 'ASC')
+                ->paginate(config('app.paginate'));
+            $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'));
+            return view('frontend.promotionindex', compact('items'))
+                ->with($data);
+        }
+        else{
+            $data = array();
+            return view('frontend.promotionindex', compact('items'))->with($data);;
+        }
 
-        return view('frontend.promotionindex', compact('items'))
-            ->with($data);
+
     }
 
     /**

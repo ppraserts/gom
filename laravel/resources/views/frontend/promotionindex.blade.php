@@ -71,6 +71,7 @@ $pagetitle = Lang::get('message.menu_promotion');
                     </tr>
                     </thead>
                     <tbody>
+                    @if(count($items) > 0)
                     @foreach ($items as $key => $item)
                         <tr>
                             <td style="text-align:center;">{{ ++$i }}</td>
@@ -99,9 +100,12 @@ $pagetitle = Lang::get('message.menu_promotion');
                             </td>
                         </tr>
                     @endforeach
+                        @endif
                     </tbody>
                 </table>
+                @if(count($items) > 0)
                 {!! $items->appends(Request::all()) !!}
+                @endif
             </div>
         </div>
     </div>
