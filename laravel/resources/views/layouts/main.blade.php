@@ -181,7 +181,13 @@ if (is_array($carts)) {
         'resizeDuration': 0,
         'wrapAround': true,
         'albumLabel': '{{ Lang::get('validation.attributes.slideimage_name') }} %1 / %2'
-    })
+    });
+
+    function hideSuccessMessage() {
+        setTimeout(function () {
+            $('.alert-success').hide();
+        }, 2000);
+    }
 </script>
 @stack('scripts')
 </body>

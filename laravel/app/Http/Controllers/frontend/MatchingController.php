@@ -22,12 +22,12 @@ class MatchingController extends Controller
   public function index(Request $request)
   {
       $userItem = auth()->guard('user')->user();
-      $Iwanttoobj = new ProductRequest();
+      $productRequest = new ProductRequest();
 
       $orderby = $request->input('orderby');
 
-      $itemsbuy = $Iwanttoobj->GetSaleMatchingWithBuy($userItem->id, $orderby);
-      $itemssale = $Iwanttoobj->GetBuyMatchingWithSale($userItem->id, $orderby);
+      $itemsbuy = $productRequest->GetSaleMatchingWithBuy($userItem->id, $orderby);
+      $itemssale = $productRequest->GetBuyMatchingWithSale($userItem->id, $orderby);
 
       return view('frontend.matching',compact('itemsbuy','itemssale','userItem'));
   }

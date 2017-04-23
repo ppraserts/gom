@@ -1,9 +1,7 @@
 @extends('layouts.main')
 @section('content')
     @include('shared.usermenu', array('setActive'=>'shopsetting'))
-
     <BR>
-
     <div class="col-sm-12">
         @if (count($errors) > 0)
             <div class="row">
@@ -288,13 +286,6 @@
 
     function setupFileStyle() {
         $(":file").filestyle({buttonText: " Choose", size: 'sm' , icon: false});
-    }
-
-    function hideSuccessMessage() {
-        setTimeout(function () {
-            $('.alert-success').hide();
-        }, 2000);
-
     }
 
 </script>

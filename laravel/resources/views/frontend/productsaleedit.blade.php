@@ -1,4 +1,3 @@
-
 @extends('layouts.main')
 @push('scripts')
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
@@ -161,7 +160,7 @@
         $('input[type=radio][name=selling_period]').change(function () {
             if (this.value == 'period') {
                 $('.div_selling_period_date').show();
-            } else if (this.value == 'all_year') {
+            } else if (this.value == 'year') {
                 $('.div_selling_period_date').hide();
             }
         });
@@ -188,7 +187,24 @@
             maxViewMode: 2
         });
 
+
+        initialViews();
+
+        hideSuccessMessage();
+
     });
+
+
+    function initialViews() {
+
+        //Selling Period
+        var selling_period = '{{$item->selling_period}}';
+        if(selling_period == 'year'){
+            $('.div_selling_period_date').hide();
+        }else{
+            $("input[type=radio][name=selling_period]:first").attr('checked', true);
+        }
+    }
 </script>
 @endpush
 
@@ -468,11 +484,12 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group" style="margin-top: 20px">
                         <label class="control-label"><strong>{{ Lang::get('validation.attributes.selling_period') }} :</strong></label>
-                        <input type="radio" name="selling_period"  value="period" checked {{ $item->productstatus == 'soldout'? 'checked="checked"' : '' }}> ช่วงเวลา
-                        <input type="radio" name="selling_period" value="all_year" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> ตลอดปี
+                        <input type="radio" name="selling_period"  value="period" {{ $item->selling_period == 'period'? 'checked="checked"' : '' }}> ช่วงเวลา
+                        <input type="radio" name="selling_period" value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
                     </div>
                 </div>
             </div>
+
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group div_selling_period_date">

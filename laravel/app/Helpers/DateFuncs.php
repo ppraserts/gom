@@ -61,4 +61,9 @@ class DateFuncs
         }
         return '';
     }
+
+    public static  function getCurrentYear()
+    {
+        return date("Y");
+    }
 }

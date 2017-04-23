@@ -4,25 +4,7 @@
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
 <script>
     CKEDITOR.replace('product_description');
-    /*
-     $('#productcategorys_id').on('change', function(e){
-     console.log(e);
-     var state_id = e.target.value;
 
-     $.get('{{ url('information') }}/create/ajax-state?productcategorys_id=' + state_id, function(data) {
-     console.log(data);
-     var option = '';
-     $('#products_id').empty();
-
-     //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
-     $.each(data, function(index,subCatObj){
-     option += '<option value="'+ subCatObj.id + '">' + subCatObj.product_name_{{ Lang::locale() }} + '</option>';
-     });
-     $('#products_id').append(option);
-     $( "#products_id" ).val({{ $item->id==0? old('products_id') : $item->products_id }});
-     });
-     });
-     */
     $('#btnDelete').on('click', function (e) {
         if (confirm('{{ trans('messages.confirm_delete', ['attribute' => $item->product_title]) }}')) {
             $.get('{{ url('user/information') }}/removeproduct/ajax-state?stateid={{ $item->id }}', function (data) {
@@ -30,6 +12,7 @@
             });
         }
     });
+
     $('#province').on('change', function (e) {
         console.log(e);
         var state_id = e.target.value;
@@ -169,6 +152,9 @@
         $('.typeahead').bind('typeahead:select', function (ev, suggestion) {
             $('#products_id').val(suggestion.id);
         });
+
+
+        hideSuccessMessage();
 
     });
 </script>

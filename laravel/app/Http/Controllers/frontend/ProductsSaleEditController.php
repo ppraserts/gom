@@ -164,7 +164,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->province_selling = $request->province_selling;
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
-        $productRequest->selling_period = "2017";
+        $productRequest->selling_period =  $request->selling_period;
         $productRequest->selling_type = $request->selling_type;
 
         if ($id == 0) {
