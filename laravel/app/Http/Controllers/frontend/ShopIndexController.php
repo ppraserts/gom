@@ -38,9 +38,8 @@ class ShopIndexController extends Controller
             ->where('start_date','<=', $dateSt)
             ->where('end_date','>=', $dateSt)
             ->orderBy('sequence','desc')
-            ->limit(5)
             ->get();
-     //  echo json_encode($promotions); exit();
+//       echo json_encode($promotions); exit();
 
         $products = $query->get();
         return view('frontend.shopindex', compact('theme' , 'products','promotions'))

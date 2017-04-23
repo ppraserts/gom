@@ -30,12 +30,13 @@ $shop_name = session('shop')['shop_name'];
 if ($shop != null && isset($shop->image_file_1)) {
     $image_header = $shop->image_file_1;
 } else {
-    $image_header = $shop_name.'/assets/theme/images/header-1.jpg)';
+    $image_header = $shop_name . '/assets/theme/images/header-1.jpg)';
 }
 ?>
 
 
-<header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
+<header class="header header-image header-theme-one"
+        style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
     <div class="text-vertical-center">
         <div class="headline">
             <div class="container">
@@ -47,60 +48,97 @@ if ($shop != null && isset($shop->image_file_1)) {
     </div>
 </header>
 
-{{--<section class="promotions">--}}
-    {{--<div class="container">--}}
-        {{--<div class="row">--}}
-            {{--<div class="col-lg-12 text-center">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<div class="promotion-item">--}}
-                            {{--<a href="#">--}}
-                                {{--<img class="img-promotion img-responsive" src="{{asset("assets/theme/images/theme-one_01.jpg")}}">--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<div class="promotion-item">--}}
-                            {{--<a href="#">--}}
-                                {{--<img class="img-promotion img-responsive" src="{{asset('assets/theme/images/theme-one_02.jpg')}}">--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-12">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-md-6">--}}
-                                {{--<div class="promotion-item">--}}
-                                    {{--<a href="#">--}}
-                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_03.jpg">--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="promotion-item">--}}
-                                    {{--<a href="#">--}}
-                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_05.jpg">--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-6">--}}
-                                {{--<div class="promotion-item">--}}
-                                    {{--<a href="#">--}}
-                                        {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_04.jpg">--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-12">--}}
-                        {{--<div class="promotion-item">--}}
-                            {{--<a href="#">--}}
-                                {{--<img class="img-promotion img-responsive" src="assets/theme/images/theme-one_06.jpg">--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</section>--}}
+<section class="promotions">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="promotion-item">
+                            @if(count($promotions) >0 )
+                                <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[0]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-one_01.jpg")}}">
+                            @endif
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="promotion-item">
+                            @if(count($promotions) >1 )
+                                <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[1]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-one_02.jpg")}}">
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="promotion-item">
+                                    @if(count($promotions) >2 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[2]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[2]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-one_03.jpg")}}">
+                                    @endif
+                                </div>
+                                <div class="promotion-item">
+                                    @if(count($promotions) >3 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[3]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[3]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-one_05.jpg")}}">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="promotion-item">
+                                    @if(count($promotions) >4 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[4]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[4]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-one_04.jpg")}}">
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="promotion-item">
+                            @if(count($promotions) >5 )
+                                <a href="{{$shop_name."/promotion/".$promotions[5]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[5]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-one_06.jpg")}}">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 <section class="products">
@@ -139,7 +177,8 @@ if ($shop != null && isset($shop->image_file_1)) {
                 <div class="contact-detail">
                     <h3>Contact Infos</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
                     </p>
                     <p><strong>Company Name Inc.</strong></p>
                     <p>300 Princess Road London,</p>

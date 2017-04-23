@@ -56,32 +56,56 @@ if ($shop != null && isset($shop->image_file_2)) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-two_01.jpg">
-                                    </a>
+                                    @if(count($promotions) >0 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[0]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-two_01.jpg")}}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-two_02.jpg">
-                                    </a>
+                                    @if(count($promotions) >1 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[1]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-two_02.jpg")}}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="promotion-item">
-                                    <a href="#">
-                                        <img class="img-promotion img-responsive" src="assets/theme/images/theme-two_04.jpg">
-                                    </a>
+                                    @if(count($promotions) >2 )
+                                        <a href="{{$shop_name."/promotion/".$promotions[2]->id}}">
+                                            <img class="img-promotion img-responsive"
+                                                 src="{{url( $promotions[2]->image_file)}}">
+                                        </a>
+                                    @else
+                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                             src="{{asset("assets/theme/images/theme-two_04.jpg")}}">
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/theme-two_03.jpg">
-                            </a>
+                            @if(count($promotions) >3 )
+                                <a href="{{$shop_name."/promotion/".$promotions[3]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[3]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-two_03.jpg")}}">
+                            @endif
                         </div>
                     </div>
                 </div>
