@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\frontend;
 
-use File;
-use DB;
-use Hash;
-use Validator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Model\frontend\User;
-use App\Amphur;
 use App\Province;
-use App\District;
+use DB;
+use File;
+use Hash;
+use Illuminate\Http\Request;
+use Validator;
 
 class UserProfileController extends Controller
 {
