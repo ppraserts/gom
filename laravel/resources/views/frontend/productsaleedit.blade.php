@@ -1,3 +1,4 @@
+
 @extends('layouts.main')
 @push('scripts')
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
@@ -150,9 +151,9 @@
 
         //Packing
         $('input[type=radio][name=is_packing]').change(function () {
-            if (this.value == 'true') {
+            if (this.value == '0') {
                 $('#div_packing_size').show();
-            } else if (this.value == 'false') {
+            } else if (this.value == '1') {
                 $('#div_packing_size').hide();
             }
         });
@@ -160,7 +161,7 @@
         $('input[type=radio][name=selling_period]').change(function () {
             if (this.value == 'period') {
                 $('.div_selling_period_date').show();
-            } else if (this.value == 'all') {
+            } else if (this.value == 'all_year') {
                 $('.div_selling_period_date').hide();
             }
         });
@@ -234,7 +235,38 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group" style="margin-top: 20px">
+                        <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
+                        <input type="radio" name="selling_type"  value="retail" checked {{ $item->selling_type == 'retail'? 'checked="checked"' : '' }}> ขายปลีก
+                        <input type="radio" name="selling_type" value="wholesale" {{ $item->selling_type == 'wholesale'? 'checked="checked"' : '' }}> ชายส่ง
+                        <input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                {{--<div class="col-xs-12 col-md-12">--}}
 
+                {{--</div>--}}
+            </div>
+            <span class="clearfix"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                <div class="col-xs-12 col-md-12">
+
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                <div class="col-xs-12 col-md-12">
+
+                </div>
+            </div>
+            <span class="clearfix"></span>
+        </div>
 
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -280,37 +312,13 @@
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
-                    <div class="form-group" style="margin-top: 20px">
-                        <label class="control-label"><strong>รูปแบบ :</strong></label>
-                        <input type="radio" name="selling_type"  value="retail" checked {{ $item->productstatus == 'soldout'? 'checked="checked"' : '' }}> ขายปลีก
-                        <input type="radio" name="selling_type" value="wholesale" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> ชายส่ง
-                        <input type="radio" name="selling_type" value="all" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> ทั้งคู่
+                    <div class="form-group {{ $errors->has('guarantee') ? 'has-error' : '' }}">
+                        <strong>{{ Lang::get('validation.attributes.guarantee') }}
+                            :</strong>
+                        {!! Form::text('guarantee', $item->guarantee, array('placeholder' => Lang::get('validation.attributes.guarantee'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-3 col-sm-3 col-md-3 ">
-                <div class="col-xs-12 col-md-12">
-                    <div class="form-group" style="margin-top: 25px">
-                        <input type="radio" name="is_packing" value="true" {{ $item->is_packing == 0? 'checked="checked"' : '' }}>
-                        บรรจุสินค้า
-                        <input type="radio" name="is_packing" value="false" {{ $item->is_packing == 1 ? 'checked="checked"' : '' }}>
-                        ไม่บรรจุสินค้า
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-3 col-sm-2 col-md-3 ">
-                <div class="col-xs-12 col-md-12">
-                    <div id="div_packing_size" class="form-group {{ $errors->has('packing_size') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.product_package_size') }} :</strong>
-                        {!! Form::text('packing_size', $item->packing_size, array('placeholder' => Lang::get('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
-                    </div>
-                </div>
-            </div>
-            <span class="clearfix"></span>
-        </div>
-
-        <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('grade') ? 'has-error' : '' }}">
@@ -328,10 +336,15 @@
                     <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
                         <strong>* {{ Lang::get('validation.attributes.price') }}
                             :</strong>
-                        {!! Form::text('price', $item->price, array('placeholder' => Lang::get('validation.attributes.price'),'class' => 'form-control')) !!}
+                        {!! Form::number('price', $item->price, array('placeholder' => Lang::get('validation.attributes.price'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
+
+            <span class="clearfix"></span>
+        </div>
+
+        <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('volumn') ? 'has-error' : '' }}">
@@ -356,6 +369,24 @@
                                 @endif
                             @endforeach
                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 ">
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group" style="margin-top: 25px">
+                        <input type="radio" name="is_packing" value="0" {{ $item->is_packing == 0? 'checked="checked"' : '' }}>
+                        บรรจุสินค้า
+                        <input type="radio" name="is_packing" value="1" {{ $item->is_packing == 1 ? 'checked="checked"' : '' }}>
+                        ไม่บรรจุสินค้า
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3 col-sm-2 col-md-3 ">
+                <div class="col-xs-12 col-md-12">
+                    <div id="div_packing_size" class="form-group {{ $errors->has('packing_size') ? 'has-error' : '' }}">
+                        <strong>* {{ Lang::get('validation.attributes.product_package_size') }} :</strong>
+                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => Lang::get('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
@@ -423,10 +454,10 @@
                         <select id="province_selling" name="province_selling" class="form-control">
                             <option value="">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
-                                @if($item->province_selling == $province->PROVINCE_NAME)
-                                    <option selected value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                @if($item->province_selling == $province->PROVINCE_ID)
+                                    <option selected value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @else
-                                    <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                    <option value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -438,16 +469,16 @@
                     <div class="form-group" style="margin-top: 20px">
                         <label class="control-label"><strong>{{ Lang::get('validation.attributes.selling_period') }} :</strong></label>
                         <input type="radio" name="selling_period"  value="period" checked {{ $item->productstatus == 'soldout'? 'checked="checked"' : '' }}> ช่วงเวลา
-                        <input type="radio" name="selling_period" value="all" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> ตลอดปี
+                        <input type="radio" name="selling_period" value="all_year" {{ $item->productstatus == 'close'? 'checked="checked"' : '' }}> ตลอดปี
                     </div>
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
-                    <div class="form-group div_selling_period_date {{ $errors->has('start_date') ? 'has-error' : '' }}">
+                    <div class="form-group div_selling_period_date">
                         <strong> {{ Lang::get('validation.attributes.product_selling_start_date') }}:</strong>
                         <div class='input-group date' id='pick_start_date'>
-                            {!! Form::text('start_date', DateFuncs::thai_date($item->start_date), array('placeholder' => Lang::get('validation.attributes.product_selling_start_date'),'class' => 'form-control')) !!}
+                            {!! Form::text('start_selling_date', DateFuncs::convertToThaiDate($item->start_selling_date), array('placeholder' => Lang::get('validation.attributes.product_selling_start_date'),'class' => 'form-control')) !!}
                             <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -460,7 +491,7 @@
                     <div class="form-group div_selling_period_date {{ $errors->has('end_date') ? 'has-error' : '' }}">
                         <strong> {{ Lang::get('validation.attributes.product_selling_end_date') }}:</strong>
                         <div class='input-group date' id='pick_end_date'>
-                            {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => Lang::get('validation.attributes.product_selling_end_date'),'class' => 'form-control')) !!}
+                            {!! Form::text('end_selling_date', DateFuncs::convertToThaiDate($item->end_selling_date), array('placeholder' => Lang::get('validation.attributes.product_selling_end_date'),'class' => 'form-control')) !!}
                             <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -473,7 +504,8 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12  ">
-                <div class="panel panel-default ">
+                <div class="panel-heading"><strong>รูปสินค้า</strong></div>
+                <div class="panel-body panel panel-default ">
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <div class="col-xs-12 col-md-12">
                             <div class="form-group {{ $errors->has('product1_file') ? 'has-error' : '' }}">

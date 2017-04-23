@@ -173,8 +173,8 @@ $url = "user/iwanttosale";
                                 <br/><br/>
                             </div>
                             <div class="rating hidden-sm col-md-4">
-                                <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}')" class="btn btn-primary"><i
-                                            class="fa fa-shopping-cart"></i></a>
+                                {{--<a href="#" onclick="addToCart('{{$col_md_4_item['id']}}')" class="btn btn-primary"><i--}}
+                                            {{--class="fa fa-shopping-cart"></i></a>--}}
                             </div>
 
                         </div>

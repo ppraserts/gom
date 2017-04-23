@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\frontend;
 
-use File;
+use App\Http\Controllers\Controller;
+use App\Product;
+use App\ProductCategory;
+use App\ProductRequest;
+use App\Province;
+use App\Units;
 use DB;
+use File;
 use Hash;
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use App\Model\frontend\User;
-use App\ProductRequest;
-use App\ProductCategory;
-use App\Units;
-use App\Amphur;
-use App\Province;
-use App\District;
-use App\Product;
+use Validator;
+use App\Helpers\DateFuncs;
 
 class ProductsSaleEditController extends Controller
 {
@@ -122,8 +119,13 @@ class ProductsSaleEditController extends Controller
 
         if ($id == 0)
             $this->validate($request, $this->rules);
-        else
+        else{
+            if($request->is_packing != null && $request->is_packing == 1){
+
+            }
             $this->validate($request, $this->rules3);
+        }
+
 
         if ($request->product1_file != "") {
             $uploadImage1 = $this->UploadImage($request, 'product1_file');
@@ -160,8 +162,9 @@ class ProductsSaleEditController extends Controller
         $productRequest->is_packing = $request->is_packing;
         $productRequest->packing_size = $request->packing_size;
         $productRequest->province_selling = $request->province_selling;
-        $productRequest->start_selling_date = $request->start_selling_date;
-        $productRequest->end_selling_date = $request->end_selling_date;
+        $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
+        $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
+        $productRequest->selling_period = "2017";
         $productRequest->selling_type = $request->selling_type;
 
         if ($id == 0) {
