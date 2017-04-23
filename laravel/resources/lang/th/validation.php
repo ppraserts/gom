@@ -230,7 +230,14 @@ return [
         'promotion_description' => 'รายละเอียดโปรโมรชั่น',
         'promotion_start_date' => 'วันเริ่มต้นโปรโมรชั่น',
         'promotion_end_date' => 'วันสิ้นสุดโปรโมรชั่น',
-        'promotion_image' => 'รูปภาพโปรโมรชั่น'
+        'promotion_image' => 'รูปภาพโปรโมรชั่น',
+        'product_package_size' => 'ขนาดบรรจุ',
+        'product_grade' => 'เกรด',
+        'product_province_source' => 'แหล่งผลิด(จังหวัด)',
+        'selling_period' => 'ช่วงเวลาจำหน่าย',
+        'product_province_selling' => 'สถานที่จำหน่าย(จังหวัด)',
+        'product_selling_start_date' => 'วันเริ่มต้นจำหน่าย',
+        'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
     ],
 
 ];

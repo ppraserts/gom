@@ -27,7 +27,15 @@ class ProductRequest extends Model
                         'province',
                         'productcategorys_id',
                         'products_id',
-                        'users_id',
+                        'grade',
+                        'is_packing',
+                        'packing_size',
+                        'province_source',
+                        'province_selling',
+                        'start_selling_date',
+                        'end_selling_date',
+                        'selling_period',
+                        'selling_type'
                         ];
 
 
