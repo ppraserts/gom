@@ -52,16 +52,28 @@ if ($shop != null && isset($shop->image_file_3)) {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/promoton-three_01.jpg">
-                            </a>
+                            @if(count($promotions) >0 )
+                                <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[0]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-three_01.jpg")}}">
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="promotion-item">
-                            <a href="#">
-                                <img class="img-promotion img-responsive" src="assets/theme/images/promoton-three_02.jpg">
-                            </a>
+                            @if(count($promotions) >1 )
+                                <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
+                                    <img class="img-promotion img-responsive"
+                                         src="{{url( $promotions[1]->image_file)}}">
+                                </a>
+                            @else
+                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
+                                     src="{{asset("assets/theme/images/theme-three_02.jpg")}}">
+                            @endif
                         </div>
                     </div>
                 </div>
