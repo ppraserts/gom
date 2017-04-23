@@ -216,10 +216,11 @@
                 totalOrder += parseFloat($(this).text());
             });
 
-            var targetUrl = BASE_URL + '/ีuser/shoppingcart/checkout';
+            var targetUrl = BASE_URL + '/user/shoppingcart/checkout';
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
             console.log(cart_items);
+            console.log(targetUrl);
 
             $.ajax({
                 type: 'POST',
@@ -232,13 +233,27 @@
                             message: "บันทึกข้อมูลสำเร็จ",
                             size: 'small',
                             callback: function () {
-                                window.location.href = '{{url("/iwanttosale")}}';
+                                window.location.href = '{{url("result")}}';
+                            }
+                        }).find('.modal-content').css({
+                            'margin-top': function () {
+                                var w = $(window).height();
+                                var b = $(".modal-dialog").height();
+                                var h = (w - b) / 2;
+                                return h + "px";
                             }
                         });
                     } else {
                         bootbox.alert({
                             message: "พบข้อผิดพลาดในการบันทึกข้อมูล",
                             size: 'small'
+                        }).find('.modal-content').css({
+                            'margin-top': function () {
+                                var w = $(window).height();
+                                var b = $(".modal-dialog").height();
+                                var h = (w - b) / 2;
+                                return h + "px";
+                            }
                         });
                     }
                 },

@@ -52,17 +52,16 @@ class ShoppingCartController extends Controller
         if($cart_items != null && $cart_items != ''){
             foreach ($cart_items as $item){
                 $order_item = new OrderItem();
-                $order_item->iwantto_id = $item['id'];
                 $order_item->unit_price = $item['unit_price'];
-                $order_item->product_id = $item['product_id'];
+                $order_item->product_request_id = $item['id'];
                 $order_item->quantity = $item['quantity'];
                 $order_item->total = $item['total'];
                 array_push( $order_items , $order_item);
             }
-        }
 
-        if($order->orderItems()->saveMany($order_items)){
-            $response['status'] = "success";
+            if($order->orderItems()->saveMany($order_items)){
+                $response['status'] = "success";
+            }
         }
 
         //clear session
