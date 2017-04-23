@@ -113,13 +113,15 @@ class ShopIndexController extends Controller
     }
 
     public function promotion($shop,$id){
-//        Shop::where('user_id', $shop) todo check shop name
+        $shop = Shop::where('shop_name', $shop)->get();
 
         $promotion = Promotions::find($id);
 //        var_dump($promotion);
-        if ($promotion!=null)
+        if ($promotion!=null & $shop->count()>0)
         {
             return view('frontend.promotiondetail')->with('promotion',$promotion);
+        }else{
+            return abort(404);
         }
     }
 }
