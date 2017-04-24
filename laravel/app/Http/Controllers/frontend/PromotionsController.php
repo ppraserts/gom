@@ -9,6 +9,7 @@ use Validator, Response;
 use Illuminate\Http\Request;
 use App\Promotions;
 use File;
+use Image;
 
 class PromotionsController extends Controller
 {
@@ -50,12 +51,13 @@ class PromotionsController extends Controller
             })
                 ->orderBy('sequence', 'ASC')
                 ->paginate(config('app.paginate'));
-            $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'));
+            $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'),
+            'setting_shop' => false);
             return view('frontend.promotionindex', compact('items'))
                 ->with($data);
         }
         else{
-            $data = array();
+            $data = array('setting_shop' => true);
             return view('frontend.promotionindex', compact('items'))->with($data);;
         }
 
@@ -88,8 +90,6 @@ class PromotionsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request, $this->rules);
 
         $request['start_date'] = DateFuncs::convertYear($request['start_date']);
         $request['end_date'] = DateFuncs::convertYear($request['end_date']);

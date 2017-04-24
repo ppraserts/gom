@@ -24,6 +24,13 @@ $pagetitle = Lang::get('message.menu_promotion');
                             <p>{{ $message }}</p>
                         </div>
                     @endif
+
+                        @if($setting_shop)
+                        <div class="alert alert-danger">
+                            <strong>{{ trans('messages.required_shop_setting')}}</strong> <a href="/user/shopsetting">{{ trans('messages.shop_setting') }}</a>
+                        </div>
+                    @endif
+
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
@@ -61,50 +68,52 @@ $pagetitle = Lang::get('message.menu_promotion');
                         <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
                         <th>{{ Lang::get('validation.attributes.promotion_title') }}</th>
                         <th>{{ Lang::get('validation.attributes.promotion_description') }}</th>
-                        <th width="160px" >{{ Lang::get('validation.attributes.promotion_start_date') }}</th>
-                        <th width="160px" >{{ Lang::get('validation.attributes.promotion_end_date') }}</th>
+                        <th width="160px">{{ Lang::get('validation.attributes.promotion_start_date') }}</th>
+                        <th width="160px">{{ Lang::get('validation.attributes.promotion_end_date') }}</th>
                         <th width="150px" style="text-align:center;">
-                            <a class="btn btn-success" href="{{ url ('user/promotion/create') }}">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </a>
+                            @if(!$setting_shop)
+                                <a class="btn btn-success" href="{{ url ('user/promotion/create') }}">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </a>
+                            @endif
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     @if(count($items) > 0)
-                    @foreach ($items as $key => $item)
-                        <tr>
-                            <td style="text-align:center;">{{ ++$i }}</td>
-                            <td>{{ $item->promotion_title }}</td>
-                            <td>{{ $item->promotion_description }}</td>
-                            <td>{{ DateFuncs::thai_date($item->start_date) }}</td>
-                            <td>{{ DateFuncs::thai_date($item->end_date) }}</td>
-                            <td style="text-align:center;">
-                                <a target="_bank" class="btn btn-info"
-                                   href="{{ URL::asset($item->image_file) }}">
-                                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-                                </a>
-                                <a class="btn btn-primary"
-                                   href="{{ url ('user/promotion/'.$item->id.'/edit') }}">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </a>
-                                <?php
-                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->promotion_title]);
-                                ?>
-                                {!! Form::open(['method' => 'DELETE','route' => ['promotion.destroy', $item->id],'style'=>'display:inline']) !!}
-                                <button onclick="return confirm('{{$confirmdelete}}');"
-                                        class="btn btn-danger" type="submit">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                                {!! Form::close() !!}
-                            </td>
-                        </tr>
-                    @endforeach
-                        @endif
+                        @foreach ($items as $key => $item)
+                            <tr>
+                                <td style="text-align:center;">{{ ++$i }}</td>
+                                <td>{{ $item->promotion_title }}</td>
+                                <td>{{ $item->promotion_description }}</td>
+                                <td>{{ DateFuncs::thai_date($item->start_date) }}</td>
+                                <td>{{ DateFuncs::thai_date($item->end_date) }}</td>
+                                <td style="text-align:center;">
+                                    <a target="_bank" class="btn btn-info"
+                                       href="{{ URL::asset($item->image_file) }}">
+                                        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-primary"
+                                       href="{{ url ('user/promotion/'.$item->id.'/edit') }}">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <?php
+                                    $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->promotion_title]);
+                                    ?>
+                                    {!! Form::open(['method' => 'DELETE','route' => ['promotion.destroy', $item->id],'style'=>'display:inline']) !!}
+                                    <button onclick="return confirm('{{$confirmdelete}}');"
+                                            class="btn btn-danger" type="submit">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                    {!! Form::close() !!}
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
                 @if(count($items) > 0)
-                {!! $items->appends(Request::all()) !!}
+                    {!! $items->appends(Request::all()) !!}
                 @endif
             </div>
         </div>
