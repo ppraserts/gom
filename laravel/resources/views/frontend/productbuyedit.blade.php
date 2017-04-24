@@ -157,6 +157,13 @@
         hideSuccessMessage();
 
     });
+
+    function hideSuccessMessage() {
+        setTimeout(function () {
+            $('.alert-success').hide();
+        }, 2000);
+
+    }
 </script>
 @endpush
 @section('content')

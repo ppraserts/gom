@@ -205,6 +205,13 @@
             $("input[type=radio][name=selling_period]:first").attr('checked', true);
         }
     }
+
+    function hideSuccessMessage() {
+        setTimeout(function () {
+            $('.alert-success').hide();
+        }, 2000);
+
+    }
 </script>
 @endpush
 
