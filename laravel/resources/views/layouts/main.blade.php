@@ -118,7 +118,7 @@ if (is_array($carts)) {
                                                                                aria-hidden="true"></span> {{ trans('messages.menu_changepassword') }}</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ url('/user/inboxmessage') }}"><span class="glyphicon glyphicon-envelope"
-                                                                            aria-hidden="true"></span> {{ trans('messages.inboxmessage') }}<span class="badge"
+                                                                            aria-hidden="true"></span> {{ trans('messages.inbox_message') }}<span class="badge"
                                                                                                                                                  style="margin-left: 8px;">0</span></a>
                         </li>
                         <li role="separator" class="divider"></li>
