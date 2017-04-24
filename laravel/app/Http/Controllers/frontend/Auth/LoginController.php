@@ -77,6 +77,7 @@ class LoginController extends Controller
     public function getLogout()
     {
         auth()->guard('user')->logout();
+        session()->forget('carts');
         session()->flush();
         return redirect()->intended('user/login');
     }

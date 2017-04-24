@@ -156,7 +156,7 @@ use App\Http\Controllers\frontend\MarketController;
                     </div>
                     <div class="modal-footer">
                         <a href="{{url('user/shoppingcart') }}" type="button"
-                           class="btn btn-success"><i class="fa fa-shopping-cart"></i> คะกร้าสินค้า</a>
+                           class="btn btn-success"><i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                     </div>
                 </div>
@@ -181,7 +181,6 @@ use App\Http\Controllers\frontend\MarketController;
     function addToCart(productRequestId) {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
-        //   alert(targetUrl);
         $.ajax({
             type: 'POST',
             url: targetUrl,
@@ -190,10 +189,13 @@ use App\Http\Controllers\frontend\MarketController;
             success: function (response) {
                 if (response.status == 'success') {
                     showProductAdded(response.product_request);
+                }else{
+                    window.location = 'user/login';
                 }
             },
             error: function (request, status, error) {
-                alert(request.responseText);
+                window.location = 'user/login';
+              //  alert(request.responseText);
             }
         });
     }
