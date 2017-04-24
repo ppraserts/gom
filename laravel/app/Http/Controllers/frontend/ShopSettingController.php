@@ -34,6 +34,7 @@ class ShopSettingController extends Controller
         $is_exist_shop = $this->isExistShop($user->id);
         if (!$is_exist_shop) {
             $shop = new Shop();
+            $shop->theme = 'theme1'; // default theme
         } else {
             $shop = Shop::where('user_id', $user->id)->first();
         }
@@ -69,6 +70,13 @@ class ShopSettingController extends Controller
         } else {
             $shop->update();
         }
+
+        //update shop into session
+        $shop_setting = array(
+            'theme' => $shop->theme,
+            'shop_name' => $shop->shop_name,
+        );
+        session(['shop' => $shop_setting]);
 
         return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }

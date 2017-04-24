@@ -62,9 +62,13 @@ class LoginController extends Controller
             $shop = Shop::where('user_id', $user->id)->first();
 
             if ($shop != null) {
-                $shop_setting["theme"] = $shop->theme;
-                $shop_setting["shop_name"] = $shop->shop_name;
+                $shop_setting = array(
+                    'theme' => $shop->theme,
+                    'shop_name' => $shop->shop_name,
+                );
                 session(['shop' => $shop_setting]); // Save to session
+            }else{
+                session(['shop' => null]);
             }
 
              return redirect()->intended('user/userprofiles');
