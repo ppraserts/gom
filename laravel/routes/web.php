@@ -144,8 +144,11 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     });
     Route::get('userproduct/all','frontend\ProductController@all');
     Route::resource('userproduct','frontend\ProductController');
+    Route::get('userproduct-filters','frontend\ProductController@index');
     Route::get('promotion/index','frontend\PromotionsController@index');
     Route::resource('promotion','frontend\PromotionsController');
+
+    //Route::get('userproduct/index','frontend\ProductController@index');
 
 });
 

@@ -18,6 +18,7 @@ class PromotionsController extends Controller
         'promotion_title' => 'required',
         'promotion_description' => 'required',
         'start_date' => 'required',
+        'image_file' => 'required',
         'end_date' => 'required|after:start_date',
         'sequence' => 'required|integer',
     ];

@@ -1,6 +1,5 @@
 <?php
-use App\ProductCategory;
-$url = "user/userproduct/index";
+//$url = "user/userproduct/index";
 $pagetitle = Lang::get('message.menu_add_product');
 ?>
 @extends('layouts.main')
@@ -51,7 +50,7 @@ $pagetitle = Lang::get('message.menu_add_product');
             </div>
         </div>
         <div class="row">
-            {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
+            {!! Form::open(['method'=>'GET','url'=>'user/userproduct-filters','class'=>'','role'=>'search'])  !!}
             <div class="input-group custom-search-form">
                 <input type="text" id="search" name="search" class="form-control" placeholder="{{ trans('messages.search') }}
                         ...">
