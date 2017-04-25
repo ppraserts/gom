@@ -57,8 +57,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                         <div class="promotion-item">
                             @if(count($promotions) >0 )
                                 <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
-                                    <img class="img-promotion img-responsive"
-                                         src="{{url( $promotions[0]->image_file)}}">
+                                    @if(isset($promotions[0]->image_file))
+                                        <img class="img-promotion img-responsive"
+                                             src="{{url( $promotions[0]->image_file)}}">
+                                    @endif
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -71,8 +73,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                         <div class="promotion-item">
                             @if(count($promotions) >1 )
                                 <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
-                                    <img class="img-promotion img-responsive"
-                                         src="{{url( $promotions[1]->image_file)}}">
+                                    @if(isset($promotions[1]->image_file))
+                                        <img class="img-promotion img-responsive"
+                                             src="{{url( $promotions[1]->image_file)}}">
+                                    @endif
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -86,8 +90,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                                 <div class="promotion-item">
                                     @if(count($promotions) >2 )
                                         <a href="{{$shop_name."/promotion/".$promotions[2]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[2]->image_file)}}">
+                                            @if(isset($promotions[2]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[2]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -97,8 +103,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                                 <div class="promotion-item">
                                     @if(count($promotions) >3 )
                                         <a href="{{$shop_name."/promotion/".$promotions[3]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[3]->image_file)}}">
+                                            @if(isset($promotions[3]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[3]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -110,8 +118,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                                 <div class="promotion-item">
                                     @if(count($promotions) >4 )
                                         <a href="{{$shop_name."/promotion/".$promotions[4]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[4]->image_file)}}">
+                                            @if(isset($promotions[4]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[4]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -125,8 +135,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                         <div class="promotion-item">
                             @if(count($promotions) >5 )
                                 <a href="{{$shop_name."/promotion/".$promotions[5]->id}}">
-                                    <img class="img-promotion img-responsive"
-                                         src="{{url( $promotions[5]->image_file)}}">
+                                    @if(isset($promotions[5]->image_file))
+                                        <img class="img-promotion img-responsive"
+                                             src="{{url( $promotions[5]->image_file)}}">
+                                    @endif
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
