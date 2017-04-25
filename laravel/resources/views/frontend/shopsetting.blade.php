@@ -155,7 +155,7 @@
                                         <a href="{{ url('user/settheme' , 'theme1' ) }}" class="info">{{ trans('messages.apply')}}</a>
                                     </div>
                                 </div>
-                                @if($shop->theme=="theme")
+                                @if($shop->theme=="theme1")
                                 <div class="text-center"><i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i></div>
                                 @endif
                             </div>
@@ -286,6 +286,13 @@
 
     function setupFileStyle() {
         $(":file").filestyle({buttonText: " Choose", size: 'sm' , icon: false});
+    }
+
+    function hideSuccessMessage() {
+        setTimeout(function () {
+            $('.alert-success').hide();
+        }, 2000);
+
     }
 
 </script>

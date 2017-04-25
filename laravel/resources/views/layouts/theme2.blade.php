@@ -57,9 +57,11 @@ if ($shop != null && isset($shop->image_file_2)) {
                             <div class="col-md-6">
                                 <div class="promotion-item">
                                     @if(count($promotions) >0 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[0]->image_file)}}">
+                                        <a href="{{url($shop_name."/promotion/".$promotions[0]->id)}}">
+                                            @if(isset($promotions[0]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[0]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -70,9 +72,11 @@ if ($shop != null && isset($shop->image_file_2)) {
                             <div class="col-md-6">
                                 <div class="promotion-item">
                                     @if(count($promotions) >1 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[1]->image_file)}}">
+                                        <a href="{{ url($shop_name."/promotion/".$promotions[1]->id)}}">
+                                            @if(isset($promotions[1]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[1]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -83,9 +87,11 @@ if ($shop != null && isset($shop->image_file_2)) {
                             <div class="col-md-12">
                                 <div class="promotion-item">
                                     @if(count($promotions) >2 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[2]->id}}">
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotions[2]->image_file)}}">
+                                        <a href="{{url($shop_name."/promotion/".$promotions[2]->id)}}">
+                                            @if(isset($promotions[2]->image_file))
+                                                <img class="img-promotion img-responsive"
+                                                     src="{{url( $promotions[2]->image_file)}}">
+                                            @endif
                                         </a>
                                     @else
                                         <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -98,9 +104,11 @@ if ($shop != null && isset($shop->image_file_2)) {
                     <div class="col-md-4">
                         <div class="promotion-item">
                             @if(count($promotions) >3 )
-                                <a href="{{$shop_name."/promotion/".$promotions[3]->id}}">
-                                    <img class="img-promotion img-responsive"
-                                         src="{{url( $promotions[3]->image_file)}}">
+                                <a href="{{url($shop_name."/promotion/".$promotions[3]->id)}}">
+                                    @if(isset($promotions[3]->image_file))
+                                        <img class="img-promotion img-responsive"
+                                             src="{{url( $promotions[3]->image_file)}}">
+                                    @endif
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
@@ -129,7 +137,7 @@ if ($shop != null && isset($shop->image_file_2)) {
                     </ul>
 
                     <div class="row">
-                    @if($products != null)
+                        @if($products != null)
                             @foreach($products as $product)
                                 <div class="col-md-3 col-sm-6">
                                     <div class="products-item">
@@ -150,7 +158,7 @@ if ($shop != null && isset($shop->image_file_2)) {
                                     </div>
                                 </div>
                             @endforeach
-                    @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -169,8 +177,9 @@ if ($shop != null && isset($shop->image_file_2)) {
         <div class="row">
             <div class="col-lg-8">
                 <div class="contact-map">
-                    <iframe width="100%" height="326px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
-                    <br />
+                    <iframe width="100%" height="326px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                            src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
+                    <br/>
                     <small>
                         <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
                     </small>
