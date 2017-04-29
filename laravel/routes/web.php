@@ -175,20 +175,7 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('adminteam','backend\AdminteamController');
 });
 
-
-Route::group(['prefix' => '{shop}', 'middleware' => ['user' , 'shop']], function () {
-
-    Route::get('/', function ($shop)    {
-        if(session('shop') != null){
-            $shop_name = session('shop')['shop_name'] ;
-            if(trim( strtolower($shop_name) == trim(strtolower($shop)))  ){
-                return redirect($shop);
-            }
-        }
-        return abort(404);
-    });
-
-    Route::resource('/', 'frontend\ShopIndexController@index');
-});
-
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
+
+Route::get('/{shop}', 'frontend\ShopIndexController@index');
+//Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');
