@@ -45,7 +45,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12 col-md-10 col-md-offset-1">
-                                <h2>ร้านค้า {{$key}}</h2>
+                                @php
+                                        $user = DB::table('users')->where('id' , $key)->first();
+                                @endphp
+                                <h3>ร้าน {{$user->users_firstname_th.' '.$user->users_lastname_th}}</h3>
                             </div>
                         </div>
                         <div class="row">

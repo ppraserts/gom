@@ -8,6 +8,7 @@ use App\OrderItem;
 use App\Shop;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\frontend\User;
 
 
 class ShoppingCartController extends Controller
@@ -42,11 +43,13 @@ class ShoppingCartController extends Controller
 
     public function checkoutEachShop($user_id, $total)
     {
+        $current_user = auth()->guard('user')->user();
         if ($user_id != null && $total != null) {
             $carts_in_session = session('carts');
             if (is_array($carts_in_session)) {
                 $order = new Order();
                 $order->user_id = trim($user_id);
+                $order->buyer_id = $current_user->id;
                 $order->total_amount = floatval($total);
                 $order->order_status = 1;
                 $order->order_type = "retail";
@@ -61,7 +64,7 @@ class ShoppingCartController extends Controller
                     if ($item['user_id'] == trim($user_id)) {
                         $order_item = new OrderItem();
                         $order_item->unit_price = $item['unit_price'];
-                        $order_item->product_request_id = $item['product_request_id'];
+                        $order_item->product_id = ProductRequest::find($item['product_request_id'])->products_id ;
                         $order_item->quantity = $item['qty'];
                         $order_item->total = intval($item['qty']) * floatval($item['unit_price']);
                         array_push($arr_order_items, $order_item);
@@ -195,7 +198,6 @@ class ShoppingCartController extends Controller
         if ($arr_summary_qty != null) {
             foreach ($arr_summary_qty as $key => $value) {
                 $value['product_request'] = ProductRequest::find($value['product_request_id']);
-                $value['shop'] = Shop::find($value['user_id']);
                 $arr_more_data[$key] = $value;
             }
         }
