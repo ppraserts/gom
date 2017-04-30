@@ -39,7 +39,7 @@ use App\Http\Controllers\frontend\MarketController;
                                 <br/><br/>
                             </div>
                             <div class="rating hidden-sm col-md-4">
-                                <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                             </div>
                         </div>
                         <div class="separator clear-left">
@@ -178,13 +178,13 @@ use App\Http\Controllers\frontend\MarketController;
         });
     });
 
-    function addToCart(productRequestId) {
+    function addToCart(productRequestId , userId , unit_price) {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
         $.ajax({
             type: 'POST',
             url: targetUrl,
-            data: {_token: CSRF_TOKEN, product_request_id: productRequestId},
+            data: {_token: CSRF_TOKEN, product_request_id: productRequestId , user_id: userId , unit_price: unit_price},
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'success') {
@@ -195,7 +195,8 @@ use App\Http\Controllers\frontend\MarketController;
             },
             error: function (request, status, error) {
                 window.location = 'user/login';
-              //  alert(request.responseText);
+                console.log(request.responseText);
+               //alert(request.responseText);
             }
         });
     }

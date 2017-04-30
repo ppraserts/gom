@@ -8,49 +8,49 @@ class ProductRequest extends Model
 {
     protected $table = "product_requests";
     public $fillable = ['iwantto',
-                        'product_title',
-                        'product_description',
-                        'guarantee',
-                        'price',
-                        'is_showprice',
-                        'volumn',
-                        'product1_file',
-                        'product2_file',
-                        'product3_file',
-                        'productstatus',
-                        'pricerange_start',
-                        'pricerange_end',
-                        'volumnrange_start',
-                        'volumnrange_end',
-                        'units',
-                        'city',
-                        'province',
-                        'productcategorys_id',
-                        'products_id',
-                        'grade',
-                        'is_packing',
-                        'packing_size',
-                        'province_source',
-                        'province_selling',
-                        'start_selling_date',
-                        'end_selling_date',
-                        'selling_period',
-                        'selling_type'
-                        ];
+        'product_title',
+        'product_description',
+        'guarantee',
+        'price',
+        'is_showprice',
+        'volumn',
+        'product1_file',
+        'product2_file',
+        'product3_file',
+        'productstatus',
+        'pricerange_start',
+        'pricerange_end',
+        'volumnrange_start',
+        'volumnrange_end',
+        'units',
+        'city',
+        'province',
+        'productcategorys_id',
+        'products_id',
+        'grade',
+        'is_packing',
+        'packing_size',
+        'province_source',
+        'province_selling',
+        'start_selling_date',
+        'end_selling_date',
+        'selling_period',
+        'selling_type'
+    ];
 
 
-      public function GetSaleMatchingWithBuy($userid,$orderby)
-      {
-                  $orderbycondition = "";
-                  if($orderby == "province")
-                    $orderbycondition = ",matching.province";
-                  else if($orderby == "unit")
-                    $orderbycondition = ",matching.units";
-                  else if($orderby == "price")
-                    $orderbycondition = ",matching.pricerange_start";
+    public function GetSaleMatchingWithBuy($userid, $orderby)
+    {
+        $orderbycondition = "";
+        if ($orderby == "province")
+            $orderbycondition = ",matching.province";
+        else if ($orderby == "unit")
+            $orderbycondition = ",matching.units";
+        else if ($orderby == "price")
+            $orderbycondition = ",matching.pricerange_start";
 
-                  $results = DB::select(
-                        DB::raw("SELECT matching.*
+        $results = DB::select(
+            DB::raw("SELECT matching.*
                                           ,u.users_firstname_th
                                           ,u.users_lastname_th
                                           ,u.users_firstname_en
@@ -118,24 +118,24 @@ class ProductRequest extends Model
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id
-                                          order by matching.Colors ".$orderbycondition)
-                  );
+                                          order by matching.Colors " . $orderbycondition)
+        );
 
-                  return $results;
-      }
+        return $results;
+    }
 
-      public function GetBuyMatchingWithSale($userid,$orderby)
-      {
-                  $orderbycondition = "";
-                  if($orderby == "province")
-                    $orderbycondition = ",matching.province";
-                  else if($orderby == "unit")
-                    $orderbycondition = ",matching.units";
-                  else if($orderby == "price")
-                    $orderbycondition = ",matching.price";
+    public function GetBuyMatchingWithSale($userid, $orderby)
+    {
+        $orderbycondition = "";
+        if ($orderby == "province")
+            $orderbycondition = ",matching.province";
+        else if ($orderby == "unit")
+            $orderbycondition = ",matching.units";
+        else if ($orderby == "price")
+            $orderbycondition = ",matching.price";
 
-                  $results = DB::select(
-                        DB::raw("SELECT matching.*
+        $results = DB::select(
+            DB::raw("SELECT matching.*
                                           ,u.users_firstname_th
                                           ,u.users_lastname_th
                                           ,u.users_firstname_en
@@ -206,30 +206,28 @@ class ProductRequest extends Model
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id
-                                          order by matching.Colors ".$orderbycondition)
-                  );
+                                          order by matching.Colors " . $orderbycondition)
+        );
 
-                  return $results;
-      }
+        return $results;
+    }
 
-      public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
-      {
+    public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
+    {
         $sqlcondition = "";
         $sqlcondition .= " and a.productstatus = 'open' ";
-        if($category != "")
-          $sqlcondition .= " and  a.`productcategorys_id` = $category";
+        if ($category != "")
+            $sqlcondition .= " and  a.`productcategorys_id` = $category";
 
-        if($qrcode != "")
-          $sqlcondition .= " and  u.`users_qrcode` <> '' ";
+        if ($qrcode != "")
+            $sqlcondition .= " and  u.`users_qrcode` <> '' ";
 
-        if(is_numeric($search))
-        {
-          $sqlcondition .= " and (a.`price` between $search and $search)";
-          $sqlcondition .= " and (a.`volumn` between $search and $search)";
-        }
-        else {
-          $sqlcondition .= " and a.productstatus = 'open'";
-          $sqlcondition .= " and (CONCAT(a.`product_title`
+        if (is_numeric($search)) {
+            $sqlcondition .= " and (a.`price` between $search and $search)";
+            $sqlcondition .= " and (a.`volumn` between $search and $search)";
+        } else {
+            $sqlcondition .= " and a.productstatus = 'open'";
+            $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
                                           , a.province
                                           , u.users_firstname_th
@@ -240,10 +238,9 @@ class ProductRequest extends Model
                                           , b.product_name_en)  like '%$search%' )";
         }
 
-        if($province!="")
-        {
-          $sqlcondition .= " and a.productstatus = 'open'";
-          $sqlcondition .= " and (CONCAT(a.`product_title`
+        if ($province != "") {
+            $sqlcondition .= " and a.productstatus = 'open'";
+            $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
                                           , a.province
                                           , u.users_firstname_th
@@ -254,18 +251,16 @@ class ProductRequest extends Model
                                           , b.product_name_en)  like '%$search%' )";
         }
 
-        if(is_numeric($price))
-        {
-          $sqlcondition .= " and (a.`price` between $price and $price)";
+        if (is_numeric($price)) {
+            $sqlcondition .= " and (a.`price` between $price and $price)";
         }
 
-        if(is_numeric($volumn))
-        {
-          $sqlcondition .= " and (a.`volumn` between $volumn and $volumn)";
+        if (is_numeric($volumn)) {
+            $sqlcondition .= " and (a.`volumn` between $volumn and $volumn)";
         }
 
         $results = DB::select(
-              DB::raw("SELECT a.*
+            DB::raw("SELECT a.*
                             ,u.users_firstname_th
                             ,u.users_lastname_th
                             ,u.users_firstname_en
@@ -302,8 +297,9 @@ class ProductRequest extends Model
                             $sqlcondition
               "));
 
-          return $results;
-      }
+        return $results;
+    }
 
 }
+
 ?>

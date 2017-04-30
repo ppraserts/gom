@@ -133,6 +133,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
     Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
     Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
+    Route::get('shoppingcart/deleteCartItem/{user_id}/{product_request_id}', ['as' => 'shoppingcart.deleteCartItem', 'uses' => 'frontend\ShoppingCartController@deleteCartItem']);
+    Route::get('shoppingcart/incrementQuantityCartItem/{user_id}/{product_request_id}/{unit_price}/{is_added}', ['as' => 'shoppingcart.incrementQuantityCartItem', 'uses' => 'frontend\ShoppingCartController@incrementQuantityCartItem']);
+    Route::get('shoppingcart/checkoutEachShop/{user_id}/{total}', ['as' => 'shoppingcart.checkoutEachShop', 'uses' => 'frontend\ShoppingCartController@checkoutEachShop']);
+
 
     Route::get('/information/removeproduct/ajax-state',function()
     {
