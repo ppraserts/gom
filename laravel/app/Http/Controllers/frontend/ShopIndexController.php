@@ -17,10 +17,13 @@ class ShopIndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($shop_name)
     {
-        $user = auth()->guard('user')->user();
-        $shop = Shop::where('user_id', $user->id)->first();
+        $shop = Shop::with(['user'])->where('shop_name',$shop_name)->first();
+        if ($shop == null) {
+            return abort(404);
+        }
+
         if ($shop != null && $shop->theme != null && $shop->theme != '') {
             $theme = trim($shop->theme);
         } else {
@@ -28,15 +31,15 @@ class ShopIndexController extends Controller
         }
 
         $query = DB::table('product_requests')
-            ->where('users_id', $user->id)
+            ->where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
             ->select('*');
 
-        $dateSt = date('Y-m-d');
+        $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
             ->where('is_active', 1)
-            ->where('start_date','<=', $dateSt)
-            ->where('end_date','>=', $dateSt)
+            ->where('start_date','<=', $dateNow)
+            ->where('end_date','>=', $dateNow)
             ->orderBy('sequence','desc')
             ->get();
 //       echo json_encode($promotions); exit();

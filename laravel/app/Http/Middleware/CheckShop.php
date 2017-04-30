@@ -7,6 +7,8 @@
  */
 
 namespace App\Http\Middleware;
+
+use App\Shop;
 use Closure;
 
 
@@ -14,17 +16,11 @@ class CheckShop
 {
     public function handle($request, Closure $next)
     {
-        if(!empty(auth()->guard('user')->id()))
-        {
-            $session_shop_name = session('shop')['shop_name'] ;
-            if(!trim( strtolower($session_shop_name) == trim(strtolower($request->segment(1))))  ){
-                return abort(404);
-            }
-           return $next($request);
-        }
-        else
-        {
+        $shop = Shop::where('shop_name',$request->segment(1))->get();
+//        echo count($shop);
+        if (count($shop)<1) {
             return abort(404);
         }
+        return $next($request);
     }
 }

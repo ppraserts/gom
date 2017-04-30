@@ -224,7 +224,7 @@ return [
         'shop_subtitle'=> 'Sub Title',
         'shop_description'=> 'Description',
         'shop_slide_image' => 'Shop Image',
-        'shop_name' => 'Shop name',
+        'shop_name' => 'Shop URL',
         'promotion_title' => 'โปรโมรชั่น',
         'promotion_description' => 'รายละเอียดโปรโมรชั่น',
         'promotion_start_date' => 'วันเริ่มต้นโปรโมรชั่น',

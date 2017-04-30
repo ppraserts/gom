@@ -40,13 +40,14 @@
             </div>
 
             <div class="row">
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-5 col-sm-5">
                         <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                             <strong>* {{ Lang::get('validation.attributes.shop_name') }}:</strong>
-                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' )) !!}
+                            {{URL::to('/')}}/<span id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
+                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name' )) !!}
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8">
+                    <div class="col-md-7 col-sm-7">
                         <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
                             <strong>* {{ Lang::get('validation.attributes.shop_title') }}:</strong>
                             {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => Lang::get('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
@@ -282,6 +283,8 @@
         hideSuccessMessage();
 
         setupFileStyle();
+
+        setupFillURI();
     });
 
     function setupFileStyle() {
@@ -294,6 +297,15 @@
         }, 2000);
 
     }
+
+    function setupFillURI() {
+        $("#shop_name").on("change paste keyup", function() {
+            $("#uri").html($(this).val());
+            console.log('-->'+$(this).val())
+        });
+    }
+
+
 
 </script>
 @endpush

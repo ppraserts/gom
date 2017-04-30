@@ -11,7 +11,18 @@ use Image;
 class ShopSettingController extends Controller
 {
 
-    private $shop_rules = [
+    private function rules($skipCheckUnique)
+    {
+        if ($skipCheckUnique) {
+            return ['shop_title' => 'required',
+                'shop_name' => 'required|regex:/^[A-Za-z][A-Za-z0-9]*$/'];
+        } else {
+            return ['shop_title' => 'required',
+                'shop_name' => 'required|regex:/^[A-Za-z][A-Za-z0-9]*$/|unique:shops,shop_name'];
+        }
+    }
+
+    private $shop_rules_update = [
         'shop_title' => 'required',
         'shop_name' => 'required|regex:/^[A-Za-z][A-Za-z0-9]*$/'
     ];
@@ -35,11 +46,11 @@ class ShopSettingController extends Controller
         if (!$is_exist_shop) {
             $shop = new Shop();
             $shop->theme = 'theme1'; // default theme
+            $this->validate($request, $this->rules(null));
         } else {
             $shop = Shop::where('user_id', $user->id)->first();
+            $this->validate($request, $this->rules((strtolower($shop->shop_name))===(strtolower($request->shop_name))));
         }
-
-        $this->validate($request, $this->shop_rules);
 
         $shop->user_id = $user->id;
         $shop->shop_name = $request->input('shop_name');
@@ -86,8 +97,8 @@ class ShopSettingController extends Controller
         sleep(1);
         $image_path = $request->file($filename)->getPathname();
         $image_filename = $request->{$filename}->getClientOriginalName();
-        $image_directory = config('app.upload_shopimage'). time();
-        $image_path_filename = $image_directory."/".$image_filename;
+        $image_directory = config('app.upload_shopimage') . time();
+        $image_path_filename = $image_directory . "/" . $image_filename;
         File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);
@@ -139,7 +150,7 @@ class ShopSettingController extends Controller
             session(['shop' => $shop_setting]); // Save to session
 
         }
-         return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
+        return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }
 
 }
