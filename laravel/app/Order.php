@@ -20,4 +20,12 @@ class Order extends Model
         return $this->hasMany('App\OrderItem');
     }
 
+    public function user(){
+        return$this->hasOne('App\User','id','user_id');
+    }
+
+    public function buyer(){
+        return$this->hasOne('App\User','id','buyer_id');
+    }
+
 }

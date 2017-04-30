@@ -20,4 +20,8 @@ class OrderItem extends Model
     public function order(){
         return $this->belongsTo('App\Order');
     }
+
+    public function productRequest(){
+        return $this->belongsTo('App\ProductRequest','id','product_request_id');
+    }
 }

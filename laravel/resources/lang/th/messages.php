@@ -111,5 +111,13 @@ return [
     'all_product' => 'สินค้าทั้งหมด',
     'shop_product' => 'สินค้า',
     'menu_promotion' => 'จัดการโปรโมชั่น',
-    'required_shop_setting' => 'กรุณาตั้งค่าร้านค้าก่อน!'
+    'required_shop_setting' => 'กรุณาตั้งค่าร้านค้าก่อน!',
+    'order_id' => 'เลขที่ใบสั่งซื้อ',
+    'order_date' => 'วันที่สั่งซื้อ',
+    'order_total' => 'ยอดรวม',
+    'menu_order_list' => 'รายการสั่งซื้อ',
+    'menu_shop_order_list' => 'รายการสั่งซื้อจากร้านค้า',
+    'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
+    'baht' => ' บาท',
+    'order_status' => 'สถานะ'
 ];

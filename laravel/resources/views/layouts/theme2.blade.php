@@ -25,6 +25,7 @@
 
 </head>
 <?php
+$shop_name = $shop->shop_name;
 if ($shop != null && isset($shop->image_file_2)) {
     $image_header = $shop->image_file_2;
 } else {

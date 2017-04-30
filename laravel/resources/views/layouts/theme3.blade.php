@@ -24,6 +24,7 @@
 
 </head>
 <?php
+$shop_name = $shop->shop_name;
 if ($shop != null && isset($shop->image_file_3)) {
     $image_header = $shop->image_file_3;
 } else {
@@ -63,7 +64,7 @@ if ($shop != null && isset($shop->image_file_3)) {
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                     src="{{asset("assets/theme/images/theme-three_01.jpg")}}">
+                                     src="{{asset("assets/theme/images/promoton-three_01.jpg")}}">
                             @endif
                         </div>
                     </div>
@@ -78,7 +79,7 @@ if ($shop != null && isset($shop->image_file_3)) {
                                 </a>
                             @else
                                 <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                     src="{{asset("assets/theme/images/theme-three_02.jpg")}}">
+                                     src="{{asset("assets/theme/images/promoton-three_02.jpg")}}">
                             @endif
                         </div>
                     </div>

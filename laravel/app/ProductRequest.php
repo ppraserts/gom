@@ -300,6 +300,13 @@ class ProductRequest extends Model
         return $results;
     }
 
+    public function orderItem(){
+        return $this->hasMany('App\OrderItem','product_request_id');
+    }
+
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
 
 }
 

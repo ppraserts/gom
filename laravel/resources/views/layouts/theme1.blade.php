@@ -25,7 +25,7 @@
 
 <?php
 
-$shop_name = session('shop')['shop_name'];
+$shop_name = $shop->shop_name;
 
 if ($shop != null && isset($shop->image_file_1)) {
     $image_header = $shop->image_file_1;

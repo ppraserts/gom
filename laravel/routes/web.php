@@ -151,6 +151,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('userproduct-filters','frontend\ProductController@index');
     Route::get('promotion/index','frontend\PromotionsController@index');
     Route::resource('promotion','frontend\PromotionsController');
+    Route::get('order','frontend\OrderController@index');
+    Route::get('shoporder','frontend\OrderController@shoporder');
+    Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('shoporderdetail/{order_id}','frontend\OrderController@shoporderdetail');
 
     //Route::get('userproduct/index','frontend\ProductController@index');
 
