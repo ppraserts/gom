@@ -13,13 +13,15 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = auth()->guard('user')->user();
-        $orderList = \App\Order::with('user')->where('buyer_id', $user->id)
+        /*$orderList = \App\Order::with(['user','orderStatusName'])->where('buyer_id', $user->id)->get();
+        echo $orderList;
+        exit();*/
+        $orderList = \App\Order::with(['user','orderStatusName'])->where('buyer_id', $user->id)
             ->orderBy('id', 'DESC')
             ->paginate(config('app.paginate'));
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
-
         return view('frontend.orderindex', compact('orderList'))
             ->with($data);
     }
@@ -27,7 +29,7 @@ class OrderController extends Controller
     public function shoporder(Request $request)
     {
         $user = auth()->guard('user')->user();
-        $orderList = \App\Order::with('buyer')->where('user_id', $user->id)
+        $orderList = \App\Order::with(['buyer','orderStatusName'])->where('user_id', $user->id)
             ->orderBy('id', 'DESC')
             ->paginate(config('app.paginate'));
 
@@ -40,25 +42,12 @@ class OrderController extends Controller
 
     public function orderdetail($order_id){
 //        $user = auth()->guard('user')->user();
-        $order = Order::with('user')->where('id', $order_id)->first();
-        $order->orderItems = ProductRequest::with(['orderItem','product'])->where('id',255)->get();
-        /*$order->orderItems = ProductRequest::with(['orderItem','product'])->whereHas('OrderItem', function($query) use ($order_id){
-            $query->whereOrderId($order_id);
-        })->get();*/
-        echo $order;
-        exit();
+        $order = Order::with(['user','orderStatusName'])->where('id', $order_id)->first();
+//        $order->orderItems = OrderItem::with(['product','productRequest'])->where('order_id',$order_id)->get();
+        $OrderItem = new OrderItem();
+        $order->orderItems = $OrderItem->orderItemDetail($order_id);
+//        echo $order;
+//        exit();
         return view('frontend.orderdetail', compact('order'));
-    }
-
-    public function shoporderdetail($order_id){
-//        $user = auth()->guard('user')->user();
-        $order = Order::with('user')->where('id', $order_id)->first();
-        $order->orderItems = ProductRequest::with(['orderItem','product'])->where('id',255)->get();
-        /*$order->orderItems = ProductRequest::with(['orderItem','product'])->whereHas('OrderItem', function($query) use ($order_id){
-            $query->whereOrderId($order_id);
-        })->get();*/
-        echo $order;
-        exit();
-        return view('frontend.shoporderdetail', compact('order'));
     }
 }

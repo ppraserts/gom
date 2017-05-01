@@ -154,7 +154,6 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('order','frontend\OrderController@index');
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
-    Route::get('shoporderdetail/{order_id}','frontend\OrderController@shoporderdetail');
 
     //Route::get('userproduct/index','frontend\ProductController@index');
 

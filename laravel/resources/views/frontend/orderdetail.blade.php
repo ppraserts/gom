@@ -1,5 +1,5 @@
 <?php
-$pagetitle = Lang::get('message.menu_order_list');
+$pagetitle = trans('message.menu_order_list');
 ?>
 @extends('layouts.main')
 @section('page_heading',$pagetitle)
@@ -9,66 +9,68 @@ $pagetitle = Lang::get('message.menu_order_list');
     <div class="col-sm-12">
 
         <div class="row">
-            <h2>{{ trans('messages.menu_order_list') }}</h2>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-lg-12 margin-tb">
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
-                    @endif
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
-                            <br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+
+            <h2>{{ trans('messages.order_detail') }}</h2>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <h4>{{ trans('messages.order_id') . " : " . $order->id }}</h4>
+                    <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
+                    <p><b>{{ trans('messages.order_status') }} : </b>{{$order->orderStatusName->status_name}}</p>
+                    <p><b>{{ trans('messages.order_type') }} : </b>{{$order->order_type}}</p>
+                    <h4><b>{{ trans('messages.total_order') }} : </b>{{$order->total_amount}}  {{trans('messages.baht')}}
+                    </h4>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <h3>{{ trans('messages.i_sale') }}</h3>
+
+                    <p><b>{{ trans('validation.attributes.name') }}
+                            : </b>{{$order->user->users_firstname_th. " ". $order->user->users_lastname_th}}</p>
+                    @if(isset($order->user->users_mobilephone))<p>
+                        <b>{{ trans('validation.attributes.users_mobilephone') }}
+                            : </b>{{ $order->user->users_mobilephone }}</p>@endif
+                    @if(isset($order->user->users_phone))<p><b>{{ trans('validation.attributes.users_phone') }}
+                            : </b>{{ $order->user->users_phone }}</p>@endif
+                    @if(isset($order->user->email))<p><b>{{ trans('validation.attributes.email') }}
+                            : </b>{{ $order->user->email }}</p>@endif
+                    <p><b>{{ trans('validation.attributes.users_addressname') }}
+                            : </b>{{ $order->user->users_addressname . " " . $order->user->users_district . " " . $order->user->users_city . " " . $order->user->users_province . " " . $order->user->users_postcode }}
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px">
 
+        <div class="row">
+            <h3>{{ trans('messages.product_list') }}</h3>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                     <tr>
                         <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                        <th>{{ Lang::get('messages.i_sale') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_total') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_status') }}</th>
-                        <th width="130px" style="text-align:center;">
-                            {{ Lang::get('messages.view_order_detail') }}
-                        </th>
+                        <th>{{ trans('messages.shop_product') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.unit_price') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.quantity') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.total_order') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($orderList as $key => $item)
+                    <?php $i = 0 ?>
+                    @foreach ($order->orderItems as $key => $item)
                         <tr>
-                            <td style="text-align:center;">{{ $item->id }}</td>
-                            <td>{{ $item->user->users_firstname_th. " ". $item->user->users_lastname_th }}</td>
-                            <td style="text-align:center;">{{ $item->order_date }}</td>
-                            <td style="text-align:center;">{{ $item->total_amount, trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->order_status }}</td>
-                            <td style="text-align:center;">
-                                <a class="btn btn-info"
-                                   href="{{ url ('user/order/detail/'.$item->id) }}">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </a>
-                            </td>
+                            <td style="text-align:center;">{{ ++$i }}</td>
+                            <td>{{ $item->product_name_th }}</td>
+                            <td style="text-align:center;">{{ $item->unit_price . trans('messages.baht') }}</td>
+                            <td style="text-align:center;">{{ $item->quantity ." ". $item->units }}</td>
+                            <td style="text-align:center;">{{ $item->total . trans('messages.baht') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                {!! $orderList->appends(Request::all()) !!}
             </div>
         </div>
+
     </div>
 @endsection

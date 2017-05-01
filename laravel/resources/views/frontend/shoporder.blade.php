@@ -33,11 +33,11 @@ $pagetitle = trans('message.menu_order_list');
                             <td style="text-align:center;">{{ $item->id }}</td>
                             <td>{{--{{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}--}}</td>
                             <td style="text-align:center;">{{ $item->order_date }}</td>
-                            <td style="text-align:center;">{{ $item->total_amount, trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->order_status }}</td>
+                            <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
+                            <td style="text-align:center;">{{ $item->orderStatusName->status_name }}</td>
                             <td style="text-align:center;">
                                 <a class="btn btn-info"
-                                   href="{{ url ('user/shoporderdetail/'.$item->id) }}">
+                                   href="{{ url ('user/orderdetail/'.$item->id) }}">
                                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                 </a>
                             </td>
