@@ -119,6 +119,16 @@ return [
     'menu_order_list' => 'รายการสั่งซื้อ',
     'menu_shop_order_list' => 'รายการสั่งซื้อจากร้านค้า',
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
-    'baht' => ' บาท',
-    'order_status' => 'สถานะ'
+    'baht' => ' Baht',
+    'order_status' => 'สถานะ',
+    'total_net' => 'Total net',
+    'process_order' => 'Process Order',
+    'process_all_order' => 'Process all orders',
+    'total_order' => 'Total',
+    'quantity' => 'Quantity',
+    'unit_price' => 'Price',
+    'total' => 'Total',
+    'continue_shopping' => 'Continue Shopping',
+    'not_found_an_orders' => 'Not found an orders',
+    'shopping_cart' => 'Shopping cart',
 ];

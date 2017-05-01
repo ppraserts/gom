@@ -75,7 +75,7 @@ if (is_array($carts)) {
                     <li>
                         <div class="btn-nav">
                             <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn"><span class="badge">{{$cart_items}}</span> <i
-                                        class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
+                                        class="fa fa-shopping-cart"></i> {{ trans('messages.shopping_cart') }}</a>
                         </div>
                     </li>
                 @endif

@@ -119,5 +119,15 @@ return [
     'menu_shop_order_list' => 'รายการสั่งซื้อจากร้านค้า',
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'baht' => ' บาท',
-    'order_status' => 'สถานะ'
+    'order_status' => 'สถานะ',
+    'total_net' => 'ยอดรวมทั้งหมด',
+    'process_order' => 'สั่งซื้อสินค้า',
+    'process_all_order' => 'สั่งซื้อสินค้าทั้งหมด',
+    'total_order' => 'ยอดรวม',
+    'quantity' => 'จำนวน',
+    'unit_price' => 'ราคา',
+    'total' => 'รวม',
+    'continue_shopping' => 'เลือกซ์้อสินค้าต่อ',
+    'not_found_an_orders' => 'ไม่พบข้อมูลในตะกร้าสินค้า',
+    'shopping_cart' => 'ตะกร้าสินค้า',
 ];

@@ -20,10 +20,10 @@
                     <div class="col-md-6">
                         <div class="pull-right">
                             <a href="{{url('result')}}" type="button" class="btn btn-primary">
-                                <span class="fa fa-cart-plus"></span> เลือกซื้อสินค้าต่อ
+                                <span class="fa fa-cart-plus"></span> {{ trans('messages.continue_shopping') }}
                             </a>
                             <button type="submit" class="btn btn-info">
-                                <span class="fa fa-cart-plus" aria-hidden="true"></span> สั่งซื่อทั้งหมด
+                                <span class="fa fa-cart-plus" aria-hidden="true"></span> {{ trans('messages.process_all_order') }}
                             </button>
 
                         </div>
@@ -32,11 +32,11 @@
             </div>
         @else
             <div class="row">
-                <h2 class="text-center">ไม่พบข้อมูลในตะกร้าสินค้า</h2>
+                <h2 class="text-center">{{ trans('messages.not_found_an_orders') }}</h2>
                 <BR>
                 <div class="text-center">
                     <a href="{{url('result')}}" type="button" class="btn btn-primary">
-                        <span class="fa fa-cart-plus"></span> เลือกซื้อสินค้าต่อ
+                        <span class="fa fa-cart-plus"></span> {{ trans('messages.continue_shopping') }}
                     </a>
                 </div>
             </div>
@@ -65,10 +65,10 @@
                             <table id="table_cart" class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th class="text-center">Quantity</th>
-                                    <th class="text-center">Price</th>
-                                    <th class="text-center">Total</th>
+                                    <th>{{ trans('messages.shop_product') }}</th>
+                                    <th class="text-center">{{ trans('messages.quantity') }}</th>
+                                    <th class="text-center">{{ trans('messages.unit_price') }}</th>
+                                    <th class="text-center">{{ trans('messages.total') }}</th>
                                     <th> </th>
                                 </tr>
                                 </thead>
@@ -132,9 +132,9 @@
                                 @endforeach
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td colspan="2"><h4 class="pull-right">มูลค่าสินค้า</h4></td>
+                                    <td colspan="2"><h4 class="pull-right">{{ trans('messages.total_order') }}</h4></td>
                                     <td colspan="2" class="text-right"><span
-                                                id="order_total"><h4><strong>{{number_format($total)}}</strong> บาท</h4> </span></td>
+                                                id="order_total"><h4><strong>{{number_format($total)}}</strong> {{ trans('messages.baht') }}</h4> </span></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;&nbsp;</td>
@@ -144,7 +144,7 @@
                                     <td>
                                         <a href="{{route('shoppingcart.checkout' , array('user_id'=> $key , 'total'=> $total )  )}}"
                                            class="btn btn-primary"><i class="glyphicon glyphicon-shopping-cart"></i>
-                                            สั่งซื้อสินค้า </span>
+                                            {{ trans('messages.process_order') }} </span>
                                         </a>
                                     </td>
                                 </tr>
@@ -162,8 +162,8 @@
     @if(count($shopping_carts) > 0)
         <div style="background-color: white">
             <div class="row">
-                <div class="col-md-8"><span class="pull-right"><h3>ยอดรวมทั้งหมด</h3></span></div>
-                <div class="col-md-4"><span class="pull-right" style="margin-right: 20px"><h3>{{number_format($total_net)}} บาท</h3></span></div>
+                <div class="col-md-8"><span class="pull-right"><h3>{{ trans('messages.total_net') }}</h3></span></div>
+                <div class="col-md-4"><span class="pull-right" style="margin-right: 20px"><h3>{{number_format($total_net)}} {{ trans('messages.baht') }}</h3></span></div>
             </div>
         </div>
     @endif
