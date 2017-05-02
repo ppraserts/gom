@@ -75,12 +75,16 @@
                                 <tbody>
                                 @php
                                     $total = 0;
+                                $int_count = 0;
                                 @endphp
 
-                                @foreach($carts as $cart)
+                                @foreach($carts as $row=> $cart)
                                     @php
+                                        $int_count ++;
                                         $total += intval($cart["qty"])*floatval($cart['product_request']['price']);
-                                        $total_net += $total;
+                                        if(count($carts) == $int_count){
+                                            $total_net += $total;
+                                        }
                                     @endphp
 
                                     <tr class="data">
@@ -163,7 +167,8 @@
         <div style="background-color: white">
             <div class="row">
                 <div class="col-md-8"><span class="pull-right"><h3>{{ trans('messages.total_net') }}</h3></span></div>
-                <div class="col-md-4"><span class="pull-right" style="margin-right: 20px"><h3>{{number_format($total_net)}} {{ trans('messages.baht') }}</h3></span></div>
+                <div class="col-md-4"><span class="pull-right"
+                                            style="margin-right: 20px"><h3>{{number_format($total_net)}} {{ trans('messages.baht') }}</h3></span></div>
             </div>
         </div>
     @endif
