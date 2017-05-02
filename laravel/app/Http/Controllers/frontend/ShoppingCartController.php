@@ -64,7 +64,7 @@ class ShoppingCartController extends Controller
             }
         }
 
-        $this->clearCarts($request);
+        $this->deleteCartsInSession($request);
         return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));;
     }
 
@@ -90,19 +90,13 @@ class ShoppingCartController extends Controller
 
             array_push($carts_in_session, $new_cart_item);
 
-            session(['carts' => $carts_in_session]); // Save to session
+            $this->saveCartsToSession($carts_in_session);
 
             $response = array("status" => "success", "product_request" => $product_request);
         }
-
         return response()->json($response);
     }
-
-    public function clearCarts($request)
-    {
-        $request->session()->forget('carts');
-    }
-
+    
     public function summarizeDataShoppingCarts($arr_summarize_quantities)
     {
         $arr_shop_carts = array();
@@ -125,7 +119,7 @@ class ShoppingCartController extends Controller
                         unset($carts_in_session[$key]);
                     }
                 }
-                session(['carts' => $carts_in_session]); // Save to session
+                $this->saveCartsToSession($carts_in_session);
             }
         }
         return redirect()->route('shoppingcart.index');
@@ -144,7 +138,7 @@ class ShoppingCartController extends Controller
                         "qty" => 1
                     );
                     array_push($carts_in_session, $new_cart_item);
-                    session(['carts' => $carts_in_session]); // Save to session
+                    $this->saveCartsToSession($carts_in_session);
                 } else {
                     if (is_array($carts_in_session)) {
                         // Add new Items
@@ -160,7 +154,7 @@ class ShoppingCartController extends Controller
 
                         unset($arr_need_to_delete_item[count($arr_need_to_delete_item) - 1]);
                         $arr_new_cart_item = array_merge($arr_new_cart_item, $arr_need_to_delete_item);
-                        session(['carts' => $arr_new_cart_item]); // Save to session
+                        $this->saveCartsToSession($arr_new_cart_item);
                     }
                 }
             }
@@ -222,9 +216,6 @@ class ShoppingCartController extends Controller
             $orderStatusHistory->status_id = 1;
             $orderStatusHistory->order_id = $order->id;
             $orderStatusHistory->save();
-
-            //Delete shop cart
-            // $this->deleteCartItemInSessionByUserId($user_id);
         }
     }
 
@@ -238,9 +229,18 @@ class ShoppingCartController extends Controller
                         unset($carts_in_session[$key]);
                     }
                 }
-                session(['carts' => $carts_in_session]); // Save to session
+                $this->saveCartsToSession($carts_in_session);
             }
         }
+    }
+
+    private function saveCartsToSession($carts){
+        session(['carts' => $carts]);
+    }
+
+    public function deleteCartsInSession($request)
+    {
+        $request->session()->forget('carts');
     }
 
 }
