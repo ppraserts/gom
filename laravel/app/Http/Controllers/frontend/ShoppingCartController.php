@@ -25,13 +25,11 @@ class ShoppingCartController extends Controller
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
             $shopping_carts = $this->summarizeDataShoppingCarts($arr_summary_quantities);
         }
-
         return view('frontend.shoppingcart', compact('shopping_carts'));
     }
 
     public function show($id)
     {
-
     }
 
     public function checkout($user_id, $total)
@@ -40,39 +38,10 @@ class ShoppingCartController extends Controller
         if ($user_id != null && $total != null) {
             $carts_in_session = session('carts');
             if (is_array($carts_in_session)) {
-                $order = new Order();
-                $order->user_id = trim($user_id);
-                $order->buyer_id = $current_user->id;
-                $order->total_amount = floatval($total);
-                $order->order_status = 1;
-                $order->order_type = "retail";
-                $order->order_date = date('Y-m-d H:i:s');
-                $order->save();
-
-                $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
-
-                // Save Order Items
-                $arr_order_items = array();
-                foreach ($arr_summary_quantities as $key => $item) {
-                    if ($item['user_id'] == trim($user_id)) {
-                        $order_item = new OrderItem();
-                        $order_item->unit_price = $item['unit_price'];
-                        $order_item->product_id = ProductRequest::find($item['product_request_id'])->products_id ;
-                        $order_item->quantity = $item['qty'];
-                        $order_item->total = intval($item['qty']) * floatval($item['unit_price']);
-                        array_push($arr_order_items, $order_item);
-                    }
-                }
-                $order->orderItems()->saveMany($arr_order_items);
-                $orderStatusHistory = new OrderStatusHistory();
-                $orderStatusHistory->status_id = 1;
-                $orderStatusHistory->order_id = $order->id;
-                $orderStatusHistory->save();
-
-                //Delete shop cart
-                $this->deleteCartItemInSessionByUserId($user_id);
+                $this->saveOrder($carts_in_session , $user_id , $current_user , $total);
             }
         }
+        $this->deleteCartItemInSessionByUserId($user_id);
         return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));;
     }
 
@@ -81,52 +50,21 @@ class ShoppingCartController extends Controller
         $current_user = auth()->guard('user')->user();
         $carts_in_session = session('carts');
         if (is_array($carts_in_session)) {
-
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
             $shopping_carts = $this->summarizeDataShoppingCarts($arr_summary_quantities);
 
             foreach ($shopping_carts as $key => $carts){
-                  foreach ($carts as $item){
-                      $total = 0;
-                      foreach ($arr_summary_quantities as $key_total=>$item){
-                          if($key == $item['user_id']){
-                              $total+= intval($item['qty']) * floatval($item['unit_price']);
-                          }
-                      }
-
-                      //Save Order
-                      $order = new Order();
-                      $order->user_id = $item['user_id'];
-                      $order->buyer_id = $current_user->id;
-                      $order->total_amount = floatval($total);
-                      $order->order_status = 1;
-                      $order->order_type = "retail";
-                      $order->order_date = date('Y-m-d H:i:s');
-                      $order->save();
-
-                      //Save Order_Items
-                      $arr_order_items = array();
-                      foreach ($arr_summary_quantities as $key_sub => $item) {
-                          if ($item['user_id'] == trim($order->user_id)) {
-                              $order_item = new OrderItem();
-                              $order_item->unit_price = $item['unit_price'];
-                              $order_item->product_id = ProductRequest::find($item['product_request_id'])->products_id ;
-                              $order_item->quantity = $item['qty'];
-                              $order_item->total = intval($item['qty']) * floatval($item['unit_price']);
-                              array_push($arr_order_items, $order_item);
-                          }
-                      }
-                      $order->orderItems()->saveMany($arr_order_items);
-                      $orderStatusHistory = new OrderStatusHistory();
-                      $orderStatusHistory->status_id = 1;
-                      $orderStatusHistory->order_id = $order->id;
-                      $orderStatusHistory->save();
-                  }
+                $total = 0;
+                foreach ($arr_summary_quantities as $key_total=>$item){
+                    if($key == $item['user_id']){
+                        $total+= intval($item['qty']) * floatval($item['unit_price']);
+                    }
+                }
+                $this->saveOrder($carts , $key , $current_user , $total);
             }
         }
 
         $this->clearCarts($request);
-
         return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));;
     }
 
@@ -251,6 +189,43 @@ class ShoppingCartController extends Controller
             }
         }
         return $arr_more_data;
+    }
+
+    private function saveOrder($arr_carts, $user_id, $current_user, $total)
+    {
+        if (is_array($arr_carts)) {
+            $order = new Order();
+            $order->user_id = trim($user_id);
+            $order->buyer_id = $current_user->id;
+            $order->total_amount = floatval($total);
+            $order->order_status = 1;
+            $order->order_type = "retail";
+            $order->order_date = date('Y-m-d H:i:s');
+            $order->save();
+
+            $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($arr_carts);
+
+            // Save Order Items
+            $arr_order_items = array();
+            foreach ($arr_summary_quantities as $key => $item) {
+                if ($item['user_id'] == trim($user_id)) {
+                    $order_item = new OrderItem();
+                    $order_item->unit_price = $item['unit_price'];
+                    $order_item->product_id = ProductRequest::find($item['product_request_id'])->products_id;
+                    $order_item->quantity = $item['qty'];
+                    $order_item->total = intval($item['qty']) * floatval($item['unit_price']);
+                    array_push($arr_order_items, $order_item);
+                }
+            }
+            $order->orderItems()->saveMany($arr_order_items);
+            $orderStatusHistory = new OrderStatusHistory();
+            $orderStatusHistory->status_id = 1;
+            $orderStatusHistory->order_id = $order->id;
+            $orderStatusHistory->save();
+
+            //Delete shop cart
+            // $this->deleteCartItemInSessionByUserId($user_id);
+        }
     }
 
     private function deleteCartItemInSessionByUserId($user_id)
