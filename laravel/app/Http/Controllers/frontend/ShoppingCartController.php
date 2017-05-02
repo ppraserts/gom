@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderItem;
+use App\OrderStatusHistory;
 use App\ProductRequest;
 use Illuminate\Http\Request;
 
@@ -63,6 +64,11 @@ class ShoppingCartController extends Controller
                     }
                 }
                 $order->orderItems()->saveMany($arr_order_items);
+                $orderStatusHistory = new OrderStatusHistory();
+                $orderStatusHistory->status_id = 1;
+                $orderStatusHistory->order_id = $order->id;
+                $orderStatusHistory->save();
+
                 //Delete shop cart
                 $this->deleteCartItemInSessionByUserId($user_id);
             }
@@ -111,6 +117,10 @@ class ShoppingCartController extends Controller
                           }
                       }
                       $order->orderItems()->saveMany($arr_order_items);
+                      $orderStatusHistory = new OrderStatusHistory();
+                      $orderStatusHistory->status_id = 1;
+                      $orderStatusHistory->order_id = $order->id;
+                      $orderStatusHistory->save();
                   }
             }
         }

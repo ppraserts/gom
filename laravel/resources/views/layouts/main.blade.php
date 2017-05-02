@@ -96,7 +96,7 @@ if (is_array($carts)) {
                             </a></li>
                         <li role="separator" class="divider"></li>
                         @if($user!=null)
-                            <li><a href="{{ $linkProfile }}" title="{{ trans('messages.menu_manageprofile') }}"><span class="glyphicon glyphicon-wrench"
+                            <li><a href="{{ url('user/shopsetting') }}" title="{{ trans('messages.menu_manageprofile') }}"><span class="glyphicon glyphicon-wrench"
                                                                                                                       aria-hidden="true"></span> {{ trans('messages.menu_manageshop') }}
                                 </a></li>
                             <li role="separator" class="divider"></li>

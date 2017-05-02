@@ -31,10 +31,10 @@ $pagetitle = trans('message.menu_order_list');
                     @foreach ($orderList as $key => $item)
                         <tr>
                             <td style="text-align:center;">{{ $item->id }}</td>
-                            <td>{{--{{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}--}}</td>
+                            <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
                             <td style="text-align:center;">{{ $item->order_date }}</td>
                             <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->orderStatusName->status_name }}</td>
+                            <td style="text-align:center;">{{ $item->status_name }}</td>
                             <td style="text-align:center;">
                                 <a class="btn btn-info"
                                    href="{{ url ('user/orderdetail/'.$item->id) }}">
