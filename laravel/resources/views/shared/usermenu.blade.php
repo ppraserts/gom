@@ -1,11 +1,10 @@
 <?php
 use App\ProductRequest;
-
 $user = auth()->guard('user')->user();
-
 $productRequest = new ProductRequest();
 ?>
 <ul class="nav nav-tabs">
+
     {{--<li role="presentation" {{ ($setActive == "userprofiles")? 'class=active' : ''  }} ><a href="{{ url('user/userprofiles') }}">{{ trans('messages.userprofile') }}</a></li>
     <li role="presentation" {{ ($setActive == "changepasswords")? 'class=active' : ''  }} ><a href="{{ url('user/changepasswords') }}">{{ trans('messages.menu_changepassword') }}</a></li>
     <li role="presentation" {{ ($setActive == "inboxmessage")? 'class=active' : ''  }}><a href="{{ url('user/inboxmessage') }}">
