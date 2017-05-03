@@ -13,6 +13,24 @@ $productRequest = new ProductRequest();
             <span class="badge">0</span>
             </a>
     </li>--}}
+
+    <li role="presentation" {{ ($setActive == "matchings")? 'class=active' : ''  }} >
+        <a href="{{ url('user/matchings') }}">
+            {{ trans('messages.menu_matching') }}
+            <span class="badge">
+                           @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
+                    {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) + count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
+                @endif
+                @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
+                    {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) }}
+                @endif
+                @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
+                    {{ count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
+                @endif
+                           </span>
+        </a>
+    </li>
+
     @if($user->iwanttobuy == "buy")
         <li role="presentation" {{ ($setActive == "iwanttobuy")? 'class=active' : ''  }}><a
                     href="{{ url('user/iwanttobuy') }}"> {{ trans('messages.i_want_to_buy') }}</a></li>
@@ -23,24 +41,9 @@ $productRequest = new ProductRequest();
         <li role="presentation" {{ ($setActive == "iwanttosale")? 'class=active' : ''  }}><a
                     href="{{ url('user/iwanttosale') }}"> {{ trans('messages.i_want_to_sale') }}</a></li>
 
-        <li role="presentation" {{ ($setActive == "matchings")? 'class=active' : ''  }} >
-            <a href="{{ url('user/matchings') }}">
-                {{ trans('messages.menu_matching') }}
-                <span class="badge">
-                           @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
-                        {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) + count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
-                    @endif
-                    @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
-                        {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) }}
-                    @endif
-                    @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
-                        {{ count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
-                    @endif
-                           </span>
-            </a>
-        </li>
         <li role="presentation" {{ ($setActive == "shoporder")? 'class=active' : ''  }}><a
                     href="{{ url('user/shoporder/') }}"> {{ trans('messages.menu_shop_order_list') }}</a></li>
+
         <li role="presentation" {{ ($setActive == "addproduct")? 'class=active' : ''  }}><a
                     href="{{ url('user/userproduct') }}"> {{ trans('messages.menu_add_product') }}</a></li>
         <li role="presentation" {{ ($setActive == "promotion")? 'class=active' : ''  }}><a

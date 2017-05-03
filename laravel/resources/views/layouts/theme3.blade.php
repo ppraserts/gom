@@ -47,7 +47,7 @@ if ($shop != null && isset($shop->image_file_3)) {
         </div>
     </div>
 </header>
-
+@if(count($promotions) >0 )
 <section class="promotions">
     <div class="container">
         <div class="row">
@@ -88,7 +88,7 @@ if ($shop != null && isset($shop->image_file_3)) {
         </div>
     </div>
 </section>
-
+@endif
 <section class="products">
     <div class="container">
         <div class="row text-center">
@@ -97,29 +97,7 @@ if ($shop != null && isset($shop->image_file_3)) {
                 <hr class="small">
 
                 <div class="row">
-                    @if($products != null)
-                        @foreach($products as $product)
-                            <div class="col-md-4">
-                                <div class="products-item">
-                                    <div class="thumbnail">
-                                        <div class="product-image">
-                                            <img class="img-product img-responsive"
-                                                 src="{{asset($product->product1_file)}}" alt="">
-                                        </div>
-                                        <div class="product-detail">
-                                            <div class="product-title">
-                                                <a href="#"><h4>{{$product->product_title}}</h4></a>
-                                            </div>
-                                            <div class="product-price">
-                                                {{$product->price}}
-                                            </div>
-                                            <a href="#" class="btn btn-primary">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
+                    @yield('product')
                 </div>
 
             </div>

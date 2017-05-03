@@ -23,6 +23,14 @@ class PromotionsController extends Controller
         'sequence' => 'required|integer',
     ];
 
+    private $rulesUpdate = [
+        'promotion_title' => 'required',
+        'promotion_description' => 'required',
+        'start_date' => 'required',
+        'end_date' => 'required|after:start_date',
+        'sequence' => 'required|integer',
+    ];
+
     /*private $ruleDate = [
         'start_date' => 'required',
         'end_date' => 'required|after:start_date',
@@ -156,7 +164,7 @@ class PromotionsController extends Controller
         $request['start_date'] = DateFuncs::convertYear($request['start_date']);
         $request['end_date'] = DateFuncs::convertYear($request['end_date']);
 
-        $validator = $this->getValidationFactory()->make($request->all(), $this->rules, [], []);
+        $validator = $this->getValidationFactory()->make($request->all(), $this->rulesUpdate, [], []);
         if ($validator->fails()) {
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
@@ -165,7 +173,7 @@ class PromotionsController extends Controller
 
         $promotion = $request->all();
 
-        if ($image_file = $request->file('image_file')) {
+        if ($request->file!=null && $image_file = $request->file('image_file')) {
             $this->RemoveFolderImage($promotion['image_file']);
             $uploadImage = $this->UploadImage($request, 'image_file');
             $promotion['image_file'] = $uploadImage["image_path_filename"];

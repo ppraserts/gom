@@ -18,6 +18,14 @@ body {
       color: #a6bd5b;
       text-decoration: none; }
 
+
+.product-image {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
 .header-image {
   display: table;
   position: relative;
@@ -72,7 +80,7 @@ hr {
   .products .thumbnail {
     border-radius: 0;
     padding: 10px;
-    padding-bottom: 30px; }
+    padding-bottom: 10px; }
   .products .btn-primary {
     border-color: #a6bd5b;
     font-family: "Kanit", sans-serif;
@@ -96,7 +104,9 @@ hr {
   margin-bottom: 15px; }
 
 .img-product {
-  width: 100%; }
+  width: 100%;
+  height: 100%;
+  background: no-repeat center center; }
 
 .contact {
   padding-top: 50px; }

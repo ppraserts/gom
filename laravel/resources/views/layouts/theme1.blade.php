@@ -47,7 +47,7 @@ if ($shop != null && isset($shop->image_file_1)) {
         </div>
     </div>
 </header>
-
+@if(count($promotions) >0 )
 <section class="promotions">
     <div class="container">
         <div class="row">
@@ -151,7 +151,7 @@ if ($shop != null && isset($shop->image_file_1)) {
         </div>
     </div>
 </section>
-
+@endif
 
 <section class="products">
     <div class="container">
