@@ -10,6 +10,17 @@ $pagetitle = trans('message.menu_order_list');
 
         <div class="row">
             <h2>{{ trans('messages.menu_shop_order_list') }}</h2>
+            <form action="{{url('user/shoporder')}}" method="GET">
+                <div class="input-group custom-search-form">
+                    <input type="text" id="search" name="filter" class="form-control" value="{{Request::input('filter')}}"
+                           placeholder="{{ trans('messages.order_id').'/'.trans('messages.i_buy').'/'.trans('messages.order_status') }}">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                          <i class="fa fa-search"></i>
+                      </button>
+                  </span>
+                </div>
+            </form>
         </div>
         <div class="row" style="margin-top: 10px">
 

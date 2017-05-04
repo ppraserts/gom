@@ -49,12 +49,27 @@ class OrderController extends Controller
     public function shoporder(Request $request)
     {
         $user = auth()->guard('user')->user();
-        $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
-            ->join('users', 'users.id', '=', 'orders.buyer_id')
-            ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
-            ->where('orders.user_id', $user->id)
-            ->orderBy('orders.id', 'DESC')
-            ->paginate(config('app.paginate'));
+        if(!empty($request->input('filter'))){
+            $filter = $request->input('filter');
+            $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+                ->join('users', 'users.id', '=', 'orders.buyer_id')
+                ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
+                ->where('orders.user_id', $user->id)
+                ->where(function($query) use ($filter) {
+                    $query->where('orders.id', 'like', '%' . $filter . '%');
+                    $query->orWhere('users.users_firstname_th', 'like', '%' . $filter . '%');
+                    $query->orWhere('order_status.status_name', 'like', '%' . $filter . '%');
+                })
+                ->orderBy('orders.id', 'DESC')
+                ->paginate(config('app.paginate'));
+        }else {
+            $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+                ->join('users', 'users.id', '=', 'orders.buyer_id')
+                ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
+                ->where('orders.user_id', $user->id)
+                ->orderBy('orders.id', 'DESC')
+                ->paginate(config('app.paginate'));
+        }
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
