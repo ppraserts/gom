@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
-
+use DB;
 use App\Order;
 use App\OrderItem;
 use App\OrderStatusHistory;
@@ -16,12 +16,29 @@ class OrderController extends Controller
         /*$orderList = \App\Order::with(['user','orderStatusName'])->where('buyer_id', $user->id)->get();
         echo $orderList;
         exit();*/
-        $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
-            ->join('users', 'users.id', '=', 'orders.user_id')
-            ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
-            ->where('orders.buyer_id', $user->id)
-            ->orderBy('orders.id', 'DESC')
-            ->paginate(config('app.paginate'));
+        $orderList = '';
+        if(!empty($request->input('filter'))){
+            $filter = $request->input('filter');
+            $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+                ->join('users', 'users.id', '=', 'orders.user_id')
+                ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
+                ->where('orders.buyer_id', $user->id)
+                ->where(function($query) use ($filter) {
+                    $query->where('orders.id', 'like', '%' . $filter . '%');
+                    $query->orWhere('users.users_firstname_th', 'like', '%' . $filter . '%');
+                    $query->orWhere('order_status.status_name', 'like', '%' . $filter . '%');
+                })
+                ->orderBy('orders.id', 'DESC')
+                ->paginate(config('app.paginate'));
+        }else{
+            $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+                ->join('users', 'users.id', '=', 'orders.user_id')
+                ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
+                ->where('orders.buyer_id', $user->id)
+                ->orderBy('orders.id', 'DESC')
+                ->paginate(config('app.paginate'));
+        }
+
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
