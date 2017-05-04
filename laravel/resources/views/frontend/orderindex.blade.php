@@ -18,7 +18,7 @@ $pagetitle = trans('message.menu_order_list');
                 {{--<button type="submit" class="btn btn-default">search</button>--}}
 
                 <div class="input-group custom-search-form">
-                    <input type="text" id="search" name="filter" class="form-control"
+                    <input type="text" id="search" name="filter" class="form-control" value="{{Request::input('filter')}}"
                            placeholder="{{ trans('messages.order_id').'/'.trans('messages.i_sale').'/'.trans('messages.order_status') }}" required>
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="submit">

@@ -124,7 +124,7 @@ return [
     'baht' => ' Baht',
     'order_status' => 'สถานะ',
     'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
-    'order_type' => 'ประเถทการสั่งซื้อ',
+    'order_type' => 'ประเภทการสั่งซื้อ',
     'total_net' => 'Total net',
     'process_order' => 'Process Order',
     'process_all_order' => 'Process all orders',

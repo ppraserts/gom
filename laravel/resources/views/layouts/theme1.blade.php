@@ -59,6 +59,10 @@ if ($shop != null && isset($shop->image_file_1)) {
                                     <a href="{{$shop_name."/promotion/".$promotion->id}}" title="{{$promotion->promotion_title}}">
                                         @if(isset($promotion->image_file))
                                             <img class="img-promotion img-responsive" src="{{url( $promotion->image_file)}}">
+                                            <p style="padding-top: 10px;">
+                                                <?php $p =''; if(strlen($promotion->promotion_title) > 48){ $p = '...'; }?>
+                                                {{ iconv_substr(strip_tags($promotion->promotion_title), 0, 48, "UTF-8").$p}}
+                                            </p>
                                         @endif
                                     </a>
                                 </div>
