@@ -39,8 +39,10 @@ if (is_array($carts)) {
     <link href="/css/image-hover-effects.css" rel="stylesheet">
     <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
     <link href="/css/custom-style-redesign.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+          rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700"
+          rel="stylesheet">
     <link href="/assets/icomoon/style.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,7 +63,8 @@ if (is_array($carts)) {
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -74,65 +77,150 @@ if (is_array($carts)) {
                 @if($cart_items > 0)
                     <li>
                         <div class="btn-nav">
-                            <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn"><span class="badge">{{$cart_items}}</span> <i
+                            <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn"><span
+                                        class="badge">{{$cart_items}}</span> <i
                                         class="fa fa-shopping-cart"></i> {{ trans('messages.shopping_cart') }}</a>
                         </div>
                     </li>
                 @endif
                 <li class="langBox">
-                    <a href="{{ url('/change/th') }}" class="{{ $thActive }}"><img src="{{ url('images/thai-flag.png') }}"
-                                                                                   alt=""> {{ trans('messages.flag_th') }}</a>
+                    <a href="{{ url('/change/th') }}" class="{{ $thActive }}"><img
+                                src="{{ url('images/thai-flag.png') }}"
+                                alt=""> {{ trans('messages.flag_th') }}</a>
                 </li>
                 <li class="langBox">
-                    <a href="{{ url('/change/en') }}" class="{{ $enActive }}"><img src="{{ url('images/eng-flag.png') }}"
-                                                                                   alt=""> {{ trans('messages.flag_en') }}</a>
+                    <a href="{{ url('/change/en') }}" class="{{ $enActive }}"><img
+                                src="{{ url('images/eng-flag.png') }}"
+                                alt=""> {{ trans('messages.flag_en') }}</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="true">{{ trans('messages.menu_visit') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('/') }}" title="{{ trans('messages.menu_index') }}"><span class="glyphicon glyphicon-home"
-                                                                                                      aria-hidden="true"></span> {{ trans('messages.menu_travel') }}
-                            </a></li>
-                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url('/') }}" title="{{ trans('messages.menu_index') }}">
+                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                {{ trans('messages.menu_travel') }}
+                            </a>
+                        </li>
+                        {{--<li role="separator" class="divider"></li>--}}
                         @if($user!=null)
-                            <li><a href="{{ url('user/shopsetting') }}" title="{{ trans('messages.menu_manageprofile') }}"><span class="glyphicon glyphicon-wrench"
-                                                                                                                      aria-hidden="true"></span> {{ trans('messages.menu_manageshop') }}
-                                </a></li>
+                            {{--<li><a href="{{ url('user/shopsetting') }}" title="{{ trans('messages.menu_manageprofile') }}">--}}
+                                    {{--<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>--}}
+                                    {{--{{ trans('messages.menu_manageshop') }}--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ url('user/matchings') }}"><span class="glyphicon glyphicon-duplicate"
-                                                                            aria-hidden="true"></span> {{ trans('messages.menu_matching') }}</a></li>
+                            <li>
+                                <a href="{{ url('user/matchings') }}">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                                    {{ trans('messages.menu_matching') }}
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    {{ trans('messages.i_buy') }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{url('user/iwanttobuy')}}">
+                                             {{ trans('messages.i_want_to_sale') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/order')}}">
+                                             {{trans('messages.menu_order_list')}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    {{ trans('messages.i_sale') }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{url('user/iwanttosale')}}">
+                                             {{ trans('messages.i_want_to_sale') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/shoporder')}}">
+                                             {{ trans('messages.menu_shop_order_list') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/userproduct')}}">
+                                             {{ trans('messages.menu_add_product') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/promotion')}}">
+                                             {{ trans('messages.menu_promotion') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/shopsetting')}}">
+                                             {{ trans('messages.shop_setting') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li role="separator" class="divider"></li>
                         @endif
 
-                        <li><a href="{{ url('/news') }}"><span class="glyphicon glyphicon-bullhorn"
-                                                               aria-hidden="true"></span> {{ trans('messages.menu_announcement') }}</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/faq') }}"><span class="glyphicon glyphicon-question-sign"
-                                                              aria-hidden="true"></span> {{ trans('messages.menu_faq') }}</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/user/userprofiles') }}"><span class="glyphicon glyphicon-user"
-                                                                            aria-hidden="true"></span> {{ trans('messages.userprofile') }}</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/user/changepasswords') }}"><span class="glyphicon glyphicon-lock"
-                                                                               aria-hidden="true"></span> {{ trans('messages.menu_changepassword') }}</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/user/inboxmessage') }}"><span class="glyphicon glyphicon-envelope"
-                                                                            aria-hidden="true"></span> {{ trans('messages.inbox_message') }}<span class="badge"
-                                                                                                                                                 style="margin-left: 8px;">0</span></a>
+                        <li><a href="{{ url('/user/userprofiles') }}">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                {{ trans('messages.userprofile') }}
+                            </a>
                         </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/contactus') }}"><span class="glyphicon glyphicon-envelope"
-                                                                    aria-hidden="true"></span> {{ trans('messages.menu_contactus') }}</a></li>
+                        <li><a href="{{ url('/user/changepasswords') }}"><span class="glyphicon glyphicon-lock"
+                                                                               aria-hidden="true"></span> {{ trans('messages.menu_changepassword') }}
+                            </a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/sitemap') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> {{ trans('messages.sitemap') }}
+                        <li><a href="{{ url('/user/inboxmessage') }}"><span class="glyphicon glyphicon-envelope"
+                                                                            aria-hidden="true"></span> {{ trans('messages.inbox_message') }}
+                                <span class="badge"
+                                      style="margin-left: 8px;">0</span></a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url('/news') }}">
+                                <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                                {{ trans('messages.menu_announcement') }}
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url('/faq') }}">
+                                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                                {{ trans('messages.menu_faq') }}
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url('/contactus') }}">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                {{ trans('messages.menu_contactus') }}
+                            </a>
+                        </li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url('/sitemap') }}"><span class="glyphicon glyphicon-list"
+                                                                  aria-hidden="true"></span> {{ trans('messages.sitemap') }}
                             </a></li>
                     </ul>
                 </li>
                 @if($user == null)
                     <li>
                         <a href="{{ url('/user/login') }}" title="{{ trans('messages.menu_login') }}"><span
-                                    class="glyphicon glyphicon-user"></span> {{ trans('messages.menu_loginmarket') }}</a>
+                                    class="glyphicon glyphicon-user"></span> {{ trans('messages.menu_loginmarket') }}
+                        </a>
                     </li>
                 @endif
                 <li>
@@ -140,17 +228,21 @@ if (is_array($carts)) {
                         @if($user != null)
                             <a href="{{ url('/user/logout') }}"
                                onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();" class="btn btn-danger btn-small navbar-btn">
+                                                             document.getElementById('logout-form').submit();"
+                               class="btn btn-danger btn-small navbar-btn">
                                 {{ trans('messages.logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ url('/user/logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ url('/user/logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         @else
-                            <a title="{{ trans('messages.menu_register') }}" class="btn btn-success btn-small navbar-btn"
+                            <a title="{{ trans('messages.menu_register') }}"
+                               class="btn btn-success btn-small navbar-btn"
                                href="{{ url('/user/chooseregister') }}"><span class="glyphicon glyphicon-pencil"
-                                                                              aria-hidden="true"></span> {{ trans('messages.menu_register') }}</a>
+                                                                              aria-hidden="true"></span> {{ trans('messages.menu_register') }}
+                            </a>
                         @endif
                     </div>
                 </li>
