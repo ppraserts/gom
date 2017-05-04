@@ -47,110 +47,28 @@ if ($shop != null && isset($shop->image_file_1)) {
         </div>
     </div>
 </header>
-@if(count($promotions) >0 )
-<section class="promotions">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="promotion-item">
-                            @if(count($promotions) >0 )
-                                <a href="{{$shop_name."/promotion/".$promotions[0]->id}}">
-                                    @if(isset($promotions[0]->image_file))
-                                        <img class="img-promotion img-responsive"
-                                             src="{{url( $promotions[0]->image_file)}}">
-                                    @endif
-                                </a>
-                            @else
-                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                     src="{{asset("assets/theme/images/theme-one_01.jpg")}}">
-                            @endif
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="promotion-item">
-                            @if(count($promotions) >1 )
-                                <a href="{{$shop_name."/promotion/".$promotions[1]->id}}">
-                                    @if(isset($promotions[1]->image_file))
-                                        <img class="img-promotion img-responsive"
-                                             src="{{url( $promotions[1]->image_file)}}">
-                                    @endif
-                                </a>
-                            @else
-                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                     src="{{asset("assets/theme/images/theme-one_02.jpg")}}">
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
+@if(count($promotions) > 0 )
+    <section class="promotions">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="row">
+                        @foreach($promotions as $promotion)
+                            <div class="col-md-4">
                                 <div class="promotion-item">
-                                    @if(count($promotions) >2 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[2]->id}}">
-                                            @if(isset($promotions[2]->image_file))
-                                                <img class="img-promotion img-responsive"
-                                                     src="{{url( $promotions[2]->image_file)}}">
-                                            @endif
-                                        </a>
-                                    @else
-                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                             src="{{asset("assets/theme/images/theme-one_03.jpg")}}">
-                                    @endif
-                                </div>
-                                <div class="promotion-item">
-                                    @if(count($promotions) >3 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[3]->id}}">
-                                            @if(isset($promotions[3]->image_file))
-                                                <img class="img-promotion img-responsive"
-                                                     src="{{url( $promotions[3]->image_file)}}">
-                                            @endif
-                                        </a>
-                                    @else
-                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                             src="{{asset("assets/theme/images/theme-one_05.jpg")}}">
-                                    @endif
+                                    <a href="{{$shop_name."/promotion/".$promotion->id}}" title="{{$promotion->promotion_title}}">
+                                        @if(isset($promotion->image_file))
+                                            <img class="img-promotion img-responsive" src="{{url( $promotion->image_file)}}">
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="promotion-item">
-                                    @if(count($promotions) >4 )
-                                        <a href="{{$shop_name."/promotion/".$promotions[4]->id}}">
-                                            @if(isset($promotions[4]->image_file))
-                                                <img class="img-promotion img-responsive"
-                                                     src="{{url( $promotions[4]->image_file)}}">
-                                            @endif
-                                        </a>
-                                    @else
-                                        <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                             src="{{asset("assets/theme/images/theme-one_04.jpg")}}">
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="promotion-item">
-                            @if(count($promotions) >5 )
-                                <a href="{{$shop_name."/promotion/".$promotions[5]->id}}">
-                                    @if(isset($promotions[5]->image_file))
-                                        <img class="img-promotion img-responsive"
-                                             src="{{url( $promotions[5]->image_file)}}">
-                                    @endif
-                                </a>
-                            @else
-                                <img class="img-promotion img-responsive" style="filter: grayscale(100%);"
-                                     src="{{asset("assets/theme/images/theme-one_06.jpg")}}">
-                            @endif
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endif
 
 <section class="products">
