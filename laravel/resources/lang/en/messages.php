@@ -134,4 +134,5 @@ return [
     'continue_shopping' => 'Continue Shopping',
     'not_found_an_orders' => 'Not found an orders',
     'shopping_cart' => 'Shopping cart',
+    'view_product_all' => 'View product all',
 ];

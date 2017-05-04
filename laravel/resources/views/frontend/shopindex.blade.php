@@ -27,6 +27,11 @@
                     </a>
                 </div>
             @endforeach
+                <div class="col-md-12 col-sm-12">
+                    <a href="{{url('result?category=&search='.$products[0]->product_title)}}" class="btn btn-default">
+                        {{trans('messages.view_product_all')}}
+                    </a>
+                </div>
         </div>
     @endif
 @stop

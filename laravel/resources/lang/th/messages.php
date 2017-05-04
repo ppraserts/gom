@@ -134,4 +134,5 @@ return [
     'continue_shopping' => 'เลือกซ์้อสินค้าต่อ',
     'not_found_an_orders' => 'ไม่พบข้อมูลในตะกร้าสินค้า',
     'shopping_cart' => 'ตะกร้าสินค้า',
+    'view_product_all' => 'ดูสินค้าทั้งหมด',
 ];

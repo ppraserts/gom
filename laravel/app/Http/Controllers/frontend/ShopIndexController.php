@@ -33,7 +33,10 @@ class ShopIndexController extends Controller
         $query = DB::table('product_requests')
             ->where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
-            ->select('*');
+            ->select('*')
+            ->orderBy('created_at','DESC')
+            ->orderBy('updated_at', 'DESC')
+            ->limit(8);
 
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
