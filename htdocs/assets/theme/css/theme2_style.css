@@ -256,3 +256,22 @@ hr {
     font-size: 2em; } }
 
 /*# sourceMappingURL=style.css.map */
+
+.product-price-t2{
+  padding-top: 15px;
+}
+.thumbnail {
+  border: 2px solid #494949;
+  padding: 5px;
+}
+.thumbnail .product-image:hover{
+  opacity: 0.9;
+}
+
+.product-price-t2 {
+  font-family: "Kanit", sans-serif;
+  color: #a6bd5b;
+  font-size: 24px;
+  font-weight: 200;
+  margin-bottom: 15px;
+}
