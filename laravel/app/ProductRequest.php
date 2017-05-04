@@ -238,8 +238,8 @@ class ProductRequest extends Model
             $sqlcondition .= " and (a.`price` between $search and $search)";
             $sqlcondition .= " and (a.`volumn` between $search and $search)";
         } else {
+            $sqlcondition .= " and a.productstatus = 'open'";
             if($notwhere_product_name == true) {
-                $sqlcondition .= " and a.productstatus = 'open'";
                 $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
                                           , a.province
@@ -274,9 +274,47 @@ class ProductRequest extends Model
         }
 
 
-
-        $results = DB::select(
-            DB::raw("SELECT a.*
+        if($notwhere_product_name == true) {
+            $results = DB::select(
+                DB::raw("SELECT a.*
+                            ,u.users_firstname_th
+                            ,u.users_lastname_th
+                            ,u.users_firstname_en
+                            ,u.users_lastname_en
+                            ,u.users_dateofbirth
+                            ,u.users_gender
+                            ,u.users_addressname
+                            ,u.users_street
+                            ,u.users_district
+                            ,u.users_city
+                            ,u.users_province
+                            ,u.users_postcode
+                            ,u.users_mobilephone
+                            ,u.users_phone
+                            ,u.users_fax
+                            ,u.users_imageprofile
+                            ,u.users_latitude
+                            ,u.users_longitude
+                            ,u.users_contactperson
+                            ,u.users_membertype
+                            ,u.iwanttosale
+                            ,u.iwanttobuy
+                            ,u.users_idcard
+                            ,u.is_active
+                            ,u.email
+                            ,u.users_qrcode
+                            ,u.users_taxcode
+                            ,u.users_company_th
+                            ,u.users_company_en
+                            FROM `product_requests` a
+                            join users u on a.`users_id` =u.id
+                            join products b on a.products_id = b.id
+                            where a.`iwantto` = '$iwantto'
+                            $sqlcondition 
+              "));
+        }else{
+            $results = DB::select(
+                DB::raw("SELECT a.*
                             ,u.users_firstname_th
                             ,u.users_lastname_th
                             ,u.users_firstname_en
@@ -313,6 +351,7 @@ class ProductRequest extends Model
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition $sqlSearchByShopName
               "));
+        }
 
         return $results;
     }
