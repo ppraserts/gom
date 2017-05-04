@@ -123,7 +123,7 @@ return [
     'baht' => ' บาท',
     'order_status' => 'สถานะ',
     'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
-    'order_type' => 'ประเถทการสั่งซื้อ',
+    'order_type' => 'ประเภทการสั่งซื้อ',
     'total_net' => 'ยอดรวมทั้งหมด',
     'process_order' => 'สั่งซื้อสินค้า',
     'process_all_order' => 'สั่งซื้อสินค้าทั้งหมด',

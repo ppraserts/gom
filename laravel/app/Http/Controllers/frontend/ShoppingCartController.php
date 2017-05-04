@@ -193,7 +193,8 @@ class ShoppingCartController extends Controller
             $order->buyer_id = $current_user->id;
             $order->total_amount = floatval($total);
             $order->order_status = 1;
-            $order->order_type = "retail";
+//            $order->order_type = "retail";
+            $order->order_type = "ขายปลีก";
             $order->order_date = date('Y-m-d H:i:s');
             $order->save();
 

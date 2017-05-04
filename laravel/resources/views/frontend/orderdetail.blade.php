@@ -96,7 +96,7 @@ $pagetitle = trans('message.menu_order_list');
             </div>
             <div class="col-md-4">
                 <div class="row">
-                    <h3>{{ trans('messages.order_status') }}</h3>
+                    <h3>{{ trans('messages.order_status_history') }}</h3>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
