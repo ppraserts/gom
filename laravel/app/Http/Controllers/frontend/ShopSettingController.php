@@ -45,7 +45,7 @@ class ShopSettingController extends Controller
         $is_exist_shop = $this->isExistShop($user->id);
         if (!$is_exist_shop) {
             $shop = new Shop();
-            $shop->theme = 'theme1'; // default theme
+            $shop->theme = 'theme3'; // default theme
             $this->validate($request, $this->rules(null));
         } else {
             $shop = Shop::where('user_id', $user->id)->first();

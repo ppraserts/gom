@@ -97,7 +97,7 @@ return [
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
     'menu_adminteam' => 'ผู้ดูแลระบบ',
     'shop_setting' => 'Shop Setting',
-    'shop_image' => 'Shop Slideshow',
+    'shop_image' => 'Shop Image',
     'title' => 'Title',
     'sub_title' => 'Sub Title',
     'Description' => 'Description',

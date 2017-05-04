@@ -73,39 +73,45 @@ if ($mode == "create") {
         <div class="row">
             @if($method === "PATCH")
                 <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px">
-                    <strong>{{ trans('messages.link') }} : </strong><a href="{{ url ($shop->shop_name."/promotion/".$item->id) }}"> {{ url ($shop->shop_name."/promotion/".$item->id) }}</a>
+                    <strong>{{ trans('messages.link') }} : </strong><a
+                            href="{{ url ($shop->shop_name."/promotion/".$item->id) }}"> {{ url ($shop->shop_name."/promotion/".$item->id) }}</a>
                 </div>
             @endif
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('promotion_title') ? 'has-error' : '' }}">
-                    <strong>* {{ Lang::get('validation.attributes.promotion_title') }}:</strong>
-                    {!! Form::text('promotion_title', null, array('placeholder' => Lang::get('validation.attributes.promotion_title'),'class' => 'form-control')) !!}
+                    <strong>* {{ trans('validation.attributes.promotion_title') }}:</strong>
+                    {!! Form::text('promotion_title', null, array('placeholder' => trans('validation.attributes.promotion_title'),'class' => 'form-control')) !!}
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('promotion_description') ? 'has-error' : '' }}">
-                    <strong>* {{ Lang::get('validation.attributes.promotion_description') }}:</strong>
+                    <strong>* {{ trans('validation.attributes.promotion_description') }}:</strong>
 
-                    {!! Form::textarea('promotion_description', null, array('placeholder' => Lang::get('validation.attributes.promotion_description'),'class' => 'form-control')) !!}
+                    {!! Form::textarea('promotion_description', null, array('placeholder' => trans('validation.attributes.promotion_description'),'class' => 'form-control')) !!}
 
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('image_file') ? 'has-error' : '' }}">
-                    <strong>* {{ Lang::get('validation.attributes.promotion_image') }}:</strong>
-                    {!! Form::file('image_file', null, array('placeholder' => Lang::get('validation.attributes.promotion_image'),'class' => 'form-control')) !!}
+                    <strong>* {{ trans('validation.attributes.promotion_image') }}:</strong>
+                    {!! Form::file('image_file', null, array('placeholder' => trans('validation.attributes.promotion_image'),'class' => 'form-control')) !!}
 
+                    @if(isset($item->image_file))
+                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive" src="{{ url($item->image_file) }}" />
+                    @else
+                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive" />
+                    @endif
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
-                    <strong>* {{ Lang::get('validation.attributes.promotion_start_date') }}:</strong>
+                    <strong>* {{ trans('validation.attributes.promotion_start_date') }}:</strong>
                     <div class='input-group date' id='pick_start_date'>
-                        {!! Form::text('start_date', DateFuncs::thai_date($item->start_date), array('placeholder' => Lang::get('validation.attributes.promotion_start_date'),'class' => 'form-control')) !!}
+                        {!! Form::text('start_date', DateFuncs::thai_date($item->start_date), array('placeholder' => trans('validation.attributes.promotion_start_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -115,9 +121,9 @@ if ($mode == "create") {
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('end_date') ? 'has-error' : '' }}">
-                    <strong>* {{ Lang::get('validation.attributes.promotion_end_date') }}:</strong>
+                    <strong>* {{ trans('validation.attributes.promotion_end_date') }}:</strong>
                     <div class='input-group date' id='pick_end_date'>
-                        {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => Lang::get('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
+                        {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => trans('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -128,10 +134,10 @@ if ($mode == "create") {
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('sequence') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                        <strong>{{ Lang::get('validation.attributes.sequence') }}:</strong>
+                        <strong>{{ trans('validation.attributes.sequence') }}:</strong>
                     </label>
                     <div class="col-sm-2" style="padding-left: 0px;">
-                        {!! Form::number('sequence', null, array('placeholder' => Lang::get('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}
+                        {!! Form::number('sequence', null, array('placeholder' => trans('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
@@ -148,3 +154,25 @@ if ($mode == "create") {
         {!! Form::close() !!}
     </div>
 @endsection
+
+{{--
+@push('script')
+        <script>
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img_promotion')
+                            .attr('src', e.target.result)
+                            .width(400)
+                            .height(300);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+        </script>
+@endpush--}}

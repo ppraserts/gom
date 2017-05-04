@@ -385,6 +385,12 @@ body {
     text-decoration: underline;
 }
 
+.center-cropped {
+    width: 100px;
+    height: 100px;
+    background: no-repeat center center;
+}
+
 @media (max-width: 767px) {
 
     .navbar-nav  {
