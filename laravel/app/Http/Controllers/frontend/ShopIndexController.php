@@ -37,6 +37,7 @@ class ShopIndexController extends Controller
             ->orderBy('created_at','DESC')
             ->orderBy('updated_at','DESC')
             ->limit(8);
+        $products = $query->get();
 
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
@@ -45,9 +46,7 @@ class ShopIndexController extends Controller
             ->where('end_date','>=', $dateNow)
             ->orderBy('sequence','desc')
             ->get();
-//       echo json_encode($promotions); exit();
 
-        $products = $query->get();
         return view('frontend.shopindex', compact('theme' , 'products','promotions'))
             ->with('shop', $shop);
     }

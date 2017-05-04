@@ -42,15 +42,19 @@
             <div class="row">
                     <div class="col-md-5 col-sm-5">
                         <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
-                            <strong>* {{ Lang::get('validation.attributes.shop_name') }}:</strong>
-                            {{URL::to('/')}}/<span id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
-                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => Lang::get('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name' )) !!}
+                            <strong>* {{ trans('validation.attributes.shop_name') }}:</strong>
+                            @if(isset($shop->shop_name))
+                                <a href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a>
+                                @else
+                                {{URL::to('/')}}/<span id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
+                                @endif
+                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name' )) !!}
                         </div>
                     </div>
                     <div class="col-md-7 col-sm-7">
                         <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
-                            <strong>* {{ Lang::get('validation.attributes.shop_title') }}:</strong>
-                            {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => Lang::get('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
+                            <strong>* {{ trans('validation.attributes.shop_title') }}:</strong>
+                            {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => trans('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
                         </div>
                     </div>
             </div>
@@ -64,8 +68,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong> {{ Lang::get('validation.attributes.shop_subtitle') }}:</strong>
-                        {!! Form::text('shop_subtitle',isset($shop->shop_subtitle)?$shop->shop_subtitle:"" , array('placeholder' => Lang::get('validation.attributes.shop_subtitle'),'class' => 'form-control' )) !!}
+                        <strong> {{ trans('validation.attributes.shop_subtitle') }}:</strong>
+                        {!! Form::text('shop_subtitle',isset($shop->shop_subtitle)?$shop->shop_subtitle:"" , array('placeholder' => trans('validation.attributes.shop_subtitle'),'class' => 'form-control' )) !!}
                     </div>
                 </div>
             </div>
@@ -73,8 +77,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong> {{ Lang::get('validation.attributes.shop_description') }}:</strong>
-                        {!! Form::textarea('shop_description', isset($shop->shop_description)?$shop->shop_description:"", array('placeholder' => Lang::get('validation.attributes.shop_description'),'class' => 'form-control','style'=>'height:100px')) !!}
+                        <strong> {{ trans('validation.attributes.shop_description') }}:</strong>
+                        {!! Form::textarea('shop_description', isset($shop->shop_description)?$shop->shop_description:"", array('placeholder' => trans('validation.attributes.shop_description'),'class' => 'form-control','style'=>'height:100px')) !!}
                     </div>
                 </div>
             </div>
@@ -89,7 +93,7 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group row">
-                                            <strong>{{ Lang::get('validation.attributes.shop_slide_image') }} 1 :</strong>
+                                            <strong>{{ trans('validation.attributes.shop_slide_image') }} 1 :</strong>
                                             {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
                                         </div>
                                     </div>
@@ -105,7 +109,7 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group row">
-                                            <strong>{{ Lang::get('validation.attributes.shop_slide_image') }} 2:</strong>
+                                            <strong>{{ trans('validation.attributes.shop_slide_image') }} 2:</strong>
                                             {!! Form::file('image_file_2', null, array('class' => 'filestyle')) !!}
                                         </div>
                                     </div>
@@ -121,7 +125,7 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group row">
-                                            <strong>{{ Lang::get('validation.attributes.shop_slide_image') }} 3:</strong>
+                                            <strong>{{ trans('validation.attributes.shop_slide_image') }} 3:</strong>
                                             {!! Form::file('image_file_3', null, array('class' => 'filestyle' )) !!}
                                         </div>
                                     </div>
@@ -301,11 +305,8 @@
     function setupFillURI() {
         $("#shop_name").on("change paste keyup", function() {
             $("#uri").html($(this).val());
-            console.log('-->'+$(this).val())
         });
     }
-
-
 
 </script>
 @endpush

@@ -52,7 +52,7 @@ class PromotionsController extends Controller
         $shop = Shop::where('user_id', $user->id)->first();
 
         $items = array();
-        if ($shop!=null){
+        if ($shop != null) {
             $items = Promotions::where('shop_id', $shop->id)->Where(function ($query) {
                 $search = \Request::get('search');
                 $query->where('promotion_title', 'like', '%' . $search . '%')
@@ -61,11 +61,10 @@ class PromotionsController extends Controller
                 ->orderBy('sequence', 'ASC')
                 ->paginate(config('app.paginate'));
             $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'),
-            'setting_shop' => false);
-            return view('frontend.promotionindex', compact('items','shop'))
+                'setting_shop' => false);
+            return view('frontend.promotionindex', compact('items', 'shop'))
                 ->with($data);
-        }
-        else{
+        } else {
             $data = array('setting_shop' => true);
             return view('frontend.promotionindex', compact('items'))->with($data);;
         }
@@ -148,7 +147,7 @@ class PromotionsController extends Controller
             'shop_id' => $shop->id
         );
         $item = Promotions::find($id);
-        return view('frontend.promotionedit', compact('item','shop'))->with($data);
+        return view('frontend.promotionedit', compact('item', 'shop'))->with($data);
     }
 
     /**
@@ -173,8 +172,8 @@ class PromotionsController extends Controller
 
         $promotion = $request->all();
 
-        if ($request->file('image_file')!=null && $image_file = $request->file('image_file')) {
-            $this->RemoveFolderImage($promotion['image_file']);
+        if ($request->file('image_file') != null && $image_file = $request->file('image_file')) {
+//            $this->RemoveFolderImage($promotion['image_file']);
             $uploadImage = $this->UploadImage($request, 'image_file');
             $promotion['image_file'] = $uploadImage["image_path_filename"];
         }
@@ -201,7 +200,7 @@ class PromotionsController extends Controller
             ->with('success', trans('messages.message_delete_success'));
     }
 
-    /*public function uploadImage($request, $filename)
+    public function uploadImage($request, $filename)
     {
         sleep(1);
         $image_path = $request->file($filename)->getPathname();
@@ -215,24 +214,8 @@ class PromotionsController extends Controller
         $img->destroy();
 
         return array('image_path_filename' => $image_path_filename);
-    }*/
-
-    private function uploadImage(Request $request, $imagecolumnname)
-    {
-        sleep(1);
-        $fileTimeStamp = time();
-        $imageTempName = $request->file($imagecolumnname)->getPathname();
-
-        $imageName = $request->{$imagecolumnname}->getClientOriginalName();
-
-        //$imageName_temp = iconv('UTF-8', 'tis620',$imageName);
-        $imageName_temp = $imageName;
-
-        $request->{$imagecolumnname}->move(config('app.upload_promotion') . $fileTimeStamp . "/", $imageName_temp);
-        $imageName = config('app.upload_promotion') . $fileTimeStamp . "/" . $imageName;
-
-        return array('imageTempName' => $imageTempName, 'image_path_filename' => $imageName);
     }
+
 
     private function RemoveFolderImage($rawfile)
     {
