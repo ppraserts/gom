@@ -31,7 +31,7 @@
             @endforeach
             @if(count($products) > 0)
                 <div class="col-md-12 col-sm-12">
-                    <a href="{{url('result?category=&search=&shop-name='.$shop->shop_name)}}" class="btn btn-default">
+                    <a href="{{url('result?category=&search='.$shop->shop_name)}}" class="btn btn-default">
                         {{trans('messages.view_product_all')}}
                     </a>
                 </div>
