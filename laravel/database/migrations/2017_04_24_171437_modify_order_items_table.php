@@ -15,7 +15,7 @@ class ModifyOrderItemsTable extends Migration
     {
         Schema::table('order_items', function (Blueprint $table) {
             //
-            $table->dropForeign('fk_order_items_product_requests_id');
+//            $table->dropForeign('fk_order_items_product_requests_id');
 
             $table->renameColumn('product_request_id' , 'product_id');
 

@@ -103,14 +103,14 @@ if (is_array($carts)) {
                                 {{ trans('messages.menu_travel') }}
                             </a>
                         </li>
+                        <li role="separator" class="divider"></li>
                         {{--<li role="separator" class="divider"></li>--}}
                         @if($user!=null)
                             {{--<li><a href="{{ url('user/shopsetting') }}" title="{{ trans('messages.menu_manageprofile') }}">--}}
-                                    {{--<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>--}}
-                                    {{--{{ trans('messages.menu_manageshop') }}--}}
-                                {{--</a>--}}
+                            {{--<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>--}}
+                            {{--{{ trans('messages.menu_manageshop') }}--}}
+                            {{--</a>--}}
                             {{--</li>--}}
-                            <li role="separator" class="divider"></li>
                             <li>
                                 <a href="{{ url('user/matchings') }}">
                                     <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
@@ -126,12 +126,12 @@ if (is_array($carts)) {
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{{url('user/iwanttobuy')}}">
-                                             {{ trans('messages.i_want_to_sale') }}
+                                            {{ trans('messages.i_want_to_sale') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/order')}}">
-                                             {{trans('messages.menu_order_list')}}
+                                            {{trans('messages.menu_order_list')}}
                                         </a>
                                     </li>
                                 </ul>
@@ -145,50 +145,51 @@ if (is_array($carts)) {
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{{url('user/iwanttosale')}}">
-                                             {{ trans('messages.i_want_to_sale') }}
+                                            {{ trans('messages.i_want_to_sale') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/shoporder')}}">
-                                             {{ trans('messages.menu_shop_order_list') }}
+                                            {{ trans('messages.menu_shop_order_list') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/userproduct')}}">
-                                             {{ trans('messages.menu_add_product') }}
+                                            {{ trans('messages.menu_add_product') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/promotion')}}">
-                                             {{ trans('messages.menu_promotion') }}
+                                            {{ trans('messages.menu_promotion') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/shopsetting')}}">
-                                             {{ trans('messages.shop_setting') }}
+                                            {{ trans('messages.shop_setting') }}
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li role="separator" class="divider"></li>
+                            <li><a href="{{ url('/user/userprofiles') }}">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    {{ trans('messages.userprofile') }}
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url('/user/changepasswords') }}"><span class="glyphicon glyphicon-lock"
+                                                                                   aria-hidden="true"></span> {{ trans('messages.menu_changepassword') }}
+                                </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url('/user/inboxmessage') }}"><span class="glyphicon glyphicon-envelope"
+                                                                                aria-hidden="true"></span> {{ trans('messages.inbox_message') }}
+                                    <span class="badge"
+                                          style="margin-left: 8px;">0</span></a>
+                            </li>
+                            <li role="separator" class="divider"></li>
                         @endif
 
-                        <li><a href="{{ url('/user/userprofiles') }}">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                {{ trans('messages.userprofile') }}
-                            </a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/user/changepasswords') }}"><span class="glyphicon glyphicon-lock"
-                                                                               aria-hidden="true"></span> {{ trans('messages.menu_changepassword') }}
-                            </a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('/user/inboxmessage') }}"><span class="glyphicon glyphicon-envelope"
-                                                                            aria-hidden="true"></span> {{ trans('messages.inbox_message') }}
-                                <span class="badge"
-                                      style="margin-left: 8px;">0</span></a>
-                        </li>
-                        <li role="separator" class="divider"></li>
+
                         <li>
                             <a href="{{ url('/news') }}">
                                 <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
