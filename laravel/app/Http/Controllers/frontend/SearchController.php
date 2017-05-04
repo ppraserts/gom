@@ -31,6 +31,7 @@ class SearchController extends Controller
     {
         $category = $request->input('category');
         $search = $request->input('search');
+
         $province= $request->input('province');
         $price = $request->input('price');
         $volumn = $request->input('volumn');

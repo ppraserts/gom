@@ -12,11 +12,13 @@
                             <div class="thumbnail">
                                 <div class="product-image">
                                     <img class="img-product img-responsive" src="{{asset($product->product1_file)}}"
-                                         alt="">
+                                         alt="" style="min-height: 150px; height: auto;  position: absolute;left: -100%;right: -100%;top: -100%;bottom: -100%;margin: auto;">
                                 </div>
                                 <div class="product-detail">
                                     <div class="product-title">
-                                        <a href="/user/productview/{{$product->id}}"><h4>{{$product->product_title}}</h4></a>
+                                        <a href="/user/productview/{{$product->id}}">
+                                            <h4>{{$product->product_title}}</h4>
+                                        </a>
                                     </div>
                                     <div class="product-price">
                                         {{$product->price}}
@@ -27,11 +29,13 @@
                     </a>
                 </div>
             @endforeach
+            @if(count($products) > 0)
                 <div class="col-md-12 col-sm-12">
-                    <a href="{{url('result?category=&search='.$products[0]->product_title)}}" class="btn btn-default">
+                    <a href="{{url('result?category=&search=&shop-name='.$shop->shop_name)}}" class="btn btn-default">
                         {{trans('messages.view_product_all')}}
                     </a>
                 </div>
+            @endif
         </div>
     @endif
 @stop

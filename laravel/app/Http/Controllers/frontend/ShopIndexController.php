@@ -35,7 +35,7 @@ class ShopIndexController extends Controller
             ->where('iwantto', 'sale')
             ->select('*')
             ->orderBy('created_at','DESC')
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('updated_at','DESC')
             ->limit(8);
 
         $dateNow = date('Y-m-d');

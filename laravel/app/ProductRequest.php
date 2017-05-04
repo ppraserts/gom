@@ -214,6 +214,18 @@ class ProductRequest extends Model
 
     public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
     {
+
+        $sqlSearchByShopName ='';
+        $notwhere_product_name = true;
+        if (!empty($search)) {
+            $searchShops = DB::table('shops')->where('shop_name', 'like', '%'.$search.'%' )->get();
+            if(count($searchShops) > 0){
+                $sqlSearchByShopName = " and s.shop_name = '".$search."'";
+                $notwhere_product_name = false;
+            }
+
+        }
+
         $sqlcondition = "";
         $sqlcondition .= " and a.productstatus = 'open' ";
         if ($category != "")
@@ -226,8 +238,9 @@ class ProductRequest extends Model
             $sqlcondition .= " and (a.`price` between $search and $search)";
             $sqlcondition .= " and (a.`volumn` between $search and $search)";
         } else {
-            $sqlcondition .= " and a.productstatus = 'open'";
-            $sqlcondition .= " and (CONCAT(a.`product_title`
+            if($notwhere_product_name == true) {
+                $sqlcondition .= " and a.productstatus = 'open'";
+                $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
                                           , a.province
                                           , u.users_firstname_th
@@ -236,6 +249,7 @@ class ProductRequest extends Model
                                           , u.users_lastname_en
                                           , b.product_name_th
                                           , b.product_name_en)  like '%$search%' )";
+            }
         }
 
         if ($province != "") {
@@ -258,6 +272,8 @@ class ProductRequest extends Model
         if (is_numeric($volumn)) {
             $sqlcondition .= " and (a.`volumn` between $volumn and $volumn)";
         }
+
+
 
         $results = DB::select(
             DB::raw("SELECT a.*
@@ -293,8 +309,9 @@ class ProductRequest extends Model
                             FROM `product_requests` a
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
+                            join shops s on u.id = s.user_id
                             where a.`iwantto` = '$iwantto'
-                            $sqlcondition
+                            $sqlcondition $sqlSearchByShopName
               "));
 
         return $results;
