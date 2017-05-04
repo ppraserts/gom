@@ -71,6 +71,11 @@ if ($mode == "create") {
         {!! Form::model($item, ['method' => $method,'route' => [$controllerAction, $formModelId] ,'files' => true]) !!}
 
         <div class="row">
+            @if($method === "PATCH")
+                <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px">
+                    <strong>{{ trans('messages.link') }} : </strong><a href="{{ url ($shop->shop_name."/promotion/".$item->id) }}"> {{ url ($shop->shop_name."/promotion/".$item->id) }}</a>
+                </div>
+            @endif
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('promotion_title') ? 'has-error' : '' }}">

@@ -1,5 +1,5 @@
 <?php
-$pagetitle = Lang::get('message.menu_order_list');
+$pagetitle = trans('message.menu_order_list');
 ?>
 @extends('layouts.main')
 @section('page_heading',$pagetitle)
@@ -17,12 +17,12 @@ $pagetitle = Lang::get('message.menu_order_list');
                     <thead>
                     <tr>
                         <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                        <th>{{ Lang::get('messages.i_sale') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_total') }}</th>
-                        <th style="text-align:center;">{{ Lang::get('messages.order_status') }}</th>
+                        <th>{{ trans('messages.i_sale') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                         <th width="130px" style="text-align:center;">
-                            {{ Lang::get('messages.view_order_detail') }}
+                            {{ trans('messages.view_order_detail') }}
                         </th>
                     </tr>
                     </thead>
