@@ -1,7 +1,7 @@
 <?php
 use App\ProductCategory;
 $url = "user/promotion/index";
-$pagetitle = Lang::get('message.menu_promotion');
+$pagetitle = trans('message.menu_promotion');
 ?>
 @extends('layouts.main')
 @section('page_heading',$pagetitle)
@@ -66,10 +66,10 @@ $pagetitle = Lang::get('message.menu_promotion');
                     <thead>
                     <tr>
                         <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
-                        <th>{{ Lang::get('validation.attributes.promotion_title') }}</th>
-                        <th>{{ Lang::get('validation.attributes.promotion_description') }}</th>
-                        <th width="160px">{{ Lang::get('validation.attributes.promotion_start_date') }}</th>
-                        <th width="160px">{{ Lang::get('validation.attributes.promotion_end_date') }}</th>
+                        <th>{{ trans('validation.attributes.promotion_title') }}</th>
+                        <th>{{ trans('validation.attributes.promotion_description') }}</th>
+                        <th width="160px">{{ trans('validation.attributes.promotion_start_date') }}</th>
+                        <th width="160px">{{ trans('validation.attributes.promotion_end_date') }}</th>
                         <th width="150px" style="text-align:center;">
                             @if(!$setting_shop)
                                 <a class="btn btn-success" href="{{ url ('user/promotion/create') }}">
@@ -90,8 +90,8 @@ $pagetitle = Lang::get('message.menu_promotion');
                                 <td>{{ DateFuncs::thai_date($item->end_date) }}</td>
                                 <td style="text-align:center;">
                                     <a target="_bank" class="btn btn-info"
-                                       href="{{ URL::asset($item->image_file) }}">
-                                        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                                       href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                     </a>
                                     <a class="btn btn-primary"
                                        href="{{ url ('user/promotion/'.$item->id.'/edit') }}">
