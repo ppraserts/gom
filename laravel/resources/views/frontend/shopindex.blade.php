@@ -20,7 +20,12 @@
                                             <h4>{{$product->product_title}}</h4>
                                         </a>
                                     </div>
-                                    <div class="product-price">
+                                    @if($theme == 'theme2')
+                                        <div class="product-price-t2">
+                                    @else
+                                        <div class="product-price">
+                                    @endif
+
                                         {{$product->price}}
                                     </div>
                                 </div>
