@@ -193,8 +193,8 @@ class ShoppingCartController extends Controller
             $order->buyer_id = $current_user->id;
             $order->total_amount = floatval($total);
             $order->order_status = 1;
-//            $order->order_type = "retail";
-            $order->order_type = "ขายปลีก";
+            $order->order_type = "retail";
+//            $order->order_type = "ขายปลีก";
             $order->order_date = date('Y-m-d H:i:s');
             $order->save();
 
@@ -206,7 +206,7 @@ class ShoppingCartController extends Controller
                 if ($item['user_id'] == trim($user_id)) {
                     $order_item = new OrderItem();
                     $order_item->unit_price = $item['unit_price'];
-                    $order_item->product_id = ProductRequest::find($item['product_request_id'])->products_id;
+                    $order_item->product_request_id = $item['product_request_id'];
                     $order_item->quantity = $item['qty'];
                     $order_item->total = intval($item['qty']) * floatval($item['unit_price']);
                     array_push($arr_order_items, $order_item);
