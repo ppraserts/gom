@@ -136,4 +136,6 @@ return [
     'not_found_an_orders' => 'ไม่พบข้อมูลในตะกร้าสินค้า',
     'shopping_cart' => 'ตะกร้าสินค้า',
     'view_product_all' => 'ดูสินค้าทั้งหมด',
+    'retail' => 'ขายปลีก',
+    'wholesale' => 'ขายส่ง',
 ];

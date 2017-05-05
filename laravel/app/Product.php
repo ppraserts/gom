@@ -22,6 +22,11 @@ class Product extends Model
         return $this->hasMany('App\OrderItem', 'product_id', 'id');
     }
 
+    public function productRequest()
+    {
+        return $this->hasMany('App\ProductRequest', 'products_id', 'id');
+    }
+
 }
 
 ?>

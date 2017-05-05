@@ -17,7 +17,7 @@ $pagetitle = trans('message.menu_order_list');
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
                     <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
                     <p><b>{{ trans('messages.order_status') }} : </b>{{$order->status_name}}</p>
-                    <p><b>{{ trans('messages.order_type') }} : </b>{{$order->order_type}}</p>
+                    <p><b>{{ trans('messages.order_type') }} : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}</p>
                     <h4><b>{{ trans('messages.total_order') }}
                             : </b>{{$order->total_amount}}  {{trans('messages.baht')}}
                     </h4>

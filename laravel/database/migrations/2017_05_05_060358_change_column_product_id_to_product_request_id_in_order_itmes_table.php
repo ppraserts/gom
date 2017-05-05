@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use app\Helpers\MigrationHelper;
 
-class ModifyOrderItemsTable extends Migration
+class ChangeColumnProductIdToProductRequestIdInOrderItmesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,18 +14,16 @@ class ModifyOrderItemsTable extends Migration
      */
     public function up()
     {
-       // Schema::disableForeignKeyConstraints();
-
         Schema::table('order_items', function (Blueprint $table) {
 
             $foreignKeys = MigrationHelper::listTableForeignKeys('order_items');
 
-            if(in_array('fk_order_items_product_requests_id', $foreignKeys)) {
-                $table->dropForeign('fk_order_items_product_requests_id');
+            if(in_array('fk_order_items_products_id', $foreignKeys)) {
+                $table->dropForeign('fk_order_items_products_id');
             }
 
-            if (Schema::hasColumn('order_items' , 'product_request_id')) {
-                $table->renameColumn('product_request_id' , 'product_id');
+            if (Schema::hasColumn('order_items' , 'product_id')) {
+                $table->renameColumn('product_id' , 'product_request_id');
             }
 
         });
@@ -33,13 +31,11 @@ class ModifyOrderItemsTable extends Migration
         Schema::table('order_items', function (Blueprint $table) {
 
             $foreignKeys = MigrationHelper::listTableForeignKeys('order_items');
-            if(!in_array('fk_order_items_products_id', $foreignKeys)) {
-                $table->foreign('product_id' , 'fk_order_items_products_id' )->references('id')->on('products');
+            if(!in_array('fk_order_items_products_requests_id', $foreignKeys)) {
+                $table->foreign('product_request_id' , 'fk_order_items_products_requests_id' )->references('id')->on('product_requests');
             }
 
         });
-
-       // Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -51,8 +47,7 @@ class ModifyOrderItemsTable extends Migration
     {
         Schema::table('order_items', function (Blueprint $table) {
             //
-            $table->dropForeign('fk_order_items_products_id');
+            $table->dropForeign('fk_order_items_products_requests_id');
         });
     }
-
 }
