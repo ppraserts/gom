@@ -35,7 +35,16 @@ use App\Http\Controllers\frontend\MarketController;
                                 <span class="glyphicon glyphicon-tag"></span>
                                 <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                                {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
+                                <?php
+                                $city_province = $col_md_4_item['city'].' '.$col_md_4_item['province'];
+                                if(mb_strlen($city_province,"UTF-8") > 23){
+                                    echo mb_strimwidth($city_province, 0, 22, '...', 'UTF-8');
+                                }else{
+                                    echo $city_province;
+                                }
+                                ?>
+
                                 <br/><br/>
                             </div>
                             <div class="rating hidden-sm col-md-4">
