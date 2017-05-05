@@ -14,6 +14,7 @@ class ChangeColumnProductIdToProductRequestIdInOrderItmesTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('order_items', function (Blueprint $table) {
 
             $foreignKeys = MigrationHelper::listTableForeignKeys('order_items');
@@ -36,6 +37,7 @@ class ChangeColumnProductIdToProductRequestIdInOrderItmesTable extends Migration
             }
 
         });
+        Schema::disableForeignKeyConstraints();
     }
 
     /**
