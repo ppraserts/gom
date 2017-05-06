@@ -37,7 +37,7 @@ class ChangeColumnProductIdToProductRequestIdInOrderItmesTable extends Migration
             }
 
         });
-        Schema::disableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
