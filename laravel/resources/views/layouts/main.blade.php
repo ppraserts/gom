@@ -266,7 +266,7 @@ if (is_array($carts)) {
 </footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="{{URL::asset('js/jquery-1.11.3.js"></script>
+<script src="{{URL::asset('js/jquery-1.11.3.js')}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
