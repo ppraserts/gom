@@ -55,7 +55,7 @@
         var query_url = '';
         var products;
 
-        query_url = '/information/create/ajax-state';
+        query_url = '{{url('/information/create/ajax-state')}}';
 
         products = new Bloodhound({
             datumTokenizer: function (datum) {
