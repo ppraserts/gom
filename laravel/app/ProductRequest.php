@@ -48,6 +48,10 @@ class ProductRequest extends Model
             $orderbycondition = ",matching.units";
         else if ($orderby == "price")
             $orderbycondition = ",matching.pricerange_start";
+        else if ($orderby == "product_standard")
+            $orderbycondition = ",matching.pricerange_start";
+        else if ($orderby == "product_category")
+            $orderbycondition = ",matching.productcategorys_id";
 
         $results = DB::select(
             DB::raw("SELECT matching.*
@@ -362,6 +366,10 @@ class ProductRequest extends Model
 
     public function product(){
         return $this->belongsTo('App\Product');
+    }
+
+    public function standards(){
+        return $this->belongsToMany( 'App\Standard');
     }
 
 }
