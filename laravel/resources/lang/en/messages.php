@@ -10,6 +10,7 @@ return [
     'userprofile' => 'User Profile',
     'confirm_delete' => 'Do you want to remove :attribute ?',
     'addeditform' => 'Add/Edit',
+    'edit' => 'แก้ไข',
     'message_whoops_error' => 'Whoops!',
     'message_result_error' => 'There were some problems with your input.',
     'button_back'=> 'Back',

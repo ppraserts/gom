@@ -10,6 +10,7 @@ return [
     'userprofile' => 'ข้อมูลส่วนตัว',
     'confirm_delete' => 'คุณต้องการลบข้อมูล :attribute ใช่หรือไม่ ?',
     'addeditform' => 'เพิ่ม/แก้ไข',
+    'edit' => 'แก้ไข',
     'message_whoops_error' => 'พบข้อผิดพลาด !!',
     'message_result_error' => 'พบข้อผิดพลาด !!',
     'button_back'=> 'กลับ',

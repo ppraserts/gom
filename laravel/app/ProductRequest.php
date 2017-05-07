@@ -10,7 +10,6 @@ class ProductRequest extends Model
     public $fillable = ['iwantto',
         'product_title',
         'product_description',
-        'guarantee',
         'price',
         'is_showprice',
         'volumn',

@@ -172,7 +172,6 @@ class ProductsSaleEditController extends Controller
         $productRequest->iwantto = $useritem->iwanttosale;
         $productRequest->product_title = $request->product_title;
         $productRequest->product_description = $request->product_description;
-        $productRequest->guarantee = $request->guarantee;
         $productRequest->price = $request->price;
         $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
         $productRequest->volumn = $request->volumn;

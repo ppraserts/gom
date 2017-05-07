@@ -22,13 +22,13 @@ class ProductsViewController extends Controller
 
     public function show($id)
     {
-        //$item = ProductRequest::find($id);
-        $item = DB::select(DB::raw("select *
-																	from product_requests i
-																	join users u on i.users_id = u.id
-																	where i.id = $id
-																	"));
-        $useritem = auth()->guard('user')->user();
-        return view('frontend.productview', compact('item', 'useritem'));
+
+        $productRequest = ProductRequest::join('users', 'users.id', '=','product_requests.users_id')
+            ->select('users.*', 'users.id AS user_id' ,'product_requests.*')
+            ->where('product_requests.id', $id)
+            ->first();
+
+        $user = auth()->guard('user')->user();
+        return view('frontend.productview', compact('productRequest', 'user'));
     }
 }
