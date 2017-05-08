@@ -11,8 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Bootstrap -->
-    <link href="{{URL::asset('css/bootstrap.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('assets/theme/css/theme1_style.css')}}" rel="stylesheet">
+    <link href="{{asset('/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{asset('/assets/theme/css/theme1_style.css')}}" rel="stylesheet">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -56,7 +56,7 @@ if ($shop != null && isset($shop->image_file_1)) {
                         @foreach($promotions as $promotion)
                             <div class="col-md-4">
                                 <div class="promotion-item">
-                                    <a href="{{$shop_name."/promotion/".$promotion->id}}" title="{{$promotion->promotion_title}}">
+                                    <a href="{{url($shop_name."/promotion/".$promotion->id)}}" title="{{$promotion->promotion_title}}">
                                         @if(isset($promotion->image_file))
                                             <img class="img-promotion img-responsive" src="{{url( $promotion->image_file)}}">
                                             <p style="padding-top: 10px;">
