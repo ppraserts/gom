@@ -11,8 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/theme/css/theme1_style.css" rel="stylesheet">
+    <link href="{{URL::asset('css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('assets/theme/css/theme1_style.css')}}" rel="stylesheet">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
