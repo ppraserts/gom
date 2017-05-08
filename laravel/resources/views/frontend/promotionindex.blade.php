@@ -27,7 +27,7 @@ $pagetitle = trans('message.menu_promotion');
 
                         @if($setting_shop)
                         <div class="alert alert-danger">
-                            <strong>{{ trans('messages.required_shop_setting')}}</strong> <a href="/user/shopsetting">{{ trans('messages.shop_setting') }}</a>
+                            <strong>{{ trans('messages.required_shop_setting')}}</strong> <a href="{{ url('/user/shopsetting') }}">{{ trans('messages.shop_setting') }}</a>
                         </div>
                     @endif
 

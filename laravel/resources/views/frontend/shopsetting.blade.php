@@ -101,11 +101,11 @@
                                     <div class="form-group">
                                         @if(isset($shop->image_file_3))
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="{{ url($shop->image_file_3) }}" class="img-responsive"
+                                                 src="{{ asset($shop->image_file_3) }}" class="img-responsive"
                                                  alt="a">
                                         @else
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="/assets/theme/images/header-3.jpg" class="img-responsive"
+                                                 src="{{asset('/assets/theme/images/header-3.jpg')}}" class="img-responsive"
                                                  alt="a">
                                         @endif
                                     </div>
@@ -123,11 +123,11 @@
                                     <div class="form-group">
                                         @if(isset($shop->image_file_1))
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="{{ url($shop->image_file_1) }}" class="img-responsive"
+                                                 src="{{ asset($shop->image_file_1) }}" class="img-responsive"
                                                  alt="a">
                                         @else
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="/assets/theme/images/header-1.jpg" class="img-responsive"
+                                                 src="{{ asset('/assets/theme/images/header-1.jpg') }}" class="img-responsive"
                                                  alt="a">
                                         @endif
                                     </div>
@@ -144,11 +144,11 @@
                                     <div class="form-group">
                                         @if(isset($shop->image_file_2))
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="{{ url($shop->image_file_2) }}" class="img-responsive"
+                                                 src="{{ asset($shop->image_file_2) }}" class="img-responsive"
                                                  alt="a">
                                         @else
                                             <img class="img-thumbnail" width="304" height="236"
-                                                 src="/assets/theme/images/header-2.jpg" class="img-responsive"
+                                                 src="{{ asset('/assets/theme/images/header-2.jpg') }}" class="img-responsive"
                                                  alt="a">
                                         @endif
                                     </div>
@@ -171,7 +171,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <strong>{{ trans('messages.shop_theme') }} 1</strong>
                                 <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="/images/small_theme3.png" alt="">
+                                    <img class="img-responsive" src="{{ asset('/images/small_theme3.png') }}" alt="">
                                     <div class="overlay">
                                         <h2>รูปแบบที่ 1</h2>
                                         <button class="info" data-toggle="modal"
@@ -188,7 +188,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <strong>{{ trans('messages.shop_theme') }} 2</strong>
                                 <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="/images/small_theme1.png" alt="">
+                                    <img class="img-responsive" src="{{ asset('/images/small_theme1.png') }}" alt="">
                                     <div class="overlay">
                                         <h2>รูปแบบที่ 2</h2>
                                         <button class="info" data-toggle="modal"
@@ -208,7 +208,7 @@
 
                                 <strong>{{ trans('messages.shop_theme') }} 3</strong>
                                 <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="/images/small_theme2.png" alt="">
+                                    <img class="img-responsive" src="{{ asset('/images/small_theme2.png') }}" alt="">
                                     <div class="overlay">
                                         <h2>รูปแบบที่ 3</h2>
                                         <button class="info" data-toggle="modal"
@@ -242,7 +242,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <img class="img-responsive" src="/images/theme3.png" alt="">
+                                        <img class="img-responsive" src="{{asset('/images/theme3.png')}}" alt="">
                                         <BR>
                                         <p>รายละเอียดเกี่ยวกับธีม</p>
                                     </div>
@@ -271,7 +271,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <img class="img-responsive" src="/images/theme1.png" alt="">
+                                        <img class="img-responsive" src="{{ asset('/images/theme1.png') }}" alt="">
                                         <BR>
                                         <p>รายละเอียดเกี่ยวกับธีม</p>
                                     </div>
@@ -300,7 +300,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <img class="img-responsive" src="/images/theme2.png" alt="">
+                                        <img class="img-responsive" src="{{asset('/images/theme2.png')}}" alt="">
                                         <BR>
                                         <p>รายละเอียดเกี่ยวกับธีม</p>
                                     </div>

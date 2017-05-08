@@ -7,7 +7,7 @@
         <div class="row">
             @foreach($products as $product)
                 <div class="col-md-3 col-sm-6">
-                    <a href="/user/productview/{{$product->id}}">
+                    <a href="{{ url('/user/productview/'.$product->id) }}">
                         <div class="products-item">
                             <div class="thumbnail">
                                 <div class="product-image">
@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="product-detail">
                                     <div class="product-title">
-                                        <a href="/user/productview/{{$product->id}}">
+                                        <a href="{{url('/user/productview/' . $product->id)}}">
                                             <h4>{{$product->product_title}}</h4>
                                         </a>
                                     </div>
