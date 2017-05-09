@@ -19,12 +19,12 @@ class Product extends Model
 
     public function productOrderItem()
     {
-        return $this->hasMany('App\OrderItem', 'product_id', 'id');
+        return $this->hasMany('App\OrderItem', 'product_request_id', 'id');
     }
 
     public function productRequest()
     {
-        return $this->hasMany('App\ProductRequest', 'products_id', 'id');
+        return $this->hasMany('App\ProductRequest', 'product_request_id', 'id');
     }
 
 }
