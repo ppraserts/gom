@@ -35,6 +35,8 @@ $productRequest = new ProductRequest();
                     href="{{ url('user/iwanttobuy') }}"> {{ trans('messages.i_want_to_buy') }}</a></li>
         <li role="presentation" {{ ($setActive == "order")? 'class=active' : ''  }}><a
                     href="{{ url('user/order/') }}"> {{ trans('messages.menu_order_list') }}</a></li>
+        <li role="presentation" {{ ($setActive == "quotation")? 'class=active' : ''  }}><a
+                    href="{{ url('user/quotation/') }}"> {{ trans('messages.menu_quotation') }}</a></li>
     @endif
     @if($user->iwanttosale == "sale")
         <li role="presentation" {{ ($setActive == "iwanttosale")? 'class=active' : ''  }}><a
@@ -42,6 +44,9 @@ $productRequest = new ProductRequest();
 
         <li role="presentation" {{ ($setActive == "shoporder")? 'class=active' : ''  }}><a
                     href="{{ url('user/shoporder/') }}"> {{ trans('messages.menu_shop_order_list') }}</a></li>
+
+        <li role="presentation" {{ ($setActive == "quote")? 'class=active' : ''  }}><a
+                    href="{{ url('user/quote/index') }}"> {{ trans('messages.menu_quotation_request') }}</a></li>
 
         <li role="presentation" {{ ($setActive == "addproduct")? 'class=active' : ''  }}><a
                     href="{{ url('user/userproduct') }}"> {{ trans('messages.menu_add_product') }}</a></li>

@@ -154,7 +154,12 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('order','frontend\OrderController@index');
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
-
+    Route::get('quotation/index','frontend\QuotationController@index');
+    Route::get('quotationRequest/{product_request_id}','frontend\QuotationController@store');
+    Route::get('quote/index','frontend\QuoteController@index');
+//    Route::get('quotation/reply/{product_request_id}','frontend\QuotationController@reply');
+    Route::resource('quotation','frontend\QuotationController');
+    Route::resource('quote','frontend\QuoteController');
     //Route::get('userproduct/index','frontend\ProductController@index');
 
 });

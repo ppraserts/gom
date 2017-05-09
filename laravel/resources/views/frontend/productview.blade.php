@@ -13,7 +13,8 @@ function renderHTML($text)
     <div class="row">
         <div class="col-md-4" style="padding-right:30px; text-align:center;">
             @if($user->id == $productRequest->users_id)
-                <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}</a>
+                <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary"><span
+                            class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}</a>
             @else
                 @if($productRequest->users_imageprofile != "")
                     <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}" alt=""
@@ -40,10 +41,14 @@ function renderHTML($text)
 
                     </div>
                 </div>
+
+
+                @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale")
+                    <a href="{{ url('user/quotationRequest/'.$productRequest['id']) }}"
+                       class="btn btn-primary">{{trans('messages.quotation_request')}}</a>
+
+                @endif
             @endif
-                <button class="btn btn-default" type="button" onclick="window.history.back();">
-                    {{ trans('messages.backtoresult') }}
-                </button>
         </div>
         <div class="col-md-8" style="background-color:#FFFFFF; padding:20px;">
             @if($productRequest->iwantto == "sale")

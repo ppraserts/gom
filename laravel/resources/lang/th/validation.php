@@ -205,6 +205,7 @@ return [
         'product_description'=> 'รายละเอียดสินค้า',
         'guarantee'=> 'มาตรฐานสินค้า(เพิ่มเติม)',
         'price'=> 'ราคาต่อหน่วย(บาท)',
+        'discount'=> 'ส่วนลด(บาท)',
         'is_showprice'=> 'แสดงราคา',
         'volumn'=> 'ปริมาณ',
         'product1_file'=> 'รูปภาพสินค้า 1',
