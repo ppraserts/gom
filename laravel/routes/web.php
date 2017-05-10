@@ -138,7 +138,6 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('shoppingcart/checkout/{user_id}/{total}', ['as' => 'shoppingcart.checkout', 'uses' => 'frontend\ShoppingCartController@checkout']);
     Route::post('shoppingcart/checkoutAll', ['as' => 'shoppingcart.checkoutAll', 'uses' => 'frontend\ShoppingCartController@checkoutAll']);
 
-
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
@@ -155,6 +154,12 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('order','frontend\OrderController@index');
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('quotation/index','frontend\QuotationController@index');
+    Route::get('quotationRequest/{product_request_id}','frontend\QuotationController@store');
+    Route::get('quote/index','frontend\QuoteController@index');
+//    Route::get('quotation/reply/{product_request_id}','frontend\QuotationController@reply');
+    Route::resource('quotation','frontend\QuotationController');
+    Route::resource('quote','frontend\QuoteController');
     Route::get('orderdetail/html-payment-channel/{id}','frontend\OrderController@getHtmlConfirmSale');
     Route::post('orderdetail/store-status-history','frontend\OrderController@storeStatusHistory');
 

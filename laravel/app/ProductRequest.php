@@ -10,7 +10,6 @@ class ProductRequest extends Model
     public $fillable = ['iwantto',
         'product_title',
         'product_description',
-        'guarantee',
         'price',
         'is_showprice',
         'volumn',
@@ -48,6 +47,10 @@ class ProductRequest extends Model
             $orderbycondition = ",matching.units";
         else if ($orderby == "price")
             $orderbycondition = ",matching.pricerange_start";
+        else if ($orderby == "product_standard")
+            $orderbycondition = ",matching.pricerange_start";
+        else if ($orderby == "product_category")
+            $orderbycondition = ",matching.productcategorys_id";
 
         $results = DB::select(
             DB::raw("SELECT matching.*
@@ -215,12 +218,12 @@ class ProductRequest extends Model
     public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
     {
 
-        $sqlSearchByShopName ='';
+        $sqlSearchByShopName = '';
         $notwhere_product_name = true;
         if (!empty($search)) {
-            $searchShops = DB::table('shops')->where('shop_name', 'like', '%'.$search.'%' )->get();
-            if(count($searchShops) > 0){
-                $sqlSearchByShopName = " and s.shop_name = '".$search."'";
+            $searchShops = DB::table('shops')->where('shop_name', 'like', '%' . $search . '%')->get();
+            if (count($searchShops) > 0) {
+                $sqlSearchByShopName = " and s.shop_name = '" . $search . "'";
                 $notwhere_product_name = false;
             }
 
@@ -239,7 +242,7 @@ class ProductRequest extends Model
             $sqlcondition .= " and (a.`volumn` between $search and $search)";
         } else {
             $sqlcondition .= " and a.productstatus = 'open'";
-            if($notwhere_product_name == true) {
+            if ($notwhere_product_name == true) {
                 $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
                                           , a.province
@@ -274,7 +277,7 @@ class ProductRequest extends Model
         }
 
 
-        if($notwhere_product_name == true) {
+        if ($notwhere_product_name == true) {
             $results = DB::select(
                 DB::raw("SELECT a.*
                             ,u.users_firstname_th
@@ -312,7 +315,7 @@ class ProductRequest extends Model
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition 
               "));
-        }else{
+        } else {
             $results = DB::select(
                 DB::raw("SELECT a.*
                             ,u.users_firstname_th
@@ -356,12 +359,19 @@ class ProductRequest extends Model
         return $results;
     }
 
-    public function orderItem(){
-        return $this->hasMany('App\OrderItem','product_request_id');
+    public function orderItem()
+    {
+        return $this->hasMany('App\OrderItem', 'product_request_id');
     }
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo('App\Product');
+    }
+
+    public function standards()
+    {
+        return $this->belongsToMany('App\Standard');
     }
 
 }

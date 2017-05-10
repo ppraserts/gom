@@ -21,7 +21,7 @@
             var option = '';
             $('#city').empty();
 
-            //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+            //option += '<option value="">{{ trans('validation.attributes.products_id') }}</option>';
             $.each(data, function (index, subCatObj) {
                 option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
             });
@@ -55,7 +55,7 @@
         var query_url = '';
         var products;
 
-        query_url = '/information/create/ajax-state';
+        query_url = '{{url('/information/create/ajax-state')}}';
 
         products = new Bloodhound({
             datumTokenizer: function (datum) {
@@ -98,7 +98,7 @@
         $('#productcategorys_id').on('change', function (e) {
             product_category_value = e.target.value;
 
-            query_url = '/information/create/ajax-state?search=true&productcategorys_id=' + product_category_value;
+            query_url = '{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}' + product_category_value;
 
             products = new Bloodhound({
                 datumTokenizer: function (datum) {
@@ -199,9 +199,9 @@
 
         //Selling Period
         var selling_period = '{{$item->selling_period}}';
-        if(selling_period == 'year'){
+        if (selling_period == 'year') {
             $('.div_selling_period_date').hide();
-        }else{
+        } else {
             $("input[type=radio][name=selling_period]:first").attr('checked', true);
         }
     }
@@ -250,7 +250,7 @@
                     <button type="submit" class="btn btn-primary" onclick="return validate();">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                         {{ trans('messages.button_save')}}</button>
-                    @if($item->id != 0)
+                    @if($showDelete)
                         <button id="btnDelete" type="button" class="btn btn-danger">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             {{ trans('messages.button_delete')}}</button>
@@ -263,7 +263,7 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group" style="margin-top: 20px">
                         <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
-                        <input type="radio" name="selling_type"  value="retail" checked {{ $item->selling_type == 'retail'? 'checked="checked"' : '' }}> ขายปลีก
+                        <input type="radio" name="selling_type" value="retail" checked {{ $item->selling_type == 'retail'? 'checked="checked"' : '' }}> ขายปลีก
                         <input type="radio" name="selling_type" value="wholesale" {{ $item->selling_type == 'wholesale'? 'checked="checked"' : '' }}> ชายส่ง
                         <input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่
                     </div>
@@ -295,7 +295,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.productcategorys_id') }}
+                        <strong>* {{ trans('validation.attributes.productcategorys_id') }}
                             :</strong>
                         <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                             <option value="">{{ trans('messages.menu_product_category') }}</option>
@@ -313,9 +313,9 @@
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('products_id') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.products_id') }}
+                        <strong>* {{ trans('validation.attributes.products_id') }}
                             :</strong>
-                        {!! Form::text('fake_products_id', $product_name->product_name_th, array('placeholder' => Lang::get('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
+                        {!! Form::text('fake_products_id', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
                         <input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
                     </div>
                 </div>
@@ -327,22 +327,22 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('product_title') ? 'has-error' : '' }}">
-                        <strong>{{ Lang::get('validation.attributes.product_title') }}
+                        <strong>{{ trans('validation.attributes.product_title') }}
                             :</strong>
-                        {!! Form::text('product_title', $item->product_title, array('placeholder' => Lang::get('validation.attributes.product_title'),'class' => 'form-control')) !!}
+                        {!! Form::text('product_title', $item->product_title, array('placeholder' => trans('validation.attributes.product_title'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
-                    <div class="form-group {{ $errors->has('guarantee') ? 'has-error' : '' }}">
-                        <strong>{{ Lang::get('validation.attributes.guarantee') }}
+                    <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
+                        <strong>* {{ trans('validation.attributes.price') }}
                             :</strong>
-                        {!! Form::text('guarantee', $item->guarantee, array('placeholder' => Lang::get('validation.attributes.guarantee'),'class' => 'form-control')) !!}
+                        {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 ">
+            <div class="col-xs-1 col-sm-1 col-md-1 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('grade') ? 'has-error' : '' }}">
                         <strong>* เกรด :</strong>
@@ -354,15 +354,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 ">
+            <div class="col-xs-5 col-sm-5 col-md-5 ">
                 <div class="col-xs-12 col-md-12">
-                    <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.price') }}
-                            :</strong>
-                        {!! Form::number('price', $item->price, array('placeholder' => Lang::get('validation.attributes.price'),'class' => 'form-control')) !!}
+                    <div class="form-group" style="margin-top: 15px">
+                        @if(isset($standards))
+                            @for($i = 0 ; $i < count($standards) ; $i++)
+                                <label class="checkbox-inline">
+                                    <input name="product_standard[]" type="checkbox" value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                    {{$standards[$i]->name}}
+                                </label>
+                            @endfor
+                        @endif
                     </div>
                 </div>
             </div>
+
 
             <span class="clearfix"></span>
         </div>
@@ -371,19 +377,19 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('volumn') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.volumn') }}
+                        <strong>* {{ trans('validation.attributes.volumn') }}
                             :</strong>
-                        {!! Form::text('volumn', $item->volumn, array('placeholder' => Lang::get('validation.attributes.volumn'),'class' => 'form-control')) !!}
+                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('units') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.units') }}
+                        <strong>* {{ trans('validation.attributes.units') }}
                             :</strong>
                         <select id="units" name="units" class="form-control">
-                            <option value="">{{ Lang::get('validation.attributes.units') }}</option>
+                            <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
                                 @if($item->units == $unit->{ "units_".Lang::locale()})
                                     <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
@@ -408,8 +414,8 @@
             <div class="col-xs-3 col-sm-2 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div id="div_packing_size" class="form-group {{ $errors->has('packing_size') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.product_package_size') }} :</strong>
-                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => Lang::get('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
+                        <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
                     </div>
                 </div>
             </div>
@@ -420,7 +426,7 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.province') }}
+                        <strong>* {{ trans('validation.attributes.province') }}
                             :</strong>
                         <select id="province" name="province" class="form-control">
                             <option value="">{{ trans('messages.allprovince') }}</option>
@@ -438,7 +444,7 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-                        <strong>* {{ Lang::get('validation.attributes.city') }}
+                        <strong>* {{ trans('validation.attributes.city') }}
                             :</strong>
                         <select id="city" name="city" class="form-control">
                         </select>
@@ -448,9 +454,9 @@
             <div class="col-xs-4 col-sm-4 col-md-4 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('productstatus') ? 'has-error' : '' }}" style="margin-top: 20px">
-                        <label class="control-label"><strong>{{ Lang::get('validation.attributes.productstatus') }} :</strong></label>
+                        <label class="control-label"><strong>{{ trans('validation.attributes.productstatus') }} :</strong></label>
                         <input type="radio" name="productstatus" id="productstatus1"
-                               value="open" {{ $item->productstatus == 'open'? 'checked="checked"' : '' }}> Open
+                               value="open" {{ $item->productstatus == 'open' || $item->productstatus == null? 'checked="checked"' : '' }} > Open
                         <input type="radio" name="productstatus" id="productstatus2"
                                value="soldout" {{ $item->productstatus == 'soldout'? 'checked="checked"' : '' }}> Soldout
                         <input type="radio" name="productstatus" id="productstatus3"
@@ -461,7 +467,7 @@
             <div class="col-xs-2 col-sm-2 col-md-2 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('is_showprice') ? 'has-error' : '' }}" style="margin-top: 20px">
-                        <label class="control-label"><strong>{{ Lang::get('validation.attributes.is_showprice') }} :</strong> </label>
+                        <label class="control-label"><strong>{{ trans('validation.attributes.is_showprice') }} :</strong> </label>
                         <input value="1" type="checkbox" id="is_showprice" name="is_showprice" {{ $item->is_showprice == 0? '' : 'checked' }}>
                     </div>
                 </div>
@@ -473,7 +479,7 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('province_selling') ? 'has-error' : '' }}">
-                        <strong> {{ Lang::get('validation.attributes.product_province_selling') }} :</strong>
+                        <strong> {{ trans('validation.attributes.product_province_selling') }} :</strong>
                         <select id="province_selling" name="province_selling" class="form-control">
                             <option value="">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
@@ -490,8 +496,8 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group" style="margin-top: 20px">
-                        <label class="control-label"><strong>{{ Lang::get('validation.attributes.selling_period') }} :</strong></label>
-                        <input type="radio" name="selling_period"  value="period" {{ $item->selling_period == 'period'? 'checked="checked"' : '' }}> ช่วงเวลา
+                        <label class="control-label"><strong>{{ trans('validation.attributes.selling_period') }} :</strong></label>
+                        <input type="radio" name="selling_period" value="period" {{ $item->selling_period == 'period'? 'checked="checked"' : '' }}> ช่วงเวลา
                         <input type="radio" name="selling_period" value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
                     </div>
                 </div>
@@ -500,9 +506,9 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group div_selling_period_date">
-                        <strong> {{ Lang::get('validation.attributes.product_selling_start_date') }}:</strong>
+                        <strong> {{ trans('validation.attributes.product_selling_start_date') }}:</strong>
                         <div class='input-group date' id='pick_start_date'>
-                            {!! Form::text('start_selling_date', DateFuncs::convertToThaiDate($item->start_selling_date), array('placeholder' => Lang::get('validation.attributes.product_selling_start_date'),'class' => 'form-control')) !!}
+                            {!! Form::text('start_selling_date', DateFuncs::convertToThaiDate($item->start_selling_date), array('placeholder' => trans('validation.attributes.product_selling_start_date'),'class' => 'form-control')) !!}
                             <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -513,9 +519,9 @@
             <div class="col-xs-3 col-sm-3 col-md-3 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group div_selling_period_date {{ $errors->has('end_date') ? 'has-error' : '' }}">
-                        <strong> {{ Lang::get('validation.attributes.product_selling_end_date') }}:</strong>
+                        <strong> {{ trans('validation.attributes.product_selling_end_date') }}:</strong>
                         <div class='input-group date' id='pick_end_date'>
-                            {!! Form::text('end_selling_date', DateFuncs::convertToThaiDate($item->end_selling_date), array('placeholder' => Lang::get('validation.attributes.product_selling_end_date'),'class' => 'form-control')) !!}
+                            {!! Form::text('end_selling_date', DateFuncs::convertToThaiDate($item->end_selling_date), array('placeholder' => trans('validation.attributes.product_selling_end_date'),'class' => 'form-control')) !!}
                             <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -533,8 +539,8 @@
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <div class="col-xs-12 col-md-12">
                             <div class="form-group {{ $errors->has('product1_file') ? 'has-error' : '' }}">
-                                <strong>* {{ Lang::get('validation.attributes.product1_file') }}:</strong>
-                                {!! Form::file('product1_file', null, array('placeholder' => Lang::get('validation.attributes.product1_file'),'class' => 'form-control')) !!}
+                                <strong>* {{ trans('validation.attributes.product1_file') }}:</strong>
+                                {!! Form::file('product1_file', null, array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control')) !!}
                             </div>
                             @if($item != null && $item->product1_file != "")
                                 <img style="height:260px; width:350px;" src="{{ url($item->product1_file) }}" alt="" class="img-thumbnail">
@@ -544,8 +550,8 @@
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <div class="col-xs-12 col-md-12">
                             <div class="form-group {{ $errors->has('product2_file') ? 'has-error' : '' }}">
-                                <strong>{{ Lang::get('validation.attributes.product2_file') }}:</strong>
-                                {!! Form::file('product2_file', null, array('placeholder' => Lang::get('validation.attributes.product2_file'),'class' => 'form-control')) !!}
+                                <strong>{{ trans('validation.attributes.product2_file') }}:</strong>
+                                {!! Form::file('product2_file', null, array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control')) !!}
                             </div>
                             @if($item != null && $item->product2_file != "")
                                 <img style="height:260px; width:350px;" src="{{ url($item->product2_file) }}" alt="" class="img-thumbnail">
@@ -555,8 +561,8 @@
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <div class="col-xs-12 col-md-12">
                             <div class="form-group {{ $errors->has('product3_file') ? 'has-error' : '' }}">
-                                <strong>{{ Lang::get('validation.attributes.product3_file') }}:</strong>
-                                {!! Form::file('product3_file', null, array('placeholder' => Lang::get('validation.attributes.product3_file'),'class' => 'form-control')) !!}
+                                <strong>{{ trans('validation.attributes.product3_file') }}:</strong>
+                                {!! Form::file('product3_file', null, array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control')) !!}
                             </div>
                             @if($item != null && $item->product3_file != "")
                                 <img style="height:260px; width:350px;" src="{{ url($item->product3_file) }}" alt="" class="img-thumbnail">
@@ -573,8 +579,8 @@
             <div class="col-xs-12 col-sm-12 col-md-12 ">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group {{ $errors->has('product_description') ? 'has-error' : '' }}">
-                        <strong>{{ Lang::get('validation.attributes.product_description') }}:</strong>
-                        {!! Form::textarea('product_description', $item->product_description, array('placeholder' => Lang::get('validation.attributes.product_description'),'class' => 'form-control','style'=>'height:100px')) !!}
+                        <strong>{{ trans('validation.attributes.product_description') }}:</strong>
+                        {!! Form::textarea('product_description', $item->product_description, array('placeholder' => trans('validation.attributes.product_description'),'class' => 'form-control','style'=>'height:100px')) !!}
                     </div>
                 </div>
             </div>

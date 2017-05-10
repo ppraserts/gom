@@ -29,21 +29,21 @@ if (is_array($carts)) {
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Bootstrap -->
-    <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/typeaheadjs.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/bootstrap-datepicker.standalone.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/custom.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('fonts/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/lightbox.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/custom-modal.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('css/image-hover-effects.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/typeaheadjs.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/bootstrap-datepicker.standalone.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/custom.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/fonts/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/lightbox.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/custom-modal.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/image-hover-effects.css')}}" rel="stylesheet">
     <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
-    <link href="{{URL::asset('css/custom-style-redesign.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/css/custom-style-redesign.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
           rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700"
           rel="stylesheet">
-    <link href="{{URL::asset('assets/icomoon/style.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('/assets/icomoon/style.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

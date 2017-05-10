@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\OrderItem;
 use App\Product;
 use App\ProductCategory;
 use App\ProductRequest;
 use App\Province;
+use App\Standard;
 use App\Units;
 use DB;
 use File;
@@ -15,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Helpers\DateFuncs;
+use Illuminate\Support\Facades\Input;
 
 class ProductsSaleEditController extends Controller
 {
@@ -71,9 +74,11 @@ class ProductsSaleEditController extends Controller
     public function show($id)
     {
         $useritem = auth()->guard('user')->user();
+        $showDelete =false;
         $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
             ->get();
         $grades = config('constants.grades');
+        $standards = Standard::all();
 
         if ($id == 0) {
             $item = new ProductRequest();
@@ -89,6 +94,11 @@ class ProductsSaleEditController extends Controller
 
             $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
 
+            $orderItems = OrderItem::where('product_request_id', $id)->get();
+            if ($orderItems == null || $orderItems->count() < 1) {
+                $showDelete = true;
+            }
+
             if ($useritem->iwanttosale != $item->iwantto) {
                 return redirect()->action('frontend\UserProfileController@index');
             }
@@ -100,14 +110,29 @@ class ProductsSaleEditController extends Controller
         $unitsItem = Units::orderBy('sequence', 'ASC')
             ->get();
 
+
+        for($i = 0;$i < $standards->count();$i++){
+            $standards[$i]->checked = false;
+            foreach ($item->standards as $standard){
+                if ($standards[$i]->id == $standard->id){
+                    $standards[$i]->checked = true;
+                }
+            }
+        }
+
+        /*echo $standards;
+        exit();*/
+
         return view('frontend.productsaleedit', compact('item'
             , 'useritem', 'productCategoryitem', 'grades'
-            , 'unitsItem', 'provinceItem', 'product_name'));
+            , 'unitsItem', 'provinceItem', 'product_name' , 'standards' ,'showDelete'));
     }
 
 
     public function update(Request $request, $id)
     {
+
+
         $useritem = auth()->guard('user')->user();
 
         if ($id == 0) {
@@ -147,7 +172,6 @@ class ProductsSaleEditController extends Controller
         $productRequest->iwantto = $useritem->iwanttosale;
         $productRequest->product_title = $request->product_title;
         $productRequest->product_description = $request->product_description;
-        $productRequest->guarantee = $request->guarantee;
         $productRequest->price = $request->price;
         $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
         $productRequest->volumn = $request->volumn;
@@ -167,27 +191,65 @@ class ProductsSaleEditController extends Controller
         $productRequest->selling_period =  $request->selling_period;
         $productRequest->selling_type = $request->selling_type;
 
+        $arr_checked_product_standards = Input::get('product_standard');
+
         if ($id == 0) {
             $productRequest->save();
+            //Save to product_request_standard :: many to many relationship
+            if(is_array($arr_checked_product_standards)){
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
             $id = $productRequest->id;
         } else {
+            if(is_array($arr_checked_product_standards)){
+                $productRequest->standards()->detach();
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
             $productRequest->update();
         }
 
-        $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
-        $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
-
-        foreach ($itemsbuy as $div_item) {
-            $this->SendEmailMatching($div_item);
-        }
-
-        foreach ($itemssale as $div_item) {
-            $this->SendEmailMatching($div_item);
-        }
-
+//        $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
+//        $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
+//
+//        foreach ($itemsbuy as $div_item) {
+//            $this->SendEmailMatching($div_item);
+//        }
+//
+//        foreach ($itemssale as $div_item) {
+//            $this->SendEmailMatching($div_item);
+//        }
 
         return redirect()->route('productsaleedit.show', ['id' => $id])
             ->with('success', trans('messages.message_update_success'));
+    }
+
+    public function destroy($id)
+    {
+        $deleteItem = ProductRequest::find($id);
+
+        $deleteItem->delete();
+
+        if (isset($deleteItem->product1_file))
+        {
+            $this->RemoveFolderImage($deleteItem->product1_file);
+        }
+
+        if (isset($deleteItem->product2_file))
+        {
+            $this->RemoveFolderImage($deleteItem->product2_file);
+        }
+
+        if (isset($deleteItem->product3_file))
+        {
+            $this->RemoveFolderImage($deleteItem->product3_file);
+        }
+
+        return redirect()->route('user.iwanttosale.index')
+            ->with('success', trans('messages.message_delete_success'));
     }
 
     private function SendEmailMatching($div_item)

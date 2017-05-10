@@ -95,7 +95,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        if (OrderItem::where('product_id', $id)->get()->count() > 0) {
+        if (OrderItem::where('product_request_id', $id)->get()->count() > 0) {
             return redirect()->route('userproduct.index')->withErrors(Lang::get('messages.cannot_delete_product_with_order'));
         }
         Product::find($id)->delete();
