@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderItem;
+use DB;
 use App\OrderStatusHistory;
 use App\ProductRequest;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class ShoppingCartController extends Controller
             }
         }
         $this->deleteCartItemInSessionByUserId($user_id);
-        return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));;
+        return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));
     }
 
     public function checkoutAll(Request $request)
@@ -215,6 +216,7 @@ class ShoppingCartController extends Controller
             $order->orderItems()->saveMany($arr_order_items);
             $orderStatusHistory = new OrderStatusHistory();
             $orderStatusHistory->status_id = 1;
+            $orderStatusHistory->status_text = 'สั่งซื้อ';
             $orderStatusHistory->order_id = $order->id;
             $orderStatusHistory->save();
         }
@@ -243,5 +245,6 @@ class ShoppingCartController extends Controller
     {
         $request->session()->forget('carts');
     }
+
 
 }

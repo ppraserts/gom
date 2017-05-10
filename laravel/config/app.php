@@ -17,6 +17,7 @@ return [
     'upload_mailfile' => 'upload/mailfile/',
     'upload_shopimage' => 'upload/shopimage/',
     'upload_promotion' => 'upload/promotion/',
+    'upload_payment' => 'upload/payments/',
 
     /*
     |--------------------------------------------------------------------------

@@ -7,11 +7,8 @@ $pagetitle = trans('message.menu_order_list');
 @section('content')
     @include('shared.usermenu', array('setActive'=>'order'))
     <div class="col-sm-12">
-
         <div class="row">
-
             <h2>{{ trans('messages.order_detail') }}</h2>
-
             <div class="col-md-4">
                 <div class="row">
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
@@ -28,8 +25,10 @@ $pagetitle = trans('message.menu_order_list');
                 <div class="row">
                     <h3>{{ trans('messages.i_buy') }}</h3>
 
-                    <p><b>{{ trans('validation.attributes.name') }}
-                            : </b>{{$order->buyer->users_firstname_th. " ". $order->buyer->users_lastname_th}}</p>
+                    <p>
+                        <b>{{ trans('validation.attributes.name') }}
+                            : </b>{{$order->buyer->users_firstname_th. " ". $order->buyer->users_lastname_th}}
+                    </p>
                     @if(isset($order->buyer->user->users_mobilephone))<p>
                         <b>{{ trans('validation.attributes.users_mobilephone') }}
                             : </b>{{ $order->buyer->user->users_mobilephone }}</p>@endif
@@ -64,11 +63,11 @@ $pagetitle = trans('message.menu_order_list');
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="row">
                     <h3>{{ trans('messages.product_list') }}</h3>
                     <div class="table-responsive">
-                        <table style="width: 96%;" class="table table-bordered table-striped table-hover">
+                        <table class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
                                 <th width="70px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
@@ -94,7 +93,7 @@ $pagetitle = trans('message.menu_order_list');
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="row">
                     <h3>{{ trans('messages.order_status_history') }}</h3>
                     <div class="table-responsive">
@@ -103,22 +102,78 @@ $pagetitle = trans('message.menu_order_list');
                             <tr>
                                 <th style="text-align:center;">{{ trans('validation.attributes.created_at') }}</th>
                                 <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
+                                <th style="text-align:center;">บันทึกเพิ่มเติม</th>
+                                <th style="text-align:center;">ไฟล์</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $i = 0 ?>
+                            <?php $i = 0; $status_id = ''; ?>
                             @foreach ($order->statusHistory as $key => $item)
                                 <tr>
                                     <td style="text-align:center;">{{ $item->created_at}}</td>
-                                    <td style="text-align:center;">{{ $item->status_name }}</td>
+                                    <td style="text-align:center;">{{ $item->status_text}}</td>
+                                    <td style="text-align:left; max-width: 400px;">{!! $item->note !!}</td>
+                                    <td style="text-align:left;">
+                                        @if(!empty($item->image_payment_url))
+                                            <a href="{{url('upload/payments/'.$item->image_payment_url)}}" target="_blank">
+                                                ดาวน์โหลด
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
+
+                                    </td>
                                 </tr>
+                                <?php $status_id = $item->status_id; ?>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <?php
+            $user = auth()->guard('user')->user();
+            $userId = $user->id;
+            ?>
+            @if($order->buyer->id == $userId and $status_id == 7)
+                @include('frontend.order_element.payment')
+            @endif
+            @if($order->userId == $userId)
+                @if($status_id == 1)
+                    @include('frontend.order_element.confirm_sale')
+                @endif
+                @if($status_id == 8)
+                    @include('frontend.order_element.delivery')
+                @endif
+            @endif
+            @include('frontend.order_element.canceled')
         </div>
 
     </div>
 @endsection
+@push('scripts')
+<script>
+    $("#payment_channel").on("change", function () {
+        var payment_channel = $("#payment_channel option:selected").val();
+        if(payment_channel == 'บัญชีธนาคาร'){
+            payment_channel = 1;
+            $.get("<?php echo url('/user/orderdetail/html-payment-channel')?>/"+ payment_channel, function (data) {
+                if (data.r == 'Y') {
+                    if (data.data_html != '') {
+//                        $("#html_payment_channel").html(data.data_html);
+                        $('#note').val(data.data_html);
+                    } else {
+                        //$("#html_payment_channel").html('Error....');
+                    }
+                } else {
+                    //$("#html_payment_channel").html('');
+                }
+            });
+        }else{
+            $("#note").val(payment_channel);
+        }
+    });
+</script>
+@endpush
+
+

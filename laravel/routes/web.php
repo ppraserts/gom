@@ -138,6 +138,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('shoppingcart/checkout/{user_id}/{total}', ['as' => 'shoppingcart.checkout', 'uses' => 'frontend\ShoppingCartController@checkout']);
     Route::post('shoppingcart/checkoutAll', ['as' => 'shoppingcart.checkoutAll', 'uses' => 'frontend\ShoppingCartController@checkoutAll']);
 
+
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
@@ -154,6 +155,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('order','frontend\OrderController@index');
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('orderdetail/html-payment-channel/{id}','frontend\OrderController@getHtmlConfirmSale');
+    Route::post('orderdetail/store-status-history','frontend\OrderController@storeStatusHistory');
 
     //Route::get('userproduct/index','frontend\ProductController@index');
 

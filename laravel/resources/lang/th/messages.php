@@ -138,4 +138,16 @@ return [
     'view_product_all' => 'ดูสินค้าทั้งหมด',
     'retail' => 'ขายปลีก',
     'wholesale' => 'ขายส่ง',
+
+    'text_note' => 'บันทึกเพิ่มเติม',
+    'cancel_list_buy'=>'ยกเลิกรายการสั่งซื้อ',
+    'text_payment_channel' => 'แจ้งช่องทางการชำระเงิน',
+    'text_order_confirmation' => 'แจ้งช่องทางการชำระเงิน',
+    'text_image_delivery' => 'ไฟล์รูปภาพข้อมูลจัดส่งสินค้า',
+    'text_image_payment' => 'ไฟล์แจ้งชำระเงิน',
+    'text_transport' => 'จัดส่ง',
+    'text_transport_product' => 'จัดส่งสินค้า',
+    'text_confirm_payment' => 'ยืนยันการสั่งซื้อ',
+    'text_push_payment' => 'แจ้งชำระเงิน',
+
 ];
