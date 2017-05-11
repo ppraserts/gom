@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
-use DB,Response;
+use DB,Response,Validator;
 use App\Order;
 use App\OrderItem;
 use App\OrderStatusHistory;
 use App\OrderPayment;
 use Illuminate\Http\Request;
+use App\Helpers\DateFuncs;
+
 //use App\Http\Controllers\Controller;
 
 //Boots
@@ -76,7 +78,6 @@ class OrderController extends Systems
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
-
         return view('frontend.shoporder', compact('orderList'))
             ->with($data);
     }
@@ -91,8 +92,7 @@ class OrderController extends Systems
 //        $order->orderItems = OrderItem::with(['product','productRequest'])->where('order_id',$order_id)->get();
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
-        $order->statusHistory = OrderStatusHistory::select('order_status_history.status_text','order_status_history.image_payment_url','order_status_history.note','order_status_history.created_at','order_status_history.status_id')
-            ->where('order_id',$order_id)->get();
+        $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
         /*echo $order;
         exit();*/
 //        $user = auth()->guard('user')->user();
@@ -131,6 +131,9 @@ class OrderController extends Systems
             }
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
+            $order['order_status'] = $status_id;
+            Order::find($order_id)->update($order);
+
             if (!empty($payment_channel) and $payment_channel == 'บัญชีธนาคาร'){
                 //insert status แจ้งช่องทางการชำระเงิน
                 $status_id = 6;
@@ -203,6 +206,9 @@ class OrderController extends Systems
             }
             $orderStatusHistory->save();
 
+            $order['order_status'] = $status_id;
+            Order::find($order_id)->update($order);
+
             $status_id = 8;
             $status_text = 'รอการจัดส่ง';
             $orderStatusHistory = new OrderStatusHistory();
@@ -232,19 +238,28 @@ class OrderController extends Systems
 
             $status_id = 4;
             $status_text = 'จัดส่งแล้ว';
+            $delivery_chanel = $request->input('delivery_chanel');
+            $order_date = DateFuncs::convertYear($request->input('order_date'));
+
             $orderStatusHistory = new OrderStatusHistory();
             $orderStatusHistory->status_id = $status_id;
             $orderStatusHistory->status_text = $status_text;
             $orderStatusHistory->note = $note;
             $orderStatusHistory->order_id = $order_id;
+            $orderStatusHistory->delivery_chanel = $delivery_chanel;
+            $orderStatusHistory->order_date = $order_date;
             if(!empty($image_name)){
                 $orderStatusHistory->image_payment_url = $image_name;
             }
             $orderStatusHistory->save();
+
+            $order['order_status'] = $status_id;
+            Order::find($order_id)->update($order);
             return redirect('user/orderdetail/'.$order_id);
         }
 
         if ($status_current == 5) {
+
             $status_id = 5;
             $status_text = 'ยกเลิกรายการสั่งซื้อ';
             $orderStatusHistory = new OrderStatusHistory();
@@ -253,9 +268,12 @@ class OrderController extends Systems
             $orderStatusHistory->note = $note;
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
+
+            $order['order_status'] = $status_id;
+            Order::find($order_id)->update($order);
+
             return redirect('user/orderdetail/'.$order_id);
         }
-
-
     }
+
 }

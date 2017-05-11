@@ -159,5 +159,7 @@ return [
     'text_transport_product' => 'จัดส่งสินค้า',
     'text_confirm_payment' => 'ยืนยันการสั่งซื้อ',
     'text_push_payment' => 'แจ้งชำระเงิน',
+    'message_validate_delivery_chanel' => 'กรุณากรอกช่องทางการจัดส่ง',
+    'message_validate_delivery_date' => 'กรุณาเลือกวันที่จัดส่ง',
 
 ];
