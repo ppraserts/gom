@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
 use App\Province;
 use DB;
@@ -48,7 +49,7 @@ class UserProfileController extends Controller
       $user->users_lastname_th = $request->input('users_lastname_th');
       $user->users_firstname_en = $request->input('users_firstname_en');
       $user->users_lastname_en = $request->input('users_lastname_en');
-      $user->users_dateofbirth = $request->input('users_dateofbirth');
+      $user->users_dateofbirth = DateFuncs::convertYear($request->input('users_dateofbirth'));
       $user->users_gender = $request->input('users_gender');
       $user->users_qrcode = $request->input('users_qrcode');
     }
