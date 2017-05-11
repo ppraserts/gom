@@ -11,9 +11,12 @@ $pagetitle = trans('message.menu_order_list');
             <h2>{{ trans('messages.order_detail') }}</h2>
             <div class="col-md-4">
                 <div class="row">
+                    <?php
+                      $statusHistory_n = count($order->statusHistory);
+                    ?>
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
                     <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
-                    <p><b>{{ trans('messages.order_status') }} : </b>{{$order->status_name}}</p>
+                    <p><b>{{ trans('messages.order_status') }} : </b>{{$order->statusHistory[$statusHistory_n-1]['status_text']}}</p>
                     <p><b>{{ trans('messages.order_type') }} : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}</p>
                     <h4><b>{{ trans('messages.total_order') }}
                             : </b>{{$order->total_amount}}  {{trans('messages.baht')}}
@@ -112,7 +115,34 @@ $pagetitle = trans('message.menu_order_list');
                                 <tr>
                                     <td style="text-align:center;">{{ $item->created_at}}</td>
                                     <td style="text-align:center;">{{ $item->status_text}}</td>
-                                    <td style="text-align:left; max-width: 400px;">{!! $item->note !!}</td>
+                                    <td style="text-align:left; max-width: 400px;">
+                                        @if($item->status_id == 4)
+                                            ช่องทางการจัดส่ง : {{$item->delivery_chanel}}<br/>
+                                            วันที่จัดส่ง :{{$item->order_date}} <br/>
+                                            {!! $item->note !!}
+                                        @endif
+                                        <?php
+                                        if($item->status_id == 6){
+                                            $arr = explode("\n",$item->note);
+                                            if (sizeof($arr)) {
+                                                $countArr = count($arr);
+                                                $count_i = 1;
+                                                $br ='';
+                                                foreach ($arr as $ele) {
+                                                    $ele = trim($ele);
+                                                    if($count_i == $countArr){
+                                                        echo $ele;
+                                                    }else{
+                                                        echo $ele.'<br/>';
+                                                    }
+                                                    $count_i++;
+                                                }
+                                            }
+                                        }else if($item->status_id !=4 and $item->status_id != 6){
+                                        ?>
+                                        {!! $item->note !!}
+                                        <?php }?>
+                                    </td>
                                     <td style="text-align:left;">
                                         @if(!empty($item->image_payment_url))
                                             <a href="{{url('upload/payments/'.$item->image_payment_url)}}" target="_blank">
@@ -173,6 +203,61 @@ $pagetitle = trans('message.menu_order_list');
             $("#note").val(payment_channel);
         }
     });
+
+    $('#pick_start_date').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'th-th',
+        autoclose: true,
+        toggleActive: false,
+        todayHighlight: false,
+        todayBtn: false,
+        startView: 2,
+        maxViewMode: 2
+    });
+    $('#pick_end_date').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'th-th',
+        autoclose: true,
+        toggleActive: false,
+        todayHighlight: false,
+        todayBtn: false,
+        startView: 2,
+        maxViewMode: 2
+    });
+
+    initialViews();
+
+    function initialViews() {
+
+        //Selling Period
+        var selling_period = '{{$item->selling_period}}';
+        if (selling_period == 'year') {
+            $('.div_selling_period_date').hide();
+        } else {
+            $("input[type=radio][name=selling_period]:first").attr('checked', true);
+        }
+    }
+
+    $(document).ready(function() {
+        $("#delivery_form").submit(function (e) {
+            var delivery_chanel = $("#delivery_chanel").val();
+            var order_date = $("#order_date").val();
+
+            if (delivery_chanel == '') {
+                $("#delivery_chanel").focus();
+                $("#mss_delivery_chanel").html("<?php echo trans('messages.message_validate_delivery_chanel')?>");
+                return false;
+            }
+            if (order_date == '') {
+                $("#order_date").focus();
+                $("#mss_order_date").html("<?php echo trans('messages.message_validate_delivery_date')?>");
+                return false;
+            }
+
+
+        })
+    });
+
 </script>
 @endpush
 
