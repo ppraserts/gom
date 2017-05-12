@@ -18,7 +18,7 @@ class PromotionsController extends Controller
         'promotion_title' => 'required',
         'promotion_description' => 'required',
         'start_date' => 'required',
-        'image_file' => 'required',
+        'image_file' => 'mimes:jpeg,jpg,png,gif|max:500',
         'end_date' => 'required|after:start_date',
         'sequence' => 'required|integer',
     ];
@@ -27,6 +27,7 @@ class PromotionsController extends Controller
         'promotion_title' => 'required',
         'promotion_description' => 'required',
         'start_date' => 'required',
+        'image_file' => 'mimes:jpeg,jpg,png,gif|max:500',
         'end_date' => 'required|after:start_date',
         'sequence' => 'required|integer',
     ];

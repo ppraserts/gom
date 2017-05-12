@@ -62,7 +62,8 @@ body {
   padding-top: 115px; }
 
 .promotion-item {
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  height: 100px;}
 
 .img-promotion {
   margin: 0 auto; }
