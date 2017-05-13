@@ -13,6 +13,7 @@
     <!-- Bootstrap -->
     <link href="{{asset('/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('/assets/theme/css/theme1_style.css')}}" rel="stylesheet">
+    <link href="{{asset('/assets/theme/css/base_theme.css')}}" rel="stylesheet">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -25,12 +26,10 @@
 
 <?php
 
-$shop_name = $shop->shop_name;
-
 if ($shop != null && isset($shop->image_file_1)) {
     $image_header = $shop->image_file_1;
 } else {
-    $image_header = $shop_name . '/assets/theme/images/header-1.jpg)';
+    $image_header = $shop->shop_name . '/assets/theme/images/header-1.jpg)';
 }
 ?>
 
@@ -47,33 +46,7 @@ if ($shop != null && isset($shop->image_file_1)) {
         </div>
     </div>
 </header>
-@if(count($promotions) > 0 )
-    <section class="promotions">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="row">
-                        @foreach($promotions as $promotion)
-                            <div class="col-md-4">
-                                <div class="promotion-item">
-                                    <a href="{{url($shop_name."/promotion/".$promotion->id)}}" title="{{$promotion->promotion_title}}">
-                                        @if(isset($promotion->image_file))
-                                            <img class="img-promotion img-responsive" src="{{url( $promotion->image_file)}}">
-                                            <p style="padding-top: 10px;">
-                                                <?php $p =''; if(strlen($promotion->promotion_title) > 48){ $p = '...'; }?>
-                                                {{ iconv_substr(strip_tags($promotion->promotion_title), 0, 48, "UTF-8").$p}}
-                                            </p>
-                                        @endif
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-@endif
+@yield('promotion')
 
 <section class="products">
     <div class="container">
