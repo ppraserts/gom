@@ -161,7 +161,7 @@ return [
     'text_push_payment' => 'แจ้งชำระเงิน',
     'message_validate_delivery_chanel' => 'กรุณากรอกช่องทางการจัดส่ง',
     'message_validate_delivery_date' => 'กรุณาเลือกวันที่จัดส่ง',
-    'promotion_image_size' => 'ขนาดรูปที่ควรใช้ 745 x 92 pixel'
+    'promotion_image_size' => 'ขนาดรูปที่ควรใช้ 745 x 92 pixel',
 
     'title_delivery_product' => 'ข้อมูลจัดส่งสินค้า',
     'text_delivery_channel' => 'ช่องทางการจัดส่ง',
