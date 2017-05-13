@@ -162,4 +162,8 @@ return [
     'message_validate_delivery_chanel' => 'กรุณากรอกช่องทางการจัดส่ง',
     'message_validate_delivery_date' => 'กรุณาเลือกวันที่จัดส่ง',
 
+    'title_delivery_product' => 'ข้อมูลจัดส่งสินค้า',
+    'text_delivery_channel' => 'ช่องทางการจัดส่ง',
+    'text_address_delivery' => 'ที่อยู่จัดส่งสินค้า',
+    'title_receiving_address' => 'ข้อมูลการรับสินค้า',
 ];

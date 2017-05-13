@@ -68,6 +68,15 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
+                    <h3>{{trans('messages.title_receiving_address')}}</h3>
+                        <b>{{trans('messages.text_delivery_channel')}} : </b>{{$order->delivery_chanel}}
+                    @if(!empty($order->address_delivery))
+                        <br/><b>{{trans('messages.text_address_delivery')}} : </b>{{$order->address_delivery}}
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
                     <h3>{{ trans('messages.product_list') }}</h3>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover">

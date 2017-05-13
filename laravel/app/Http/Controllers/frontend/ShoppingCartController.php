@@ -33,13 +33,15 @@ class ShoppingCartController extends Controller
     {
     }
 
-    public function checkout($user_id, $total)
+    public function checkout(Request $request,$user_id, $total)
     {
         $current_user = auth()->guard('user')->user();
         if ($user_id != null && $total != null) {
+            $delivery_chanel =  $request->input('delivery_chanel');
+            $address_delivery =  $request->input('address_delivery');
             $carts_in_session = session('carts');
             if (is_array($carts_in_session)) {
-                $this->saveOrder($carts_in_session , $user_id , $current_user , $total);
+                $this->saveOrder($carts_in_session , $user_id , $current_user , $total,$delivery_chanel,$address_delivery);
             }
         }
         $this->deleteCartItemInSessionByUserId($user_id);
@@ -48,12 +50,35 @@ class ShoppingCartController extends Controller
 
     public function checkoutAll(Request $request)
     {
+        $delivery_chanel =  $request->input('delivery_chanel');
+        $address_delivery =  $request->input('address_delivery');
+        $i_address = 0;
+        $count_address = count($address_delivery);
+        $dataArr = array();
+        foreach ($delivery_chanel as $var){
+            //return $var;
+            if($var == 'รับเอง'){
+                $address_delivery_new = '';
+                if($i_address == 0){
+
+                }else{
+                    $i_address--;
+                }
+            }else{
+                $address_delivery_new = $address_delivery[$i_address];
+                $i_address++;
+            }
+            $arr[] = array($var,$address_delivery_new);
+            //array_push($dataArr,$arr);
+
+        }
+        //return $arr[1][0];
         $current_user = auth()->guard('user')->user();
         $carts_in_session = session('carts');
         if (is_array($carts_in_session)) {
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
             $shopping_carts = $this->summarizeDataShoppingCarts($arr_summary_quantities);
-
+            $countArr = 0;
             foreach ($shopping_carts as $key => $carts){
                 $total = 0;
                 foreach ($arr_summary_quantities as $key_total=>$item){
@@ -61,7 +86,8 @@ class ShoppingCartController extends Controller
                         $total+= intval($item['qty']) * floatval($item['unit_price']);
                     }
                 }
-                $this->saveOrder($carts , $key , $current_user , $total);
+                $this->saveOrder($carts , $key , $current_user , $total, $arr[$countArr][0], $arr[$countArr][1]);
+                $countArr++;
             }
         }
 
@@ -186,7 +212,7 @@ class ShoppingCartController extends Controller
         return $arr_more_data;
     }
 
-    private function saveOrder($arr_carts, $user_id, $current_user, $total)
+    private function saveOrder($arr_carts, $user_id, $current_user, $total,$delivery_chanel, $address_delivery ='')
     {
         if (is_array($arr_carts)) {
             $order = new Order();
@@ -197,6 +223,8 @@ class ShoppingCartController extends Controller
             $order->order_type = "retail";
 //            $order->order_type = "ขายปลีก";
             $order->order_date = date('Y-m-d H:i:s');
+            $order->delivery_chanel = $delivery_chanel;
+            $order->address_delivery = $address_delivery;
             $order->save();
 
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($arr_carts);

@@ -41,11 +41,45 @@
 
         @php
             $total_net = 0;
+
+            $user = auth()->guard('user')->user();
+            $userId = $user->id;
+            $user_address = DB::table('users')->where('id' , $userId)->first();
+            $users_addressname = '-';
+            if(!empty($user_address->users_addressname)){ $users_addressname = $user_address->users_addressname; }
+            $users_street = '-';
+            if(!empty($user_address->users_street)){ $users_street = $user_address->users_street; }
+            $users_district = '-';
+            if(!empty($user_address->users_district)){ $users_district = $user_address->users_district; }
+            $users_city = '-';
+            if(!empty($user_address->users_city)){ $users_city = $user_address->users_city; }
+            $users_province = '-';
+            if(!empty($user_address->users_province)){ $users_province = $user_address->users_province; }
+            $users_postcode = '-';
+            if(!empty($user_address->users_postcode)){ $users_postcode = $user_address->users_postcode; }
+            $address = 'บ้านเลขที่: '.$users_addressname.' ถนน: '.$users_street.' ตำบล: '.$users_district.' อำเภอ: '.$users_city.' จังหวัด: '.$users_province.' ไปรษณีย์: '.$users_postcode;
         @endphp
-
+        <input type="hidden" id="count_key" value="{{count($shopping_carts)}}">
         @foreach($shopping_carts as $key => $carts)
-
             <div class="row" style="background-color: white">
+                <div class="col-sm-12 col-md-12">
+                    <h3>{{ trans('messages.title_delivery_product') }}</h3>
+                        <div class="form-group ">
+                            <strong> * {{ trans('messages.text_delivery_channel') }} :</strong>
+                            <select id="delivery_chanel_{{$key}}" class="form-control" name="delivery_chanel[]" onchange="hsHtml('{{$key}}')" id="payment_channel" style="margin-bottom: 5px;">
+                                <option value="จัดส่งตามที่อยู่">จัดส่งตามที่อยู่</option>
+                                <option value="รับเอง">รับเอง</option>
+                            </select>
+                            <span id="mss_delivery_chanel_{{$key}}" class="alert-danger"></span>
+                            <textarea id="hd_address_delivery_{{$key}}" style="display: none">{{$address}}</textarea>
+                        </div>
+                        <div class="form-group" id="hidden_{{$key}}">
+                            <strong> * {{ trans('messages.text_address_delivery') }} :</strong>
+                            <textarea name="address_delivery[]" id="address_delivery_{{$key}}" class="form-control" style="margin-bottom: 5px;">{{$address}}</textarea>
+                            <span id="mss_address_delivery_{{$key}}" class="alert-danger"></span>
+                        </div>
+
+                </div>
                 <div class="col-sm-12 col-md-12">
                     @php
                         $user = DB::table('users')->where('id' , $key)->first();
@@ -137,10 +171,14 @@
                             <td>&nbsp;&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
-                                <a href="{{route('shoppingcart.checkout' , array('user_id'=> $key , 'total'=> $total )  )}}"
-                                   class="btn btn-primary"><i class="glyphicon glyphicon-shopping-cart"></i>
+                                {{--<a href="{{route('shoppingcart.checkout' , array('user_id'=> $key , 'total'=> $total )  )}}"--}}
+                                   {{--class="btn btn-primary"><i class="glyphicon glyphicon-shopping-cart"></i>--}}
+                                    {{--{{ trans('messages.process_order') }} </span>--}}
+                                {{--</a>--}}
+                                <button type="button" class="btn btn-primary" onClick="ctrlOrder({{$key}},{{$total}})">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
                                     {{ trans('messages.process_order') }} </span>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -175,6 +213,53 @@
             $('.alert-success').hide();
         }, 2000);
     }
+
+    $(document).ready(function() {
+        var key = $('#count_key').val();
+        //alert(key);
+//        $("p").click(function(){
+//            alert("The paragraph was clicked.");
+//        });
+    });
+
+    function ctrlOrder(key, total) {
+        if(key != ''){
+            var delivery_chanel = $('#delivery_chanel_'+key+' option:selected').val()
+            var address_delivery = $('#address_delivery_'+key).val();
+
+            if(delivery_chanel == ''){
+                $('#delivery_chanel_'+key).focus();
+                $("#mss_delivery_chanel_"+key).html("<?php echo trans('messages.message_validate_delivery_date')?>");
+                return false;
+            }
+            if(address_delivery == ''){
+                $('#address_delivery_'+key).focus();
+                $("#mss_address_delivery_"+key).html("กรุณาระบุที่อยู่จัดส่ง");
+                return false;
+            }
+            var url = "<?php echo url('user/shoppingcart/checkout/')?>/"+key+"/"+total+"?delivery_chanel="+delivery_chanel+"&address_delivery="+address_delivery;
+            window.location.href = url;
+        }
+    }
+
+    function hsHtml(key) {
+        var delivery_chanel = $('#delivery_chanel_'+key+' option:selected').val();
+        var address_delivery = $('textarea#address_delivery_'+key).val();
+        var hd_address_delivery = $('#hd_address_delivery_'+key).val();
+
+        if(delivery_chanel == 'รับเอง'){
+            $('#hidden_'+key).empty();
+        }else{
+            var html_address = '<strong> * ระบุสถานที่จัดส่ง :</strong><textarea name="address_delivery[]" id="address_delivery_'+key+'" class="form-control" style="margin-bottom: 5px;">'+hd_address_delivery+'</textarea><span id="mss_address_delivery_'+key+'" class="alert-danger"></span>';
+            $('#hidden_'+key).html(html_address);
+        }
+        return false;
+
+    }
+
+
+
+
 
 </script>
 @endpush
