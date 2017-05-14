@@ -203,11 +203,11 @@ return [
         'news_document_file'=> 'ไฟล์เอกสาร',
         'product_title'=> 'ยี่ห้อ',
         'product_description'=> 'รายละเอียดสินค้า',
-        'guarantee'=> 'มาตรฐานสินค้า(เพิ่มเติม)',
+        'guarantee'=> 'มาตรฐานสินค้า',
         'price'=> 'ราคาต่อหน่วย(บาท)',
         'discount'=> 'ส่วนลด(บาท)',
         'is_showprice'=> 'แสดงราคา',
-        'volumn'=> 'ปริมาณ',
+        'volumn'=> 'ปริมาณทั้งหมด',
         'product1_file'=> 'รูปภาพสินค้า 1',
         'product2_file'=> 'รูปภาพสินค้า 2',
         'product3_file'=> 'รูปภาพสินค้า 3',
@@ -219,6 +219,7 @@ return [
         'units'=> 'หน่วยนับ',
         'city'=> 'อำเภอ',
         'province'=> 'จังหวัด',
+        'production_province'=> 'พื้นที่ผลิต',
         'productcategorys_id'=> 'กลุ่มสินค้า',
         'products_id'=> 'สินค้า',
         'users_id'=> 'ผู้ใช้งาน',
@@ -236,9 +237,9 @@ return [
         'product_grade' => 'เกรด',
         'product_province_source' => 'แหล่งผลิด(จังหวัด)',
         'selling_period' => 'ช่วงเวลาจำหน่าย',
-        'product_province_selling' => 'สถานที่จำหน่าย(จังหวัด)',
+        'product_province_selling' => 'พื้นที่จำหน่าย',
         'product_selling_start_date' => 'วันเริ่มต้นจำหน่าย',
-        'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
+        'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย'
     ],
 
 ];

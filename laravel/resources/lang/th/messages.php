@@ -175,5 +175,12 @@ return [
     'choose_image' => 'เลือกภาพเอง',
     'color_black' => 'สีดำ',
     'color_gray' => 'สีเทา',
-    'color_white' => 'สีขาว'
+    'color_white' => 'สีขาว',
+    'product_info' => 'ข้อมูลสินค้า',
+    'other_text' => 'อื่นๆ ระบุ',
+    'product_sale_info' => 'ข้อมูลการจัดจำหน่าย',
+    'open_sale' => 'เปิดการจำหน่าย',
+    'close_sale' => 'ปิดการจำหน่าย',
+    'sold_out' => 'สินค้าหมด',
+
 ];

@@ -29,8 +29,6 @@ class ProductsSaleEditController extends Controller
         'price' => 'required|numeric',
         'volumn' => 'required|numeric',
         'units' => 'required',
-        'city' => 'required',
-        'province' => 'required',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -46,8 +44,6 @@ class ProductsSaleEditController extends Controller
         'volumnrange_start' => 'required|numeric',
         'volumnrange_end' => 'required|numeric',
         'units' => 'required',
-        'city' => 'required',
-        'province' => 'required',
     ];
 
     private $rules3 = [
@@ -145,9 +141,9 @@ class ProductsSaleEditController extends Controller
         if ($id == 0)
             $this->validate($request, $this->rules);
         else{
-            if($request->is_packing != null && $request->is_packing == 1){
+            /*if($request->is_packing != null && $request->is_packing == 1){
 
-            }
+            }*/
             $this->validate($request, $this->rules3);
         }
 
@@ -173,17 +169,17 @@ class ProductsSaleEditController extends Controller
         $productRequest->product_title = $request->product_title;
         $productRequest->product_description = $request->product_description;
         $productRequest->price = $request->price;
-        $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
+//        $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
         $productRequest->volumn = $request->volumn;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->units = $request->units;
-        $productRequest->city = $request->city;
+//        $productRequest->city = $request->city;
         $productRequest->province = $request->province;
         $productRequest->productcategorys_id = $request->productcategorys_id;
         $productRequest->products_id = $request->products_id;
         $productRequest->users_id = $useritem->id;
         $productRequest->grade = $request->grade;
-        $productRequest->is_packing = $request->is_packing;
+//        $productRequest->is_packing = $request->is_packing;
         $productRequest->packing_size = $request->packing_size;
         $productRequest->province_selling = $request->province_selling;
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
@@ -192,6 +188,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->selling_type = $request->selling_type;
 
         $arr_checked_product_standards = Input::get('product_standard');
+        $productRequest->product_other_standard = $request->product_other_standard;
 
         if ($id == 0) {
             $productRequest->save();
