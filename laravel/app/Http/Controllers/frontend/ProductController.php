@@ -20,7 +20,7 @@ class ProductController extends Controller
     private $rules = [
         'productcategory_id' => 'required',
         'product_name_th' => 'required',
-        'product_name_en' => 'required',
+        //'product_name_en' => 'required',
         'sequence' => 'required|integer',
     ];
 
@@ -63,12 +63,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), $this->rules)->validate();
-
         /** เช็คชื่อสินค้าว่ามีอยู่แล้วหรือไม่ */
         if (Product::where('product_name_th', '=', $request->product_name_th)->get()->count() > 0) {
-            return redirect()->route('userproduct.index')->withErrors(sprintf(Lang::get('messages.product_exist'), $request->product_name_th));
+            return redirect()->route('userproduct.index')
+                ->withErrors(sprintf(Lang::get('messages.product_exist'), $request->product_name_th));
         }
-        Product::create($request->all());
+        $data = $request->all();
+        if(empty($data['product_name_en'])){
+            $data['product_name_en'] = $data['product_name_th'];
+        }
+        Product::create($data);
         return redirect()->route('userproduct.index')
             ->with('success', trans('messages.message_create_success'));
     }
