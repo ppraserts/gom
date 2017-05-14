@@ -16,7 +16,8 @@ class Shop extends Model
                         'image_file_1',
                         'image_file_2',
                         'image_file_3',
-                        'theme'
+                        'theme',
+                        'text_color'
                     ];
 
     public function user()

@@ -29,7 +29,7 @@ class ProductController extends Controller
 
         $user = auth()->guard('user')->user();
 
-        $items = Product::with(['productCategory', 'productOrderItem','productRequest'])->Where('user_id', $user->id)->Where(function ($query) {
+        $items = Product::with(['productCategory','productRequest'])->Where('user_id', $user->id)->Where(function ($query) {
             $search = \Request::get('search');
             $query->where('product_name_th', 'like', '%' . $search . '%')
                 ->orWhere('product_name_en', 'like', '%' . $search . '%');

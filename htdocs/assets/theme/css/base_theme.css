@@ -1,5 +1,3 @@
-
-
 .promotions {
 }
 
@@ -8,6 +6,7 @@
     text-align: center; /* ensures the image is always in the h-middle */
     overflow: hidden;
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .img-promotion {

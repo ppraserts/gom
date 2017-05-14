@@ -97,7 +97,7 @@ if ($mode == "create") {
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('image_file') ? 'has-error' : '' }}">
                     <strong>* {{ trans('validation.attributes.promotion_image') }}:</strong>
-                    <p>{{trans('messages.promotion_image_size')}} </p>
+                    <p style="color: #ff2222">{{trans('messages.image_size')}} 745 x 92 pixel และ {{trans('messages.image_file_size_limit')}} 500 KB</p>
                     {!! Form::file('image_file', null, array('placeholder' => trans('validation.attributes.promotion_image'),'class' => 'form-control')) !!}
 
                     @if(isset($item->image_file))

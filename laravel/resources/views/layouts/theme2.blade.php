@@ -42,9 +42,9 @@ if ($shop != null && isset($shop->image_file_2)) {
         <div class="headline">
             <div class="container">
                 <div class="headline-detail">
-                    <h2>{{$shop->shop_subtitle}}</h2>
-                    <h1>{{$shop->shop_title}}</h1>
-                    <p>{{$shop->shop_description}}</p>
+                    <h2 style="color: {{ $shop->text_color }};">{{$shop->shop_subtitle}}</h2>
+                    <h1 style="color: {{ $shop->text_color }};">{{$shop->shop_title}}</h1>
+                    <p style="color: {{ $shop->text_color }};">{{$shop->shop_description}}</p>
                 </div>
             </div>
         </div>
@@ -79,11 +79,11 @@ if ($shop != null && isset($shop->image_file_2)) {
             <div class="col-lg-8">
                 <div class="contact-map">
                     <iframe width="100%" height="326px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                            src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=13.852896,100.574899&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"
+                            src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"
                     "></iframe>
                     <br/>
                     <small>
-                        <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=13.852896,100.574899&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
+                        <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
                     </small>
                 </div>
             </div>

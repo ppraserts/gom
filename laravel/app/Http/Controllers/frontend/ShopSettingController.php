@@ -57,20 +57,30 @@ class ShopSettingController extends Controller
         $shop->shop_title = $request->input('shop_title');
         $shop->shop_subtitle = $request->input('shop_subtitle');
         $shop->shop_description = $request->input('shop_description');
+        $shop->text_color = $request->input('text_color');
 
-        if ($image_file_1 = $request->file('image_file_1')) {
+        if ($request->input('image_file_1_type') == 0){
+            $this->RemoveFolderImage($shop->image_file_1);
+            $shop->image_file_1 = "";
+        }else if ($image_file_1 = $request->file('image_file_1')) {
             $this->RemoveFolderImage($shop->image_file_1);
             $uploadImage1 = $this->UploadImage($request, 'image_file_1');
             $shop->image_file_1 = $uploadImage1["image_path_filename"];
         }
 
-        if ($image_file_2 = $request->file('image_file_2')) {
+        if ($request->input('image_file_2_type') == 0){
+            $this->RemoveFolderImage($shop->image_file_2);
+            $shop->image_file_2 = "";
+        }else if ($image_file_2 = $request->file('image_file_2')) {
             $uploadImage2 = $this->UploadImage($request, 'image_file_2');
             $this->RemoveFolderImage($shop->image_file_2);
             $shop->image_file_2 = $uploadImage2["image_path_filename"];
         }
 
-        if ($image_file_3 = $request->file('image_file_3')) {
+        if ($request->input('image_file_3_type') == 0){
+            $this->RemoveFolderImage($shop->image_file_3);
+            $shop->image_file_3 = "";
+        }else if ($image_file_3 = $request->file('image_file_3')) {
             $uploadImage3 = $this->UploadImage($request, 'image_file_3');
             $this->RemoveFolderImage($shop->image_file_3);
             $shop->image_file_3 = $uploadImage3["image_path_filename"];

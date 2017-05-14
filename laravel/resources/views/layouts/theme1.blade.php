@@ -34,22 +34,14 @@ if ($shop != null && isset($shop->image_file_1)) {
 ?>
 
 
-<header class="header header-image header-theme-one"
-        style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
-    <div class="text-vertical-center">
-        <div class="headline">
-            <div class="container">
-                <h2>{{$shop->shop_subtitle}}</h2>
-                <h1>{{$shop->shop_title}}</h1>
-                <p>{{$shop->shop_description}}</p>
-            </div>
-        </div>
-    </div>
-</header>
-@yield('promotion')
+<div class="container">
+    <header class="header header-image header-theme-one"
+            style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
+        @yield('header')
+    </header>
+    @yield('promotion')
 
-<section class="products">
-    <div class="container">
+    <section class="products">
         <div class="row text-center">
             <div class="col-lg-12">
                 <h2>{{ trans('messages.shop_product') }}</h2>
@@ -58,56 +50,55 @@ if ($shop != null && isset($shop->image_file_1)) {
                 @yield('product')
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="contact">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <h2>{{ trans('messages.menu_contactusinfo') }}</h2>
-                <hr class="small">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="contact-map">
-                    <iframe width="100%" height="326px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                            src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=13.852896,100.574899&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
-                    <br/>
-                    <small>
-                        <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=13.852896,100.574899&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
-                    </small>
+    <section class="contact">
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <h2>{{ trans('messages.menu_contactusinfo') }}</h2>
+                    <hr class="small">
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="contact-detail">
-                    <h3>{{ trans('messages.menu_contactusinfo') }}</h3>
-                    <p><strong>{{ $shop->user->users_firstname_th. " ". $shop->user->users_lastname_th}}</strong></p>
-                    <p>{{$shop->user->users_addressname . " " . $shop->user->users_street}}</p>
-                    <p>{{$shop->user->users_district . " " . $shop->user->users_city}}</p>
-                    <p>{{$shop->user->users_province. " ".$shop->user->users_postcode}} </p>
-                    @if(isset($shop->user->users_mobilephone))<p><a
-                                href="tel:{{$shop->user->users_mobilephone}}">{{$shop->user->users_mobilephone}}</a>
-                    </p>@endif
-                    @if(isset($shop->user->users_phone))<p><a
-                                href="tel:{{$shop->user->users_phone}}">{{$shop->user->users_phone}}</a></p>@endif
-                    @if(isset($shop->user->email))<p><a href="mailto:{{$shop->user->email}}">{{$shop->user->email}}</a>
-                    </p>@endif
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="contact-map">
+                        <iframe width="100%" height="326px" frameborder="0" scrolling="no" marginheight="0"
+                                marginwidth="0"
+                                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
+                        <br/>
+                        <small>
+                            <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
+                        </small>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="contact-detail">
+                        <h3>{{ trans('messages.menu_contactusinfo') }}</h3>
+                        <p><strong>{{ $shop->user->users_firstname_th. " ". $shop->user->users_lastname_th}}</strong>
+                        </p>
+                        <p>{{$shop->user->users_addressname . " " . $shop->user->users_street}}</p>
+                        <p>{{$shop->user->users_district . " " . $shop->user->users_city}}</p>
+                        <p>{{$shop->user->users_province. " ".$shop->user->users_postcode}} </p>
+                        @if(isset($shop->user->users_mobilephone))<p><a
+                                    href="tel:{{$shop->user->users_mobilephone}}">{{$shop->user->users_mobilephone}}</a>
+                        </p>@endif
+                        @if(isset($shop->user->users_phone))<p><a
+                                    href="tel:{{$shop->user->users_phone}}">{{$shop->user->users_phone}}</a></p>@endif
+                        @if(isset($shop->user->email))<p><a
+                                    href="mailto:{{$shop->user->email}}">{{$shop->user->email}}</a>
+                        </p>@endif
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 
-<section class="comments">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12"></div>
-        </div>
-    </div>
-</section>
+    </section>
 
+    <section class="comments">
+            <div class="row">
+                <div class="col-lg-12"></div>
+            </div>
+    </section>
+</div>
 </body>
 
 </html>

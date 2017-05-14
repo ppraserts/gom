@@ -97,7 +97,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                                 <?php
                                 $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->product_question_th]);
                                 ?>
-                                @if(count($item->productOrderItem) == 0 && $item->user_id == $user_id && count($item->productRequest) == 0)
+                                @if($item->user_id == $user_id && count($item->productRequest) == 0)
                                 {!! Form::open(['method' => 'DELETE','route' => ['userproduct.destroy', $item->id],'style'=>'display:inline']) !!}
                                 <button onclick="return confirm('{{$confirmdelete}}');"
                                         class="btn btn-danger" type="submit">
