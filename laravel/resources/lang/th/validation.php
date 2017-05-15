@@ -215,6 +215,7 @@ return [
         'pricerange_start'=> 'ราคาเริ่มต้น',
         'pricerange_end'=> 'ราคาสิ้นสุด',
         'volumnrange_start'=> 'ปริมาณเริ่มต้น',
+        'volumnrange_product_need'=> 'บริมาณสินค้าที่ต้องการ',
         'volumnrange_end'=> 'ปริมาณสิ้นสุด',
         'units'=> 'หน่วยนับ',
         'city'=> 'อำเภอ',

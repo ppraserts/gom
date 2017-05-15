@@ -171,4 +171,5 @@ return [
     'text_delivery_channel' => 'ช่องทางการจัดส่ง',
     'text_address_delivery' => 'ที่อยู่จัดส่งสินค้า',
     'title_receiving_address' => 'ข้อมูลการรับสินค้า',
+    'text_product_province' => 'สินค้าจากจังหวัด',
 ];

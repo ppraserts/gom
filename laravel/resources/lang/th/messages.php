@@ -175,5 +175,9 @@ return [
     'choose_image' => 'เลือกภาพเอง',
     'color_black' => 'สีดำ',
     'color_gray' => 'สีเทา',
-    'color_white' => 'สีขาว'
+    'color_white' => 'สีขาว',
+    'text_product_province' => 'สินค้าจากจังหวัด',
+    'text_specify' => 'ระบุ',
+    'text_grade' => 'เกรด',
+    'text_grade' => 'บริมาณสินค้าที่ต้องการ',
 ];

@@ -18,6 +18,8 @@ use App\Amphur;
 use App\Province;
 use App\District;
 use App\Product;
+use App\Standard;
+use Illuminate\Support\Facades\Input;
 
 class ProductsBuyEditController extends Controller
 {
@@ -43,11 +45,11 @@ class ProductsBuyEditController extends Controller
         //'product_description' => 'required',
         'pricerange_start' => 'required|numeric',
         'pricerange_end' => 'required|numeric',
-        'volumnrange_start' => 'required|numeric',
-        'volumnrange_end' => 'required|numeric',
-        'units' => 'required',
-        'city' => 'required',
-        'province' => 'required',
+        //'volumnrange_start' => 'required|numeric',
+        //'volumnrange_end' => 'required|numeric',
+        //'units' => 'required',
+        //'city' => 'required',
+        //'province' => 'required',
     ];
 
     private $rules3 = [
@@ -99,9 +101,20 @@ class ProductsBuyEditController extends Controller
         $unitsItem = Units::orderBy('sequence', 'ASC')
             ->get();
 
-        return view('frontend.productbuyedit', compact('item', 'useritem', 'productCategoryitem', 'unitsItem', 'provinceItem', 'product_name'));
+        $standards = Standard::all();
+        $grades = config('constants.grades');
+        for($i = 0;$i < $standards->count();$i++){
+            $standards[$i]->checked = false;
+            foreach ($item->standards as $standard){
+                if ($standards[$i]->id == $standard->id){
+                    $standards[$i]->checked = true;
+                }
+            }
+        }
+        //return $standards;
+        return view('frontend.productbuyedit', compact('item', 'useritem', 'productCategoryitem',
+            'unitsItem', 'provinceItem', 'product_name','standards','grades'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -114,29 +127,47 @@ class ProductsBuyEditController extends Controller
             $productRequest = ProductRequest::find($id);
         }
 
-
         $this->validate($request, $this->rules2);
-        $productRequest->iwantto = $useritem->iwanttobuy;
-        $productRequest->product_title = $request->product_title;
-        $productRequest->product_description = $request->product_description;
-        $productRequest->productstatus = $request->productstatus;
-        $productRequest->productstatus = "open";
+
+        $productRequest->productcategorys_id = $request->productcategorys_id; //
+        $productRequest->products_id = $request->products_id;
+        $arr_checked_product_standards = Input::get('product_standard');
+        if(!empty($request->product_other_standard)){
+            $productRequest->product_other_standard = $request->product_other_standard;
+        }
+        $productRequest->packing_size = $request->packing_size;
+        $productRequest->units = $request->units;
+        $productRequest->grade = $request->grade;
         $productRequest->pricerange_start = $request->pricerange_start;
         $productRequest->pricerange_end = $request->pricerange_end;
         $productRequest->volumnrange_start = $request->volumnrange_start;
-        $productRequest->volumnrange_end = $request->volumnrange_end;
-        $productRequest->units = $request->units;
-        $productRequest->city = $request->city;
         $productRequest->province = $request->province;
-        $productRequest->productcategorys_id = $request->productcategorys_id;
-        $productRequest->products_id = $request->products_id;
+        $productRequest->product_description = $request->product_description;
+
+        $productRequest->iwantto = $useritem->iwanttobuy;
+        $productRequest->productstatus = $request->productstatus;
+        $productRequest->productstatus = "open";
         $productRequest->users_id = $useritem->id;
         $productRequest->selling_type = $request->selling_type;
 
+        //return $productRequest;
+
         if ($id == 0) {
             $productRequest->save();
+            //Save to product_request_standard :: many to many relationship
+            if(is_array($arr_checked_product_standards)){
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
             $id = $productRequest->id;
         } else {
+            if(is_array($arr_checked_product_standards)){
+                $productRequest->standards()->detach();
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
             $productRequest->update();
         }
 
