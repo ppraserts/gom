@@ -54,7 +54,6 @@ class ProductsSaleEditController extends Controller
         'price' => 'required|numeric',
         'volumn' => 'required|numeric',
         'units' => 'required',
-        'city' => 'required',
         'province' => 'required',
         'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -125,10 +124,9 @@ class ProductsSaleEditController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function updatesale(Request $request)
     {
-
-
+        $id = $request->id;
         $useritem = auth()->guard('user')->user();
 
         if ($id == 0) {
@@ -137,7 +135,6 @@ class ProductsSaleEditController extends Controller
         } else {
             $productRequest = ProductRequest::find($id);
         }
-
         if ($id == 0)
             $this->validate($request, $this->rules);
         else{
@@ -157,13 +154,18 @@ class ProductsSaleEditController extends Controller
             $uploadImage2 = $this->UploadImage($request, 'product2_file');
             $this->RemoveFolderImage($productRequest->product2_file);
             $productRequest->product2_file = $uploadImage2["imageName"];
+        }else if ($request->product2_file == "" && $productRequest->product2_file !=""){
+            $this->RemoveFolderImage($productRequest->product2_file);
+            $productRequest->product2_file = "";
         }
         if ($request->product3_file != "") {
             $uploadImage3 = $this->UploadImage($request, 'product3_file');
             $this->RemoveFolderImage($productRequest->product3_file);
             $productRequest->product3_file = $uploadImage3["imageName"];
+        }else if ($request->product3_file == "" && $productRequest->product3_file !=""){
+            $this->RemoveFolderImage($productRequest->product3_file);
+            $productRequest->product3_file = "";
         }
-
 
         $productRequest->iwantto = $useritem->iwanttosale;
         $productRequest->product_title = $request->product_title;

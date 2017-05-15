@@ -125,6 +125,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('iwanttosale','frontend\IwanttoSaleController');
     Route::resource('matchings','frontend\MatchingController');
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
+    Route::post('productsaleupdate','frontend\ProductsSaleEditController@updatesale');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
     //Shop

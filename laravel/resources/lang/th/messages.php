@@ -188,4 +188,9 @@ return [
     'text_specify' => 'ระบุ',
     'text_grade' => 'เกรด',
     'text_grade' => 'บริมาณสินค้าที่ต้องการ',
+    'add_sale' => 'เพิ่มรายการขาย',
+    'edit_sale' => 'แก้ไขรายการขาย',
+    'clone_product' => 'Clone สินค้า',
+    'clone_product_success' => 'Clone สินค้าแล้ว'
+
 ];
