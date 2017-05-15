@@ -29,6 +29,7 @@ return [
     'send_quotation'=> 'ส่งใบเสนอราคา',
     'message_create_success'=> 'ระบบสร้างรายการใหม่สำเร็จ',
     'message_update_success'=> 'ระบบปรับปรุงรายการสำเร็จ',
+    'message_buy_success'=> 'ดำเนินการเสร็จแล้ว',
     'message_delete_success'=> 'ระบบลบรายการสำเร็จ',
     'message_delete_inuse'=> 'ไม่สามารถลบข้อมูลได้ เนื่องจากมีการใช้ข้อมูลในระบบ',
     'message_reset_password_success' => 'การเปลี่ยนแปลงรหัสผ่านสำเร็จ',

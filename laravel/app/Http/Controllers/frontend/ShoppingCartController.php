@@ -9,6 +9,7 @@ use DB;
 use App\OrderStatusHistory;
 use App\ProductRequest;
 use Illuminate\Http\Request;
+use Redirect,Session;
 
 
 class ShoppingCartController extends Controller
@@ -26,6 +27,7 @@ class ShoppingCartController extends Controller
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
             $shopping_carts = $this->summarizeDataShoppingCarts($arr_summary_quantities);
         }
+        //return $shopping_carts;
         return view('frontend.shoppingcart', compact('shopping_carts'));
     }
 
@@ -45,7 +47,11 @@ class ShoppingCartController extends Controller
             }
         }
         $this->deleteCartItemInSessionByUserId($user_id);
-        return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));
+        if(count(session('carts')) > 0){
+            return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));
+        }
+        Session::flash('success', trans('messages.message_buy_success'));
+        return redirect('user/order');
     }
 
     public function checkoutAll(Request $request)
@@ -92,7 +98,9 @@ class ShoppingCartController extends Controller
         }
 
         $this->deleteCartsInSession($request);
-        return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));;
+        //return redirect()->route('shoppingcart.index')->with('success', trans('messages.message_update_success'));
+        Session::flash('success', trans('messages.message_buy_success'));
+        return redirect('user/order');
     }
 
     public function addToCart(Request $request)

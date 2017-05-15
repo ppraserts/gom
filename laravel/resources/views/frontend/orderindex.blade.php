@@ -7,7 +7,13 @@ $pagetitle = trans('message.menu_order_list');
 @section('content')
     @include('shared.usermenu', array('setActive'=>'order'))
     <div class="col-sm-12">
-
+        @if ($message = Session::get('success'))
+            <div class="row">
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <h2>{{ trans('messages.menu_order_list') }}</h2>
             <form action="{{url('user/order')}}" method="GET">

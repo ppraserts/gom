@@ -122,29 +122,47 @@
                                         <div class="media-body">
                                             <h4 class="media-heading"><a href="#">{{$cart['product_request']['product_title']}}</a></h4>
                                             <h5 class="media-heading"><a href="#"></a></h5>
-                                            <span class="text-success">
-                                                        <strong><span class="glyphicon glyphicon-map-marker"></span>
-                                                            {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}</strong>
-                                                    </span>
+                                            <span class="text-success"><strong>
+                                            <span class="glyphicon glyphicon-map-marker"></span>
+                                               {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}
+                                            </span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="col-sm-2 col-md-2">
                                     <div class="input-append text-left">
                                         <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'], 'is_added'=> 0 )) }}"
-                                           class="btn btn-default minus"> <i class="fa fa-minus"></i></a>
+                                           class="btn btn-default minus">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
                                         <input class="text-center product_quantity" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
                                                id="appendedInputButtons" size="16" type="text">
+                                        @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"])
                                         <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'] , 'is_added'=> 1)) }}"
-                                           class="btn btn-default plus"><i class="fa fa-plus"></i></a>
+                                           class="btn btn-default plus">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        @else
+                                            <button class="btn btn-default plus disabled">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        @endif
+                                        {{$cart['product_request']['units']}}
                                     </div>
                                 </td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong>
-                                        <span class="product_price">{{$cart['product_request']['price']}}</span>
-                                    </strong></td>
                                 <td class="col-sm-1 col-md-1 text-center">
-                                    <strong><span
-                                                class="total">{{ number_format (intval($cart["qty"])*floatval($cart['product_request']['price']), 2 ) }}</span></strong>
+                                    <strong>
+                                        <span class="product_price">
+                                            {{$cart['product_request']['price']}}
+                                        </span>
+                                    </strong>
+                                </td>
+                                <td class="col-sm-1 col-md-1 text-center">
+                                    <strong>
+                                        <span class="total">
+                                            {{ number_format (intval($cart["qty"])*floatval($cart['product_request']['price']), 2 ) }}
+                                        </span>
+                                    </strong>
                                 </td>
                                 <td class="col-sm-1 col-md-1">
                                     <div class="text-center">
@@ -162,8 +180,14 @@
                         <tr>
                             <td>&nbsp;</td>
                             <td colspan="2"><h4 class="pull-right">{{ trans('messages.total_order') }}</h4></td>
-                            <td colspan="2" class="text-right"><span
-                                        id="order_total"><h4><strong>{{number_format($total)}}</strong> {{ trans('messages.baht') }}</h4> </span></td>
+                            <td colspan="2" class="text-right">
+                                <span id="order_total">
+                                    <h4>
+                                        <strong>{{number_format($total)}}</strong>
+                                        {{ trans('messages.baht') }}
+                                    </h4>
+                                </span>
+                            </td>
                         </tr>
                         <tr>
                             <td>&nbsp;&nbsp;</td>
