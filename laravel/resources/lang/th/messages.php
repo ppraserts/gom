@@ -182,7 +182,6 @@ return [
     'open_sale' => 'เปิดการจำหน่าย',
     'close_sale' => 'ปิดการจำหน่าย',
     'sold_out' => 'สินค้าหมด',
-
     'color_white' => 'สีขาว',
     'text_product_province' => 'สินค้าจากจังหวัด',
     'text_specify' => 'ระบุ',
