@@ -187,7 +187,6 @@ return [
     'text_product_province' => 'สินค้าจากจังหวัด',
     'text_specify' => 'ระบุ',
     'text_grade' => 'เกรด',
-    'text_grade' => 'บริมาณสินค้าที่ต้องการ',
     'add_sale' => 'เพิ่มรายการขาย',
     'edit_sale' => 'แก้ไขรายการขาย',
     'clone_product' => 'Clone สินค้า',
