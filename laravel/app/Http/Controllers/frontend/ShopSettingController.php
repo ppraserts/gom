@@ -106,9 +106,9 @@ class ShopSettingController extends Controller
     {
         sleep(1);
         $image_path = $request->file($filename)->getPathname();
-        $image_filename = $request->{$filename}->getClientOriginalName();
-        $image_directory = config('app.upload_shopimage') . time();
-        $image_path_filename = $image_directory . "/" . $image_filename;
+        $ext = pathinfo($image_path, PATHINFO_EXTENSION);
+        $image_directory = config('app.upload_promotion');
+        $image_path_filename = $image_directory . "/" . time() .".".$ext;
         File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);

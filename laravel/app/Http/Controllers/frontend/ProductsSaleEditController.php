@@ -13,6 +13,7 @@ use App\Units;
 use DB;
 use File;
 use Hash;
+use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Validator;
@@ -284,17 +285,15 @@ class ProductsSaleEditController extends Controller
     private function UploadImage(Request $request, $imagecolumnname)
     {
         sleep(1);
-        $fileTimeStamp = time();
         $imageTempName = $request->file($imagecolumnname)->getPathname();
-
-        $imageName = $request->{$imagecolumnname}->getClientOriginalName();
-
-        //$imageName_temp = iconv('UTF-8', 'tis620',$imageName);
-        $imageName_temp = $imageName;
-
-        $request->{$imagecolumnname}->move(config('app.upload_product') . $fileTimeStamp . "/", $imageName_temp);
-        $imageName = config('app.upload_product') . $fileTimeStamp . "/" . $imageName;
-
+        $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
+        $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
+        $image_directory = config('app.upload_product');
+        File::makeDirectory($image_directory, 0777, true, true);
+        $imageName = $image_directory . "/" . time() .".".$ext;
+        $img = Image::make($imageTempName);
+        $img->save($imageName);
+        $img->destroy();
         return array('imageTempName' => $imageTempName, 'imageName' => $imageName);
     }
 }
