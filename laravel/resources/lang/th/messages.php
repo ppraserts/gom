@@ -191,6 +191,8 @@ return [
     'add_sale' => 'เพิ่มรายการขาย',
     'edit_sale' => 'แก้ไขรายการขาย',
     'clone_product' => 'Clone สินค้า',
-    'clone_product_success' => 'Clone สินค้าแล้ว'
+    'clone_product_success' => 'Clone สินค้าแล้ว',
+    'add_buy' => 'เพิ่มรายการต้องการซื้อ',
+    'edit_buy' => 'แก้ไขรายการต้องการซื้อ',
 
 ];

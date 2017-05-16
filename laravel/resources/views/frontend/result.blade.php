@@ -47,9 +47,11 @@ use App\Http\Controllers\frontend\MarketController;
 
                                 <br/><br/>
                             </div>
+                            @if($col_md_4_item['productstatus'] == 'open')
                             <div class="rating hidden-sm col-md-4">
                                 <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                             </div>
+                            @endif
                         </div>
                         <div class="separator clear-left">
                             <p class="btn-add">
@@ -157,7 +159,7 @@ use App\Http\Controllers\frontend\MarketController;
                                         <div id="div_product_title"></div>
                                         <div id="div_product_price"></div>
                                         <p>ราคาต่อหน่วย(บาท) : <span id="sp_product_price"></span></p>
-                                        <p>ปริมาณ : <span id="sp_product_volume"></span></p>
+                                        <p>ปริมาณ (<span id="units"></span>) : <span id="sp_product_volume"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -218,6 +220,7 @@ use App\Http\Controllers\frontend\MarketController;
             $('#div_product_title').html(productRequest.product1_title);
             $('#sp_product_price').text(productRequest.price);
             $('#sp_product_volume').text(productRequest.volumn);
+            $('#units').html(productRequest.units);
         }
         $('#modal_add_to_cart').modal('show');
     }
