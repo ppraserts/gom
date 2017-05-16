@@ -47,9 +47,11 @@ use App\Http\Controllers\frontend\MarketController;
 
                                 <br/><br/>
                             </div>
+                            @if($col_md_4_item['productstatus'] == 'open')
                             <div class="rating hidden-sm col-md-4">
                                 <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                             </div>
+                            @endif
                         </div>
                         <div class="separator clear-left">
                             <p class="btn-add">

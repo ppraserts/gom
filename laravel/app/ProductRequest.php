@@ -230,7 +230,8 @@ class ProductRequest extends Model
         }
 
         $sqlcondition = "";
-        $sqlcondition .= " and a.productstatus = 'open' ";
+        $sqlcondition .= " and a.productstatus != 'close' ";
+//        $sqlcondition .= " and a.productstatus = 'open' ";
         if ($category != "")
             $sqlcondition .= " and  a.`productcategorys_id` = $category";
 
@@ -241,7 +242,7 @@ class ProductRequest extends Model
             $sqlcondition .= " and (a.`price` between $search and $search)";
             $sqlcondition .= " and (a.`volumn` between $search and $search)";
         } else {
-            $sqlcondition .= " and a.productstatus = 'open'";
+            //$sqlcondition .= " and a.productstatus = 'open'";
             if ($notwhere_product_name == true) {
                 $sqlcondition .= " and (CONCAT(a.`product_title`
                                           , a.city
