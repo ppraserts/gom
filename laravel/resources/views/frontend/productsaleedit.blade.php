@@ -192,8 +192,25 @@
 
         hideSuccessMessage();
 
+
     });
 
+    function deleteImage(imageNo) {
+        /*if(imageNo == 1){
+            $("input[type=file], product1_file").val('');
+            $('#img1').removeAttr('src')
+            $('#img1').show();
+        }else */
+        if(imageNo == 2){
+            $("input[type=file], product2_file").val('');
+            $('#img2').removeAttr('src')
+            $('#img2').show();
+        }else if(imageNo == 3){
+            $("input[type=file], product3_file").val('');
+            $('#img3').removeAttr('src')
+            $('#img3').show();
+        }
+    }
 
     function initialViews() {
 
@@ -212,6 +229,16 @@
         }, 2000);
 
     }
+
+    function clone() {
+        $("input[name=id]").val('0');
+        $("#btn-clone").hide();
+        $("#clone-alert").alert();
+        $("#clone-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#clone-alert").slideUp(500);
+        });
+        $("#head-title").text('{{ trans('messages.add_sale') }}');
+    }
 </script>
 @endpush
 
@@ -219,14 +246,15 @@
     @include('shared.usermenu', array('setActive'=>'iwanttosale'))
     <br/>
     <form enctype="multipart/form-data" class="form-horizontal" role="form" method="post"
-          action="{{ url('user/productsaleedit/'.$item->id) }}">
+          action="{{ url('user/productsaleupdate') }}">
         {{ csrf_field() }}
         {{ Form::hidden('product1_file_temp', $item->product1_file) }}
         {{ Form::hidden('product2_file_temp', $item->product2_file) }}
         {{ Form::hidden('product3_file_temp', $item->product3_file) }}
         {{ Form::hidden('users_id', $useritem->id) }}
         {{ Form::hidden('iwantto', $useritem->iwantto) }}
-        <input name="_method" type="hidden" value="PATCH">
+        {{ Form::hidden('id', $item->id) }}
+        <input name="_method" type="hidden" value="post">
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
@@ -243,11 +271,20 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
+        <div id="clone-alert" class="alert alert-info" style="display: none">
+            <strong>{{trans('messages.clone_product_success')}} </strong>
+        </div>
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
+                        <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_sale') : trans('messages.edit_sale')}}</h2>
                 </div>
                 <div class="pull-right">
+                    @if($item->id != 0)
+                    <button id="btn-clone" type="button" class="btn btn-info" onclick="clone();">
+                        <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+                        {{ trans('messages.clone_product')}}</button>
+                    @endif
                     <button type="submit" class="btn btn-primary" onclick="return validate();">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                         {{ trans('messages.button_save')}}</button>
@@ -499,10 +536,13 @@
                         {!! Form::file('product1_file', null, array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control')) !!}
                     </div>
                     @if($item != null && $item->product1_file != "")
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <img style="height:260px; width:350px;" src="{{ url($item->product1_file) }}" alt=""
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <img id="img1" style="height:260px; width:350px;" src="{{ url($item->product1_file) }}" alt=""
                                  class="img-thumbnail">
                         </div>
+                        {{--<div class="col-xs-3 col-sm-3 col-md-3">
+                            <input type="button" class="btn btn-danger" value="ลบรูป" onclick="deleteImage(1)">
+                        </div>--}}
                     @endif
                 </div>
                 <div class="row" style="margin-top: 15px">
@@ -511,9 +551,10 @@
                         {!! Form::file('product2_file', null, array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control')) !!}
                     </div>
                     @if($item != null && $item->product2_file != "")
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <img style="height:260px; width:350px;" src="{{ url($item->product2_file) }}" alt=""
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <img id="img2" style="height:260px; width:350px;" src="{{ url($item->product2_file) }}" alt=""
                                  class="img-thumbnail">
+                            <button type="button" class="btn btn-danger" onclick="deleteImage(2)">ลบรูป</button>
                         </div>
                     @endif
                 </div>
@@ -523,9 +564,10 @@
                         {!! Form::file('product3_file', null, array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control')) !!}
                     </div>
                     @if($item != null && $item->product3_file != "")
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <img style="height:260px; width:350px;" src="{{ url($item->product3_file) }}" alt=""
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <img id="img3" style="height:260px; width:350px;" src="{{ url($item->product3_file) }}" alt=""
                                  class="img-thumbnail">
+                            <button type="button" class="btn btn-danger" onclick="deleteImage(3)">ลบรูป</button>
                         </div>
                     @endif
                 </div>
