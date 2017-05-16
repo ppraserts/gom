@@ -199,6 +199,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
+                    <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_buy') : trans('messages.edit_buy')}}</h2>
                 </div>
                 <div class="pull-right">
                     <button type="submit" class="btn btn-primary" onclick="return validate();">
