@@ -142,7 +142,7 @@ class ProductsBuyEditController extends Controller
         $productRequest->pricerange_end = $request->pricerange_end;
         $productRequest->volumnrange_start = $request->volumnrange_start;
         $productRequest->province = $request->province;
-        $productRequest->product_description = $request->product_description;
+        //$productRequest->product_description = $request->product_description;
 
         $productRequest->iwantto = $useritem->iwanttobuy;
         $productRequest->productstatus = $request->productstatus;

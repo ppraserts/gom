@@ -265,7 +265,7 @@
 
 
                         @if(isset($standards))
-                            <div class="form-group col-md-6 pd-top-10">
+                            <div class="form-group col-md-12 pd-top-10">
                                 <strong style="display: block; padding-bottom: 5px;"> {{ trans('validation.attributes.guarantee') }}
                                     :</strong>
                                 @for($i = 0 ; $i < count($standards) ; $i++)
@@ -275,11 +275,10 @@
                                         {{$standards[$i]->name}}
                                     </label>
                                 @endfor
+                                <span> {{ trans('messages.text_specify') }} :</span>
+                                {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control')) !!}
                             </div>
-                            <div class="form-group col-md-6 pd-top-10">
-                                <strong> {{ trans('messages.text_specify') }} :</strong>
-                                {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control min-width-100pc')) !!}
-                            </div>
+
                         @endif
 
                         <div id="div_packing_size"
@@ -354,18 +353,5 @@
                 width: 100% !important;
             }
         </style>
-        <div class="panel panel-default" style="margin-top: 20px;">
-            <div class="panel-heading">
-                <strong>{{ trans('validation.attributes.product_description') }}</strong>
-            </div>
-            <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            {!! Form::textarea('product_description', $item->product_description, array('placeholder' => Lang::get('validation.attributes.product_description'),'class' => 'form-control')) !!}
-                        </div>
-                    </div>
-            </div>
-        </div>
-
-    </form>
+      </form>
 @stop
