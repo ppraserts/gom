@@ -27,10 +27,10 @@
 </head>
 <?php
 
-if ($shop != null && isset($shop->image_file_2)) {
+if ($shop != null &&$shop->image_file_2 != "") {
     $image_header = $shop->image_file_2;
 } else {
-    $image_header = 'assets/theme/images/header-2.jpg)';
+    $image_header = 'assets/theme/images/header-2.jpg';
 }
 ?>
 <body class="theme theme-section theme-section-two">

@@ -165,7 +165,7 @@ return [
     'image_size' => 'ขนาดรูปที่ควรใช้',
     'english_only' => 'ภาษาอังกฤษเท่านั้น',
     'cant_change_url' => 'ไม่สามารถเปลี่ยนภายหลังได้',
-    'select_text_color' => 'เสือกสีข้อความหัวเรื่อง',
+    'select_text_color' => 'เลือกสีข้อความ',
     'promotion_image_size' => 'ขนาดรูปที่ควรใช้ 745 x 92 pixel',
     'title_delivery_product' => 'ข้อมูลจัดส่งสินค้า',
     'text_delivery_channel' => 'ช่องทางการจัดส่ง',
