@@ -19,7 +19,7 @@ return [
     'button_delete'=> 'ลบข้อมูล',
     'button_moredetail'=> 'รายละเอียดเพิ่มเติม',
     'menu_quotation'=> 'ใบเสนอราคา',
-    'menu_quotation_request'=> 'เสนอราคา',
+    'menu_quotation_request'=> 'รายการเสนอราคา',
     'quotation'=> 'ใบเสนอราคา',
     'quotation_view'=> 'ดูรายละเอียดใบเสนอราคา',
     'quotation_request'=> 'ขอใบเสนอราคา',
