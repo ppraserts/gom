@@ -238,6 +238,7 @@ return [
         'product_province_selling' => 'สถานที่จำหน่าย(จังหวัด)',
         'product_selling_start_date' => 'วันเริ่มต้นจำหน่าย',
         'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
+        'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม'
     ],
 
 ];

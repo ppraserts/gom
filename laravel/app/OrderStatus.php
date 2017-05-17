@@ -8,4 +8,5 @@ class OrderStatus extends Model
 {
     //
     protected $table = "order_status";
+    public $timestamps = false;
 }
