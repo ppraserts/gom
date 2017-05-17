@@ -16,13 +16,14 @@
                 <div id="collapse1" class="panel-collapse collapse">
                     <div class="panel-body">
 
-                        <form action="{{url('user/orderdetail/store-status-history')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{url('user/orderdetail/store-status-history')}}" id="form_cancled" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="order_id" value="{{$orderId}}">
                             <input type="hidden" name="status_current" value="5">
                             {{csrf_field()}}
                             <div class="form-group ">
                                 <strong>* {{ trans('messages.text_note') }}:</strong>
-                                <textarea name="note" class="form-control" rows="7"></textarea>
+                                <textarea name="note" id="cancled_note" class="form-control" rows="7" style="margin-bottom: 3px;"></textarea>
+                                <span id="mss_cancled_note" class="alert-danger"></span>
                             </div>
                             <div class="form-group ">
                                 <button class="btn btn-default" type="submit">

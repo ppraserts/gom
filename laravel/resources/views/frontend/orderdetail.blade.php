@@ -185,7 +185,10 @@ $pagetitle = trans('message.menu_order_list');
                     @include('frontend.order_element.delivery')
                 @endif
             @endif
-            @include('frontend.order_element.canceled')
+            @if($status_id == 4 || $status_id == 5)
+            @else
+                @include('frontend.order_element.canceled')
+            @endif
         </div>
 
     </div>
@@ -264,6 +267,16 @@ $pagetitle = trans('message.menu_order_list');
             }
 
 
+        })
+
+        $("#form_cancled").submit(function (e) {
+            var cancled_note = $("#cancled_note").val();
+
+            if (cancled_note == '') {
+                $("#cancled_note").focus();
+                $("#mss_cancled_note").html("<?php echo trans('validation.attributes.message_validate_note')?>");
+                return false;
+            }
         })
     });
 
