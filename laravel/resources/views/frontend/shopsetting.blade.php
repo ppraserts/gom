@@ -39,60 +39,87 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-5 col-sm-5">
-                    <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.shop_name') }}</strong> <span style="color: #ff2222;"> *{{trans('messages.english_only')}}
-                            *{{trans('messages.cant_change_url')}}</span>
-                        @if($shop->id > 0 && isset($shop->shop_name))
-                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
-                            <div style="padding-top: 10px;"><strong>URL : </strong><a
-                                        href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
-                                            id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a></div>
-                        @else
-                            {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
-                            {{URL::to('/')}}/<span id="uri"
-                                                   style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
-                        @endif
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>{{ trans('messages.shop_setting')}}</strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5">
+                            <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
+                                @if($shop->id > 0 && isset($shop->shop_name))
+                                    <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
+                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
+                                                    id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a></div>
+                                @else
+                                    <strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong>{{URL::to('/')}}/<span id="uri"
+                                                                                                                                   style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
+                                @endif
+                                @if($shop->id > 0 && isset($shop->shop_name))
+                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
+
+                                @else
+                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
+
+                                @endif
+                                <span style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}
+                                    *{{trans('messages.cant_change_url')}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
+                                <strong>* {{ trans('validation.attributes.shop_title') }}:</strong> <i
+                                        class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
+                                        data-target="#modal_help"></i>
+                                {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => trans('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-7 col-sm-7">
-                    <div class="form-group {{ $errors->has('shop_title') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.shop_title') }}:</strong> <i
-                                class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
-                                data-target="#modal_help"></i>
-                        {!! Form::text('shop_title', isset($shop->shop_title)?$shop->shop_title:"", array('placeholder' => trans('validation.attributes.shop_title'),'class' => 'form-control' )) !!}
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong> {{ trans('validation.attributes.shop_subtitle') }}: </strong><i
+                                        class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
+                                        data-target="#modal_help"></i>
+                                {!! Form::text('shop_subtitle',isset($shop->shop_subtitle)?$shop->shop_subtitle:"" , array('placeholder' => trans('validation.attributes.shop_subtitle'),'class' => 'form-control' )) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong> {{ trans('validation.attributes.shop_description') }}: </strong><i
+                                        class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
+                                        data-target="#modal_help"></i>
+                                {!! Form::textarea('shop_description', isset($shop->shop_description)?$shop->shop_description:"", array('placeholder' => trans('validation.attributes.shop_description'),'class' => 'form-control','style'=>'height:100px')) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group" style="padding-left: 10px;">
+                                <strong> {{ trans('messages.select_text_color') }}: </strong><br>
+                                <div class="btn-group" data-toggle="buttons" style="padding-top: 5px">
+                                    <label class="btn btn-default {{ ($shop->text_color =="" || $shop->text_color =='#000000') =='#000000' ? 'active' : '' }}">
+                                        {{ Form::radio('text_color', '#000000', ($shop->text_color =="" || $shop->text_color =='#000000'),['autocomplete' => 'off']) }}
+                                        {{trans('messages.color_black')}}
+                                    </label>
+                                    <label class="btn btn-default {{ $shop->text_color =='#cccccc' ? 'active' : '' }}">
+                                        {{ Form::radio('text_color', '#cccccc', $shop->text_color =='#cccccc',['autocomplete' => 'off']) }}
+                                        {{trans('messages.color_gray')}}
+                                    </label>
+                                    <label class="btn btn-default {{ $shop->text_color =='#ffffff' ? 'active' : '' }}">
+                                        {{ Form::radio('text_color', '#ffffff', $shop->text_color =='#ffffff',['autocomplete' => 'off']) }}
+                                        {{trans('messages.color_white')}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong> {{ trans('validation.attributes.shop_subtitle') }}: </strong><i
-                                class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
-                                data-target="#modal_help"></i>
-                        {!! Form::text('shop_subtitle',isset($shop->shop_subtitle)?$shop->shop_subtitle:"" , array('placeholder' => trans('validation.attributes.shop_subtitle'),'class' => 'form-control' )) !!}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong> {{ trans('validation.attributes.shop_description') }}: </strong><i
-                                class="fa fa-question-circle" aria-hidden="true" data-toggle="modal"
-                                data-target="#modal_help"></i>
-                        {!! Form::textarea('shop_description', isset($shop->shop_description)?$shop->shop_description:"", array('placeholder' => trans('validation.attributes.shop_description'),'class' => 'form-control','style'=>'height:100px')) !!}
-                    </div>
-                </div>
-            </div>
             {{--Shop Theme--}}
             @if($shop!= null)
                 <div class="panel panel-default">
@@ -156,29 +183,6 @@
                                                 data-target="#modal3">{{ trans('messages.preview')}}</button>
                                         <a href="{{ url('user/settheme' , 'theme2' ) }}"
                                            class="info">{{ trans('messages.apply')}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group" style="padding-left: 10px;">
-                                    <strong> {{ trans('messages.select_text_color') }}: </strong><br>
-                                    <div class="btn-group" data-toggle="buttons" style="padding-top: 5px">
-                                        <label class="btn btn-default {{ ($shop->text_color =="" || $shop->text_color =='#000000') =='#000000' ? 'active' : '' }}">
-                                            {{ Form::radio('text_color', '#000000', ($shop->text_color =="" || $shop->text_color =='#000000'),['autocomplete' => 'off']) }}
-                                            {{trans('messages.color_black')}}
-                                        </label>
-                                        <label class="btn btn-default {{ $shop->text_color =='#cccccc' ? 'active' : '' }}">
-                                            {{ Form::radio('text_color', '#cccccc', $shop->text_color =='#cccccc',['autocomplete' => 'off']) }}
-                                            {{trans('messages.color_gray')}}
-                                        </label>
-                                        <label class="btn btn-default {{ $shop->text_color =='#ffffff' ? 'active' : '' }}">
-                                            {{ Form::radio('text_color', '#ffffff', $shop->text_color =='#ffffff',['autocomplete' => 'off']) }}
-                                            {{trans('messages.color_white')}}
-                                        </label>
                                     </div>
                                 </div>
                             </div>
