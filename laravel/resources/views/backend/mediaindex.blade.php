@@ -72,7 +72,7 @@ $pagetitle = trans('messages.menu_media');
                 </table>
               </div>
 
-            {!! $items->appends(Request::all()) !!}
+              {!! $items->render() !!}
         </div>
 		  </div>
     </div>

@@ -15,10 +15,6 @@ return [
     'upload_imageprofile' => 'upload/imageprofiles/',
     'upload_product' => 'upload/products/',
     'upload_mailfile' => 'upload/mailfile/',
-    'upload_shopimage' => 'upload/shopimage/',
-    'upload_promotion' => 'upload/promotion/',
-    'upload_payment' => 'upload/payments/',
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -68,7 +64,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://52.163.212.67/dgtfarmdev'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -201,12 +197,6 @@ return [
 		* Helper Service Providers
 		*/
 		App\Providers\HelperServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        Way\Generators\GeneratorsServiceProvider::class,
-        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
-
     ],
 
     /*
@@ -256,8 +246,6 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
-       'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

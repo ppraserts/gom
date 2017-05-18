@@ -7,21 +7,9 @@ class Product extends Model
 {
     protected $table = "products";
     public $fillable = ['product_name_th',
-        'product_name_en',
-        'productcategory_id',
-        'user_id',
-        'sequence'];
-
-    public function productCategory()
-    {
-        return $this->belongsTo('App\ProductCategory', 'productcategory_id');
-    }
-
-    public function productRequest()
-    {
-        return $this->hasMany('App\ProductRequest', 'products_id', 'id');
-    }
+                        'product_name_en',
+                        'productcategory_id',
+                        'sequence'];
 
 }
-
 ?>

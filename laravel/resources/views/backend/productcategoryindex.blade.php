@@ -84,7 +84,7 @@ $pagetitle = trans('messages.menu_product_category');
                 </table>
               </div>
 
-            {!! $items->appends(Request::all()) !!}
+              {!! $items->render() !!}
         </div>
 		  </div>
     </div>

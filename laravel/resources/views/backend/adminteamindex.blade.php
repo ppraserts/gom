@@ -75,7 +75,7 @@ $pagetitle = trans('messages.menu_adminteam');
                 </table>
               </div>
 
-            {!! $items->appends(Request::all()) !!}
+              {!! $items->render() !!}
         </div>
 		  </div>
     </div>

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Helpers\DateFuncs;
-use App\Http\Controllers\Controller;
-use App\Province;
-use DB;
 use File;
+use DB;
 use Hash;
-use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Model\frontend\User;
+use App\Amphur;
+use App\Province;
+use App\District;
 
 class UserProfileController extends Controller
 {
@@ -49,7 +52,7 @@ class UserProfileController extends Controller
       $user->users_lastname_th = $request->input('users_lastname_th');
       $user->users_firstname_en = $request->input('users_firstname_en');
       $user->users_lastname_en = $request->input('users_lastname_en');
-      $user->users_dateofbirth = DateFuncs::convertYear($request->input('users_dateofbirth'));
+      $user->users_dateofbirth = $request->input('users_dateofbirth');
       $user->users_gender = $request->input('users_gender');
       $user->users_qrcode = $request->input('users_qrcode');
     }
