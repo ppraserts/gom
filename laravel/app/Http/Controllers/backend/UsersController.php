@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\ProductRequest;
+use App\Iwantto;
 use DateFuncs;
 
 class UsersController extends Controller
@@ -101,7 +101,7 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-        ProductRequest::where('users_id', '=', $id)->delete();
+        Iwantto::where('users_id', '=', $id)->delete();
 
         $deleteItem = User::find($id);
         $deleteItem->delete();

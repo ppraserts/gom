@@ -1,144 +1,125 @@
 <?php
 function renderHTML($text)
 {
-    if ($text != "")
-        echo "<br/>" . $text;
+    if($text != "")
+      echo "<br/>".$text;
 }
-
 ?>
 @extends('layouts.main')
 @section('content')
-    @include('shared.usermenu', array('setActive'=>'matchings'))
-    <br/>
-    <div class="row">
-        <div class="col-md-4" style="padding-right:30px; text-align:center;">
-            @if($user->id == $productRequest->users_id)
-                <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary"><span
-                            class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}</a>
-            @else
-                @if($productRequest->users_imageprofile != "")
-                    <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}" alt=""
-                         class="img-circle">
-                    <br/><br/>
-                @endif
-                <div class="row">
-                    <div class="col-md-12">
-                        {{--@if($useritem->id == $item->)--}}
-                        @if($productRequest->users_membertype == "personal")
-                            {{ $productRequest->users_firstname .Lang::locale() }}
-                            {{ $productRequest->users_lastname .Lang::locale() }}
-                        @endif
-                        @if($productRequest->users_membertype == "company")
-                            {{ $productRequest->users_company .Lang::locale() }}
-                        @endif
-                        {{ renderHTML($productRequest->users_mobilephone) }}
-                        {{ renderHTML($productRequest->users_phone) }}
-                        {{ renderHTML($productRequest->users_fax) }}
-                        {{ renderHTML($productRequest->email) }}
-                        <br/><br/>
-                        <button type="button" class="btn btn-primary">{{ trans('messages.inbox_message') }}</button>
-                        <br/><br/>
-
-                    </div>
-                </div>
-
-
-                @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale")
-                    <a href="{{ url('user/quotationRequest/'.$productRequest['id']) }}"
-                       class="btn btn-primary">{{trans('messages.quotation_request')}}</a>
-
-                @endif
-            @endif
+@include('shared.usermenu', array('setActive'=>'matchings'))
+<br/>
+<div class="row">
+  <div class="col-md-4" style="padding-right:30px; text-align:center;">
+      @if($item[0]->users_imageprofile != "")
+        <img height="150" width="150" src="{{ url($item[0]->users_imageprofile) }}" alt="" class="img-circle">
+        <br/><br/>
+      @endif
+      <div class="row" >
+        <div class="col-md-12">
+          @if($item[0]->users_membertype == "personal")
+            {{ $item[0]->{"users_firstname_".Lang::locale()} }}
+            {{ $item[0]->{"users_lastname_".Lang::locale()} }}
+          @endif
+          @if($item[0]->users_membertype == "company")
+            {{ $item[0]->{"users_company_".Lang::locale()} }}
+          @endif
+          {{ renderHTML($item[0]->users_mobilephone) }}
+          {{ renderHTML($item[0]->users_phone) }}
+          {{ renderHTML($item[0]->users_fax) }}
+          {{ renderHTML($item[0]->email) }}
+          <br/><br/><button type="button" class="btn btn-primary">{{ trans('messages.inbox_message') }}</button>
+          <br/><br/><button class="btn btn-default" type="button" onclick="window.history.back();">
+            {{ trans('messages.backtoresult') }}
+          </button>
         </div>
-        <div class="col-md-8" style="background-color:#FFFFFF; padding:20px;">
-            @if($productRequest->iwantto == "sale")
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        @if($productRequest->product1_file != "")
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        @endif
-                        @if($productRequest->product2_file != "")
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        @endif
-                        @if($productRequest->product3_file != "")
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        @endif
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        @if($productRequest->product1_file != "")
-                            <div class="item crop-height-slide active">
-                                <a href="{{ url($productRequest->product1_file) }}" data-lightbox="products"
-                                   data-title="{{ trans('validation.attributes.product1_file') }}">
-                                    <img class="scale" src="{{ url($productRequest->product1_file) }}">
-                                </a>
-                                <div class="carousel-caption"></div>
-                            </div>
-                        @endif
-                        @if($productRequest->product2_file != "")
-                            <div class="item crop-height-slide">
-                                <a href="{{ url($productRequest->product2_file) }}" data-lightbox="products"
-                                   data-title="{{ trans('validation.attributes.product2_file') }}">
-                                    <img class="scale" src="{{ url($productRequest->product2_file) }}">
-                                </a>
-                                <div class="carousel-caption"></div>
-                            </div>
-                        @endif
-                        @if($productRequest->product3_file != "")
-                            <div class="item crop-height-slide">
-                                <a href="{{ url($productRequest->product3_file) }}" data-lightbox="products"
-                                   data-title="{{ trans('validation.attributes.product3_file') }}">
-                                    <img class="scale" src="{{ url($productRequest->product3_file) }}">
-                                </a>
-                                <div class="carousel-caption"></div>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <br/>
+      </div>
+  </div>
+  <div class="col-md-8" style="background-color:#FFFFFF; padding:20px;">
+    @if($item[0]->iwantto == "sale")
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            @if($item[0]->product1_file != "")
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
             @endif
+            @if($item[0]->product2_file != "")
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            @endif
+            @if($item[0]->product3_file != "")
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            @endif
+          </ol>
 
-            <span class="glyphicon glyphicon-map-marker"></span>
-            {{ $productRequest->city }} {{ $productRequest->province }}
-            <h3>{{ $productRequest->product_title }}</h3>
-            <p>{!! $productRequest->product_description !!}</p>
-            <h3>
-                {{ trans('validation.attributes.price') }} :
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            @if($item[0]->product1_file != "")
+            <div class="item crop-height-slide active">
+              <a href="{{ url($item[0]->product1_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product1_file') }}">
+				<img class="scale" src="{{ url($item[0]->product1_file) }}">
+			  </a>
+              <div class="carousel-caption"></div>
+            </div>
+            @endif
+            @if($item[0]->product2_file != "")
+            <div class="item crop-height-slide">
+              <a href="{{ url($item[0]->product2_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product2_file') }}">
+				<img class="scale" src="{{ url($item[0]->product2_file) }}">
+			  </a>
+              <div class="carousel-caption"></div>
+            </div>
+            @endif
+            @if($item[0]->product3_file != "")
+            <div class="item crop-height-slide">
+              <a href="{{ url($item[0]->product3_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product3_file') }}">
+				<img class="scale" src="{{ url($item[0]->product3_file) }}">
+			  </a>
+              <div class="carousel-caption"></div>
+            </div>
+            @endif
+          </div>
 
-                @if($productRequest->iwantto == "buy")
-                    {{ floatval($productRequest->pricerange_start) }} - {{ floatval($productRequest->pricerange_end) }}
-                @endif
-                @if($productRequest->iwantto == "sale")
-                    @if($productRequest->is_showprice)
-                        {{ floatval($productRequest->price) }}
-                    @endif
-                    @if(!$productRequest->is_showprice)
-                        {{ trans('messages.product_no_price') }}
-                    @endif
-                @endif
-            </h3>
-            <h3>
-                {{ trans('validation.attributes.volumn') }} :
-                @if($productRequest->iwantto == "buy")
-                    {{ floatval($productRequest->volumnrange_start) }}
-                    - {{ floatval($productRequest->volumnrange_end) }}  {{ $productRequest->units }}
-                @endif
-                @if($productRequest->iwantto == "sale")
-                    {{ floatval($productRequest->volumn) }} {{ $productRequest->units }}
-                @endif
-            </h3>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-    </div>
+        <br/>
+    @endif
+
+    <span class="glyphicon glyphicon-map-marker"></span>
+    {{ $item[0]->city }} {{ $item[0]->province }}
+    <h3>{{ $item[0]->product_title }}</h3>
+    <p>{!! $item[0]->product_description !!}</p>
+    <h3>
+      {{ Lang::get('validation.attributes.price') }} :
+
+      @if($item[0]->iwantto == "buy")
+        {{ floatval($item[0]->pricerange_start) }} - {{ floatval($item[0]->pricerange_end) }}
+      @endif
+      @if($item[0]->iwantto == "sale")
+        @if($item[0]->is_showprice)
+          {{ floatval($item[0]->price) }}
+        @endif
+        @if(!$item[0]->is_showprice)
+          {{ trans('messages.product_no_price') }}
+        @endif
+      @endif
+    </h3>
+    <h3>
+      {{ Lang::get('validation.attributes.volumn') }} :
+      @if($item[0]->iwantto == "buy")
+        {{ floatval($item[0]->volumnrange_start) }} - {{ floatval($item[0]->volumnrange_end) }}  {{ $item[0]->units }}
+      @endif
+      @if($item[0]->iwantto == "sale")
+        {{ floatval($item[0]->volumn) }} {{ $item[0]->units }}
+      @endif
+    </h3>
+  </div>
+</div>
 @stop

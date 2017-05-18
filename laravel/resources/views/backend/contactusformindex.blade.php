@@ -92,7 +92,7 @@ $pagetitle = trans('messages.menu_contactus');
                 </table>
               </div>
 
-            {!! $items->appends(Request::all()) !!}
+              {!! $items->render() !!}
         </div>
 		  </div>
     </div>
