@@ -1,6 +1,6 @@
 <?php
 use App\Product;
-use App\Iwantto;
+use App\ProductRequest;
 use App\Amphur;
 use App\Province;
 use App\District;
@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Input;
 */
 
 Auth::routes();
+
 Route::group(['middleware' => ['guest']], function () {
-    //Route::get('/', 'HomeController@index');
+
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index1');
     Route::get('/choosemarket', 'HomeController@index2');
@@ -113,11 +114,6 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('logout', 'frontend\Auth\LoginController@getLogout');
-    //Route::get('user/dashboard', 'frontend\UserController@dashboard');
-
-    /*Route::get('user/userprofile/', function () {
-        return view('frontend.userprofile');
-    });*/
     Route::resource('userprofiles','frontend\UserProfileController');
     Route::post('updateprofiles', 'frontend\UserProfileController@updateProfile');
 
@@ -129,21 +125,50 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('iwanttosale','frontend\IwanttoSaleController');
     Route::resource('matchings','frontend\MatchingController');
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
+    Route::post('productsaleupdate','frontend\ProductsSaleEditController@updatesale');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
+    //Shop
+    Route::resource('shopsetting','frontend\ShopSettingController');
+    Route::resource('shoppingcart','frontend\ShoppingCartController');
+    Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
+    Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
+    Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
+    Route::get('shoppingcart/deleteCartItem/{user_id}/{product_request_id}', ['as' => 'shoppingcart.deleteCartItem', 'uses' => 'frontend\ShoppingCartController@deleteCartItem']);
+    Route::get('shoppingcart/incrementQuantityCartItem/{user_id}/{product_request_id}/{unit_price}/{is_added}', ['as' => 'shoppingcart.incrementQuantityCartItem', 'uses' => 'frontend\ShoppingCartController@incrementQuantityCartItem']);
+    Route::get('shoppingcart/checkout/{user_id}/{total}', ['as' => 'shoppingcart.checkout', 'uses' => 'frontend\ShoppingCartController@checkout']);
+    Route::post('shoppingcart/checkoutAll', ['as' => 'shoppingcart.checkoutAll', 'uses' => 'frontend\ShoppingCartController@checkoutAll']);
 
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
-        $Iwantto = Iwantto::find($stateid);
+        $Iwantto = ProductRequest::find($stateid);
         $Iwantto->delete();
         return [];
 
     });
+    Route::get('userproduct/all','frontend\ProductController@all');
+    Route::resource('userproduct','frontend\ProductController');
+    Route::get('userproduct-filters','frontend\ProductController@index');
+    Route::get('promotion/index','frontend\PromotionsController@index');
+    Route::resource('promotion','frontend\PromotionsController');
+    Route::get('order','frontend\OrderController@index');
+    Route::get('shoporder','frontend\OrderController@shoporder');
+    Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('quotation/index','frontend\QuotationController@index');
+    Route::get('quotationRequest/{product_request_id}','frontend\QuotationController@store');
+    Route::get('quote/index','frontend\QuoteController@index');
+//    Route::get('quotation/reply/{product_request_id}','frontend\QuotationController@reply');
+    Route::resource('quotation','frontend\QuotationController');
+    Route::resource('quote','frontend\QuoteController');
+    Route::get('orderdetail/html-payment-channel/{id}','frontend\OrderController@getHtmlConfirmSale');
+    Route::post('orderdetail/store-status-history','frontend\OrderController@storeStatusHistory');
+
+    //Route::get('userproduct/index','frontend\ProductController@index');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
-    //Route::get('dashboard', 'backend\AdminController@dashboard');
     Route::post('logout', 'backend\Auth\LoginController@getLogout');
     Route::get('/', 'backend\UserProfileController@index');
     Route::resource('userprofile','backend\UserProfileController');
@@ -165,3 +190,8 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('reportuser','backend\ReportController');
     Route::resource('adminteam','backend\AdminteamController');
 });
+
+Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
+
+Route::get('/{shop}', 'frontend\ShopIndexController@index');
+//Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

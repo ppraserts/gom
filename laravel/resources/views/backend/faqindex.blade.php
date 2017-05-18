@@ -75,7 +75,7 @@ $pagetitle = trans('messages.menu_faq')." ($faqcategoryItem->faqcategory_title_t
                 </table>
               </div>
 
-              {!! $items->appends(['faqcategory' => Request::input('faqcategory')])->render() !!}
+            {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

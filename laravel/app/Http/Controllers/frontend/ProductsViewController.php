@@ -10,25 +10,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 
 class ProductsViewController extends Controller
 {
-	 public function __construct()
-	  {
-	      $this->middleware('user');
-	  }
+    public function __construct()
+    {
+        $this->middleware('user');
+    }
 
-	  public function show($id)
-	  {
-	  	//$item = Iwantto::find($id);
-			$item = DB::select(DB::raw("select *
-																	from iwantto i
-																	join users u on i.users_id = u.id
-																	where i.id = $id
-																	"));
-	  	$useritem = auth()->guard('user')->user();
-	  	return view('frontend.productview',compact('item','useritem'));
-	  }
+    public function show($id)
+    {
+
+        $productRequest = ProductRequest::join('users', 'users.id', '=','product_requests.users_id')
+            ->select('users.*', 'users.id AS user_id' ,'product_requests.*')
+            ->where('product_requests.id', $id)
+            ->first();
+
+        $user = auth()->guard('user')->user();
+        return view('frontend.productview', compact('productRequest', 'user'));
+    }
 }

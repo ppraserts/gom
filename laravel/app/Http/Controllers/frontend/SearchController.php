@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
-use App\Iwantto;
+use App\ProductRequest;
 
 class SearchController extends Controller
 {
@@ -31,15 +31,16 @@ class SearchController extends Controller
     {
         $category = $request->input('category');
         $search = $request->input('search');
+
         $province= $request->input('province');
         $price = $request->input('price');
         $volumn = $request->input('volumn');
         $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                     ->get();
 
-        $Iwanttoobj = new Iwantto();
-        $itemssale = $Iwanttoobj->GetSearchIwantto('sale',$category, $search, '', $province, $price, $volumn);
-        $itemsbuy = $Iwanttoobj->GetSearchIwantto('buy',$category, $search, '', $province, $price, $volumn);
+        $productRequest = new ProductRequest();
+        $itemssale = $productRequest->GetSearchProductRequests('sale',$category, $search, '', $province, $price, $volumn);
+        $itemsbuy = $productRequest->GetSearchProductRequests('buy',$category, $search, '', $province, $price, $volumn);
         return view('frontend.result',compact('productCategoryitem','itemssale', 'itemsbuy'));
     }
 
