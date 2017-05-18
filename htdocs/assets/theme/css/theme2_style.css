@@ -117,6 +117,13 @@ hr {
   .contact-detail strong {
     color: #000; }
 
+.container {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .comments {
   padding-top: 50px; }
 
