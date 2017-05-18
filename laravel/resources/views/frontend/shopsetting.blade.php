@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-md-5 col-sm-5">
                             <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
-                                @if($shop->id > 0 && isset($shop->shop_name))
+                                @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
                                                 href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
                                                     id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a></div>
@@ -53,7 +53,7 @@
                                     <strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong>{{URL::to('/')}}/<span id="uri"
                                                                                                                                    style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
                                 @endif
-                                @if($shop->id > 0 && isset($shop->shop_name))
+                                    @if($shop->id > 0 && $shop->shop_name != "")
                                     {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
 
                                 @else

@@ -36,6 +36,9 @@ class ShopSettingController extends Controller
     {
         $user = auth()->guard('user')->user();
         $shop = Shop::where('user_id', $user->id)->first();
+        if ($shop == null){
+            $shop = new Shop();
+        }
         return view('frontend.shopsetting', compact('shop'));
     }
 
