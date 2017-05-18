@@ -34,9 +34,9 @@ if ($shop != null &&$shop->image_file_2 != "") {
 }
 ?>
 <body class="theme theme-section theme-section-two">
-<div class="container">
+<div class="container setHeight-560">
     <header class="header header-image header-theme-two"
-            style="background: url({{$image_header}}) no-repeat center center scroll; background-size: cover;">
+            style="background: url({{$image_header}}) no-repeat center center scroll; background-size: cover; max-height: 560px;">
         <div class="text-vertical-center">
             <img class="img-header-shadow img-responsive" src="assets/theme/images/shadow.png">
             <div class="headline">
@@ -51,6 +51,7 @@ if ($shop != null &&$shop->image_file_2 != "") {
         </div>
     </header>
 </div>
+
 @yield('promotion')
 <div class="container">
     <section class="products">
