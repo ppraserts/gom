@@ -34,25 +34,26 @@ if ($shop != null && isset($shop->image_file_2)) {
 }
 ?>
 <body class="theme theme-section theme-section-two">
-
-<header class="header header-image header-theme-two"
-        style="background: url({{$image_header}}) no-repeat center center scroll; background-size: cover;">
-    <div class="text-vertical-center">
-        <img class="img-header-shadow img-responsive" src="assets/theme/images/shadow.png">
-        <div class="headline">
-            <div class="container">
-                <div class="headline-detail">
-                    <h2 style="color: {{ $shop->text_color }};">{{$shop->shop_subtitle}}</h2>
-                    <h1 style="color: {{ $shop->text_color }};">{{$shop->shop_title}}</h1>
-                    <p style="color: {{ $shop->text_color }};">{{$shop->shop_description}}</p>
+<div class="container">
+    <header class="header header-image header-theme-two"
+            style="background: url({{$image_header}}) no-repeat center center scroll; background-size: cover;">
+        <div class="text-vertical-center">
+            <img class="img-header-shadow img-responsive" src="assets/theme/images/shadow.png">
+            <div class="headline">
+                <div class="container">
+                    <div class="headline-detail">
+                        <h2 style="color: {{ $shop->text_color }};">{{$shop->shop_subtitle}}</h2>
+                        <h1 style="color: {{ $shop->text_color }};">{{$shop->shop_title}}</h1>
+                        <p style="color: {{ $shop->text_color }};">{{$shop->shop_description}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
+</div>
 @yield('promotion')
-<section class="products">
-    <div class="container">
+<div class="container">
+    <section class="products">
         <div class="row text-center">
             <div class="col-lg-12">
                 <h2>{{ trans('messages.shop_product') }}</h2>
@@ -64,11 +65,10 @@ if ($shop != null && isset($shop->image_file_2)) {
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="contact">
-    <div class="container">
+    </section>
+</div>
+<div class="container">
+    <section class="contact">
         <div class="row text-center">
             <div class="col-lg-12">
                 <h2>{{ trans('messages.menu_contactusinfo') }}</h2>
@@ -104,17 +104,15 @@ if ($shop != null && isset($shop->image_file_2)) {
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="comments">
-    <div class="container">
+    </section>
+</div>
+<div class="container">
+    <section class="comments">
         <div class="row">
             <div class="col-lg-12"></div>
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
 </body>
 
 </html>
