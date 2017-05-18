@@ -92,10 +92,9 @@ class ProductRequest extends Model
                                                           AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
-
                                                               and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)
-
                                                               and a.productstatus = 'open'
+                                                              and b.volumnrange_start >= a.min_order
                                                       union
                                                       SELECT 'red' as Colors ,a.*
                                                       FROM `product_requests` a
@@ -104,10 +103,10 @@ class ProductRequest extends Model
                                                               AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
-
                                                               and  (a.`volumn` between b.`volumnrange_start` and b.`volumnrange_end`)
                                                               and a.province like CONCAT('%', b.province , '%')
                                                               and a.productstatus = 'open'
+                                                              and b.volumnrange_start >= a.min_order
                                                       union
                                                       SELECT 'white' as Colors ,a.*
                                                       FROM `product_requests` a
@@ -116,8 +115,8 @@ class ProductRequest extends Model
                                                               AND a.iwantto =  'sale'
                                                               and a.productcategorys_id = b.productcategorys_id
                                                               and a.products_id = b.products_id
-
                                                               and a.productstatus = 'open'
+                                                              and b.volumnrange_start >= a.min_order
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id
@@ -179,9 +178,9 @@ class ProductRequest extends Model
                                                             AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-
-                                                            and buy.pricerange_start <= sale.price and buy.pricerange_end>=sale.price
-
+                                                            and buy.pricerange_start <= sale.price 
+                                                            and buy.pricerange_end>=sale.price
+                                                            and buy.volumnrange_start >= sale.min_order
                                                       union
                                                     SELECT
                                                       'red' as Colors, buy.*
@@ -195,6 +194,7 @@ class ProductRequest extends Model
 
                                                             and buy.volumnrange_start <= sale.volumn and buy.volumnrange_end>=sale.volumn
                                                             and buy.province like CONCAT('%', sale.province , '%')
+                                                            and buy.volumnrange_start >= sale.min_order
                                                       union
                                                     SELECT
                                                       'red' as Colors, buy.*
@@ -205,6 +205,7 @@ class ProductRequest extends Model
                                                             AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
+                                                            and buy.volumnrange_start >= sale.min_order
 
                                           ) as matching
                                           join users u on matching.users_id = u.id

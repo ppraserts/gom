@@ -22,7 +22,7 @@
             var option = '';
             $('#city').empty();
 
-            //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
+            //option += '<option value="">{{ trans('validation.attributes.products_id') }}</option>';
             $.each(data, function (index, subCatObj) {
                 option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
             });
@@ -238,7 +238,7 @@
                     <div class="col-md-12">
                         {{--* กลุ่มสินค้า :--}}
                         <div class="form-group col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
-                            <strong>* {{ Lang::get('validation.attributes.productcategorys_id') }} :</strong>
+                            <strong>* {{ trans('validation.attributes.productcategorys_id') }} :</strong>
                             <select id="productcategorys_id" name="productcategorys_id"
                                     class="form-control min-width-100pc">
                                 <option value="">{{ trans('messages.menu_product_category') }}</option>
@@ -288,10 +288,10 @@
                         </div>
 
                         <div class="form-group pd-top-10 col-md-3 {{ $errors->has('units') ? 'has-error' : '' }}">
-                            <strong> {{ Lang::get('validation.attributes.units') }}
+                            <strong> {{ trans('validation.attributes.units') }}
                                 :</strong>
                             <select id="units" name="units" class="form-control min-width-100pc">
-                                <option value="">{{ Lang::get('validation.attributes.units') }}</option>
+                                <option value="">{{ trans('validation.attributes.units') }}</option>
                                 @foreach ($unitsItem as $key => $unit)
                                     @if($item->units == $unit->{ "units_".Lang::locale()})
                                         <option selected
@@ -313,17 +313,17 @@
                         </div>
                         <br/>
                         <div class="form-group pd-top-10 col-md-6 {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>* {{ Lang::get('validation.attributes.pricerange_start') }} (บาท):</strong>
-                            {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => Lang::get('validation.attributes.pricerange_start'),'class' => 'form-control min-width-100pc')) !!}
+                            <strong>* {{ trans('validation.attributes.pricerange_start') }} (บาท):</strong>
+                            {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => trans('validation.attributes.pricerange_start'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
                         <div class="form-group pd-top-10  col-md-6 {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>* {{ Lang::get('validation.attributes.pricerange_end') }} (บาท):</strong>
-                            {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => Lang::get('validation.attributes.pricerange_end'),'class' => 'form-control min-width-100pc')) !!}
+                            <strong>* {{ trans('validation.attributes.pricerange_end') }} (บาท):</strong>
+                            {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => trans('validation.attributes.pricerange_end'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
                         <br/>
                         <div class="form-group pd-top-10 col-md-6 {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
-                            <strong>* {{Lang::get('validation.attributes.volumnrange_product_need')}} :</strong>
-                            {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => Lang::get('validation.attributes.volumnrange_product_need'),'class' => 'form-control min-width-100pc')) !!}
+                            <strong>* {{trans('validation.attributes.volumnrange_product_need')}} :</strong>
+                            {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => trans('validation.attributes.volumnrange_product_need'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
 
                         <div class="form-group pd-top-10 col-md-6 {{ $errors->has('province') ? 'has-error' : '' }}">

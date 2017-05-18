@@ -37,10 +37,10 @@ use App\Http\Controllers\frontend\MarketController;
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
                                 <?php
-                                $city_province = $col_md_4_item['city'].' '.$col_md_4_item['province'];
-                                if(mb_strlen($city_province,"UTF-8") > 23){
+                                $city_province = $col_md_4_item['city'] . ' ' . $col_md_4_item['province'];
+                                if (mb_strlen($city_province, "UTF-8") > 23) {
                                     echo mb_strimwidth($city_province, 0, 22, '...', 'UTF-8');
-                                }else{
+                                } else {
                                     echo $city_province;
                                 }
                                 ?>
@@ -48,22 +48,30 @@ use App\Http\Controllers\frontend\MarketController;
                                 <br/><br/>
                             </div>
                             @if($col_md_4_item['productstatus'] == 'open')
-                            <div class="rating hidden-sm col-md-4">
-                                <a href="#" onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}')" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
-                            </div>
+                                <div class="rating hidden-sm col-md-4">
+                                    <a href="#"
+                                       onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}' , '{{$col_md_4_item['min_order']}}')"
+                                       class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                                </div>
                             @endif
                         </div>
-                        <div class="separator clear-left">
-                            <p class="btn-add">
-                                <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? floatval($col_md_4_item['price']) : trans('messages.product_no_price') }}</span>
-                            </p>
-                            <p class="btn-details">
-                                <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? trans('messages.unit_price'). " ".floatval($col_md_4_item['price']). trans('messages.baht')." / ". $col_md_4_item['units'] : trans('messages.product_no_price') }}</span>
+                                </p>
+                            </div>
                         </div>
-                        <div class="clearfix">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <i class="fa fa-list"></i>
+                                    <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                       class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <?php
@@ -96,7 +104,8 @@ use App\Http\Controllers\frontend\MarketController;
                     <div class="info">
                         <div class="row">
                             <div class="price col-md-9">
-                                <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }}
+                                <h4>{{ $col_md_4_item['product_title'] }}
+                                    : {{ floatval($col_md_4_item['volumnrange_start']) }}
                                     - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
@@ -107,12 +116,13 @@ use App\Http\Controllers\frontend\MarketController;
                         </div>
                         <div class="separator clear-left">
                             <p class="btn-add">
-                                <span class="hidden-sm">THB {{ floatval($col_md_4_item['pricerange_start']) }}
-                                    - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
+                                <span class="hidden-sm"> {{ floatval($col_md_4_item['pricerange_start']) }}
+                                    - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}</span>
                             </p>
                             <p class="btn-details">
                                 <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                   class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                         </div>
                         <div class="clearfix">
                         </div>
@@ -189,25 +199,31 @@ use App\Http\Controllers\frontend\MarketController;
         });
     });
 
-    function addToCart(productRequestId , userId , unit_price) {
+    function addToCart(productRequestId, userId, unit_price, min_order) {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
         $.ajax({
             type: 'POST',
             url: targetUrl,
-            data: {_token: CSRF_TOKEN, product_request_id: productRequestId , user_id: userId , unit_price: unit_price},
+            data: {
+                _token: CSRF_TOKEN,
+                product_request_id: productRequestId,
+                user_id: userId,
+                unit_price: unit_price,
+                min_order: min_order
+            },
             dataType: 'json',
             success: function (response) {
                 if (response.status == 'success') {
                     showProductAdded(response.product_request);
-                }else{
+                } else {
                     window.location = 'user/login';
                 }
             },
             error: function (request, status, error) {
                 window.location = 'user/login';
                 console.log(request.responseText);
-               //alert(request.responseText);
+                //alert(request.responseText);
             }
         });
     }

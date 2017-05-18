@@ -131,10 +131,14 @@
                                 </td>
                                 <td class="col-sm-2 col-md-2">
                                     <div class="input-append text-left">
+                                        @if($cart["qty"] > $cart["min_order"])
                                         <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'], 'is_added'=> 0 )) }}"
                                            class="btn btn-default minus">
                                             <i class="fa fa-minus"></i>
                                         </a>
+                                        @else
+                                            <button type="button" class="btn btn-default minus disabled"><i class="fa fa-minus"></i></button>
+                                        @endif
                                         <input class="text-center product_quantity" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
                                                id="appendedInputButtons" size="16" type="text">
                                         @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"])

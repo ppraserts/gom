@@ -24,12 +24,13 @@ class ProductsSaleEditController extends Controller
 {
     private $rules = [
         'productcategorys_id' => 'required',
-        'products_id' => 'required',
+//        'products_id' => 'required',
         //'product_title' => 'required',
         //'product_description' => 'required',
         'price' => 'required|numeric',
         'volumn' => 'required|numeric',
         'units' => 'required',
+        'min_order' => 'min:1',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -49,12 +50,13 @@ class ProductsSaleEditController extends Controller
 
     private $rules3 = [
         'productcategorys_id' => 'required',
-        'products_id' => 'required',
+//        'products_id' => 'required',
         //'product_title' => 'required',
         //'product_description' => 'required',
         'price' => 'required|numeric',
         'volumn' => 'required|numeric',
         'units' => 'required',
+        'min_order' => 'min:1',
         'province' => 'required',
         'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -130,6 +132,35 @@ class ProductsSaleEditController extends Controller
         $id = $request->id;
         $useritem = auth()->guard('user')->user();
 
+        $product_id = $request->products_id;
+        $productExist = false;
+        if ($request->products_id > 0){
+            $product = Product::find($product_id);
+            if ($product == null || $product->product_name_th != $request->fake_products_name){
+                $productExist = false;
+            }
+        }else if ($product_id == ''){
+            if ($request->fake_products_name != ''){
+                $product = Product::where('product_name_th','=',$request->fake_products_name)
+                    ->where('productcategory_id','=',$request->productcategorys_id)->first();
+                if ($product!=null){
+                    $productExist = true;
+                    $product_id = $product->id;
+                }
+            }
+        }
+
+        if (!$productExist){
+            $product = new Product();
+            $product->product_name_th = $request->fake_products_name;
+            $product->product_name_en = $request->fake_products_name;
+            $product->productcategory_id = $request->productcategorys_id;
+            $product->user_id = $useritem->id;
+            $product->sequence = 999;
+            $product->save();
+            $product_id = $product->id;
+        }
+
         if ($id == 0) {
             $productRequest = new ProductRequest();
             $productRequest->id = 0;
@@ -174,12 +205,13 @@ class ProductsSaleEditController extends Controller
         $productRequest->price = $request->price;
 //        $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
         $productRequest->volumn = $request->volumn;
+        $productRequest->min_order = $request->min_order;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->units = $request->units;
 //        $productRequest->city = $request->city;
         $productRequest->province = $request->province;
         $productRequest->productcategorys_id = $request->productcategorys_id;
-        $productRequest->products_id = $request->products_id;
+        $productRequest->products_id = $product_id;
         $productRequest->users_id = $useritem->id;
         $productRequest->grade = $request->grade;
 //        $productRequest->is_packing = $request->is_packing;

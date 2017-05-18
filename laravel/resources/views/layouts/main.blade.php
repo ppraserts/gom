@@ -126,7 +126,7 @@ if (is_array($carts)) {
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{{url('user/iwanttobuy')}}">
-                                            {{ trans('messages.i_want_to_sale') }}
+                                            {{ trans('messages.i_want_to_buy') }}
                                         </a>
                                     </li>
                                     <li>

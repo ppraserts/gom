@@ -110,6 +110,7 @@ class ShoppingCartController extends Controller
         $request_product_request_id = $request->input('product_request_id');
         $request_user_id = $request->input('user_id');
         $request_unit_price = $request->input('unit_price');
+        $request_min_order = $request->input('min_order');
         $product_request = ProductRequest::find($request_product_request_id);
 
         if ($product_request != null) {
@@ -121,7 +122,8 @@ class ShoppingCartController extends Controller
                 "product_request_id" => $product_request->id,
                 "user_id" => $request_user_id,
                 "unit_price" => $request_unit_price,
-                "qty" => 1);
+                "qty" => $request_min_order,
+                "min_order" => $request_min_order);
 
             array_push($carts_in_session, $new_cart_item);
 

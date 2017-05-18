@@ -43,11 +43,11 @@
     var products_array = [];
 
     function validate() {
-        if (jQuery.inArray($('input[name=fake_products_id]').val(), products_array) == -1) {
+        /*if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) {
             alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
-            $('input[name=fake_products_id]').focus();
+            $('input[name=fake_products_name]').focus();
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -336,7 +336,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('products_id') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.products_id') }}
                             :</strong>
-                        {!! Form::text('fake_products_id', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
+                        {!! Form::text('fake_products_name', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
                         <input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
                     </div>
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('product_title') ? 'has-error' : '' }}">
@@ -444,6 +444,11 @@
                         <strong>* {{ trans('validation.attributes.volumn') }}
                             :</strong>
                         {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <strong>{{ trans('validation.attributes.min_order') }}
+                            :</strong>
+                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.จำนวนสั่งซื้อขึ้นต่ำ'),'class' => 'form-control')) !!}
                     </div>
                 </div>
 
