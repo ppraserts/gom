@@ -70,6 +70,10 @@ class UserProfileController extends Controller
       $user->users_imageprofile = $uploadImage["imageName"];
     }
 
+    $user->requset_email_system = 0;
+    if(!empty($request->input('requset_email_system'))){
+        $user->requset_email_system = $request->input('requset_email_system');
+    }
     $user->users_addressname = $request->input('users_addressname');
     $user->users_street = $request->input('users_street');
     $user->users_district = $request->input('users_district');

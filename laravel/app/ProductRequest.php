@@ -83,6 +83,7 @@ class ProductRequest extends Model
                                           ,u.users_taxcode
                                           ,u.users_company_th
                                           ,u.users_company_en
+                                          ,u.requset_email_system
                                           FROM
                                           (
                                                     SELECT 'green' as Colors ,a.*
@@ -167,6 +168,7 @@ class ProductRequest extends Model
                                           ,u.users_taxcode
                                           ,u.users_company_th
                                           ,u.users_company_en
+                                          ,u.requset_email_system
                                           FROM
                                           (
                                                     SELECT

@@ -175,11 +175,15 @@ class ProductsBuyEditController extends Controller
         $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
 
         foreach ($itemsbuy as $div_item) {
-            $this->SendEmailMatching($div_item);
+            if ($div_item->requset_email_system == 1){
+                $this->SendEmailMatching($div_item);
+            }
         }
 
         foreach ($itemssale as $div_item) {
-            $this->SendEmailMatching($div_item);
+            if ($div_item->requset_email_system == 1) {
+                $this->SendEmailMatching($div_item);
+            }
         }
 
         return redirect()->route('productbuyedit.show', ['id' => $id])

@@ -192,6 +192,8 @@ return [
     'clone_product' => 'Clone สินค้า',
     'clone_product_success' => 'Clone สินค้าแล้ว',
     'add_buy' => 'เพิ่มรายการต้องการซื้อ',
-    'edit_buy' => 'แก้ไขรายการต้องการซื้อ'
+    'edit_buy' => 'แก้ไขรายการต้องการซื้อ',
+    'lable_requset_email_system' => 'ยอมรับอีเมล์แจ้งเตือนจากระบบ'
+
 
 ];

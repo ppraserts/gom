@@ -1,9 +1,9 @@
 @extends('layouts.main')
 @push('scripts')
-<script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
+{{--<script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>--}}
+{{--<script src="{{ asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>--}}
 <script>
-    CKEDITOR.replace('product_description');
+//    CKEDITOR.replace('product_description');
 
     $('#btnDelete').on('click', function (e) {
         if (confirm('{{ trans('messages.confirm_delete', ['attribute' => $item->product_title]) }}')) {

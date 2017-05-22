@@ -131,19 +131,20 @@
                         <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
                     </div>
                     <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                        {{ trans('validation.attributes.email') }}
-                        :
+                        {{ trans('validation.attributes.email') }} :
                         <strong>{{ $item->email }}</strong>
                     </div>
                     @if($item->users_membertype == "personal")
                         <div class="form-group {{ $errors->has('users_idcard') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.users_idcard') }}
-                            :
+                            {{ trans('validation.attributes.users_idcard') }} :
                             <strong>{{ $item->users_idcard }}</strong>
                         </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="requset_email_system" value="1" @if(!empty($item->requset_email_system)) checked @endif>
+                            {{ trans('messages.lable_requset_email_system') }}
+                        </div>
                         <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_qrcode') }}
-                                :</strong>
+                            <strong>{{ trans('validation.attributes.users_qrcode') }} :</strong>
                             {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
                         </div>
                         <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
