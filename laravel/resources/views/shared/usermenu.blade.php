@@ -64,13 +64,13 @@ $productRequest = new ProductRequest();
             {{ trans('messages.menu_matching') }}
             <span class="badge">
                            @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
-                    {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) + count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
+                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) + count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
                 @endif
                 @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
-                    {{ count($productRequest->GetSaleMatchingWithBuy($user->id,Request::input('orderby'))) }}
+                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
                 @endif
                 @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
-                    {{ count($productRequest->GetBuyMatchingWithSale($user->id,Request::input('orderby'))) }}
+                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
                 @endif
                            </span>
         </a>
