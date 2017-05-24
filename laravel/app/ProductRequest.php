@@ -467,6 +467,7 @@ class ProductRequest extends Model
                             join products b on a.products_id = b.id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition 
+                            order by a.sequence asc, a.updated_at desc
               "));
         } else {
             $results = DB::select(
@@ -505,7 +506,8 @@ class ProductRequest extends Model
                             join products b on a.products_id = b.id
                             join shops s on u.id = s.user_id
                             where a.`iwantto` = '$iwantto'
-                            $sqlcondition $sqlSearchByShopName
+                            $sqlcondition $sqlSearchByShopName 
+                            order by a.sequence asc, a.updated_at desc
               "));
         }
 

@@ -164,30 +164,39 @@ $url = "user/iwanttosale";
                     </div>
                     <div class="info">
                         <div class="row">
-                            <div class="price col-md-8">
-                                <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?></h4>
+                            <div class="price col-md-12">
+                                <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 40, '...', 'UTF-8'); ?></h4>
                                 <span class="glyphicon glyphicon-tag"></span>
-                                <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
+                                <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 40, '...', 'UTF-8'); ?></i><br/>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                                {{ mb_strimwidth($col_md_4_item['city'] ." ".$col_md_4_item['province'], 0, 40, '...', 'UTF-8') }}
                                 <br/><br/>
-                            </div>
-                            <div class="rating hidden-sm col-md-4">
-                                {{--<a href="#" onclick="addToCart('{{$col_md_4_item['id']}}')" class="btn btn-primary"><i--}}
-                                            {{--class="fa fa-shopping-cart"></i></a>--}}
                             </div>
 
                         </div>
-                        <div class="separator clear-left">
-                            <p class="btn-add">
-                                <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? floatval($col_md_4_item['price']) : trans('messages.product_no_price') }}</span>
-                            </p>
-                            <p class="btn-details">
-                                <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                   class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="hidden-sm">  {{ trans('messages.unit_price'). " ".floatval($col_md_4_item['price']). trans('messages.baht')." / ". $col_md_4_item['units'] }}</span>
+                                </p>
+                            </div>
                         </div>
-                        <div class="clearfix">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <i class="fa fa-list"></i>
+                                    <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                       class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <i class="fa fa-pencil-square-o"></i>
+                                    <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}"
+                                       class="hidden-sm">{{ trans('messages.edit')}}</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>

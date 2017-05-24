@@ -393,6 +393,10 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-xs-4 col-sm-6 col-md-4">
+                        <strong> {{ trans('validation.attributes.sequence') }} :</strong>
+                        {!! Form::number('sequence', $item->sequence != '' ? $item->sequence : '1', array('class' => 'form-control')) !!}
+                    </div>
                 </div>
 
             </div>
@@ -448,7 +452,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-4">
                         <strong>{{ trans('validation.attributes.min_order') }}
                             :</strong>
-                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.จำนวนสั่งซื้อขึ้นต่ำ'),'class' => 'form-control')) !!}
+                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
                     </div>
                 </div>
 

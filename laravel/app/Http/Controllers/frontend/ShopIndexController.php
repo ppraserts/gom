@@ -34,7 +34,7 @@ class ShopIndexController extends Controller
             ->where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
             ->select('*')
-            ->orderBy('created_at','DESC')
+            ->orderBy('sequence','ASC')
             ->orderBy('updated_at','DESC')
             ->limit(8);
         $products = $query->get();
