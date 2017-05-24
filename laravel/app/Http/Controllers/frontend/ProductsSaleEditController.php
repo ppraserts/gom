@@ -214,6 +214,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->products_id = $product_id;
         $productRequest->users_id = $useritem->id;
         $productRequest->grade = $request->grade;
+        $productRequest->sequence = $request->sequence;
 //        $productRequest->is_packing = $request->is_packing;
         $productRequest->packing_size = $request->packing_size;
         $productRequest->province_selling = $request->province_selling;

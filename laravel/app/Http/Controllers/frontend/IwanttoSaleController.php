@@ -55,8 +55,10 @@ class IwanttoSaleController extends Controller
 					  ->orWhere('product_name_th','like','%'.$search.'%');
       }
 
-      $items = $query->orderBy('product_requests.created_at','desc')
-                     ->paginate(config('app.paginate'));
+      $items = $query
+          ->orderBy('product_requests.sequence','asc')
+          ->orderBy('product_requests.updated_at','desc')
+          ->paginate(config('app.paginate'));
 
       return view('frontend.iwanttosale',compact('items','productCategoryitem'))
           ->with('i', ($request->input('page', 1) - 1) * config('app.paginate'));

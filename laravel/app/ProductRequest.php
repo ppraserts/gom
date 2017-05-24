@@ -37,13 +37,86 @@ class ProductRequest extends Model
         'selling_type'
     ];
 
+    public function matchWithBuy($userid, $whereColumn, $orderby = 'price', $order = 'ASC')
+    {
+        $orderbycondition = "";
+        if ($orderby == "province")
+            $orderbycondition = "matching.province";
+        else if ($orderby == "quantity")
+            $orderbycondition = "matching.units";
+        else if ($orderby == "price")
+            $orderbycondition = "matching.price";
 
-    public function GetSaleMatchingWithBuy($userid, $orderby)
+        $conditionStr = "";
+        foreach ($whereColumn as $column) {
+            if ($column == "price") {
+                $conditionStr .= " and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)";
+            } else if ($column == "province") {
+                $conditionStr .= " and a.province like CONCAT('%', b.province , '%')";
+            } else if ($column == "quantity") {
+                $conditionStr .= " and b.volumnrange_start >= a.min_order";
+            }
+        }
+        $results = DB::select(
+            DB::raw("SELECT matching.*
+                                          ,u.users_firstname_th
+                                          ,u.users_lastname_th
+                                          ,u.users_firstname_en
+                                          ,u.users_lastname_en
+                                          ,u.users_dateofbirth
+                                          ,u.users_gender
+                                          ,u.users_addressname
+                                          ,u.users_street
+                                          ,u.users_district
+                                          ,u.users_city
+                                          ,u.users_province
+                                          ,u.users_postcode
+                                          ,u.users_mobilephone
+                                          ,u.users_phone
+                                          ,u.users_fax
+                                          ,u.users_imageprofile
+                                          ,u.users_latitude
+                                          ,u.users_longitude
+                                          ,u.users_contactperson
+                                          ,u.users_membertype
+                                          ,u.iwanttosale
+                                          ,u.iwanttobuy
+                                          ,u.users_idcard
+                                          ,u.is_active
+                                          ,u.email
+                                          ,u.users_qrcode
+                                          ,u.users_taxcode
+                                          ,u.users_company_th
+                                          ,u.users_company_en
+                                          ,u.requset_email_system
+                                          FROM
+                                          (
+                                                    SELECT a.*, p.product_name_th
+                                                      FROM `product_requests` a
+                                                      join `product_requests` b on b.users_id=$userid
+                                                          and b.iwantto = 'buy'
+                                                          AND a.iwantto =  'sale'
+                                                          and a.productcategorys_id = b.productcategorys_id
+                                                          and a.products_id = b.products_id
+                                                          and a.productstatus = 'open'
+                                                          $conditionStr
+                                                      JOIN `products` p on a.products_id = p.id
+                                          ) as matching
+                                          join users u on matching.users_id = u.id
+                                          group by matching.id
+                                          order by $orderbycondition $order")
+        );
+
+        return $results;
+
+    }
+
+    /*public function GetSaleMatchingWithBuy($userid, $orderby)
     {
         $orderbycondition = "";
         if ($orderby == "province")
             $orderbycondition = ",matching.province";
-        else if ($orderby == "unit")
+        else if ($orderby == "quantity")
             $orderbycondition = ",matching.units";
         else if ($orderby == "price")
             $orderbycondition = ",matching.pricerange_start";
@@ -125,14 +198,90 @@ class ProductRequest extends Model
         );
 
         return $results;
+    }*/
+
+    public function matchingWithSale($userid, $whereColumn, $orderby = 'price', $order = 'ASC')
+    {
+        $orderbycondition = "";
+        if ($orderby == "province")
+            $orderbycondition = "matching.province";
+        else if ($orderby == "quantity")
+            $orderbycondition = "matching.units";
+        else if ($orderby == "price")
+            $orderbycondition = "matching.price";
+
+        $conditionStr = "";
+        foreach ($whereColumn as $column) {
+            if ($column == "price") {
+                $conditionStr .= " and (sale.`price` between buy.`pricerange_start` and buy.`pricerange_end`)";
+            } else if ($column == "province") {
+                $conditionStr .= " and sale.province like CONCAT('%', buy.province , '%')";
+            } else if ($column == "quantity") {
+                $conditionStr .= " and buy.volumnrange_start >= sale.min_order";
+            }
+        }
+
+        $results = DB::select(
+            DB::raw("SELECT matching.*
+                                          ,u.users_firstname_th
+                                          ,u.users_lastname_th
+                                          ,u.users_firstname_en
+                                          ,u.users_lastname_en
+                                          ,u.users_dateofbirth
+                                          ,u.users_gender
+                                          ,u.users_addressname
+                                          ,u.users_street
+                                          ,u.users_district
+                                          ,u.users_city
+                                          ,u.users_province
+                                          ,u.users_postcode
+                                          ,u.users_mobilephone
+                                          ,u.users_phone
+                                          ,u.users_fax
+                                          ,u.users_imageprofile
+                                          ,u.users_latitude
+                                          ,u.users_longitude
+                                          ,u.users_contactperson
+                                          ,u.users_membertype
+                                          ,u.iwanttosale
+                                          ,u.iwanttobuy
+                                          ,u.users_idcard
+                                          ,u.is_active
+                                          ,u.email
+                                          ,u.users_qrcode
+                                          ,u.users_taxcode
+                                          ,u.users_company_th
+                                          ,u.users_company_en
+                                          ,u.requset_email_system
+                                          FROM
+                                          (
+                                                    SELECT buy.*, p.product_name_th
+                                                      FROM product_requests buy
+                                                      JOIN product_requests sale on
+                                                            sale.users_id=$userid
+                                                            and sale.iwantto = 'sale'
+                                                            AND buy.iwantto =  'buy'
+                                                            and buy.productcategorys_id = sale.productcategorys_id
+                                                            and buy.products_id = sale.products_id
+                                                            and buy.pricerange_start <= sale.price 
+                                                            and buy.pricerange_end>=sale.price
+                                                            and buy.volumnrange_start >= sale.min_order
+                                                    JOIN `products` p on buy.products_id = p.id
+                                          ) as matching
+                                          join users u on matching.users_id = u.id
+                                          group by matching.id
+                                          order by $orderbycondition $order")
+        );
+
+        return $results;
     }
 
-    public function GetBuyMatchingWithSale($userid, $orderby)
+    /*public function GetBuyMatchingWithSale($userid, $orderby)
     {
         $orderbycondition = "";
         if ($orderby == "province")
             $orderbycondition = ",matching.province";
-        else if ($orderby == "unit")
+        else if ($orderby == "quantity")
             $orderbycondition = ",matching.units";
         else if ($orderby == "price")
             $orderbycondition = ",matching.price";
@@ -180,7 +329,7 @@ class ProductRequest extends Model
                                                             AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-                                                            and buy.pricerange_start <= sale.price 
+                                                            and buy.pricerange_start <= sale.price
                                                             and buy.pricerange_end>=sale.price
                                                             and buy.volumnrange_start >= sale.min_order
                                                       union
@@ -216,7 +365,7 @@ class ProductRequest extends Model
         );
 
         return $results;
-    }
+    }*/
 
     public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
     {
@@ -318,6 +467,7 @@ class ProductRequest extends Model
                             join products b on a.products_id = b.id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition 
+                            order by a.sequence asc, a.updated_at desc
               "));
         } else {
             $results = DB::select(
@@ -356,7 +506,8 @@ class ProductRequest extends Model
                             join products b on a.products_id = b.id
                             join shops s on u.id = s.user_id
                             where a.`iwantto` = '$iwantto'
-                            $sqlcondition $sqlSearchByShopName
+                            $sqlcondition $sqlSearchByShopName 
+                            order by a.sequence asc, a.updated_at desc
               "));
         }
 
