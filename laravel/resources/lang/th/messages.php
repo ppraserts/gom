@@ -193,7 +193,12 @@ return [
     'clone_product_success' => 'Clone สินค้าแล้ว',
     'add_buy' => 'เพิ่มรายการต้องการซื้อ',
     'edit_buy' => 'แก้ไขรายการต้องการซื้อ',
-    'lable_requset_email_system' => 'ยอมรับอีเมล์แจ้งเตือนจากระบบ'
-
-
+    'lable_requset_email_system' => 'ยอมรับอีเมล์แจ้งเตือนจากระบบ',
+    'text_list_recomment_promotion' => 'รายการแนะนำโปรโมชั่น',
+    'text_date' => 'วันที่',
+    'text_email' => 'อีเมล',
+    'text_count_read_recomment_promotion' => 'จำนวนการอ่านอีเมล',
+    'text_recomment_promotion' => 'แนะนำโปรโมชั่น',
+    'text_send_promotion' => 'ส่งโปรโมชั่น',
+    'text_example' => 'ตัวอย่าง',
 ];

@@ -15,6 +15,9 @@ if ($mode == "create") {
 ?>
 @extends('layouts.main')
 @push('scripts')
+<link href="{{url('bootstrap-tokenfield/css/tokenfield-typeahead.css')}}" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="{{url('bootstrap-tokenfield/css/bootstrap-tokenfield.css')}}" />
+<script src="{{url('bootstrap-tokenfield/bootstrap-tokenfield.js')}}"></script>
 <script src="//maps.google.com/maps/api/js?key=AIzaSyCTyLJemFK5wu_ONI1iZobLGK9pP1EVReo"></script>
 <script type="text/javascript">
     $(function () {
@@ -38,7 +41,46 @@ if ($mode == "create") {
             startView: 2,
             maxViewMode: 2
         });
-    })
+    });
+
+
+//    $('#tokenfield-typeahead').tokenfield();
+    $('#tokenfield')
+
+        .on('tokenfield:createtoken', function (e) {
+            var data = e.attrs.value.split('|')
+            e.attrs.value = data[1] || data[0]
+            e.attrs.label = data[1] ? data[0] + ' (' + data[1] + ')' : data[0]
+        })
+
+        .on('tokenfield:createdtoken', function (e) {
+            // Über-simplistic e-mail validation
+            var re = /\S+@\S+\.\S+/
+            var valid = re.test(e.attrs.value)
+            if (!valid) {
+                $(e.relatedTarget).addClass('invalid')
+            }
+        })
+
+        .on('tokenfield:edittoken', function (e) {
+            if (e.attrs.label !== e.attrs.value) {
+                var label = e.attrs.label.split(' (')
+                e.attrs.value = label[0] + '|' + e.attrs.value
+            }
+        })
+
+        .on('tokenfield:removedtoken', function (e) {
+            //alert('Removed! value was: ' + e.attrs.value)
+        })
+
+        .tokenfield({
+            showAutocompleteOnFocus: false
+        })
+
+
+        @if (!empty(Session::get('error_recomment')))
+            $('#myModal').modal('show');
+        @endif
 </script>
 @endpush
 @section('content')
@@ -53,6 +95,7 @@ if ($mode == "create") {
         </div>
 
         @if (count($errors) > 0)
+            @if(!empty(Session::get('error_recomment'))) @else
             <div class="alert alert-danger">
                 <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
                 <br>
@@ -62,6 +105,7 @@ if ($mode == "create") {
                     @endforeach
                 </ul>
             </div>
+            @endif
         @endif
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -73,8 +117,10 @@ if ($mode == "create") {
         <div class="row">
             @if($method === "PATCH")
                 <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px">
-                    <strong>{{ trans('messages.link') }} : </strong><a
-                            href="{{ url ($shop->shop_name."/promotion/".$item->id) }}"> {{ url ($shop->shop_name."/promotion/".$item->id) }}</a>
+                    <strong>{{ trans('messages.link') }} : </strong>
+                    <a href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">
+                        {{ url ($shop->shop_name."/promotion/".$item->id) }}
+                    </a>
                 </div>
             @endif
 
@@ -136,6 +182,7 @@ if ($mode == "create") {
                 <div class="form-group {{ $errors->has('sequence') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label" style="padding-left: 0px;">
                         <strong>{{ trans('validation.attributes.sequence') }}:</strong>
+
                     </label>
                     <div class="col-sm-2" style="padding-left: 0px;">
                         {!! Form::number('sequence', null, array('placeholder' => trans('validation.attributes.sequence'),'style' => 'text-align:center;','class' => 'form-control')) !!}
@@ -143,16 +190,23 @@ if ($mode == "create") {
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
+
+
+            <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px;">
                 <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>"/>
                 <input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id; ?>"/>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     {{ trans('messages.button_save')}}</button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">แนะนำโปรโมชั่น</button>
             </div>
 
         </div>
         {!! Form::close() !!}
+        @include('frontend.promotion_element.modal')
+        @if(count($pormotion_recomments) > 0)
+            @include('frontend.promotion_element.list_recommen_promotion')
+        @endif
     </div>
 @endsection
 

@@ -165,6 +165,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('orderdetail/store-status-history','frontend\OrderController@storeStatusHistory');
 
     //Route::get('userproduct/index','frontend\ProductController@index');
+    Route::post('recommend-promotion/{id}','frontend\PromotionsController@recommendPromotion');
 
 });
 
@@ -192,6 +193,7 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
+
 
 Route::get('/{shop}', 'frontend\ShopIndexController@index');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

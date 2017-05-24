@@ -5,11 +5,14 @@ namespace App\Http\Controllers\frontend;
 use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
 use App\Shop;
+use App\PormotionRecomment;
 use Validator, Response;
 use Illuminate\Http\Request;
 use App\Promotions;
 use File;
 use Image;
+use Redirect, View, Session;
+use Illuminate\Support\Facades\Mail;
 
 class PromotionsController extends Controller
 {
@@ -30,6 +33,11 @@ class PromotionsController extends Controller
         'image_file' => 'mimes:jpeg,jpg,png,gif|max:500',
         'end_date' => 'required|after:start_date',
         'sequence' => 'required|integer',
+    ];
+
+    private $rules_reconment = [
+        'email' => 'required',
+        'detail' => 'required',
     ];
 
     /*private $ruleDate = [
@@ -148,7 +156,8 @@ class PromotionsController extends Controller
             'shop_id' => $shop->id
         );
         $item = Promotions::find($id);
-        return view('frontend.promotionedit', compact('item', 'shop'))->with($data);
+        $pormotion_recomments = PormotionRecomment::where('promotion_id',$id)->paginate(25);
+        return view('frontend.promotionedit', compact('item', 'shop','pormotion_recomments'))->with($data);
     }
 
     /**
@@ -208,7 +217,7 @@ class PromotionsController extends Controller
         $orgFilePathName = $request->{$filename}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_promotion');
-        $image_path_filename = $image_directory . "/" . time() .".".$ext;
+        $image_path_filename = $image_directory . "/" . time() . "." . $ext;
         File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);
@@ -232,6 +241,70 @@ class PromotionsController extends Controller
                 File::deleteDirectory(config('app.upload_promotion') . $rawfileArr[$indexFolder]);
             }
         }
+    }
+
+    public function recommendPromotion(Request $request, $id)
+    {
+        //return $user = auth()->guard('user')->user();
+        $validator = $this->getValidationFactory()->make($request->all(), $this->rules_reconment, [], []);
+        if ($validator->fails()) {
+            Session::flash('error_recomment',trans('messages.message_update_success'));
+            return Redirect::to('user/promotion/' . $id . '/edit')->withErrors($validator)->withInput();
+        }
+        $user = auth()->guard('user')->user();
+        $promotion = Promotions::find($id);
+        $shop = Shop::where('user_id', $user->id)->first();
+        $emailArr = $request->input('email');
+        $detail = $request->input('detail');
+        $emails = explode(',', $emailArr);
+        $link = url($shop->shop_name."/promotion/".$id);
+        $image_file = url($promotion->image_file);
+        foreach ($emails as $email) {
+            if (filter_var(trim($email), FILTER_VALIDATE_EMAIL)) {
+                $recomment['email'] = $email;
+                $recomment['detail'] = $detail;
+                $recomment['count_recommend'] = 0;
+                $recomment['recommend_date'] = date('Y-m-d');
+                $recomment['promotion_id'] = $id;
+                $last_id = PormotionRecomment::insertGetId($recomment);
+                $encode_id = md5($last_id);
+                $this->SendEmailPromotion($email, $detail, $shop->shop_title, $promotion->promotion_title, $image_file, $user, $link, $last_id,$encode_id);
+
+            }
+        }
+        Session::flash('success',trans('messages.message_update_success'));
+        return redirect('user/promotion/'.$id.'/edit');
+    }
+
+    private function SendEmailPromotion($email, $detail = '', $shop_title, $promotion_title, $image_file, $user, $link,$last_id,$encode_id)
+    {
+        $sendemailTo = $email;
+        $sendemailFrom = env('MAIL_USERNAME');
+
+        $data = array(
+            'email' => $email,
+            'detail' => $detail,
+            'shop_title' => $shop_title,
+            'promotion_title' => $promotion_title,
+            'image_file' => $image_file,
+            'user_name' => $user->users_firstname_th.' '.$user->users_lastname_th,
+            'users_addressname' => $user->users_addressname,
+            'users_street' => $user->users_street,
+            'users_district' => $user->users_district,
+            'users_city' => $user->users_city,
+            'users_province' => $user->users_province,
+            'users_postcode' => $user->users_postcode,
+            'users_mobilephone' => $user->users_mobilephone,
+            'link' => $link,
+            'pormotion_recomment_id' => $last_id,
+            'encode_id' => $encode_id
+        );
+
+       sleep(0.1);
+       Mail::send('frontend.promotion_element.email_template', $data, function ($message) use ($sendemailTo, $sendemailFrom, $promotion_title) {
+            $message->from($sendemailFrom);
+            $message->to($sendemailTo)->subject($promotion_title);
+        });
     }
 
 }
