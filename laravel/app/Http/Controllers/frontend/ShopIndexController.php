@@ -9,6 +9,7 @@ use Auth;
 use App\Shop;
 use App\ProductRequest;
 use Illuminate\Support\Facades\DB;
+use App\PormotionRecomment;
 
 class ShopIndexController extends Controller
 {
@@ -117,7 +118,19 @@ class ShopIndexController extends Controller
         //
     }
 
-    public function promotion($shop,$id){
+    public function promotion(Request $request,$shop,$id){
+        if(!empty($request->input('rid')) and !empty($request->input('key'))){
+            $pr_id = $request->input('rid');
+            $key = $request->input('key');
+            if($key == md5($pr_id)){
+                $pormotion_recomment = PormotionRecomment::find($pr_id);
+                $data['count_recommend'] = 1 + $pormotion_recomment->count_recommend;
+                PormotionRecomment::where('id',$pr_id)->update($data);
+            }else{
+                return view('errors.404');
+            }
+        }
+
         $shop = Shop::where('shop_name', $shop)->get();
 
         $promotion = Promotions::find($id);

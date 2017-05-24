@@ -302,7 +302,7 @@ class PromotionsController extends Controller
 
        sleep(0.1);
        Mail::send('frontend.promotion_element.email_template', $data, function ($message) use ($sendemailTo, $sendemailFrom, $promotion_title) {
-            $message->from($sendemailFrom);
+            $message->from($sendemailFrom, 'DGTFarm');
             $message->to($sendemailTo)->subject($promotion_title);
         });
     }
