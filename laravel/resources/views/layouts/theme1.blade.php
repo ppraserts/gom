@@ -19,6 +19,8 @@
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+
+
 </head>
 
 <body class="theme theme-section theme-section-one">
@@ -115,6 +117,9 @@ if ($shop != null && isset($shop->image_file_1)) {
         </div>
     </section>
 </div>
+<link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
+<script src="{{url('jquery-loading/waitMe.js')}}"></script>
+@stack('scripts')
 </body>
 
 </html>

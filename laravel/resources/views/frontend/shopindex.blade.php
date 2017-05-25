@@ -78,3 +78,7 @@
         </div>
     @endif
 @stop
+@push('scripts')
+<script> var partUrl = "{{url('/')}}"; </script>
+<script src="{{url('js/comment_shop.js')}}"></script>
+@endpush

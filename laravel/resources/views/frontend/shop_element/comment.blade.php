@@ -1,6 +1,7 @@
 <div class="detailBox" id="commentBox">
     <div class="titleBox">
         <label><i class="fa fa-commenting" aria-hidden="true"></i> {{ trans('messages.text_comments')}}</label>
+        <input type="hidden" id="shop_name" value="{{$shop->shop_name}}">
     </div>
     <div class="commentBox row">
         <div class="col-md-8">
@@ -51,60 +52,13 @@
                     <ul class="commentList">
                         @if(count($comments) > 0)
                             @foreach($comments as $comment)
-                                <li>
-                                    <div class="commenterImage">
-                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="commentText">
-                                        <p class="score-star">
-                                            @if($comment->score == 1)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                            @elseif($comment->score == 2)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                            @elseif($comment->score == 3)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                            @elseif($comment->score == 4)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                            @elseif($comment->score == 5)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            @elseif($comment->score == 0)
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                            @endif
-
-                                        </p>
-                                        <p class="">
-                                            {!! $comment->comment !!}
-                                        </p>
-                                        <span class="date sub-text">
-                                        {{ trans('messages.text_date')}}: {{date("d M Y", strtotime($comment->created_at))}}
-                                    </span>
-
-                                    </div>
-                                </li>
+                                @if(!empty($status_comment) and $status_comment == 1 and $comment->status == 1)
+                                    @include('frontend.shop_element.list_comment')
+                                @elseif(!empty($status_comment) and $status_comment == 1 and $comment->status == 0)
+                                    @include('frontend.shop_element.list_comment')
+                                @elseif(empty($status_comment) and $comment->status == 1)
+                                    @include('frontend.shop_element.list_comment')
+                                @endif
                             @endforeach
                         @endif
                     </ul>

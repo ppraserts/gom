@@ -11,7 +11,7 @@ use App\Comment;
 use App\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use App\PormotionRecomment;
-use Redirect,Session;
+use Redirect,Session,Response;
 
 class ShopIndexController extends Controller
 {
@@ -26,6 +26,8 @@ class ShopIndexController extends Controller
      */
     public function index($shop_name)
     {
+        $user = auth()->guard('user')->user();
+
         $shop = Shop::with(['user'])->where('shop_name',$shop_name)->first();
         if ($shop == null) {
             return abort(404);
@@ -35,6 +37,10 @@ class ShopIndexController extends Controller
             $theme = trim($shop->theme);
         } else {
             $theme = "main";
+        }
+        $status_comment = '';
+        if($shop->user_id == $user['id']){
+            $status_comment = 1;
         }
 
         $query = DB::table('product_requests')
@@ -56,7 +62,7 @@ class ShopIndexController extends Controller
 
         $comments = Comment::where('shop_id',$shop->id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
 
-        return view('frontend.shopindex', compact('theme' , 'products','promotions'))
+        return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment'))
             ->with('comments', $comments)
             ->with('shop', $shop);
     }
@@ -173,11 +179,26 @@ class ShopIndexController extends Controller
             $comment['comment'] = $request->input('comment');
             $comment['shop_id'] = $shop_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
+            $comment['status']= 1;
             Comment::insertGetId($comment);
             Session::flash('success','Comment successfully.');
             return redirect($shop_name.'#commentBox');
         }
         return abort(404);
 
+    }
+    public function updateCommentStatus(Request $request,$shop_name,$id)
+    {
+        if($request->ajax()){
+            $id_input = $request->input('id');
+            $status = $request->input('status');
+            if($id_input == $id){
+                $data['status']= $status;
+                Comment::where('id',$id)->update($data);
+                return Response::json(array('R'=>'Y'));
+            }
+            return Response::json(array('R'=>'N'));
+        }
+        return Response::view('errors.404');
     }
 }

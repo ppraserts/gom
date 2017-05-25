@@ -152,3 +152,9 @@ function renderHTML($text)
         </div>
     </div>
 @stop
+@push('scripts')
+<link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
+<script src="{{url('jquery-loading/waitMe.js')}}"></script>
+<script> var partUrl = "{{url('/')}}"; </script>
+<script src="{{url('js/comment_product.js')}}"></script>
+@endpush

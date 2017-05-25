@@ -23,6 +23,7 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Trirong:400,500,600,700" rel="stylesheet">
 
+
 </head>
 <?php
 if ($shop != null && $shop->image_file_3!="") {
@@ -112,7 +113,9 @@ if ($shop != null && $shop->image_file_3!="") {
         </div>
     </div>
 </section>
-
+<link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
+<script src="{{url('jquery-loading/waitMe.js')}}"></script>
+@stack('scripts')
 </body>
 
 </html>

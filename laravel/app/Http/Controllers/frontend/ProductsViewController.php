@@ -34,8 +34,14 @@ class ProductsViewController extends Controller
             ->first();
 
         $user = auth()->guard('user')->user();
+
+        $status_comment = '';
+        if($productRequest->user_id == $user['id']){
+            $status_comment = 1;
+        }
+
         $comments = Comment::where('product_id',$id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
-        return view('frontend.productview', compact('productRequest', 'user','comments'));
+        return view('frontend.productview', compact('productRequest', 'user','comments','status_comment'));
     }
 
     /**
@@ -59,11 +65,26 @@ class ProductsViewController extends Controller
             $comment['comment'] = $request->input('comment');
             $comment['product_id'] = $product_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
+            $comment['status']= 1;
             Comment::insertGetId($comment);
             Session::flash('success', 'Comment successfully.');
             return redirect('user/productview/' . $product_id . '#commentBox');
         }
         return abort(404);
 
+    }
+    public function updateCommentStatus(Request $request,$id)
+    {
+        if($request->ajax()){
+            $id_input = $request->input('id');
+            $status = $request->input('status');
+            if($id_input == $id){
+                $data['status']= $status;
+                Comment::where('id',$id)->update($data);
+                return Response::json(array('R'=>'Y'));
+            }
+            return Response::json(array('R'=>'N'));
+        }
+        return Response::view('errors.404');
     }
 }
