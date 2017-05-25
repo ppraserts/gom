@@ -11,6 +11,7 @@ function renderHTML($text)
     @include('shared.usermenu', array('setActive'=>'matchings'))
     <br/>
     <div class="row">
+        <div class="col-lg-12">
         <div class="col-md-4" style="padding-right:30px; text-align:center;">
             @if($user->id == $productRequest->users_id)
                 <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary"><span
@@ -139,6 +140,15 @@ function renderHTML($text)
                     {{ floatval($productRequest->volumn) }} {{ $productRequest->units }}
                 @endif
             </h3>
+        </div>
+    </div>
+    </div>
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-lg-12">
+            <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
+            <link rel="stylesheet" href="{{url('css/star.css')}}">
+            <link rel="stylesheet" href="{{url('css/comment.css')}}">
+            @include('frontend.product_element.comment')
         </div>
     </div>
 @stop

@@ -128,6 +128,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('productsaleupdate','frontend\ProductsSaleEditController@updatesale');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
+    Route::post('productview/{id}/{key}', 'frontend\ProductsViewController@storeComment');
     //Shop
     Route::resource('shopsetting','frontend\ShopSettingController');
     Route::resource('shoppingcart','frontend\ShoppingCartController');
@@ -196,4 +197,6 @@ Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
 
 
 Route::get('/{shop}', 'frontend\ShopIndexController@index');
+Route::post('/{shop}/{id}/{key}', 'frontend\ShopIndexController@storeComment');
+
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

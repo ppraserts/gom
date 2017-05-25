@@ -108,9 +108,14 @@ if ($shop != null &&$shop->image_file_2 != "") {
     </section>
 </div>
 <div class="container">
-    <section class="comments">
+    <section class="comments" style="margin-bottom: 40px;">
         <div class="row">
-            <div class="col-lg-12"></div>
+            <div class="col-lg-12">
+                <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
+                <link rel="stylesheet" href="{{url('css/star.css')}}">
+                <link rel="stylesheet" href="{{url('css/comment.css')}}">
+                @include('frontend.shop_element.comment')
+            </div>
         </div>
     </section>
 </div>
