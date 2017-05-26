@@ -242,7 +242,8 @@ return [
         'product_province_selling' => 'พื้นที่จำหน่าย',
         'product_selling_start_date' => 'วันเริ่มต้นจำหน่าย',
         'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
-        'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม'
+        'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
+        'censor_word' => 'รูปแบบการเซ็นเซอร์',
     ],
 
 ];

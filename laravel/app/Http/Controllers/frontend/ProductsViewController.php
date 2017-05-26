@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\BadWord;
 use File;
 use DB;
 use Hash;
@@ -13,6 +14,7 @@ use App\Model\frontend\User;
 use App\ProductRequest;
 use App\ProductCategory;
 use App\Comment;
+use App\Config;
 use Redirect,Session;
 class ProductsViewController extends Controller
 {
@@ -60,9 +62,16 @@ class ProductsViewController extends Controller
             return abort(404);
         }
 
+
         if(!empty($product_id) and md5($product_id) == $product_key) {
+
+            $config = Config::find(1);
+            $badwords = BadWord::all();
+            foreach ($badwords as $word){
+                $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
+            }
             $comment['score'] = $request->input('star');
-            $comment['comment'] = $request->input('comment');
+            $comment['comment'] = $string;
             $comment['product_id'] = $product_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
             $comment['status']= 1;
