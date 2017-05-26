@@ -462,12 +462,18 @@ class ProductRequest extends Model
                             ,u.users_taxcode
                             ,u.users_company_th
                             ,u.users_company_en
+                            ,sum(c.score) as sum_score
+                            ,count(c.score) as count_score
+                            ,sum(c.score)/count(c.score) as avg_score
+                     
                             FROM `product_requests` a
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
+                            LEFT JOIN comments c on a.id = c.product_id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition 
-                            order by a.sequence asc, a.updated_at desc
+                            GROUP BY a.id
+                            order by avg_score desc, a.sequence asc, a.updated_at desc
               "));
         } else {
             $results = DB::select(
@@ -501,13 +507,18 @@ class ProductRequest extends Model
                             ,u.users_taxcode
                             ,u.users_company_th
                             ,u.users_company_en
+                            ,sum(c.score) as sum_score
+                            ,count(c.score) as count_score
+                            ,sum(c.score)/count(c.score) as avg_score
+                            
                             FROM `product_requests` a
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
                             join shops s on u.id = s.user_id
+                            LEFT JOIN comments c on a.id = c.product_id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition $sqlSearchByShopName 
-                            order by a.sequence asc, a.updated_at desc
+                            order by avg_score desc, a.sequence asc, a.updated_at desc
               "));
         }
 
