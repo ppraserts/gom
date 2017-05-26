@@ -12,6 +12,8 @@ use App\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use App\PormotionRecomment;
 use Redirect,Session,Response;
+use App\Config;
+use App\BadWord;
 
 class ShopIndexController extends Controller
 {
@@ -175,8 +177,13 @@ class ShopIndexController extends Controller
         }
 
         if(!empty($shop_id) and md5($shop_id) == $shop_key){
+            $config = Config::find(1);
+            $badwords = BadWord::all();
+            foreach ($badwords as $word){
+                $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
+            }
             $comment['score'] = $request->input('star');
-            $comment['comment'] = $request->input('comment');
+            $comment['comment'] = $string;
             $comment['shop_id'] = $shop_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
             $comment['status']= 1;

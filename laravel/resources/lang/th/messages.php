@@ -37,6 +37,7 @@ return [
     'menu_product_category' => 'กลุ่มสินค้า',
     'menu_slide_image' => 'สไลด์โชว์รูปภาพ',
     'menu_download_document' => 'ดาวน์โหลดเอกสาร',
+    'menu_bad_word' => 'คำที่ไม่เหมาะสม',
     'menu_aboutus' => 'เกี่ยวกับเรา',
     'menu_contactus' => 'ติดต่อเรา',
     'menu_contactusinfo' => 'ข้อมูลติดต่อเรา',
@@ -206,6 +207,7 @@ return [
     'text_rate_shop' => 'ให้คะแนนร้านค้านี้',
     'text_type_comment_here' => 'พิมพ์ความคิดเห็นที่นี่',
     'text_send_comment' => 'ส่งความคิดเห็น',
+    'add_bad_word' => 'เพิ่มคำที่ไม่เหมาะสม',
 
 
 ];

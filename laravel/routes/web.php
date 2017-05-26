@@ -192,6 +192,8 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('news','backend\NewsController');
     Route::resource('reportuser','backend\ReportController');
     Route::resource('adminteam','backend\AdminteamController');
+    Route::resource('badword','backend\BadWordController');
+    Route::post('censor','backend\BadWordController@censor');
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
