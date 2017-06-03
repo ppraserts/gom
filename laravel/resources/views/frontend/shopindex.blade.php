@@ -60,7 +60,7 @@
                                         </a>
                                     </div>
                                     <div class="{{ $theme == 'theme2' ? 'product-price-t2' : 'product-price'}}">
-                                        {{$product->price}}
+                                        {{ trans('messages.unit_price'). " ".floatval($product->price). trans('messages.baht')." / ". $product->units }}
                                     </div>
                                 </div>
                             </div>

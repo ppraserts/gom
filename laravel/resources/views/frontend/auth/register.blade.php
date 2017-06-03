@@ -156,6 +156,27 @@
                                 @endif
                             </div>
                         </div>
+                        @if(isset($standards))
+                        <div id="users_standard_section" class="form-group{{ $errors->has('users_standard') ? ' has-error' : '' }}">
+                            <label for="users_standard" class="col-md-4 control-label">{{ Lang::get('validation.attributes.guarantee') }}</label>
+
+                            <div class="col-md-6">
+                                @for($i = 0 ; $i < count($standards) ; $i++)
+                                    <label class="checkbox-inline">
+                                        <input name="users_standard[]" type="checkbox"
+                                               value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                        {{$standards[$i]->name}}
+                                    </label>
+                                @endfor
+
+                                @if ($errors->has('users_standard'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('users_standard') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                         <div class="form-group{{ $errors->has('users_firstname_th') ? ' has-error' : '' }}">
                             <label for="users_firstname_th" class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_firstname_th') }}</label>
 
