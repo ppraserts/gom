@@ -10,25 +10,56 @@
                     <h4 class="modal-title">{{ trans('messages.text_recomment_promotion') }}</h4>
                 </div>
                 <div class="modal-body">
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <strong>{{ trans('messages.message_whoops_error')}}</strong>
-                            <br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#input_detail">กรอกรายละเอียดแนะนำโปรโมชั่น</a></li>
+                        <li><a data-toggle="tab" id="box_preview_template" href="#preview_template">ตัวอย่างเทมเพลตอีเมล</a></li>
+                    </ul>
+
+                    <div class="tab-content" style="padding-top: 18px;">
+                        <div id="input_detail" class="tab-pane fade in active">
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <strong>{{ trans('messages.message_whoops_error')}}</strong>
+                                    <br>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <div class="form-group">
+                                <strong>{{ trans('messages.text_email') }} :</strong>
+                                <span style="color: #ff2222">( {{ trans('messages.text_example_email') }})</span>
+                                <input type="text" name="email" class="form-control" id="tokenfield" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <strong>* {{ trans('messages.Description') }}:</strong>
+                                <textarea name="detail" id="textarea_detail" class="form-control" rows="12"></textarea>
+                            </div>
                         </div>
-                    @endif
-                    <div class="form-group">
-                        <strong>{{ trans('messages.text_email') }} :</strong>
-                        <span style="color: #ff2222">( {{ trans('messages.text_example') }} test@gmail.com,test2@hotmail.com, )</span>
-                        <input type="text" name="email" class="form-control" id="tokenfield" value=""/>
-                    </div>
-                    <div class="form-group">
-                        <strong>* {{ trans('messages.Description') }}:</strong>
-                        <textarea name="detail" class="form-control" rows="12"></textarea>
+                        <div id="preview_template" class="tab-pane fade">
+                            <h4>To : dgtfarm@gmail.com</h4>
+                            <div style="margin-bottom: 10px; display: block;">
+                                <strong>รายละเอียดโปรโมชั่น :</strong> <br/>
+                                <p id="box_detail">ข้อความรายละเอียดโปรโมชั่น .....</p>
+                            </div>
+                            <div>
+                                <p>
+                                    สวัสดีสมาชิก DGTFarm ทางร้าน <strong>{{$shop->shop_title}}</strong> <br/>
+                                    ขอเสนอโปรโมชั่น  <a href="#" style="color: #aec54b;">{{$item->promotion_title}}</a> <br/><br/>
+                                    <strong>ติดต่อร้านค้า</strong> <br/>
+                                    ชื่อ-นามสกุล : {{$user->user_name}}
+                                    ที่อยู่ : {{$user->users_addressname}}
+                                    ถนน: {{$user->users_street}}
+                                    ตำบล : {{$user->users_district}}
+                                    อำเภอ : {{$user->users_city}}
+                                    จังหวัด : {{$user->users_province}}
+                                    รหัสไปรษณีย์ : {{$user->users_postcode}}
+                                    <br/>เบอร์มือถือ : {{$user->users_mobilephone}}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

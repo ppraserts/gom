@@ -157,7 +157,7 @@ class PromotionsController extends Controller
         );
         $item = Promotions::find($id);
         $pormotion_recomments = PormotionRecomment::where('promotion_id',$id)->paginate(25);
-        return view('frontend.promotionedit', compact('item', 'shop','pormotion_recomments'))->with($data);
+        return view('frontend.promotionedit', compact('item', 'shop','pormotion_recomments','user'))->with($data);
     }
 
     /**
