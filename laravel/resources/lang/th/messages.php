@@ -205,6 +205,8 @@ return [
     'text_comments' => 'ความคิดเห็น',
     'text_share_comment' => 'กรุณาแชร์ประสบการณ์เกี่ยวกับร้านค้านี้',
     'text_rate_shop' => 'ให้คะแนนร้านค้านี้',
+    'text_share_comment_product' => 'กรุณาแชร์ประสบการณ์เกี่ยวกับสินค้านี้',
+    'text_rate_product' => 'ให้คะแนนสินค้านี้',
     'text_type_comment_here' => 'พิมพ์ความคิดเห็นที่นี่',
     'text_send_comment' => 'ส่งความคิดเห็น',
     'add_bad_word' => 'เพิ่มคำที่ไม่เหมาะสม',

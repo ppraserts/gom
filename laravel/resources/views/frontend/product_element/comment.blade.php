@@ -23,9 +23,9 @@
                 @endif
                 </p>
                 <p class="ratingFormDesc">
-                    {{ trans('messages.text_share_comment')}}
+                    {{ trans('messages.text_share_comment_product')}}
                 </p>
-                <label class="ratingStarsTitle">{{ trans('messages.text_rate_shop')}}</label>
+                <label class="ratingStarsTitle">{{ trans('messages.text_rate_product')}}</label>
                 <form class="form-horizontal" method="post" action="{{url('user/productview/'.$productRequest->id.'/'.md5($productRequest->id))}}">
                     {{csrf_field()}}
                     <div class="stars">
@@ -81,7 +81,7 @@
                 <li>กรุณาอย่าแสดงความคิดเห็นที่ไม่เป็นความจริง เบี่ยงเบนหรือนำไปสู่ในทางที่ไม่เป็นจริง</li>
                 <li>ใช้ คำดูหมิ่น หยายคาย ลามก ทำลายชื่อเสียง ข่มขู่ หรือ ภาษาดูถูกผู้อื่น</li>
                 <li>เปิดเผยข้อมูลส่วนตัวของผู้อื่น</li>
-                <li>ใส่ ลิงค็ที่ไม่เกี่ยวข้องกับลาซาด้า</li>
+                <li>ใส่ ลิงค็ที่ไม่เกี่ยวข้องกับ</li>
                 <li>ใส่ ลิ้งค์เครื่องหมายการค้าที่ไม่ได้รับอนุญาติ หรือ เนื้อหาที่ละเมิดลิขสิทธ์</li>
             </ul>
         </div>
