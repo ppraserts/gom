@@ -14,6 +14,7 @@ use App\Model\frontend\User;
 use App\ProductRequest;
 use App\ProductCategory;
 use App\Comment;
+use App\Shop;
 use App\Config;
 use Redirect,Session;
 class ProductsViewController extends Controller
@@ -41,9 +42,9 @@ class ProductsViewController extends Controller
         if($productRequest->user_id == $user['id']){
             $status_comment = 1;
         }
-
+        $shop = Shop::where('user_id', $productRequest->user_id)->first();
         $comments = Comment::where('product_id',$id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
-        return view('frontend.productview', compact('productRequest', 'user','comments','status_comment'));
+        return view('frontend.productview', compact('productRequest', 'user','comments','status_comment','shop'));
     }
 
     /**

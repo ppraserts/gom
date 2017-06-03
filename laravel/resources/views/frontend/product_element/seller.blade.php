@@ -58,4 +58,9 @@
     @else
         -
     @endif
+    <p>
+        <a href="{{url($shop->shop_name)}}"  class="btn btn-primary">
+            หน้าแรกร้านค้า
+        </a>
+    </p>
 </div>
