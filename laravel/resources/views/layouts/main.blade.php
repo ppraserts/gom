@@ -76,7 +76,7 @@ if (is_array($carts)) {
                     <li>
                         <span style="color: #a4a4a4;"> ผู้ใช้งาน :</span>
                         <span style="color: #a2b940;">
-                            {{ ucfirst(Session::get('firstname')).' '.ucfirst(Session::get('lastname')) }}
+                            {{ Session::get('firstname').' '.Session::get('lastname') }}
                         </span>
                     </li>
                 </ul>
