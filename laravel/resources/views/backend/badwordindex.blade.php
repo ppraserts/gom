@@ -63,10 +63,7 @@ $pagetitle = trans('messages.menu_bad_word');
                                 <tr>
                                     <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
                                     <th>{{ trans('messages.menu_bad_word') }}</th>
-                                    <th width="60px" style="text-align:center;"><a class="btn btn-primary"
-                                                                                   href="{{ route('badword.create') }}">
-                                            <span class="fa fa-plus " aria-hidden="true"></span>
-                                        </a></th>
+                                    <th width="60px" style="text-align:center;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>

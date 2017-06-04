@@ -7,6 +7,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
+use App\Standard;
 
 class CompanysController extends Controller
 {
@@ -58,10 +59,19 @@ class CompanysController extends Controller
                                                     $query->where('users_membertype','=', 'company')
                                                                 ->where('is_active','=', 0);
                                                 })->count();
-
+        $standards = Standard::join('user_standard', 'user_standard.id', '=', 'standards.id')
+            ->where('user_standard.user_id', $id)->get();
+        $standard = null;
+        if ($standards!=null){
+            $standardArr = array();
+            foreach ($standards as $item){
+                array_push($standardArr,$item->name);
+            }
+            $standard = implode(", ",$standardArr);
+        }
         $data = array('mode' => 'edit');
         $item = User::find($id);
-        return view('backend.companysedit',compact('item','countinactiveusers','countinactivecompanyusers'))->with($data);
+        return view('backend.companysedit',compact('item','countinactiveusers','countinactivecompanyusers','standard'))->with($data);
     }
 
     public function update(Request $request, $id)

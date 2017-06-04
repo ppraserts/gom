@@ -74,8 +74,8 @@ class UsersController extends Controller
         $standard = null;
         if ($standards!=null){
             $standardArr = array();
-            foreach ($standards as $item){
-                array_push($standardArr,$item->name);
+            foreach ($standards as $standard_item){
+                array_push($standardArr,$standard_item->name);
             }
             $standard = implode(", ",$standardArr);
         }
@@ -84,6 +84,7 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $user = User::find($id);
         $is_active = $user->is_active;
         $user->is_active = $request->is_active == "" ? 0 : 1;
