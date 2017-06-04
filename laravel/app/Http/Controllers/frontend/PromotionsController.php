@@ -37,7 +37,7 @@ class PromotionsController extends Controller
 
     private $rules_reconment = [
         'email' => 'required',
-        'detail' => 'required',
+        //'detail' => 'required',
     ];
 
     /*private $ruleDate = [

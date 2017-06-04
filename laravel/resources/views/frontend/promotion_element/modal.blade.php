@@ -10,31 +10,41 @@
                     <h4 class="modal-title">{{ trans('messages.text_recomment_promotion') }}</h4>
                 </div>
                 <div class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>{{ trans('messages.message_whoops_error')}} </strong>
+                            <br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <div class="form-group">
+                        <strong>* {{ trans('messages.text_email') }} :</strong>
+                        <span style="color: #ff2222">( {{ trans('messages.text_example_email') }})</span>
+                        <input type="text" name="email" class="form-control" id="tokenfield" value=""/>
+                    </div>
+
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#input_detail">กรอกรายละเอียดแนะนำโปรโมชั่น</a></li>
-                        <li><a data-toggle="tab" id="box_preview_template" href="#preview_template">ตัวอย่างเทมเพลตอีเมล</a></li>
+                        <li class="active">
+                            <a data-toggle="tab" href="#input_detail">
+                                {{ trans('messages.text_input_detail_promotion')}}
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" id="box_preview_template" href="#preview_template">
+                                {{ trans('messages.text_ex_email_seand')}}
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="tab-content" style="padding-top: 18px;">
                         <div id="input_detail" class="tab-pane fade in active">
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
-                                    <strong>{{ trans('messages.message_whoops_error')}}</strong>
-                                    <br>
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+
                             <div class="form-group">
-                                <strong>{{ trans('messages.text_email') }} :</strong>
-                                <span style="color: #ff2222">( {{ trans('messages.text_example_email') }})</span>
-                                <input type="text" name="email" class="form-control" id="tokenfield" value=""/>
-                            </div>
-                            <div class="form-group">
-                                <strong>* {{ trans('messages.Description') }}:</strong>
+                                <strong>{{ trans('messages.text_input_detail_promotion') }} :</strong>
                                 <textarea name="detail" id="textarea_detail" class="form-control" rows="12"></textarea>
                             </div>
                         </div>
@@ -64,7 +74,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">{{ trans('messages.text_send_promotion') }}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ trans('messages.text_close') }}</button>
                 </div>
             </form>
         </div>
