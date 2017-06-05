@@ -202,7 +202,7 @@ return [
     'text_recomment_promotion' => 'แนะนำโปรโมชั่น',
     'text_send_promotion' => 'ส่งโปรโมชั่น',
     'text_example_email' => 'เมื่อพิมพ์อีเมล์เสร็จให้กด Tab หรือ , เพื่อตรวจสอบความถูกต้องของรูปแบบอีเมล์',
-    'text_comments' => 'ความคิดเห็น',
+    'text_comments' => 'แสดงความคิดเห็นและให้คะแนน',
     'text_share_comment' => 'กรุณาแชร์ประสบการณ์เกี่ยวกับร้านค้านี้',
     'text_rate_shop' => 'ให้คะแนนร้านค้านี้',
     'text_share_comment_product' => 'กรุณาแชร์ประสบการณ์เกี่ยวกับสินค้านี้',
