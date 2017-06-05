@@ -55,6 +55,53 @@ function renderHTML($text)
                         <div class="col-md-12">
                 <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px;"></div>
                     <p><strong>{{ $productRequest->product_title }}</strong></p>
+                            <?php
+                            $avg_score=0;
+                            if(!empty($productRequest->avg_score)){
+                                $avg_score = round($productRequest->avg_score);
+                            }
+                            ?>
+
+                            <p class="score-star">
+                                @if($avg_score == 1)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                @elseif($avg_score == 2)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                @elseif($avg_score == 3)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                @elseif($avg_score == 4)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                @elseif($avg_score == 5)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                @elseif($avg_score == 0)
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                @endif
+
+                            </p>
                     <p>
                         {{ trans('validation.attributes.price') }} :
                         <strong>
@@ -193,6 +240,7 @@ function renderHTML($text)
 <script src="{{url('jquery-loading/waitMe.js')}}"></script>
 <script> var partUrl = "{{url('/')}}"; </script>
 <script src="{{url('js/comment_product.js')}}"></script>
+<link rel="stylesheet" href="{{url('css/star.css')}}">
 <script>
 
     var BASE_URL = '<?php echo url('/')?>';

@@ -41,6 +41,7 @@ class SearchController extends Controller
         $productRequest = new ProductRequest();
         $itemssale = $productRequest->GetSearchProductRequests('sale',$category, $search, '', $province, $price, $volumn);
         $itemsbuy = $productRequest->GetSearchProductRequests('buy',$category, $search, '', $province, $price, $volumn);
+        //return $itemssale;
         return view('frontend.result',compact('productCategoryitem','itemssale', 'itemsbuy'));
     }
 

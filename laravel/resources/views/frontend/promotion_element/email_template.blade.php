@@ -14,7 +14,6 @@
         สวัสดีสมาชิก DGTFarm ทางร้าน <strong>{{$shop_title}}</strong> <br/>
         ขอเสนอโปรโมชั่น  <a href="{{$link.'?rid='.$pormotion_recomment_id.'&key='.$encode_id}}" target="_blank">{{$promotion_title}}</a> <br/><br/>
         <strong>ติดต่อร้านค้า</strong> <br/>
-        ชื่อ-นามสกุล : {{$user_name}}
         ที่อยู่ : {{$users_addressname}}
         ถนน: {{$users_street}}
         ตำบล : {{$users_district}}
@@ -22,6 +21,7 @@
         จังหวัด : {{$users_province}}
         รหัสไปรษณีย์ : {{$users_postcode}}
         <br/>เบอร์มือถือ : {{$users_mobilephone}}
+        <br/> URL ร้านค้า : <a href="{{url($shop_name)}}" target="_blank">{{url($shop_name)}}</a>
     </p>
 </div>
 </body>
