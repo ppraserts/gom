@@ -169,6 +169,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     //Route::get('userproduct/index','frontend\ProductController@index');
     Route::post('recommend-promotion/{id}','frontend\PromotionsController@recommendPromotion');
 
+    //Reports
+    Route::get('reports/buy','frontend\ReportsController@index');
+    Route::post('reports/view','frontend\ReportsController@actionFilter');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
