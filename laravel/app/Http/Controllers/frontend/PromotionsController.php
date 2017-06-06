@@ -268,7 +268,7 @@ class PromotionsController extends Controller
                 $recomment['promotion_id'] = $id;
                 $last_id = PormotionRecomment::insertGetId($recomment);
                 $encode_id = md5($last_id);
-                $this->SendEmailPromotion($email, $detail, $shop->shop_title, $promotion->promotion_title, $image_file, $user, $link, $last_id,$encode_id);
+                $this->SendEmailPromotion($email, $detail, $shop->shop_title,$shop->shop_name, $promotion->promotion_title, $image_file, $user, $link, $last_id,$encode_id);
 
             }
         }
@@ -276,7 +276,7 @@ class PromotionsController extends Controller
         return redirect('user/promotion/'.$id.'/edit');
     }
 
-    private function SendEmailPromotion($email, $detail = '', $shop_title, $promotion_title, $image_file, $user, $link,$last_id,$encode_id)
+    private function SendEmailPromotion($email, $detail = '', $shop_title, $shop_name, $promotion_title, $image_file, $user, $link,$last_id,$encode_id)
     {
         $sendemailTo = $email;
         $sendemailFrom = env('MAIL_USERNAME');
@@ -285,6 +285,7 @@ class PromotionsController extends Controller
             'email' => $email,
             'detail' => $detail,
             'shop_title' => $shop_title,
+            '$shop_name' => $shop_name,
             'promotion_title' => $promotion_title,
             'image_file' => $image_file,
             'user_name' => $user->users_firstname_th.' '.$user->users_lastname_th,
