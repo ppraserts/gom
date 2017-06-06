@@ -28,17 +28,16 @@
 
 <?php
 
-if ($shop != null && isset($shop->image_file_1)) {
+if ($shop != null && $shop->image_file_1 != '') {
     $image_header = $shop->image_file_1;
 } else {
-    $image_header = $shop->shop_name . '/assets/theme/images/header-1.jpg)';
+    $image_header = 'assets/theme/images/header-1.jpg';
 }
 ?>
 
 
 <div class="container">
-    <header class="header header-image header-theme-one"
-            style="background: url({{asset($image_header)}}) no-repeat center center scroll; background-size: cover;">
+    <header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}) no-repeat center center scroll !important; background-size: cover; max-height: 560px; height: 560px;">
         @yield('header')
     </header>
     @yield('promotion')
