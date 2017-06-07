@@ -26,7 +26,6 @@ class ReportsController extends Controller
             ->where('orders.buyer_id', $user->id)
             ->orderBy('orders.id', 'DESC')
             ->paginate(config('app.paginate'));
-
         return view('frontend.reports.orderlist', compact('orderLists','products'));
     }
 
@@ -86,29 +85,22 @@ class ReportsController extends Controller
 //            $orderList->orderBy('orders.id', 'DESC');
 //            $orderList->paginate(config('app.paginate'));
 //            $orderLists = $orderList->paginate(config('app.paginate'));
-
-            $info = Excel::create('Laravel_Excel', function($excel) {
-
-                $excel->sheet('Excel sheet', function($sheet) {
-
-                    $sheet->setOrientation('landscape');
-
+            $data = array(
+                array('data1', 'data2'),
+                array('data3', 'data4')
+            );
+            $info = Excel::create('Laravel_Excel', function($excel) use($data) {
+                $excel->sheet('Sheetname', function($sheet) use($data) {
+                    $sheet->fromArray($data);
                 });
-
             })->store('xls', false, true);
-            //$url = Storage::url('exports/'.$info['file']);
-
             return response()->json(array('file'=>$info['file']));
-            //return   $file = Storage::get('exports/'.$info['file']);
-
         }
     }
 
-    public function actiondownload($file)
+    public function actionDownload(Request $request)
     {
-        return 'xx';
-        //Storage::disk($disk)->getDriver()->getAdapter()->applyPathPrefix($file);
-        $path  = storage_path().'/exports/'.$file;
+        $path  = storage_path().'/exports/'.$request->input('file');
         return response()->download($path);
     }
 

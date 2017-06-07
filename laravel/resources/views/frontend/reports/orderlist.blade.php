@@ -61,7 +61,7 @@ $pagetitle = trans('message.menu_order_list');
                     </div>
                 </div>
 
-                <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
                     <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_product_type_name') }} :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
                         <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name" data-live-search="true"
@@ -78,17 +78,17 @@ $pagetitle = trans('message.menu_order_list');
                     </div>
                 </div>
 
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-right" type="submit">
+                <div class="col-md-1" style="padding-left: 0; padding-right: 0;">
+                    <button class="btn btn-primary pull-right btn-sm" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
             </form>
-            {{--<div class="col-md-12" style="padding-left: 0; padding-right: 0;">--}}
-                {{--<button class="btn btn-primary pull-left" id="export" type="button">--}}
-                    {{--Export--}}
-                {{--</button>--}}
-            {{--</div>--}}
+            <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
+                <button class="btn btn-primary pull-left" id="export" type="button">
+                    Export
+                </button>
+            </div>
         </div>
         <div class="row" style="margin-top: 10px">
             <div class="table-responsive">
@@ -249,8 +249,10 @@ $pagetitle = trans('message.menu_order_list');
             url: "<?php echo url('user/reports/buy/export')?>",
             //data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
             success: function(response) {
-                //console.log(response);
-                window.location.href = "<?php echo url('reports/buy/export/')?>/"+response.file;
+                window.open(
+                    "<?php echo url('user/reports/buy/download/?file=')?>"+response.file,
+                    '_blank'
+                );
                 return false;
             },
             error: function(response){
