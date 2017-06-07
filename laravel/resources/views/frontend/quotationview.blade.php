@@ -71,7 +71,7 @@
                                     <th>{{ trans('validation.attributes.product_name_th') }}</th>
                                     <th>{{ trans('validation.attributes.product_title') }}</th>
                                     <th>{{ trans('validation.attributes.price') }}</th>
-                                    <th>{{ trans('validation.attributes.discount') }}</th>
+                                    {{--<th>{{ trans('validation.attributes.discount') }}</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +79,7 @@
                                     <td>{{  $quotation->product_name_th }}</td>
                                     <td>{{  $quotation->product_title }}</td>
                                     <td><strong>{{  $quotation->price. " " .$quotation->units }}</strong></td>
-                                    <td>{{  $quotation->discount }}</td>
+                                    {{--<td>{{  $quotation->discount }}</td>--}}
                                 </tr>
                                 </tbody>
                             </table>
@@ -94,14 +94,18 @@
                                  src="{{url($quotation->product1_file)}}">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-2 col-md-offset-5">
+                    @if($user->user_id != $quotation->buyer_id)
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-5">
 
-                            <button type="button" class="btn btn-primary" onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->user_id}}','{{$quotation->price}}','{{$quotation->min_order}}')"><i class="fa fa-shopping-cart"></i>
-                                สั่งซื้อสินค้า
-                            </button>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->user_id}}','{{$quotation->price}}','{{$quotation->min_order}}')">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    สั่งซื้อสินค้า
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -122,7 +126,7 @@
     function addToCart(productRequestId, userId, unit_price, min_order) {
         console.log('hello adToCart');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var targetUrl = '{{url('')}}/user/shoppingcart/addToCart';
+        var targetUrl = '{{url('/user/shoppingcart/addToCart')}}';
         //   alert(targetUrl);
         $.ajax({
             type: 'POST',
