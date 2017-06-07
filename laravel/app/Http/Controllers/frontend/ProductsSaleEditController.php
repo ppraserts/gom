@@ -322,7 +322,7 @@ class ProductsSaleEditController extends Controller
         $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_product');
-        File::makeDirectory($image_directory, 0777, true, true);
+//        File::makeDirectory($image_directory, 0777, true, true);
         $imageName = $image_directory . time() .".".$ext;
         $img = Image::make($imageTempName);
         $img->save($imageName);
