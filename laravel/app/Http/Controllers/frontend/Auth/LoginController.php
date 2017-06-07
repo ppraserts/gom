@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Shop;
+use Session;
 
 class LoginController extends Controller
 {
@@ -70,6 +71,8 @@ class LoginController extends Controller
             }else{
                 session(['shop' => null]);
             }
+            Session::put('firstname',$user->users_firstname_th);
+            Session::put('lastname',$user->users_lastname_th);
 
              return redirect()->intended('user/userprofiles');
         } else {

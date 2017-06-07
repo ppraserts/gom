@@ -71,6 +71,17 @@ if (is_array($carts)) {
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ url('/') }}"> <i class="fa fa-home" aria-hidden="true"></i><span>DGT</span>Farm</a>
+            @if(!empty(ucfirst(Session::get('firstname'))))
+                <ul class="nav navbar-nav navbar-left user_loget">
+                    <li>
+                        <span style="color: #a4a4a4;"> ผู้ใช้งาน :</span>
+                        <span style="color: #a2b940;">
+                            {{ Session::get('firstname').' '.Session::get('lastname') }}
+                        </span>
+                    </li>
+                </ul>
+            @endif
+
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">

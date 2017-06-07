@@ -442,6 +442,23 @@ body {
 
 }
 
+.setHeight{
+    height: 450px !important;
+    width: auto !important;
+}
+.user_loget{
+    padding-top: 18px;
+}
+@media (max-width: 767px) {
+    .setHeight{
+        height: auto !important;
+        width: auto !important;
+    }
+    .user_loget{
+        padding-top: 0px;
+    }
+}
+
 @media (min-width: 768px) {
     ul.nav li:hover > ul.dropdown-menu {
         display: block;
@@ -449,6 +466,7 @@ body {
     #navbar {
         text-align: center;
     }
+
 }
 
 /* PANEL GROUP / ACCORDION */
@@ -566,4 +584,8 @@ ul.panel-controls > li > .dropdown-menu:after {
 ul.panel-controls > li > .dropdown-menu:before {
     margin-left: auto;
     margin-right: -6px;
+}
+.pd-top-bottom{
+    padding-bottom: 5px;
+    padding-top: 5px;
 }

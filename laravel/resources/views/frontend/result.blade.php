@@ -31,9 +31,60 @@ use App\Http\Controllers\frontend\MarketController;
                     <div class="info">
                         <div class="row">
                             <div class="price col-md-8">
-                                <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?></h4>
+                                <h4 title="{{ $product_name }}">
+                                    <?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?>
+                                </h4>
+                                <?php
+                                $avg_score=0;
+                                if(!empty($col_md_4_item['avg_score'])){
+                                    $avg_score = round($col_md_4_item['avg_score']);
+                                }
+                                ?>
+
+                                <p class="score-star">
+                                    @if($avg_score == 1)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @elseif($avg_score == 2)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @elseif($avg_score == 3)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @elseif($avg_score == 4)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @elseif($avg_score == 5)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    @elseif($avg_score == 0)
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @endif
+
+                                </p>
                                 <span class="glyphicon glyphicon-tag"></span>
-                                <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
+                                <i title="{{ $product_name }}">
+                                    <?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?>
+                                </i><br/>
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
                                 <?php
@@ -188,7 +239,7 @@ use App\Http\Controllers\frontend\MarketController;
 @stop
 
 @push('scripts')
-
+<link rel="stylesheet" href="{{url('css/star.css')}}">
 <script>
 
     var BASE_URL = '<?php echo url('/')?>';

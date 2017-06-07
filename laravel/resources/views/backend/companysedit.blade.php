@@ -107,6 +107,17 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_qrcode }}</strong>
             </div>
+            <div class="form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
+                {{ trans('validation.attributes.guarantee') }}
+                :
+                <strong>
+                    @if($standard!=null)
+                        {{$standard}}
+                    @else
+                        -
+                    @endif
+                </strong>
+            </div>
             <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_company_th') }}
                 :

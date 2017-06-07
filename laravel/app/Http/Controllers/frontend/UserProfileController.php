@@ -5,11 +5,13 @@ namespace App\Http\Controllers\frontend;
 use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
 use App\Province;
+use App\UserStandard;
 use DB;
 use File;
 use Hash;
 use Illuminate\Http\Request;
 use Validator;
+use App\Standard;
 
 class UserProfileController extends Controller
 {
@@ -36,7 +38,17 @@ class UserProfileController extends Controller
       $item = auth()->guard('user')->user();
       $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
                   ->get();
-      return view('frontend.userprofile',compact('item','provinceItem'));
+      $standards = Standard::all();
+      $user_standard = UserStandard::where('user_id', $item->id)->get();
+      for($i = 0;$i < $standards->count();$i++){
+          $standards[$i]->checked = false;
+          foreach ($user_standard as $standard){
+              if ($standards[$i]->id == $standard->standard_id){
+                  $standards[$i]->checked = true;
+              }
+          }
+      }
+      return view('frontend.userprofile',compact('item','provinceItem','standards'));
   }
 
   public function updateProfile(Request $request)

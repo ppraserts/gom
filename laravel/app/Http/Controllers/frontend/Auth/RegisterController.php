@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend\Auth;
 
 use App\Model\frontend\User;
+use App\UserStandard;
 use Illuminate\Http\Request;
 
 use Validator;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use App\Amphur;
 use App\Province;
 use App\District;
+use App\Standard;
 
 class RegisterController extends Controller
 {
@@ -49,16 +51,18 @@ class RegisterController extends Controller
 
     public function getRegisterForm()
     {
-        $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
-                    ->get();
-        return view('frontend/auth/register',compact('provinceItem'));
+        $standards = Standard::all();
+        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
+            ->get();
+        return view('frontend/auth/register', compact('provinceItem', 'standards'));
     }
 
     public function getCompanyRegisterForm()
     {
-      $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
-                  ->get();
-        return view('frontend/auth/companyregister',compact('provinceItem'));
+        $standards = Standard::all();
+        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
+            ->get();
+        return view('frontend/auth/companyregister', compact('provinceItem', 'standards'));
     }
 
     public function getChooseRegisterForm()
@@ -69,7 +73,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  request  $request
+     * @param  request $request
      * @return User
      */
     protected function saveRegisterForm(Request $request)
@@ -91,21 +95,22 @@ class RegisterController extends Controller
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             return redirect('user/register')
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $input = $request->all();
         $user = User::registeruser($input);
 
+
         $sendemailTo = $request->email;
         $sendemailFrom = env('MAIL_USERNAME');
 
         $data = array(
-            'fullname' => $request->users_firstname_th." ".$request->users_lastname_th
+            'fullname' => $request->users_firstname_th . " " . $request->users_lastname_th
         );
 
-		/*
+        /*
         Mail::send('emails.register', $data, function ($message) use($request, $sendemailTo, $sendemailFrom)
         {
             $message->from($sendemailFrom
@@ -114,17 +119,27 @@ class RegisterController extends Controller
                     ->subject("Greenmart Online Market : ".trans('messages.email_subject_newregister'));
 
         });
-		*/
+        */
 
-        if($user->id){
+        if ($user->id) {
+            $arr_checked_user_standards = Input::get('users_standard');
+            if (is_array($arr_checked_user_standards)) {
+                foreach ($arr_checked_user_standards as $standard_id) {
+                    UserStandard::create([
+                        'user_id' => $user->id,
+                        'standard_id' =>$standard_id
+                    ]);
+                }
+            }
             return redirect('user/login')->with('status', trans('messages.registercomplete'));
-        }else{
+        } else {
             return redirect('user/register')->with('status', 'User not register. Please try again');
         }
 
     }
 
-    protected function saveCompanyRegisterForm(Request $request)
+    protected
+    function saveCompanyRegisterForm(Request $request)
     {
         $rules = array(
             'iwantto' => 'required',
@@ -139,8 +154,8 @@ class RegisterController extends Controller
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             return redirect('user/companyregister')
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $input = $request->all();
@@ -152,18 +167,26 @@ class RegisterController extends Controller
         $data = array(
             'fullname' => $request->users_company_th
         );
-        Mail::send('emails.register', $data, function ($message) use($request, $sendemailTo, $sendemailFrom)
-        {
+        Mail::send('emails.register', $data, function ($message) use ($request, $sendemailTo, $sendemailFrom) {
             $message->from($sendemailFrom
-                    , "Greenmart Online Market");
+                , "Greenmart Online Market");
             $message->to($sendemailTo)
-                    ->subject("Greenmart Online Market : ".trans('messages.email_subject_newregister'));
+                ->subject("Greenmart Online Market : " . trans('messages.email_subject_newregister'));
 
         });
 
-        if($user->id){
+        if ($user->id) {
+            $arr_checked_user_standards = Input::get('users_standard');
+            if (is_array($arr_checked_user_standards)) {
+                foreach ($arr_checked_user_standards as $standard_id) {
+                    UserStandard::create([
+                        'user_id' => $user->id,
+                        'standard_id' =>$standard_id
+                    ]);
+                }
+            }
             return redirect('user/login')->with('status', 'User register successfully');
-        }else{
+        } else {
             return redirect('user/register')->with('status', 'User not register. Please try again');
         }
 

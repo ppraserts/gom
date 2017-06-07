@@ -8,4 +8,8 @@ class User extends Model
 {
     //
     protected $table = "users";
+
+    public function userStandard(){
+        return $this->hasMany('App\UserStandard');
+    }
 }

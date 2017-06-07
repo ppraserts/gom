@@ -43,3 +43,6 @@ label.star:before {
 .score-star .fa-star{
     color: #FD4;
 }
+.size-fa-28{
+    font-size: 28px !important;
+}

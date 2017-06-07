@@ -140,13 +140,26 @@
                             <strong>{{ $item->users_idcard }}</strong>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" name="requset_email_system" value="1" @if(!empty($item->requset_email_system)) checked @endif>
+                            <input type="checkbox" name="requset_email_system" value="1"
+                                   @if(!empty($item->requset_email_system)) checked @endif>
                             {{ trans('messages.lable_requset_email_system') }}
                         </div>
                         <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
                             <strong>{{ trans('validation.attributes.users_qrcode') }} :</strong>
                             {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
                         </div>
+                        @if(isset($standards))
+                            <div class="form-group">
+                                <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
+                                @for($i = 0 ; $i < count($standards) ; $i++)
+                                    <label class="checkbox-inline">
+                                        <input name="users_standard[]" type="checkbox" disabled
+                                               value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                        {{$standards[$i]->name}}
+                                    </label>
+                                @endfor
+                            </div>
+                        @endif
                         <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
                             <strong>* {{ trans('validation.attributes.users_firstname_th') }} -
                                 {{ trans('validation.attributes.users_lastname_th') }}

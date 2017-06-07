@@ -1,6 +1,9 @@
 <div class="detailBox" id="commentBox">
     <div class="titleBox">
-        <label><i class="fa fa-commenting" aria-hidden="true"></i> {{ trans('messages.text_comments')}}</label>
+        <label>
+            <i class="fa fa-commenting" aria-hidden="true"></i>
+            {{ trans('messages.text_comments')}}
+        </label>
         <input type="hidden" id="shop_name" value="{{$shop->shop_name}}">
     </div>
     <div class="commentBox row">
@@ -50,8 +53,15 @@
                 <div class="clearfix"></div>
                 <div class="actionBox">
                     <ul class="commentList">
+                        <?php $score=0; $i=0;?>
                         @if(count($comments) > 0)
                             @foreach($comments as $comment)
+                                <?php
+                                $i++;
+                                if(!empty($comment->score)){
+                                    $score = $score+$comment->score;
+                                }
+                                ?>
                                 @if(!empty($status_comment) and $status_comment == 1 and $comment->status == 1)
                                     @include('frontend.shop_element.list_comment')
                                 @elseif(!empty($status_comment) and $status_comment == 1 and $comment->status == 0)
@@ -69,21 +79,69 @@
         </div>
 
         <div class="col-md-4">
+            <?php
+            $avg_score = 0;
+            if(!empty($score)){
+                $avg_score = round($score/$i);
+            }
+            ?>
+            <h3>คะแนนของร้านค้านี้ :</h3>
+
+            <p class="score-star" style="font-size: 28px;">
+                @if($avg_score == 1)
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                @elseif($avg_score == 2)
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                @elseif($avg_score == 3)
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                @elseif($avg_score == 4)
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                @elseif($avg_score == 5)
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                @elseif($avg_score == 0)
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                @endif
+
+            </p>
             <h3>การเขียนรีวิวที่ถูกวิธี</h3>
             <h4>สิ่งที่ควรทำ</h4>
             <ul>
-                <li>เน้นเฉพาะที่ตัวสินค้าและคุณสมบ้ติของสินค้า</li>
+                <li>เน้นเฉพาะคุณสมบัติของร้านค้า</li>
                 <li>แสดงความคิดเห็นตามประสบการณ์โดยตรงของคุณ</li>
-                <li>โปรดช่วยอธิบายเพิ่มเติม ว่าทำไมคุณถึงแสดงความคิดเห็นเช่นนั้น</li>
+                <li>โปรดช่วยอธิบายเพิ่มเติมว่าทำไมคุณถึงแสดงความคิดเห็นเช่นนั้น</li>
             </ul>
             <br>
-            <h4>แสดงความคิดเห็นที่ไม่เกี่ยวข้องกับสินค้าโดยตรง</h4>
+            <h4>แสดงความคิดเห็นที่ไม่เกี่ยวข้องกับร้านค้าโดยตรง</h4>
             <ul>
                 <li>กรุณาอย่าแสดงความคิดเห็นที่ไม่เป็นความจริง เบี่ยงเบนหรือนำไปสู่ในทางที่ไม่เป็นจริง</li>
                 <li>ใช้ คำดูหมิ่น หยายคาย ลามก ทำลายชื่อเสียง ข่มขู่ หรือ ภาษาดูถูกผู้อื่น</li>
                 <li>เปิดเผยข้อมูลส่วนตัวของผู้อื่น</li>
-                <li>ใส่ ลิงค็ที่ไม่เกี่ยวข้องกับลาซาด้า</li>
-                <li>ใส่ ลิ้งค์เครื่องหมายการค้าที่ไม่ได้รับอนุญาติ หรือ เนื้อหาที่ละเมิดลิขสิทธ์</li>
+                <li>ใส่ลิ้งค์ที่ไม่เกี่ยวข้องกับ DGTFarm</li>
+                <li>ใส่ลิ้งค์เครื่องหมายการค้าที่ไม่ได้รับอนุญาติ หรือ เนื้อหาที่ละเมิดลิขสิทธ์</li>
             </ul>
         </div>
 

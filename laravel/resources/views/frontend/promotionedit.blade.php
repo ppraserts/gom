@@ -19,6 +19,7 @@ if ($mode == "create") {
 <link rel="stylesheet" href="{{url('bootstrap-tokenfield/css/bootstrap-tokenfield.css')}}" />
 <script src="{{url('bootstrap-tokenfield/bootstrap-tokenfield.js')}}"></script>
 <script src="//maps.google.com/maps/api/js?key=AIzaSyCTyLJemFK5wu_ONI1iZobLGK9pP1EVReo"></script>
+
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({
@@ -75,8 +76,14 @@ if ($mode == "create") {
 
         .tokenfield({
             showAutocompleteOnFocus: false
-        })
+        });
 
+        $('#box_preview_template').click(function(){
+            var detail = $('#textarea_detail').val();
+            if(detail != ''){
+                $('#box_detail').html(detail);
+            }
+        });
 
         @if (!empty(Session::get('error_recomment')))
             $('#myModal').modal('show');
@@ -156,8 +163,10 @@ if ($mode == "create") {
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
-                    <strong>* {{ trans('validation.attributes.promotion_start_date') }}:</strong>
-                    <div class='input-group date' id='pick_start_date'>
+                    <label class="col-sm-2 control-label" style="padding-left: 0px;">
+                        <strong>* {{ trans('validation.attributes.promotion_start_date') }}:</strong>
+                    </label>
+                    <div class='input-group date col-sm-2' id='pick_start_date'>
                         {!! Form::text('start_date', DateFuncs::thai_date($item->start_date), array('placeholder' => trans('validation.attributes.promotion_start_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
@@ -168,8 +177,10 @@ if ($mode == "create") {
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('end_date') ? 'has-error' : '' }}">
+                    <label class="col-sm-2 control-label" style="padding-left: 0px;">
                     <strong>* {{ trans('validation.attributes.promotion_end_date') }}:</strong>
-                    <div class='input-group date' id='pick_end_date'>
+                    </label>
+                    <div class='input-group date col-sm-2' id='pick_end_date'>
                         {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => trans('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>

@@ -14,6 +14,7 @@ use App\Model\frontend\User;
 use App\ProductRequest;
 use App\ProductCategory;
 use App\Comment;
+use App\Shop;
 use App\Config;
 use Redirect,Session;
 class ProductsViewController extends Controller
@@ -31,7 +32,9 @@ class ProductsViewController extends Controller
     {
 
         $productRequest = ProductRequest::join('users', 'users.id', '=','product_requests.users_id')
-            ->select('users.*', 'users.id AS user_id' ,'product_requests.*')
+            ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id')
+            ->select(DB::raw('users.*, users.id AS user_id ,product_requests.*
+                ,sum(comments.score)/count(comments.score) as avg_score'))
             ->where('product_requests.id', $id)
             ->first();
 
@@ -41,9 +44,9 @@ class ProductsViewController extends Controller
         if($productRequest->user_id == $user['id']){
             $status_comment = 1;
         }
-
+        $shop = Shop::where('user_id', $productRequest->user_id)->first();
         $comments = Comment::where('product_id',$id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
-        return view('frontend.productview', compact('productRequest', 'user','comments','status_comment'));
+        return view('frontend.productview', compact('productRequest', 'user','comments','status_comment','shop'));
     }
 
     /**
