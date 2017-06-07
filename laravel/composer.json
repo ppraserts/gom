@@ -14,7 +14,8 @@
         "doctrine/dbal": "^2.5",
         "paragonie/random_compat": "~1.4.0",
         "barryvdh/laravel-debugbar": "^2.3",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

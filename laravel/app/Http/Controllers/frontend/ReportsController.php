@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\frontend;
 use Illuminate\Routing\Controller;
 
-use DB,Response;
+use DB,Validator, Response;
 use App\Order;
-use App\OrderItem;
-use App\OrderStatusHistory;
+use Excel;
+use Storage;
 use App\OrderPayment;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Helpers\DateFuncs;
 
+
 class ReportsController extends Controller
 {
+
     public function index()
     {
         $user = auth()->guard('user')->user();
+        $products = Product::all();
         $orderLists = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
             ->join('users', 'users.id', '=', 'orders.user_id')
             ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
@@ -23,40 +27,89 @@ class ReportsController extends Controller
             ->orderBy('orders.id', 'DESC')
             ->paginate(config('app.paginate'));
 
-        return view('frontend.reports.orderlist', compact('orderLists'));
+        return view('frontend.reports.orderlist', compact('orderLists','products'));
     }
 
     public function actionFilter(Request $request)
     {
         $user = auth()->guard('user')->user();
-        echo "xxxxxxxxxxxxxxxxxxxxxxx";
-        exit();
+        $v = Validator::make($request->all(), [
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'product_type_name' => 'required'
+        ]);
+        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
+
         $orderLists = '';
-        if(!empty($request->input('filter')) and $request->isMethod('post')){
-            $start_date='';
-            $end_date='';
-            if(!empty($request->input('end_date'))){
-                $start_date = DateFuncs::convertYear($request->input('start_date'));
-            }
-            if(!empty($request->input('end_date'))){
-                $end_date = DateFuncs::convertYear($request->input('end_date'));
-            }
-            return $request->all();
-            $filter = $request->input('filter');
+        if($request->isMethod('post')){
+           $start_date = DateFuncs::convertYear($request->input('start_date'));
+           $end_date = DateFuncs::convertYear($request->input('end_date'));
+            $productTypeNameArr = $request->input('product_type_name');
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
-
+            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
             $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
             $orderList->where('orders.buyer_id', $user->id);
-            $orderList->where(function($query) use ($filter) {
-                $query->where('orders.id', 'like', '%' . $filter . '%');
-                $query->orWhere('users.users_firstname_th', 'like', '%' . $filter . '%');
-                $query->orWhere('order_status.status_name', 'like', '%' . $filter . '%');
-            });
+            $orderList->whereIn('products.id', $productTypeNameArr);
+            $orderList->where('orders.order_date','>=', $start_date);
+            $orderList->where('orders.order_date','<=', $end_date);
+            $orderList->groupBy('orders.id');
             $orderList->orderBy('orders.id', 'DESC');
             $orderList->paginate(config('app.paginate'));
             $orderLists = $orderList->paginate(config('app.paginate'));
+
+            $products = Product::all();
+            return view('frontend.reports.orderlist', compact('orderLists','products','productTypeNameArr'));
         }
-        return view('frontend.reports.orderlist', compact('orderLists'));
     }
+
+    public function actionExportExcel(Request $request)
+    {
+        if($request->ajax()){
+//            $user = auth()->guard('user')->user();
+//            $start_date = DateFuncs::convertYear($request->input('start_date'));
+//            $end_date = DateFuncs::convertYear($request->input('end_date'));
+//            $productTypeNameArr = $request->input('product_type_name');
+//            $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+//            $orderList->join('users', 'users.id', '=', 'orders.user_id');
+//            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+//            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+//            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+//            $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+//            $orderList->where('orders.buyer_id', $user->id);
+//            $orderList->whereIn('products.id', $productTypeNameArr);
+//            $orderList->where('orders.order_date','>=', $start_date);
+//            $orderList->where('orders.order_date','<=', $end_date);
+//            $orderList->groupBy('orders.id');
+//            $orderList->orderBy('orders.id', 'DESC');
+//            $orderList->paginate(config('app.paginate'));
+//            $orderLists = $orderList->paginate(config('app.paginate'));
+
+            $info = Excel::create('Laravel_Excel', function($excel) {
+
+                $excel->sheet('Excel sheet', function($sheet) {
+
+                    $sheet->setOrientation('landscape');
+
+                });
+
+            })->store('xls', false, true);
+            //$url = Storage::url('exports/'.$info['file']);
+
+            return response()->json(array('file'=>$info['file']));
+            //return   $file = Storage::get('exports/'.$info['file']);
+
+        }
+    }
+
+    public function actiondownload($file)
+    {
+        return 'xx';
+        //Storage::disk($disk)->getDriver()->getAdapter()->applyPathPrefix($file);
+        $path  = storage_path().'/exports/'.$file;
+        return response()->download($path);
+    }
+
 }

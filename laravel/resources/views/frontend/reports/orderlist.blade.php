@@ -8,78 +8,87 @@ $pagetitle = trans('message.menu_order_list');
     @include('shared.usermenu', array('setActive'=>'reports'))
     <div class="col-sm-12">
         @if ($message = Session::get('success'))
-            <div class="row">
+            <div class="row" style="margin-top: 15px;">
                 <div class="alert alert-success">
                     <p>{{ $message }}</p>
                 </div>
             </div>
         @endif
+        @if (count($errors) > 0)
+                <div class="row" style="margin-top: 15px;">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <h2>{{ trans('messages.menu_order_list') }}</h2>
-            <form action="{{url('user/reports/view')}}" class="form-horizontal" id="my-form" method="POST">
+            <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="my-form" method="POST">
                 {{csrf_field()}}
                 <style>
                     .form-horizontal .form-group {
-                         margin-right: 0px;
-                         margin-left: 0px;
+                        margin-right: 0px;
+                        margin-left: 0px;
                     }
                 </style>
-
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label class="col-sm-2" style="padding-right: 0;">* วันเริ่มต้น :</label>
+                    <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }} :</label>
                     <div class="col-sm-10" style="padding-right: 0px;">
                         <div class='input-group date ' id='pick_start_date'>
-                            {!! Form::text('start_date', '', array('placeholder' => 'วันเริ่มต้น','class' => 'col-md-10 form-control')) !!}
+                            {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
+                        <small class="alert-danger" id="ms_start_date"></small>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2" style="padding-right: 0;">* วันสิ้นสุด :</label>
+                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">* {{ trans('messages.text_end_date') }} :</label>
                     <div class="col-sm-10" style="padding-right: 0px;">
                         <div class='input-group date' id='pick_end_date'>
-                            {!! Form::text('end_date', '', array('placeholder' => 'วันสิ้นสุด','class' => 'form-control')) !!}
+                            {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
                             <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
+                        <small class="alert-danger" id="ms_end_date"></small>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0;">* ชนิดสินค้า :</label>
+                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_product_type_name') }} :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
-                        <select class="selectpicker form-control" name="product_type_name" data-live-search="true" multiple>
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
-                            <option>Relish</option>
+                        <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name" data-live-search="true"
+                                multiple>
+                            @if(count($products))
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}" @if(!empty($productTypeNameArr)) @if(in_array($product->id, $productTypeNameArr)) selected @endif @endif>
+                                        {{$product->product_name_th}}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
+                        <small class="alert-danger" id="ms_product_type_name"></small>
                     </div>
                 </div>
-                <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0; padding-top: 5px;">
-                    <label class="col-sm-1" style="padding-right: 0;">* หัวข้อ :</label>
-                    <div class='col-sm-11' style="padding-right: 0;">
-                        <input type="text" id="search" name="filter" class="form-control" value="{{Request::input('filter')}}"
-                           placeholder="{{ trans('messages.order_id').'/'.trans('messages.i_sale').'/'.trans('messages.order_status') }}">
-                    </div>
-               </div>
+
                 <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-default pull-right" type="submit">
-                        <i class="fa fa-search"></i> ค้นหา
+                    <button class="btn btn-primary pull-right" type="submit">
+                        <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
             </form>
+            {{--<div class="col-md-12" style="padding-left: 0; padding-right: 0;">--}}
+                {{--<button class="btn btn-primary pull-left" id="export" type="button">--}}
+                    {{--Export--}}
+                {{--</button>--}}
+            {{--</div>--}}
         </div>
         <div class="row" style="margin-top: 10px">
             <div class="table-responsive">
@@ -105,7 +114,7 @@ $pagetitle = trans('message.menu_order_list');
                             <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
                             <td style="text-align:center;">{{ $item->status_name }}</td>
                             <td style="text-align:center;">
-                                <a class="btn btn-info"
+                                <a class="btn btn-primary"
                                    href="{{ url ('user/orderdetail/'.$item->id) }}">
                                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                 </a>
@@ -123,7 +132,6 @@ $pagetitle = trans('message.menu_order_list');
 @push('scripts')
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-{!! JsValidator::formRequest('App\Http\Requests\OrderBuyRequest', '#my-form') !!}
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({
@@ -146,6 +154,110 @@ $pagetitle = trans('message.menu_order_list');
             startView: 2,
             maxViewMode: 2
         });
+    });
+
+    $("#start_date").change(function () {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        if(end_date != ''){
+            if (start_date <= end_date) {
+                $("#ms_end_date").html('');
+            } else {
+                $("#start_date").focus();
+                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
+            }
+        }
+
+    });
+    $("#end_date").change(function () {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        if(start_date != '') {
+            if (end_date >= start_date) {
+                $("#ms_start_date").html('');
+                $("#ms_end_date").html('');
+            } else {
+                $("#end_date").focus();
+                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
+            }
+        }
+    });
+
+    $(function(){
+        $('#my-form').submit(function() {
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            var product_type_name = $("#product_type_name option:selected").val();
+
+            if(!start_date) {
+                $("#start_date").focus();
+                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date')?>');
+                return false;
+            }else{
+                $("#ms_start_date").html('');
+            }
+            if(!end_date) {
+                $("#start_date").focus();
+                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
+                return false;
+            }else{
+                $("#ms_start_date").html('');
+            }
+
+            if(start_date != '') {
+                if (end_date >= start_date) {
+                    $("#ms_start_date").html('');
+                    $("#ms_end_date").html('');
+                } else {
+                    $("#end_date").focus();
+                    $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
+                    return false;
+                }
+            }
+
+            if(end_date != ''){
+                if (start_date <= end_date) {
+                    $("#ms_end_date").html('');
+                } else {
+                    $("#start_date").focus();
+                    $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
+                    return false;
+                }
+            }
+            if(!product_type_name) {
+                $("#product_type_name").focus();
+                $("#ms_product_type_name").html('<?php echo Lang::get('validation.attributes.message_validate_product_type_name')?>');
+                return false;
+            }else{
+                $("#ms_product_type_name").html('');
+            }
+
+        });
+    });
+
+
+
+    //***********************************************
+    $( "#export" ).click(function() {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var product_type_name = $("#product_type_name option:selected").val();
+        var key_token = $('input[name=_token]').val();
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': key_token},
+            type: "POST",
+            url: "<?php echo url('user/reports/buy/export')?>",
+            //data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
+            success: function(response) {
+                //console.log(response);
+                window.location.href = "<?php echo url('reports/buy/export/')?>/"+response.file;
+                return false;
+            },
+            error: function(response){
+                alert('error..');
+                return false;
+            }
+        })
     });
 </script>
 @endpush
