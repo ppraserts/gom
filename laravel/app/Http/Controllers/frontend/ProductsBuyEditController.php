@@ -205,29 +205,4 @@ class ProductsBuyEditController extends Controller
 
         });
     }
-
-    private function RemoveFolderImage($rawfile)
-    {
-        sleep(1);
-        if ($rawfile != "") {
-            $rawfileArr = explode("/", $rawfile);
-            $indexFile = count($rawfileArr) - 1;
-            $indexFolder = count($rawfileArr) - 2;
-            File::delete($rawfile);
-            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
-        }
-    }
-
-    private function UploadImage(Request $request, $imagecolumnname)
-    {
-        sleep(1);
-        $fileTimeStamp = time();
-        $imageTempName = $request->file($imagecolumnname)->getPathname();
-
-        $imageName = $request->{$imagecolumnname}->getClientOriginalName();
-        $request->{$imagecolumnname}->move(config('app.upload_product') . $fileTimeStamp . "/", $imageName);
-        $imageName = config('app.upload_product') . $fileTimeStamp . "/" . $imageName;
-
-        return array('imageTempName' => $imageTempName, 'imageName' => $imageName);
-    }
 }
