@@ -13,6 +13,11 @@ class QuoteController extends Controller
         'price' => 'min:1',
     ];
 
+    public function __construct()
+    {
+        $this->middleware('user');
+    }
+
     public function index(Request $request){
         $user = auth()->guard('user')->user();
         $quotations = Quotation::join('product_requests', 'quotation.product_request_id', '=', 'product_requests.id')
