@@ -25,46 +25,9 @@ class ProductsBuyEditController extends Controller
 {
     private $rules = [
         'productcategorys_id' => 'required',
-        'products_id' => 'required',
-        //'product_title' => 'required',
-        //'product_description' => 'required',
-        'price' => 'required|numeric',
-        'volumn' => 'required|numeric',
-        'units' => 'required',
-        'city' => 'required',
-        'province' => 'required',
-        'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-        'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-        'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-    ];
-
-    private $rules2 = [
-        'productcategorys_id' => 'required',
-        'products_id' => 'required',
-        //'product_title' => 'required',
-        //'product_description' => 'required',
-        'pricerange_start' => 'required|numeric',
-        'pricerange_end' => 'required|numeric',
-        //'volumnrange_start' => 'required|numeric',
-        //'volumnrange_end' => 'required|numeric',
-        //'units' => 'required',
-        //'city' => 'required',
-        //'province' => 'required',
-    ];
-
-    private $rules3 = [
-        'productcategorys_id' => 'required',
-        'products_id' => 'required',
-        //'product_title' => 'required',
-        //'product_description' => 'required',
-        'price' => 'required|numeric',
-        'volumn' => 'required|numeric',
-        'units' => 'required',
-        'city' => 'required',
-        'province' => 'required',
-        'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-        'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-        'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
+        'pricerange_start' => 'required',
+        'pricerange_end' => 'required',
+        'volumnrange_start' => 'required',
     ];
 
 
@@ -84,6 +47,7 @@ class ProductsBuyEditController extends Controller
             $item->id = 0;
             $item->productstatus = 'open';
             $item->iwantto = $useritem->iwanttobuy;
+            $item->products_id = '';
             $product_name = (object)array();
             $product_name->product_name_th = '';
         } else {
@@ -120,6 +84,34 @@ class ProductsBuyEditController extends Controller
     {
         $useritem = auth()->guard('user')->user();
 
+        $product_id = $request->products_id;
+        $productExist = false;
+        if ($request->products_id > 0){
+            $product = Product::find($product_id);
+            if ($product == null || $product->product_name_th != $request->fake_products_name){
+                $productExist = false;
+            }
+        }else if ($product_id == ''){
+            if ($request->fake_products_name != ''){
+                $product = Product::where('product_name_th','=',$request->fake_products_name)
+                    ->where('productcategory_id','=',$request->productcategorys_id)->first();
+                if ($product!=null){
+                    $productExist = true;
+                    $product_id = $product->id;
+                }
+            }
+        }
+
+        if (!$productExist){
+            $product = new Product();
+            $product->product_name_th = $request->fake_products_name;
+            $product->product_name_en = $request->fake_products_name;
+            $product->productcategory_id = $request->productcategorys_id;
+            $product->user_id = $useritem->id;
+            $product->sequence = 999;
+            $product->save();
+            $product_id = $product->id;
+        }
         if ($id == 0) {
             $productRequest = new ProductRequest();
             $productRequest->id = 0;
@@ -127,7 +119,12 @@ class ProductsBuyEditController extends Controller
             $productRequest = ProductRequest::find($id);
         }
 
-        $this->validate($request, $this->rules2);
+        $this->validate($request, $this->rules);
+        /*if ($id == 0)
+            $this->validate($request, $this->rules);
+        else{
+            $this->validate($request, $this->rules3);
+        }*/
 
         $productRequest->productcategorys_id = $request->productcategorys_id; //
         $productRequest->products_id = $request->products_id;
@@ -147,6 +144,7 @@ class ProductsBuyEditController extends Controller
         $productRequest->iwantto = $useritem->iwanttobuy;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->productstatus = "open";
+        $productRequest->products_id = $product_id;
         $productRequest->users_id = $useritem->id;
         $productRequest->selling_type = $request->selling_type;
 
@@ -171,7 +169,7 @@ class ProductsBuyEditController extends Controller
             $productRequest->update();
         }
 
-        $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
+        /*$itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
         $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
 
         foreach ($itemsbuy as $div_item) {
@@ -184,7 +182,7 @@ class ProductsBuyEditController extends Controller
             if ($div_item->requset_email_system == 1) {
                 $this->SendEmailMatching($div_item);
             }
-        }
+        }*/
 
         return redirect()->route('productbuyedit.show', ['id' => $id])
             ->with('success', trans('messages.message_update_success'));
