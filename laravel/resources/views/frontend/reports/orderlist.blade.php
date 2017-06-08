@@ -6,14 +6,10 @@ $pagetitle = trans('message.menu_order_list');
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
     @include('shared.usermenu', array('setActive'=>'reports'))
-    <div class="col-sm-12">
-        @if ($message = Session::get('success'))
-            <div class="row" style="margin-top: 15px;">
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            </div>
-        @endif
+    <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
+        <div class="row">
+            @include('frontend.reports.menu_reports')
+        </div>
         @if (count($errors) > 0)
                 <div class="row" style="margin-top: 15px;">
                 <div class="alert alert-danger">
@@ -236,30 +232,34 @@ $pagetitle = trans('message.menu_order_list');
     });
 
 
-
     //***********************************************
     $( "#export" ).click(function() {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
-        var product_type_name = $("#product_type_name option:selected").val();
+        //var product_type_name = $("#product_type_name option:selected").val();
+        var product_type_name = [];
+        $('#product_type_name option:selected').each(function(i, selected){
+            product_type_name[i] = $(selected).val();
+        });
+        //console.log(product_type_name); return false;
         var key_token = $('input[name=_token]').val();
-        $.ajax({
-            headers: { 'X-CSRF-TOKEN': key_token},
-            type: "POST",
-            url: "<?php echo url('user/reports/buy/export')?>",
-            //data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
-            success: function(response) {
-                window.open(
-                    "<?php echo url('user/reports/buy/download/?file=')?>"+response.file,
-                    '_blank'
-                );
-                return false;
-            },
-            error: function(response){
-                alert('error..');
-                return false;
-            }
-        })
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': key_token},
+                type: "POST",
+                url: "<?php $page =''; if(!empty(Request::input('page'))){ $page = '?page='.Request::input('page'); } echo url('user/reports/buy/export'.$page)?>",
+                data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
+                success: function (response) {
+                    window.open(
+                        "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                    return false;
+                },
+                error: function (response) {
+                    alert('error..');
+                    return false;
+                }
+            })
     });
 </script>
 @endpush
