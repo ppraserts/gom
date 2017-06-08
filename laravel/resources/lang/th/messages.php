@@ -223,6 +223,9 @@ return [
     'text_input_detail_promotion' => 'กรอกรายละเอียดแนะนำโปรโมชั่น',
     'text_ex_email_seand' => 'ตัวอย่างอีเมลที่ส่ง',
     'text_close' => 'ปิด',
-
+    'text_start_date' => 'วันที่เริ่มต้น',
+    'text_end_date' => 'วันที่สิ้นสุด',
+    'text_product_type_name' => 'ชนิดสินค้า',
+    'text_filter' => 'หัวข้อ ',
 
 ];

@@ -244,6 +244,13 @@ return [
         'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
         'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
         'censor_word' => 'รูปแบบการเซ็นเซอร์',
+
+        'message_validate_start_date' => 'กรุณากรอกวันที่เริ่มต้น',
+        'message_validate_end_date' => 'กรุณากรอกวันที่สิ้นสุด',
+        'message_validate_start_date_1' => 'กรุณากรอกวันที่เริ่มต้นน้อยกว่าวันที่สิ้นสุด',
+        'message_validate_end_date_1' => 'กรุณากรอกวันที่สิ้นสุดมากกว่าวันที่เริ่มต้น',
+        'message_validate_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
+        'message_validate_filter' => 'กรุณากรอกหัวข้อในการค้นหา',
     ],
 
 ];

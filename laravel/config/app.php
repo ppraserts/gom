@@ -201,11 +201,14 @@ return [
 		* Helper Service Providers
 		*/
 		App\Providers\HelperServiceProvider::class,
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+
+        //excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -256,8 +259,11 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
-//       'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Image' => Intervention\Image\Facades\Image::class
+       'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+
+        //excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

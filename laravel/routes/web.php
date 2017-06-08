@@ -169,6 +169,14 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     //Route::get('userproduct/index','frontend\ProductController@index');
     Route::post('recommend-promotion/{id}','frontend\PromotionsController@recommendPromotion');
 
+    //Reports
+    Route::get('reports/buy','frontend\ReportsController@index');
+
+    Route::post('reports/buy','frontend\ReportsController@actionFilter');
+    Route::post('reports/buy/export','frontend\ReportsController@actionExportExcel');
+
+    Route::get('reports/buy/download','frontend\ReportsController@actionDownload');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {

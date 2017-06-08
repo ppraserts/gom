@@ -20,11 +20,11 @@ $productRequest = new ProductRequest();
             </a>
         </li>
     @endif
-    <li role="presentation" {{ ($setActive == "userprofiles")? 'class=active' : ''  }}>
-        <a href="{{ url('/user/userprofiles') }}">
-            {{ trans('messages.userprofile') }}
-        </a>
-    </li>
+    {{--<li role="presentation" {{ ($setActive == "userprofiles")? 'class=active' : ''  }}>--}}
+        {{--<a href="{{ url('/user/userprofiles') }}">--}}
+            {{--{{ trans('messages.userprofile') }}--}}
+        {{--</a>--}}
+    {{--</li>--}}
     @if($user->iwanttosale == "sale")
         <li role="presentation" {{ ($setActive == "iwanttosale")? 'class=active' : ''  }}>
             <a href="{{ url('user/iwanttosale') }}">
@@ -89,4 +89,9 @@ $productRequest = new ProductRequest();
             </a>
         </li>
     @endif
+    <li role="presentation" {{ (Request::segment(2) == "reports")? 'class=active' : ''  }}>
+        <a href="{{ url('/user/reports/buy') }}">
+            รายงาน
+        </a>
+    </li>
 </ul>
