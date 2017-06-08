@@ -46,11 +46,11 @@
     var products_array = [];
 
     function validate() {
-        if (jQuery.inArray($('input[name=fake_products_id]').val(), products_array) == -1) {
+        /*if (jQuery.inArray($('input[name=fake_products_id]').val(), products_array) == -1) {
             alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
             $('input[name=fake_products_id]').focus();
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -58,7 +58,7 @@
         var query_url = '';
         var products;
 
-        query_url = '/information/create/ajax-state';
+        query_url = '{{url('/information/create/ajax-state')}}';
 
         products = new Bloodhound({
             datumTokenizer: function (datum) {
@@ -101,7 +101,7 @@
         $('#productcategorys_id').on('change', function (e) {
             product_category_value = e.target.value;
 
-            query_url = '/information/create/ajax-state?search=true&productcategorys_id=' + product_category_value;
+            query_url = '{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}' + product_category_value;
 
             products = new Bloodhound({
                 datumTokenizer: function (datum) {
@@ -257,9 +257,9 @@
                         </div>
 
                         <div class="form-group  col-md-6 {{ $errors->has('product_title') ? 'has-error' : '' }}">
-                            <strong> {{ trans('validation.attributes.products_id') }}
+                            <strong>* {{ trans('validation.attributes.products_id') }}
                                 :</strong>
-                            {!! Form::text('fake_products_id', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control min-width-100pc typeahead')) !!}
+                            {!! Form::text('fake_products_name', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control min-width-100pc typeahead')) !!}
                             <input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
                         </div>
 

@@ -211,7 +211,7 @@ return [
     'text_send_comment' => 'ส่งความคิดเห็น',
     'add_bad_word' => 'เพิ่มคำที่ไม่เหมาะสม',
     'add_to_cart' =>'ใส่ตะกร้า',
-    'text_detail_product' =>'รายล่ะเอียดสินค้า',
+    'text_detail_product' =>'รายละเอียดสินค้า',
     'text_address' => 'ที่อยู่',
     'text_district' => 'อำเภอ',
     'text_zip_code' => 'รหัสไปรษณีย์',

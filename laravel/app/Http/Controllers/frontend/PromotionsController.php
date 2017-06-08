@@ -217,8 +217,8 @@ class PromotionsController extends Controller
         $orgFilePathName = $request->{$filename}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_promotion');
-        $image_path_filename = $image_directory . "/" . time() . "." . $ext;
-        File::makeDirectory($image_directory, 0777, true, true);
+        $image_path_filename = $image_directory . time() . "." . $ext;
+//        File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);
         $img->save($image_path_filename);
@@ -285,7 +285,7 @@ class PromotionsController extends Controller
             'email' => $email,
             'detail' => $detail,
             'shop_title' => $shop_title,
-            '$shop_name' => $shop_name,
+            'shop_name' => $shop_name,
             'promotion_title' => $promotion_title,
             'image_file' => $image_file,
             'user_name' => $user->users_firstname_th.' '.$user->users_lastname_th,

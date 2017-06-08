@@ -12,7 +12,7 @@ $url = "user/iwanttosale";
             var query_url = '';
             var products;
 
-            query_url = '/information/create/ajax-state';
+            query_url = '{{url('/information/create/ajax-state')}}';
 
             products = new Bloodhound({
                 datumTokenizer: function (datum) {
@@ -55,7 +55,7 @@ $url = "user/iwanttosale";
             $('#productcategorys_id').on('change', function (e) {
                 product_category_value = e.target.value;
 
-                query_url = '/information/create/ajax-state?search=true&productcategorys_id=' + product_category_value;
+                query_url = '{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}' + product_category_value;
 
                 products = new Bloodhound({
                     datumTokenizer: function (datum) {
@@ -215,97 +215,7 @@ $url = "user/iwanttosale";
     @endif
 
 
-    <!-- modal product added to cart -->
-        <div id="modal_add_to_cart" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false"
-             data-backdrop="static">
-            <div class="vertical-alignment-helper">
-                <div class="modal-dialog modal-md vertical-align-center">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title text-success" style="color: #00cc66"> สินค้า 1 ชิ้น
-                                ได้ถูกเพิ่มเข้าไปยังตะกร้าสินค้าของคุณ</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="col-md-4">
-                                        <img class="text-center" id="img_product" width="150" height="120">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            <div id="div_product_description"></div>
-                                            <div id="div_product_title"></div>
-                                            <div id="div_product_price"></div>
-                                            <p>ราคาต่อหน่วย(บาท) : <span id="sp_product_price"></span></p>
-                                            <p>ปริมาณ : <span id="sp_product_volume"></span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="{{url('user/shoppingcart') }}" type="button"
-                               class="btn btn-success"><i class="fa fa-shopping-cart"></i> คะกร้าสินค้า</a>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-
 
     </div>
     {!! $items->appends(Request::all()) !!}
 @stop
-
-@push('scripts')
-
-<script>
-
-    var BASE_URL = '<?php echo url('/')?>';
-
-    $(document).ready(function () {
-        $('#modal_add_to_cart').on('hidden.bs.modal', function () {
-            location.reload();
-        });
-    });
-
-    function addToCart(productRequestId) {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
-        //   alert(targetUrl);
-        $.ajax({
-            type: 'POST',
-            url: targetUrl,
-            data: {_token: CSRF_TOKEN, product_request_id: productRequestId},
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 'success') {
-                    //console.log(response.iwantto);
-                    // location.reload();
-                    showProductAdded(response.product_request);
-                }
-            },
-            error: function (request, status, error) {
-                alert(request.responseText);
-            }
-        });
-    }
-
-
-    function showProductAdded(productRequest) {
-        if (productRequest != null) {
-            $('#img_product').attr('src', BASE_URL + '/' + productRequest.product1_file);
-            $('#div_product_description').html(productRequest.product_description);
-            $('#div_product_title').html(productRequest.product1_title);
-            $('#sp_product_price').text(productRequest.price);
-            $('#sp_product_volume').text(productRequest.volumn);
-        }
-        $('#modal_add_to_cart').modal('show');
-    }
-
-</script>
-
-@endpush

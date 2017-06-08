@@ -16,7 +16,7 @@ if ($mode == "create") {
 @extends('layouts.main')
 @push('scripts')
 <link href="{{url('bootstrap-tokenfield/css/tokenfield-typeahead.css')}}" type="text/css" rel="stylesheet">
-<link rel="stylesheet" href="{{url('bootstrap-tokenfield/css/bootstrap-tokenfield.css')}}" />
+<link rel="stylesheet" href="{{url('bootstrap-tokenfield/css/bootstrap-tokenfield.css')}}"/>
 <script src="{{url('bootstrap-tokenfield/bootstrap-tokenfield.js')}}"></script>
 <script src="//maps.google.com/maps/api/js?key=AIzaSyCTyLJemFK5wu_ONI1iZobLGK9pP1EVReo"></script>
 
@@ -45,7 +45,7 @@ if ($mode == "create") {
     });
 
 
-//    $('#tokenfield-typeahead').tokenfield();
+    //    $('#tokenfield-typeahead').tokenfield();
     $('#tokenfield')
 
         .on('tokenfield:createtoken', function (e) {
@@ -78,16 +78,16 @@ if ($mode == "create") {
             showAutocompleteOnFocus: false
         });
 
-        $('#box_preview_template').click(function(){
-            var detail = $('#textarea_detail').val();
-            if(detail != ''){
-                $('#box_detail').html(detail);
-            }
-        });
+    $('#box_preview_template').click(function () {
+        var detail = $('#textarea_detail').val();
+        if (detail != '') {
+            $('#box_detail').html(detail);
+        }
+    });
 
-        @if (!empty(Session::get('error_recomment')))
-            $('#myModal').modal('show');
-        @endif
+    @if (!empty(Session::get('error_recomment')))
+        $('#myModal').modal('show');
+    @endif
 </script>
 @endpush
 @section('content')
@@ -103,15 +103,15 @@ if ($mode == "create") {
 
         @if (count($errors) > 0)
             @if(!empty(Session::get('error_recomment'))) @else
-            <div class="alert alert-danger">
-                <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
-                <br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+                <div class="alert alert-danger">
+                    <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
+                    <br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
         @endif
         @if ($message = Session::get('success'))
@@ -150,13 +150,15 @@ if ($mode == "create") {
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('image_file') ? 'has-error' : '' }}">
                     <strong>* {{ trans('validation.attributes.promotion_image') }}:</strong>
-                    <p style="color: #ff2222">{{trans('messages.image_size')}} 745 x 92 pixel และ {{trans('messages.image_file_size_limit')}} 500 KB</p>
+                    <p style="color: #ff2222">{{trans('messages.image_size')}} 745 x 92 pixel
+                        และ {{trans('messages.image_file_size_limit')}} 500 KB</p>
                     {!! Form::file('image_file', null, array('placeholder' => trans('validation.attributes.promotion_image'),'class' => 'form-control')) !!}
 
                     @if(isset($item->image_file))
-                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive" src="{{ url($item->image_file) }}" />
+                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive"
+                             src="{{ url($item->image_file) }}"/>
                     @else
-                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive" />
+                        <img img_promotion width="400px" height="300px" class="img-promotion img-responsive"/>
                     @endif
                 </div>
             </div>
@@ -178,7 +180,7 @@ if ($mode == "create") {
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group {{ $errors->has('end_date') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label" style="padding-left: 0px;">
-                    <strong>* {{ trans('validation.attributes.promotion_end_date') }}:</strong>
+                        <strong>* {{ trans('validation.attributes.promotion_end_date') }}:</strong>
                     </label>
                     <div class='input-group date col-sm-2' id='pick_end_date'>
                         {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => trans('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
@@ -202,21 +204,23 @@ if ($mode == "create") {
             </div>
 
 
-
             <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px;">
                 <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>"/>
                 <input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id; ?>"/>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     {{ trans('messages.button_save')}}</button>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">แนะนำโปรโมชั่น</button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">แนะนำโปรโมชั่น
+                </button>
             </div>
 
         </div>
         {!! Form::close() !!}
-        @include('frontend.promotion_element.modal')
-        @if(count($pormotion_recomments) > 0)
-            @include('frontend.promotion_element.list_recommen_promotion')
+        @if($mode!="create")
+            @include('frontend.promotion_element.modal')
+            @if(count($pormotion_recomments) > 0)
+                @include('frontend.promotion_element.list_recommen_promotion')
+            @endif
         @endif
     </div>
 @endsection
