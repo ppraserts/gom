@@ -90,6 +90,8 @@ class ProductsBuyEditController extends Controller
             $product = Product::find($product_id);
             if ($product == null || $product->product_name_th != $request->fake_products_name){
                 $productExist = false;
+            }else{
+                $productExist = true;
             }
         }else if ($product_id == ''){
             if ($request->fake_products_name != ''){

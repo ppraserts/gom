@@ -138,6 +138,8 @@ class ProductsSaleEditController extends Controller
             $product = Product::find($product_id);
             if ($product == null || $product->product_name_th != $request->fake_products_name){
                 $productExist = false;
+            }else{
+                $productExist = true;
             }
         }else if ($product_id == ''){
             if ($request->fake_products_name != ''){
@@ -311,7 +313,7 @@ class ProductsSaleEditController extends Controller
             $indexFile = count($rawfileArr) - 1;
             $indexFolder = count($rawfileArr) - 2;
             File::delete($rawfile);
-            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
+//            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
         }
     }
 
@@ -322,7 +324,6 @@ class ProductsSaleEditController extends Controller
         $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_product');
-//        File::makeDirectory($image_directory, 0777, true, true);
         $imageName = $image_directory . time() .".".$ext;
         $img = Image::make($imageTempName);
         $img->save($imageName);
