@@ -134,14 +134,85 @@ class ReportsController extends Controller
     public function SaleItemIndex()
     {
         $user = auth()->guard('user')->user();
-        $products = Product::all();
-        $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
-            ->join('users', 'users.id', '=', 'orders.buyer_id')
-            ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
-            ->where('orders.user_id', $user->id)
-            ->orderBy('orders.id', 'DESC')
-            ->paginate(config('app.paginate'));
-        return view('frontend.reports.sale_item_list', compact('orderList','products'));
+        $product = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+        $product->join('users', 'users.id', '=', 'orders.user_id');
+        $product->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $product->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $product->join('products', 'products.id', '=', 'product_requests.products_id');
+        $product->select(DB::raw('products.*'));
+        $product->where('orders.user_id', $user->id);
+        $product->orderBy('products.id', 'DESC');
+        $products = $product->get();
+        //
+        $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+        $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
+        , products.product_name_en'));
+        $orderList->where('orders.user_id', $user->id);
+        $orderList->where('orders.order_status', '!=', 5);
+        $orderList->groupBy('products.id');
+        $orderList->orderBy('orders.id', 'DESC');
+        $orderSaleItem = $orderList->paginate(config('app.paginate'));
+        //return $orderSaleItem;
+        $sumAll=0;
+        foreach ($orderSaleItem as $value){
+           $sumAll = $sumAll + $value->total_amounts;
+        }
+        return view('frontend.reports.sale_item_list', compact('orderSaleItem','products','sumAll'));
+    }
+
+    public function SaleItemFilter(Request $request)
+    {
+        $user = auth()->guard('user')->user();
+        $v = Validator::make($request->all(), [
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'product_type_name' => 'required'
+        ]);
+        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
+
+        $orderSaleItem = '';
+        if($request->isMethod('post')){
+            $start_date = DateFuncs::convertYear($request->input('start_date'));
+            $end_date = DateFuncs::convertYear($request->input('end_date'));
+            $productTypeNameArr = $request->input('product_type_name');
+            $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+            $orderList->join('users', 'users.id', '=', 'orders.user_id');
+            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+            $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
+        , products.product_name_en'));
+            $orderList->where('orders.user_id', $user->id);
+            $orderList->whereIn('products.id', $productTypeNameArr);
+            $orderList->where('orders.order_date','>=', $start_date);
+            $orderList->where('orders.order_date','<=', $end_date);
+            $orderList->where('orders.order_status', '!=', 5);
+            $orderList->groupBy('products.id');
+            $orderList->orderBy('orders.id', 'DESC');
+            $orderList->paginate(config('app.paginate'));
+            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+            //products
+            $product = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+            $product->join('users', 'users.id', '=', 'orders.user_id');
+            $product->join('order_items', 'order_items.order_id', '=', 'orders.id');
+            $product->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+            $product->join('products', 'products.id', '=', 'product_requests.products_id');
+            $product->select(DB::raw('products.*'));
+            $product->where('orders.user_id', $user->id);
+            $product->orderBy('products.id', 'DESC');
+            $products = $product->get();
+            //
+            $sumAll=0;
+            foreach ($orderSaleItem as $value){
+                $sumAll = $sumAll + $value->total_amounts;
+            }
+            //return $orderSaleItem;
+            return view('frontend.reports.sale_item_list', compact('orderSaleItem','products','productTypeNameArr','sumAll'));
+        }
     }
 
 }

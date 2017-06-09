@@ -13,7 +13,7 @@ $pagetitle = trans('message.menu_order_list');
 
         <div class="row">
             <h2>รายงานยอดจำหน่ายสินค้า</h2>
-            <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="my-form" method="POST">
+            <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="my-form" method="POST">
                 {{csrf_field()}}
                 <style>
                     .form-horizontal .form-group {
@@ -72,41 +72,14 @@ $pagetitle = trans('message.menu_order_list');
             </form>
         </div>
         <div class="row" style="margin-top: 10px">
+            @if(count($orderSaleItem) > 0)
+            <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
+            @else
+                <div style="margin: 0px auto; padding-top:2%;">
+                    Data not found
+                </div>
+            @endif
 
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                        <th>{{ trans('messages.i_buy') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
-                        <th width="130px" style="text-align:center;">
-                            {{ trans('messages.view_order_detail') }}
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($orderList as $key => $item)
-                        <tr>
-                            <td style="text-align:center;">{{ $item->id }}</td>
-                            <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                            <td style="text-align:center;">{{ $item->order_date }}</td>
-                            <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->status_name }}</td>
-                            <td style="text-align:center;">
-                                <a class="btn btn-info"
-                                   href="{{ url ('user/orderdetail/'.$item->id) }}">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                {!! $orderList->appends(Request::all()) !!}
-            </div>
         </div>
     </div>
 @endsection
@@ -216,35 +189,74 @@ $pagetitle = trans('message.menu_order_list');
         });
     });
 
-
-    //***********************************************
-    $( "#export" ).click(function() {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        //var product_type_name = $("#product_type_name option:selected").val();
-        var product_type_name = [];
-        $('#product_type_name option:selected').each(function(i, selected){
-            product_type_name[i] = $(selected).val();
-        });
-        //console.log(product_type_name); return false;
-        var key_token = $('input[name=_token]').val();
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': key_token},
-            type: "POST",
-            url: "<?php $page =''; if(!empty(Request::input('page'))){ $page = '?page='.Request::input('page'); } echo url('user/reports/buy/export'.$page)?>",
-            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
-            success: function (response) {
-                window.open(
-                    "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
-                    '_blank'
-                );
-                return false;
+</script>
+<?php if(count($orderSaleItem) > 0){ ?>
+<script src="{{ url('charts/js/highcharts.js')}}"></script>
+<script src="{{ url('charts/js/modules/exporting.js')}}"></script>
+<style type="text/css">
+    ${
+demo.css
+}
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
             },
-            error: function (response) {
-                alert('error..');
-                return false;
-            }
-        })
+            title: {
+                text: 'ยอดจำหน่ายสินค้ารวมทั้งหมด'
+            },
+            subtitle: {
+                text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">ยอดรวม : {{ number_format($sumAll)}} บาท </span>'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'ยอดจำหน่ายสินค้า'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'center',
+                        format: '{point.y:.1f} บาท',
+                        y: 35,
+                        style: {
+                            fontSize: '10px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px"><b></b></span>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span> : <b>{point.y:.2f} บาท</b><br/>'
+            },
+
+            series: [{
+                name: '',
+                colorByPoint: true,
+                data: [<?php $n=1; foreach ($orderSaleItem as $val){ ?>{
+                    name: '<?php echo $val->product_name_en?>',
+                    y: <?php echo $val->total_amounts?>,
+                    drilldown: '<?php echo $val->product_name_en?>'
+                }<?php if(count($orderSaleItem) == $n){ }else{?>,<?php }}?>]
+            }],
+
+        });
     });
 </script>
+<?php }?>
 @endpush
