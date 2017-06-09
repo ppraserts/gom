@@ -91,7 +91,7 @@ class ProductRequest extends Model
                                           ,u.requset_email_system
                                           FROM
                                           (
-                                                    SELECT a.*, p.product_name_th
+                                                    SELECT a.*, p.product_name_th, q.id as quotation_id, q.is_reply
                                                       FROM `product_requests` a
                                                       join `product_requests` b on b.users_id=$userid
                                                           and b.iwantto = 'buy'
@@ -101,6 +101,8 @@ class ProductRequest extends Model
                                                           and a.productstatus = 'open'
                                                           $conditionStr
                                                       JOIN `products` p on a.products_id = p.id
+                                                      LEFT JOIN quotation q ON a.id = q.product_request_id
+                                                          and q.user_id = $userid
                                           ) as matching
                                           join users u on matching.users_id = u.id
                                           group by matching.id

@@ -112,8 +112,8 @@ class ShopSettingController extends Controller
         $orgFilePathName = $request->{$filename}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.shopimage');
-        $image_path_filename = $image_directory . "/" . time() .".".$ext;
-        File::makeDirectory($image_directory, 0777, true, true);
+        $image_path_filename = $image_directory . time() .".".$ext;
+//        File::makeDirectory($image_directory, 0777, true, true);
 
         $img = Image::make($image_path);
         $img->save($image_path_filename);

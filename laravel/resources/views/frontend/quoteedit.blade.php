@@ -44,10 +44,10 @@
                         {!! Form::number('price', null, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
                     </div>
 
-                    <div class="form-group {{ $errors->has('discount') ? 'has-error' : '' }}">
+                    {{--<div class="form-group {{ $errors->has('discount') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.discount') }}:</strong>
                         {!! Form::number('discount', null, array('placeholder' => trans('validation.attributes.discount'),'class' => 'form-control')) !!}
-                    </div>
+                    </div>--}}
 
                     <button type="submit" class="btn btn-primary">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

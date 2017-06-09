@@ -12,7 +12,7 @@ $url = "user/iwanttobuy";
             var query_url = '';
             var products;
 
-            query_url = '/information/create/ajax-state';
+            query_url = '{{url('/information/create/ajax-state')}}';
 
             products = new Bloodhound({
                 datumTokenizer: function (datum) {
@@ -55,7 +55,7 @@ $url = "user/iwanttobuy";
             $('#productcategorys_id').on('change', function (e) {
                 product_category_value = e.target.value;
 
-                query_url = '/information/create/ajax-state?search=true&productcategorys_id=' + product_category_value;
+                query_url = '{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}' + product_category_value;
 
                 products = new Bloodhound({
                     datumTokenizer: function (datum) {

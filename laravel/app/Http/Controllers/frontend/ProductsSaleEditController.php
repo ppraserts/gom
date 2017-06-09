@@ -36,18 +36,6 @@ class ProductsSaleEditController extends Controller
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
     ];
 
-    private $rules2 = [
-        'productcategorys_id' => 'required',
-        'products_id' => 'required',
-        //'product_title' => 'required',
-        //'product_description' => 'required',
-        'pricerange_start' => 'required|numeric',
-        'pricerange_end' => 'required|numeric',
-        'volumnrange_start' => 'required|numeric',
-        'volumnrange_end' => 'required|numeric',
-        'units' => 'required',
-    ];
-
     private $rules3 = [
         'productcategorys_id' => 'required',
 //        'products_id' => 'required',
@@ -132,12 +120,24 @@ class ProductsSaleEditController extends Controller
         $id = $request->id;
         $useritem = auth()->guard('user')->user();
 
+
+        if ($id == 0)
+            $this->validate($request, $this->rules);
+        else{
+            /*if($request->is_packing != null && $request->is_packing == 1){
+
+            }*/
+            $this->validate($request, $this->rules3);
+        }
+
         $product_id = $request->products_id;
         $productExist = false;
         if ($request->products_id > 0){
             $product = Product::find($product_id);
             if ($product == null || $product->product_name_th != $request->fake_products_name){
                 $productExist = false;
+            }else{
+                $productExist = true;
             }
         }else if ($product_id == ''){
             if ($request->fake_products_name != ''){
@@ -166,14 +166,6 @@ class ProductsSaleEditController extends Controller
             $productRequest->id = 0;
         } else {
             $productRequest = ProductRequest::find($id);
-        }
-        if ($id == 0)
-            $this->validate($request, $this->rules);
-        else{
-            /*if($request->is_packing != null && $request->is_packing == 1){
-
-            }*/
-            $this->validate($request, $this->rules3);
         }
 
 
@@ -311,7 +303,7 @@ class ProductsSaleEditController extends Controller
             $indexFile = count($rawfileArr) - 1;
             $indexFolder = count($rawfileArr) - 2;
             File::delete($rawfile);
-            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
+//            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
         }
     }
 
@@ -322,8 +314,7 @@ class ProductsSaleEditController extends Controller
         $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_product');
-        File::makeDirectory($image_directory, 0777, true, true);
-        $imageName = $image_directory . "/" . time() .".".$ext;
+        $imageName = $image_directory . time() .".".$ext;
         $img = Image::make($imageTempName);
         $img->save($imageName);
         $img->destroy();

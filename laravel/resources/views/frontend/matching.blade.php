@@ -47,8 +47,8 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
             foreach ($div_item as $col_md_4_items)
             {
             $col_md_4_item = (array)$col_md_4_items;
-//            echo json_encode($col_md_4_item);
-//            $product_name = ($col_md_4_item['product_name_th']);
+            //            echo json_encode($col_md_4_item);
+            //            $product_name = ($col_md_4_item['product_name_th']);
 
             $imageName_temp = iconv('UTF-8', 'tis620', $col_md_4_item['product1_file']);
             if (!file_exists($imageName_temp)) {
@@ -74,13 +74,29 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                 </div>
 
 
-                                @if($col_md_4_item['selling_type'] == "all" || $col_md_4_item['selling_type'] == "wholesale")
-                                    <div class="col-md-12" style="margin-top: 10px;">
-                                        <p class="btn-wholesale">
-                                            <i class="fa fa-file-text-o"></i>
-                                            <a href="{{ url('user/quotationRequest/'.$col_md_4_item['id']) }}"
-                                               class="hidden-sm">{{ trans('messages.quotation_request')}}</a></p>
-                                    </div>
+                                @if(($col_md_4_item['selling_type'] == "all" || $col_md_4_item['selling_type'] == "wholesale"))
+                                    @if($col_md_4_item['quotation_id'] == null)
+                                        <div class="col-md-12" style="margin-top: 10px;">
+                                            <p class="btn-wholesale">
+                                                <i class="fa fa-file-text-o"></i>
+                                                <a href="{{ url('user/quotationRequest/'.$col_md_4_item['id']) }}"
+                                                   class="hidden-sm">{{ trans('messages.quotation_request')}}</a></p>
+                                        </div>
+                                    @elseif($col_md_4_item['is_reply'] == 1)
+                                        <div class="col-md-12" style="margin-top: 10px;">
+                                            <p class="btn-wholesale">
+                                                <i class="fa fa-file-text-o"></i>
+                                                <a href="{{ url('user/quotation/'.$col_md_4_item['quotation_id']) }}"
+                                                   class="hidden-sm">{{ trans('messages.quotation_view')}}</a></p>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12" style="margin-top: 10px;">
+                                            <p class="btn-wholesale">
+                                                <i class="fa fa-file-text-o"></i>
+                                                <span
+                                                   class="hidden-sm">{{ trans('messages.quotation_request_waiting')}}</span></p>
+                                        </div>
+                                    @endif
                                 @endif
                             </div>
 
@@ -128,7 +144,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
             foreach ($div_item as $col_md_4_items)
             {
             $col_md_4_item = (array)$col_md_4_items;
-//            $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+            //            $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
 
             $imageName_temp = iconv('UTF-8', 'tis620', $col_md_4_item['product1_file']);
             if (!file_exists($imageName_temp)) {
