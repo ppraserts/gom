@@ -171,11 +171,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
 
     //Reports
     Route::get('reports/buy','frontend\ReportsController@index');
-
     Route::post('reports/buy','frontend\ReportsController@actionFilter');
     Route::post('reports/buy/export','frontend\ReportsController@actionExportExcel');
-
     Route::get('reports/buy/download','frontend\ReportsController@actionDownload');
+    Route::get('reports/sale','frontend\ReportsController@SaleItemIndex');
 
 });
 

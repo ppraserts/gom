@@ -130,4 +130,18 @@ class ReportsController extends Controller
         return response()->download($path);
     }
 
+    //Report List Sale Item
+    public function SaleItemIndex()
+    {
+        $user = auth()->guard('user')->user();
+        $products = Product::all();
+        $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->join('users', 'users.id', '=', 'orders.buyer_id')
+            ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
+            ->where('orders.user_id', $user->id)
+            ->orderBy('orders.id', 'DESC')
+            ->paginate(config('app.paginate'));
+        return view('frontend.reports.sale_item_list', compact('orderList','products'));
+    }
+
 }
