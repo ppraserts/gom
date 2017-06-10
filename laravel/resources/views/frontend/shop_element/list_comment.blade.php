@@ -3,6 +3,9 @@
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
     </div>
     <div class="commentText">
+        <p>
+            {{$comment->users_firstname_th.' '.$comment->users_lastname_th}}
+        </p>
         <p class="score-star">
             @if($comment->score == 1)
                 <i class="fa fa-star" aria-hidden="true"></i>
