@@ -223,6 +223,8 @@ return [
     'text_input_detail_promotion' => 'กรอกรายละเอียดแนะนำโปรโมชั่น',
     'text_ex_email_seand' => 'ตัวอย่างอีเมลที่ส่ง',
     'text_close' => 'ปิด',
+    'quote_price'=> 'ราคาที่เสนอ',
+    'remark'=> 'หมายเหตุ',
 
 
 ];
