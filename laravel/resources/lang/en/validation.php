@@ -167,7 +167,7 @@ return [
         'users_phone' => 'Phone',
         'users_fax' => 'Fax',
         'iwantto' => 'I want to',
-        'users_idcard' => 'ID Card/Passport',
+        'users_idcard' => 'ID Card',
         'users_dateofbirth' => 'Date of birth',
         'users_gender' => 'Gender',
         'users_addressname' => 'Address',
