@@ -13,43 +13,24 @@ function renderHTML($text)
     <div class="row">
         <div class="col-lg-12">
             <div class="col-md-4" style="padding-right:30px;">
+
+                <a href="#" class="btn btn-default" onclick="history.back();">
+                    {{trans('messages.backtoresult')}}
+                </a>
                 @if($user->id == $productRequest->users_id)
-                    <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}
-                    </a>
+
                 @else
                     @if($productRequest->users_imageprofile != "")
                         <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}" class="img-circle">
                         <br/><br/>
                     @endif
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{--@if($useritem->id == $item->)--}}
-                            @if($productRequest->users_membertype == "personal")
-                                {{ $productRequest->users_firstname .Lang::locale() }}
-                                {{ $productRequest->users_lastname .Lang::locale() }}
-                            @endif
-                            @if($productRequest->users_membertype == "company")
-                                {{ $productRequest->users_company .Lang::locale() }}
-                            @endif
-                            {{ renderHTML($productRequest->users_mobilephone) }}
-                            {{ renderHTML($productRequest->users_phone) }}
-                            {{ renderHTML($productRequest->users_fax) }}
-                            {{ renderHTML($productRequest->email) }}
-                            <br/><br/>
-                            <button type="button" class="btn btn-primary">{{ trans('messages.inbox_message') }}</button>
-                            <br/><br/>
-
-                        </div>
-                    </div>
-
                     @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale")
-                        <a href="{{ url('user/quotationRequest/'.$productRequest['id']) }}"
-                           class="btn btn-primary">{{trans('messages.quotation_request')}}</a>
-
+                        <a href="{{ url('user/quotationRequest/'.$productRequest['id']) }}" class="btn btn-primary">
+                            {{trans('messages.quotation_request')}}
+                        </a>
                     @endif
                 @endif
-                <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px;"></div>
+                <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
                 @include('frontend.product_element.seller')
                     <div class="row">
                         <div class="col-md-12">
@@ -136,14 +117,21 @@ function renderHTML($text)
                         <span class="glyphicon glyphicon-map-marker"></span>
                         {{ $productRequest->city }} {{ $productRequest->province }}
                     </p>
-
-                    @if($productRequest['productstatus'] == 'open')
+                    @if($user->id == $productRequest->users_id)
                         <p>
-                            <button type="button" onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
-                                    class="btn btn-primary">
-                                <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
-                            </button>
+                             <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}
+                             </a>
                         </p>
+                    @else
+                        @if($productRequest['productstatus'] == 'open')
+                            <p>
+                                <button type="button" onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
+                                        class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
+                                </button>
+                            </p>
+                        @endif
                     @endif
                         </div>
                     </div>

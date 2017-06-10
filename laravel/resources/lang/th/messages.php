@@ -225,6 +225,5 @@ return [
     'text_close' => 'ปิด',
     'quote_price'=> 'ราคาที่เสนอ',
     'remark'=> 'หมายเหตุ',
-
-
+    'text_go_to_shop' => 'เข้าสู่หน้าร้าน',
 ];

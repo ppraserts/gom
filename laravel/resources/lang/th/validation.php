@@ -167,7 +167,7 @@ return [
         'users_phone' => 'เบอร์โทร',
         'users_fax' => 'โทรสาร',
         'iwantto' => 'ต้องการขาย/ซื้อ',
-        'users_idcard' => 'รหัสบัตรประชาชน/พาสปอร์ต',
+        'users_idcard' => 'รหัสบัตรประชาชน',
         'users_dateofbirth' => 'วันเกิด',
         'users_gender' => 'เพศ',
         'users_addressname' => 'ที่อยู่',

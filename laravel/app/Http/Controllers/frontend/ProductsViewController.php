@@ -45,7 +45,12 @@ class ProductsViewController extends Controller
             $status_comment = 1;
         }
         $shop = Shop::where('user_id', $productRequest->user_id)->first();
-        $comments = Comment::where('product_id',$id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
+
+        $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
+            ->select(DB::raw('comments.*, users.users_firstname_th, users.users_lastname_th'))
+            ->where('product_id',$id)
+            ->orderBy('created_at','desc')
+            ->paginate(25); //show list 15/page
         return view('frontend.productview', compact('productRequest', 'user','comments','status_comment','shop'));
     }
 
@@ -67,7 +72,7 @@ class ProductsViewController extends Controller
 
 
         if(!empty($product_id) and md5($product_id) == $product_key) {
-
+            $user = auth()->guard('user')->user();
             $config = Config::find(1);
             $badwords = BadWord::all();
             foreach ($badwords as $word){
@@ -78,6 +83,7 @@ class ProductsViewController extends Controller
             $comment['product_id'] = $product_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
             $comment['status']= 1;
+            $comment['user_id']= $user->id;
             Comment::insertGetId($comment);
             Session::flash('success', 'Comment successfully.');
             return redirect('user/productview/' . $product_id . '#commentBox');
