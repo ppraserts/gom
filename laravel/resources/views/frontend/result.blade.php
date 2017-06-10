@@ -205,7 +205,7 @@ use App\Http\Controllers\frontend\MarketController;
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title text-success" style="color: #00cc66"> สินค้า 1 ชิ้น
+                        <h4 class="modal-title text-success" style="color: #00cc66"> สินค้า
                             ได้ถูกเพิ่มเข้าไปยังตะกร้าสินค้าของคุณ</h4>
                     </div>
                     <div class="modal-body">
