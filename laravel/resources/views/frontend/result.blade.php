@@ -220,7 +220,7 @@ use App\Http\Controllers\frontend\MarketController;
                                         <div id="div_product_title"></div>
                                         <div id="div_product_price"></div>
                                         <p>ราคาต่อหน่วย(บาท) : <span id="sp_product_price"></span></p>
-                                        <p>ปริมาณ (<span id="units"></span>) : <span id="sp_product_volume"></span></p>
+                                        {{--<p>ปริมาณ (<span id="units"></span>) : <span id="sp_product_volume"></span></p>--}}
                                     </div>
                                 </div>
                             </div>
