@@ -187,7 +187,9 @@ $pagetitle = trans('message.menu_order_list');
             @endif
             @if($status_id == 4 || $status_id == 5)
             @else
-                @include('frontend.order_element.canceled')
+                @if($status_id <= 2)
+                    @include('frontend.order_element.canceled')
+                @endif
             @endif
         </div>
 
