@@ -59,9 +59,10 @@
         -
     @endif
     @if(count($shop) > 0)
-    <p>
-        <a href="{{url($shop->shop_name)}}"  class="btn btn-primary">
-            หน้าแรกร้านค้า
+    <p style="padding-top: 10px;">
+        <a href="{{url($shop->shop_name)}}">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            {{trans('messages.text_go_to_shop')}}
         </a>
     </p>
     @endif
