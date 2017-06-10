@@ -209,9 +209,13 @@ if ($mode == "create") {
                 <input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id; ?>"/>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    {{ trans('messages.button_save')}}</button>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">แนะนำโปรโมชั่น
+                    {{ trans('messages.button_save')}}
                 </button>
+                @if($mode == "edit")
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                    แนะนำโปรโมชั่น
+                </button>
+                @endif
             </div>
 
         </div>
