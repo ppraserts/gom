@@ -29,7 +29,7 @@
                 <form class="form-horizontal" method="post" action="{{url('user/productview/'.$productRequest->id.'/'.md5($productRequest->id))}}">
                     {{csrf_field()}}
                     <div class="stars">
-                        <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
+                        <input class="star star-5" id="star-5" type="radio" name="star" checked value="5"/>
                         <label class="star star-5" for="star-5"></label>
                         <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
                         <label class="star star-4" for="star-4"></label>
