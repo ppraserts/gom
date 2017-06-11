@@ -269,7 +269,7 @@ $pagetitle = trans('message.menu_order_list');
             }
 
 
-        })
+        });
 
         $("#form_cancled").submit(function (e) {
             var cancled_note = $("#cancled_note").val();
@@ -277,6 +277,15 @@ $pagetitle = trans('message.menu_order_list');
             if (cancled_note == '') {
                 $("#cancled_note").focus();
                 $("#mss_cancled_note").html("<?php echo trans('validation.attributes.message_validate_note')?>");
+                return false;
+            }
+        });
+
+        $("#form_payment_channel").submit(function (e) {
+            var payment_channel = $("#payment_channel option:selected").val();
+            if(payment_channel == ''){
+                $('#payment_channel').focus();
+                $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_delivery_date')?>");
                 return false;
             }
         })
