@@ -67,7 +67,7 @@ class QuotationController extends Controller
         $quotation = Quotation::join('product_requests', 'quotation.product_request_id', '=', 'product_requests.id')
             ->join('products', 'product_requests.products_id', '=', 'products.id')
             ->join('users','users.id','=','product_requests.users_id')
-            ->select('users.users_firstname_th','users.users_lastname_th','users.users_mobilephone','users.users_phone','product_requests.*','product_requests.users_id as buyer_id','product_requests.id as product_request_id','quotation.*','products.product_name_th')
+            ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','product_requests.*','product_requests.users_id as buyer_id','product_requests.id as product_request_id','quotation.*','products.product_name_th')
             ->where('quotation.id', $id)->first();
         /*echo json_encode($quotation);
         exit();*/

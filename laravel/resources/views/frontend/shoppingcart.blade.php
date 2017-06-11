@@ -287,9 +287,5 @@
 
     }
 
-
-
-
-
 </script>
 @endpush

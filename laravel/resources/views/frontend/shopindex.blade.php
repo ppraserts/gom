@@ -23,7 +23,7 @@
                                         @if(isset($promotion->image_file))
                                             <img class="img-promotion img-responsive"
                                                  src="{{url( $promotion->image_file)}}">
-
+                                            <h4>{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h4>
                                         @else
                                             <div class="promotion-text-box">
                                                 <h3 class="promotion-text">{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h3>
