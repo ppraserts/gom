@@ -9,7 +9,7 @@ use App\PormotionRecomment;
 use Validator, Response;
 use Illuminate\Http\Request;
 use App\Promotions;
-use File;
+use File,DB;
 use Image;
 use Redirect, View, Session;
 use Illuminate\Support\Facades\Mail;
@@ -36,7 +36,7 @@ class PromotionsController extends Controller
     ];
 
     private $rules_reconment = [
-        'email' => 'required',
+        //'email' => 'required',
         //'detail' => 'required',
     ];
 
@@ -156,7 +156,11 @@ class PromotionsController extends Controller
             'shop_id' => $shop->id
         );
         $item = Promotions::find($id);
-        $pormotion_recomments = PormotionRecomment::where('promotion_id',$id)->paginate(25);
+        $pormotion_recomments = PormotionRecomment::select(DB::raw('SUM(count_recommend) as sum_recommend, COUNT(email) as count_email,
+        id,promotion_id,recommend_date,email,detail,created_at'))
+            ->where('promotion_id',$id)
+            ->groupBy('key')
+            ->paginate(25);
         return view('frontend.promotionedit', compact('item', 'shop','pormotion_recomments','user'))->with($data);
     }
 
@@ -254,21 +258,35 @@ class PromotionsController extends Controller
         $user = auth()->guard('user')->user();
         $promotion = Promotions::find($id);
         $shop = Shop::where('user_id', $user->id)->first();
-        $emailArr = $request->input('email');
         $detail = $request->input('detail');
-        $emails = explode(',', $emailArr);
+
+//        $emailArr = $request->input('email');
+//        $emails = explode(',', $emailArr); requset_email_system
+       $user_requset_email_system = DB::table('users')
+            ->select('users.email', 'users.id')
+            ->where('requset_email_system', 1)
+            ->where('iwanttobuy', 'buy')
+            ->where('id', '!=', $user->id)
+            ->get();
+        if (count($user_requset_email_system) <= 0) {
+            Session::flash('error_recomment',trans('messages.message_user_email_fail'));
+            return Redirect::to('user/promotion/' . $id . '/edit')->withErrors($validator)->withInput();
+        }
+
         $link = url($shop->shop_name."/promotion/".$id);
         $image_file = url($promotion->image_file);
-        foreach ($emails as $email) {
-            if (filter_var(trim($email), FILTER_VALIDATE_EMAIL)) {
-                $recomment['email'] = $email;
+        $key = md5($id.date('Y-m-d H:i:s'));
+        foreach ($user_requset_email_system as $userVal) {
+            if (!empty($userVal->email)) {
+                $recomment['email'] = $userVal->email;
                 $recomment['detail'] = $detail;
                 $recomment['count_recommend'] = 0;
                 $recomment['recommend_date'] = date('Y-m-d');
                 $recomment['promotion_id'] = $id;
+                $recomment['key'] = $key;
                 $last_id = PormotionRecomment::insertGetId($recomment);
-                $encode_id = md5($last_id);
-                $this->SendEmailPromotion($email, $detail, $shop->shop_title,$shop->shop_name, $promotion->promotion_title, $image_file, $user, $link, $last_id,$encode_id);
+                $encode_id = $key;
+                $this->SendEmailPromotion($userVal->email, $detail, $shop->shop_title,$shop->shop_name, $promotion->promotion_title, $image_file, $user, $link, $last_id,$encode_id);
 
             }
         }

@@ -10,22 +10,16 @@
                     <h4 class="modal-title">{{ trans('messages.text_recomment_promotion') }}</h4>
                 </div>
                 <div class="modal-body">
-                    @if (count($errors) > 0)
+                    @if (!empty(Session::get('error_recomment')))
                         <div class="alert alert-danger">
-                            <strong>{{ trans('messages.message_whoops_error')}} </strong>
-                            <br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                            <strong>{{ Session::get('error_recomment') }} </strong>
                         </div>
                     @endif
-                    <div class="form-group">
-                        <strong>* {{ trans('messages.text_email') }} :</strong>
-                        <span style="color: #ff2222">( {{ trans('messages.text_example_email') }})</span>
-                        <input type="text" name="email" class="form-control" id="tokenfield" value=""/>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<strong>* {{ trans('messages.text_email') }} :</strong>--}}
+                        {{--<span style="color: #ff2222">( {{ trans('messages.text_example_email') }})</span>--}}
+                        {{--<input type="text" name="email" class="form-control" id="tokenfield" value=""/>--}}
+                    {{--</div>--}}
 
                     <ul class="nav nav-tabs">
                         <li class="active">

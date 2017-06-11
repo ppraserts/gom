@@ -244,6 +244,7 @@ return [
         'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
         'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
         'censor_word' => 'รูปแบบการเซ็นเซอร์',
+        'shop_bank' => 'บัญชีธนาคาร',
     ],
 
 ];

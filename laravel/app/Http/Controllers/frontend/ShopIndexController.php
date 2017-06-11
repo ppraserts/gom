@@ -143,7 +143,11 @@ class ShopIndexController extends Controller
         if(!empty($request->input('rid')) and !empty($request->input('key'))){
             $pr_id = $request->input('rid');
             $key = $request->input('key');
-            if($key == md5($pr_id)){
+            if(!empty($key)){
+                $promotion = PormotionRecomment::where('key',$key)->where('id', $pr_id)->first();
+                if(count($promotion) <= 0){
+                    return view('errors.404');
+                }
                 $pormotion_recomment = PormotionRecomment::find($pr_id);
                 $data['count_recommend'] = 1 + $pormotion_recomment->count_recommend;
                 PormotionRecomment::where('id',$pr_id)->update($data);
@@ -153,9 +157,7 @@ class ShopIndexController extends Controller
         }
 
         $shop = Shop::where('shop_name', $shop)->get();
-
         $promotion = Promotions::find($id);
-//        var_dump($promotion);
         if ($promotion!=null & $shop->count()>0)
         {
             return view('frontend.promotiondetail')->with('promotion',$promotion);

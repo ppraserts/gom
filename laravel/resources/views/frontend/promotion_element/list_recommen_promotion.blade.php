@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>{{ trans('messages.text_date') }}</th>
-                    <th>{{ trans('messages.text_email') }}</th>
+                    <th>{{ trans('messages.text_count_email') }}</th>
                     <th width="360px">{{ trans('messages.Description') }}</th>
                     <th width="160px">{{ trans('messages.text_count_read_recomment_promotion') }}</th>
                 </tr>
@@ -22,9 +22,9 @@
                     @foreach ($pormotion_recomments as $recomment)
                         <tr>
                             <td>{{ $recomment->recommend_date }}</td>
-                            <td>{{ $recomment->email }}</td>
+                            <td>{{ $recomment->count_email }}</td>
                             <td>{{ mb_strimwidth($recomment->detail, 0, 150, '...', 'UTF-8') }}</td>
-                            <td>{{ $recomment->count_recommend }}</td>
+                            <td>{{ $recomment->sum_recommend }}</td>
                         </tr>
                     @endforeach
                 @endif

@@ -117,6 +117,15 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong> {{ trans('validation.attributes.shop_bank') }}: </strong>
+                                {!! Form::textarea('bank', isset($shop->bank)?$shop->bank:"", array('placeholder' => trans('validation.attributes.shop_bank'),'class' => 'form-control','style'=>'height:180px')) !!}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

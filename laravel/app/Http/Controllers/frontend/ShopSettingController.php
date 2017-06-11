@@ -60,6 +60,7 @@ class ShopSettingController extends Controller
         $shop->shop_title = $request->input('shop_title');
         $shop->shop_subtitle = $request->input('shop_subtitle');
         $shop->shop_description = $request->input('shop_description');
+        $shop->bank = $request->input('bank');
         $shop->text_color = $request->input('text_color');
 
         if ($request->input('image_file_1_type') == 0){
