@@ -132,6 +132,7 @@ return [
     'menu_order_list' => 'รายการสั่งซื้อ',
     'menu_shop_order_list' => 'รายการขาย',
     'order_detail' => 'รายละเอียดการสั่งซื้อ',
+    'order_detail_sale' => 'รายละเอียดการขาย',
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'product_list' => 'รายการสินค้า',
     'baht' => ' บาท',

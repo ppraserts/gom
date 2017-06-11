@@ -5,6 +5,7 @@ use DB,Response,Validator;
 use App\Order;
 use App\OrderItem;
 use App\Shop;
+use Session;
 use App\OrderStatusHistory;
 use App\OrderPayment;
 use Illuminate\Http\Request;
@@ -83,8 +84,12 @@ class OrderController extends Systems
             ->with($data);
     }
 
-    public function orderdetail($order_id){
+    public function orderdetail(Request $request,$order_id){
 //        $user = auth()->guard('user')->user();
+        $orderType = $request->input('status');
+        if(!empty($orderType)){
+            Session::put('orderType',$orderType);
+        }
         $orderId = $order_id;
         $order = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
             ->join('users', 'users.id', '=', 'orders.user_id')
