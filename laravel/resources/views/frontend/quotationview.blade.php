@@ -78,11 +78,27 @@
                                 <tr>
                                     <td>{{  $quotation->product_name_th }}</td>
                                     <td>{{  $quotation->product_title }}</td>
-                                    <td><strong>{{  $quotation->price. " " .$quotation->units }}</strong></td>
+                                    <td><strong>{{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}</strong></td>
                                     {{--<td>{{  $quotation->discount }}</td>--}}
                                 </tr>
                                 </tbody>
                             </table>
+
+                            @if(!empty($quotation->remark))
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ trans('messages.remark') }}</th>
+                                        {{--<th>{{ trans('validation.attributes.discount') }}</th>--}}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{  $quotation->remark }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            @endif
                         </div>
                         <div class="col-md-4">
 
@@ -128,6 +144,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = '{{url('/user/shoppingcart/addToCart')}}';
         //   alert(targetUrl);
+        console.log(unit_price);
         $.ajax({
             type: 'POST',
             url: targetUrl,

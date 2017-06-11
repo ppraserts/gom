@@ -36,18 +36,6 @@ class ProductsSaleEditController extends Controller
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
     ];
 
-    private $rules2 = [
-        'productcategorys_id' => 'required',
-        'products_id' => 'required',
-        //'product_title' => 'required',
-        //'product_description' => 'required',
-        'pricerange_start' => 'required|numeric',
-        'pricerange_end' => 'required|numeric',
-        'volumnrange_start' => 'required|numeric',
-        'volumnrange_end' => 'required|numeric',
-        'units' => 'required',
-    ];
-
     private $rules3 = [
         'productcategorys_id' => 'required',
 //        'products_id' => 'required',
@@ -132,6 +120,16 @@ class ProductsSaleEditController extends Controller
         $id = $request->id;
         $useritem = auth()->guard('user')->user();
 
+
+        if ($id == 0)
+            $this->validate($request, $this->rules);
+        else{
+            /*if($request->is_packing != null && $request->is_packing == 1){
+
+            }*/
+            $this->validate($request, $this->rules3);
+        }
+
         $product_id = $request->products_id;
         $productExist = false;
         if ($request->products_id > 0){
@@ -168,14 +166,6 @@ class ProductsSaleEditController extends Controller
             $productRequest->id = 0;
         } else {
             $productRequest = ProductRequest::find($id);
-        }
-        if ($id == 0)
-            $this->validate($request, $this->rules);
-        else{
-            /*if($request->is_packing != null && $request->is_packing == 1){
-
-            }*/
-            $this->validate($request, $this->rules3);
         }
 
 

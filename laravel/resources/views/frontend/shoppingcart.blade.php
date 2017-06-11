@@ -84,7 +84,7 @@
                     @php
                         $user = DB::table('users')->where('id' , $key)->first();
                     @endphp
-                    <h3>ร้าน {{$user->users_firstname_th.' '.$user->users_lastname_th}}</h3>
+                    <h3>{{trans('messages.i_sale')." ".$user->users_firstname_th.' '.$user->users_lastname_th}}</h3>
                 </div>
                 <div class="col-sm-12 col-md-12 ">
                     <table id="table_cart" class="table table-hover">
@@ -106,7 +106,7 @@
                         @foreach($carts as $row=> $cart)
                             @php
                                 $int_count ++;
-                                $total += intval($cart["qty"])*floatval($cart['product_request']['price']);
+                                $total += intval($cart["qty"])*floatval($cart['unit_price']);
                                 if(count($carts) == $int_count){
                                     $total_net += $total;
                                 }
@@ -122,9 +122,11 @@
                                         <div class="media-body">
                                             <h4 class="media-heading"><a href="#">{{$cart['product_request']['product_title']}}</a></h4>
                                             <h5 class="media-heading"><a href="#"></a></h5>
-                                            <span class="text-success"><strong>
+                                            <span class="text-success">
                                             <span class="glyphicon glyphicon-map-marker"></span>
+                                                <strong>
                                                {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}
+                                                </strong>
                                             </span>
                                         </div>
                                     </div>
@@ -132,7 +134,7 @@
                                 <td class="col-sm-2 col-md-2">
                                     <div class="input-append text-left">
                                         @if($cart["qty"] > $cart["min_order"])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'], 'is_added'=> 0 )) }}"
+                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'], 'is_added'=> 0 )) }}"
                                            class="btn btn-default minus">
                                             <i class="fa fa-minus"></i>
                                         </a>
@@ -142,7 +144,7 @@
                                         <input class="text-center product_quantity" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
                                                id="appendedInputButtons" size="16" type="text">
                                         @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'] , 'is_added'=> 1)) }}"
+                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'] , 'is_added'=> 1)) }}"
                                            class="btn btn-default plus">
                                             <i class="fa fa-plus"></i>
                                         </a>
@@ -157,14 +159,14 @@
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <strong>
                                         <span class="product_price">
-                                            {{$cart['product_request']['price']}}
+                                            {{$cart['unit_price']}}
                                         </span>
                                     </strong>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <strong>
                                         <span class="total">
-                                            {{ number_format (intval($cart["qty"])*floatval($cart['product_request']['price']), 2 ) }}
+                                            {{ number_format (intval($cart["qty"])*floatval($cart['unit_price']), 2 ) }}
                                         </span>
                                     </strong>
                                 </td>

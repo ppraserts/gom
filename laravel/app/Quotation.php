@@ -11,7 +11,8 @@ class Quotation extends Model
 
     public $fillable = ['price',
         'discount',
-        'is_reply'
+        'is_reply',
+        'remark'
     ];
 
     public function user()
