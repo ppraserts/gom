@@ -115,7 +115,7 @@
                             <div class="col-md-2 col-md-offset-5">
 
                                 <button type="button" class="btn btn-primary"
-                                        onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->user_id}}','{{$quotation->price}}','{{$quotation->min_order}}')">
+                                        onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->seller_id}}','{{$quotation->price}}','{{$quotation->min_order}}')">
                                     <i class="fa fa-shopping-cart"></i>
                                     สั่งซื้อสินค้า
                                 </button>
