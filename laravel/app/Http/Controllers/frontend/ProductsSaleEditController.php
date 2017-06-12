@@ -32,6 +32,7 @@ class ProductsSaleEditController extends Controller
         'units' => 'required',
         'min_order' => 'min:1',
         'package_unit' => 'required',
+        'product_stock' => 'required',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -47,6 +48,7 @@ class ProductsSaleEditController extends Controller
         'units' => 'required',
         'min_order' => 'min:1',
         'package_unit' => 'required',
+        'product_stock' => 'required',
 //        'province' => 'required',
         'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -119,7 +121,6 @@ class ProductsSaleEditController extends Controller
 
     public function updatesale(Request $request)
     {
-        //return $request->selling_period;
         $id = $request->id;
         $useritem = auth()->guard('user')->user();
 
@@ -217,6 +218,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
         $productRequest->selling_period =  $request->selling_period;
+        $productRequest->product_stock =  $request->product_stock;
         if(count($request->selling_type) == 2){
             $productRequest->selling_type == 'all';
         }else{

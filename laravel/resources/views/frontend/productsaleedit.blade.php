@@ -237,13 +237,39 @@
         });
         $("#head-title").text('{{ trans('messages.add_sale') }}');
     }
+
+    $(document).ready(function(){
+        $("#form-productsaleedit").submit(function (e) {
+            var volumn = $("input[name=volumn]").val();
+            var min_order = $("input[name=min_order]").val();
+            var product_stock = $("input[name=product_stock]").val();
+
+            if(min_order <= 0){
+                $("input[name=min_order]").focus();
+                $("#ms_min_order").html("<?php echo trans('messages.ms_min_order')?>");
+                return false;
+            }
+            if(product_stock <= -1){
+                $("input[name=product_stock]").focus();
+                $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
+                return false;
+            }
+            if(volumn != '' && product_stock != ''){
+                if(product_stock > volumn){
+                    $("input[name=product_stock]").focus();
+                    $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
+                    return false;
+                }
+            }
+        })
+    });
 </script>
 @endpush
 
 @section('content')
     @include('shared.usermenu', array('setActive'=>'iwanttosale'))
     <br/>
-    <form enctype="multipart/form-data" class="form-horizontal" role="form" method="post"
+    <form enctype="multipart/form-data" class="form-horizontal" id="form-productsaleedit" role="form" method="post"
           action="{{ url('user/productsaleupdate') }}">
         {{ csrf_field() }}
         {{ Form::hidden('product1_file_temp', $item->product1_file) }}
@@ -435,13 +461,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.price') }}
-                            :</strong>
-                        {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 15px;">
+
                     <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
                         <strong>เกรด :</strong>
                         <select id="grade" name="grade" class="form-control">
@@ -450,19 +470,21 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-8 {{ $errors->has('volumn') ? 'has-error' : '' }}">
+                </div>
+                <div class="row" style="margin-top: 15px;">
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.volumn') }}
                             :</strong>
                         {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
                     </div>
-                </div>
-                <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-6 col-sm-6 col-md-4">
-                        <strong>{{ trans('validation.attributes.min_order') }}
+                        <strong>* {{ trans('validation.attributes.min_order') }}
                             :</strong>
                         {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
+                        <small class="alert-danger" id="ms_min_order"></small>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-8 {{ $errors->has('unit') ? 'has-error' : '' }}">
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('unit') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.units') }} :</strong>
                         <select id="units" name="package_unit" class="form-control">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
@@ -480,7 +502,17 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="row " style="margin-top: 15px;">
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('price') ? 'has-error' : '' }}">
+                        <strong>* {{ trans('validation.attributes.price') }} :</strong>
+                        {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <strong>*  {{ trans('validation.attributes.product_stock') }}:</strong>
+                        {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control')) !!}
+                        <small class="alert-danger" id="ms_product_stock"></small>
+                    </div>
+                </div>
                 <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <label class="control-label">
@@ -511,6 +543,7 @@
                       </span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="row " style="margin-top: 15px;">

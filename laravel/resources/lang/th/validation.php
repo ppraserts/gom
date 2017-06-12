@@ -248,6 +248,7 @@ return [
         'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
         'censor_word' => 'รูปแบบการเซ็นเซอร์',
         'shop_bank' => 'บัญชีธนาคาร',
+        'product_stock' => 'บริมาณคงเหลือ',
     ],
 
 ];
