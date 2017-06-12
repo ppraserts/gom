@@ -142,7 +142,6 @@
             });
         });
 
-
         $('.typeahead').bind('typeahead:select', function (ev, suggestion) {
             $('#products_id').val(suggestion.id);
         });
@@ -186,12 +185,8 @@
             startView: 2,
             maxViewMode: 2
         });
-
-
         initialViews();
-
         hideSuccessMessage();
-
 
     });
 
@@ -215,10 +210,13 @@
     function initialViews() {
 
         //Selling Period
-        var selling_period = '{{$item->selling_period}}';
+        var selling_period = '<?php echo $item->selling_period?>';
         if (selling_period == 'year') {
             $('.div_selling_period_date').hide();
+        }else if (selling_period == 'peri') {
+            $('.div_selling_period_date').show();
         } else {
+            $('.div_selling_period_date').hide();
             $("input[type=radio][name=selling_period]:first").attr('checked', true);
         }
     }
@@ -306,13 +304,21 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 ">
                         <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
-                        <input type="radio" name="selling_type" value="retail"
-                               checked {{ $item->selling_type == 'retail'? 'checked="checked"' : '' }}> ขายปลีก
-                        <input type="radio" name="selling_type"
-                               value="wholesale" {{ $item->selling_type == 'wholesale'? 'checked="checked"' : '' }}>
-                        ชายส่ง
-                        <input type="radio" name="selling_type"
-                               value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่
+
+                        @if($item->selling_type == 'retail')
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                        @elseif($item->selling_type == 'wholesale'){
+                            <input type="checkbox" name="selling_type[]" value="retail"> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                        @elseif($item->selling_type == 'all'){
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                        @else
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                        @endif
+                        {{--<input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่--}}
                     </div>
                 </div>
                 {{-- row--}}
@@ -366,7 +372,7 @@
 
                 <div class="row" style="margin-top: 15px;">
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.production_province') }}:</strong>
+                        <strong> {{ trans('validation.attributes.production_province') }} : </strong>
                         <select id="province" name="province" class="form-control">
                             <option value="">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
@@ -444,27 +450,48 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
+                    <div class="col-xs-6 col-sm-6 col-md-8 {{ $errors->has('volumn') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.volumn') }}
                             :</strong>
                         {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
                     </div>
+                </div>
+                <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-6 col-sm-6 col-md-4">
                         <strong>{{ trans('validation.attributes.min_order') }}
                             :</strong>
                         {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
                     </div>
+                    <div class="col-xs-6 col-sm-6 col-md-8 {{ $errors->has('unit') ? 'has-error' : '' }}">
+                        <strong>* {{ trans('validation.attributes.units') }} :</strong>
+                        <select id="units" name="package_unit" class="form-control">
+                            <option value="">{{ trans('validation.attributes.units') }}</option>
+                            @foreach ($unitsItem as $key => $unit)
+                                @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                                    <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
+                                @else
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
-                        <label class="control-label"><strong>{{ trans('validation.attributes.selling_period') }}
-                                :</strong></label>
-                        <input type="radio" name="selling_period"
-                               value="period" {{ $item->selling_period == 'period'? 'checked="checked"' : '' }}>
-                        ช่วงเวลา
+                        <label class="control-label">
+                            <strong>{{ trans('validation.attributes.selling_period') }} :</strong>
+                        </label>
+
                         <input type="radio" name="selling_period"
                                value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
+                        <input type="radio" name="selling_period" value="period" {{ $item->selling_period == 'peri'? 'checked="checked"' : '' }}>
+                        ช่วงเวลา
+
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4 div_selling_period_date form-inline">
                         <strong> {{ trans('validation.attributes.product_selling_start_date') }}:</strong>
