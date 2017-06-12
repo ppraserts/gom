@@ -297,7 +297,7 @@ $pagetitle = trans('message.menu_order_list');
             var payment_channel = $("#payment_channel option:selected").val();
             if(payment_channel == ''){
                 $('#payment_channel').focus();
-                $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_delivery_date')?>");
+                $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_order_channel')?>");
                 return false;
             }
         })
