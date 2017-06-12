@@ -263,7 +263,6 @@
                             <input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
                         </div>
 
-
                         @if(isset($standards))
                             <div class="form-group col-md-12 pd-top-10">
                                 <strong style="display: block; padding-bottom: 5px;"> {{ trans('validation.attributes.guarantee') }}
@@ -281,13 +280,17 @@
 
                         @endif
 
-                        <div id="div_packing_size"
-                             class="form-group col-md-6 pd-top-10 {{ $errors->has('packing_size') ? 'has-error' : '' }}">
-                            <strong> {{ trans('validation.attributes.product_package_size') }} :</strong>
-                            {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control min-width-100pc')) !!}
+                        {{--<div id="div_packing_size"--}}
+                             {{--class="form-group col-md-6 pd-top-10 {{ $errors->has('packing_size') ? 'has-error' : '' }}">--}}
+                            {{--<strong> {{ trans('validation.attributes.product_package_size') }} :</strong>--}}
+                            {{--{!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control min-width-100pc')) !!}--}}
+                        {{--</div>--}}
+                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
+                            <strong>* {{trans('validation.attributes.volumnrange_product_need_buy')}} :</strong>
+                            {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => trans('validation.attributes.volumnrange_product_need_buy'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
 
-                        <div class="form-group pd-top-10 col-md-3 {{ $errors->has('units') ? 'has-error' : '' }}">
+                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('units') ? 'has-error' : '' }}">
                             <strong> {{ trans('validation.attributes.units') }}
                                 :</strong>
                             <select id="units" name="units" class="form-control min-width-100pc">
@@ -303,28 +306,16 @@
                             </select>
                         </div>
 
-                        <div class="form-group pd-top-10 col-md-3 {{ $errors->has('grade') ? 'has-error' : '' }}">
-                            <strong> {{ trans('messages.text_grade') }} :</strong>
-                            <select id="grade" name="grade" class="form-control min-width-100pc">
-                                @foreach ($grades as $key => $value)
-                                    <option>{{$value}}</option>
-                                @endforeach
-                            </select>
+
+                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('pricerange_start_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
+                            <strong>* {{ trans('validation.attributes.pricerange_start_unit') }} (บาท):</strong>
+                            {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => trans('validation.attributes.pricerange_start_unit'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
-                        <br/>
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>* {{ trans('validation.attributes.pricerange_start') }} (บาท):</strong>
-                            {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => trans('validation.attributes.pricerange_start'),'class' => 'form-control min-width-100pc')) !!}
+                        <div class="form-group pd-top-10  col-md-6 {{ $errors->has('pricerange_end_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
+                            <strong>* {{ trans('validation.attributes.pricerange_end_unit') }} (บาท):</strong>
+                            {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => trans('validation.attributes.pricerange_end_unit'),'class' => 'form-control min-width-100pc')) !!}
                         </div>
-                        <div class="form-group pd-top-10  col-md-6 {{ $errors->has('pricerange_start')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>* {{ trans('validation.attributes.pricerange_end') }} (บาท):</strong>
-                            {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => trans('validation.attributes.pricerange_end'),'class' => 'form-control min-width-100pc')) !!}
-                        </div>
-                        <br/>
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
-                            <strong>* {{trans('validation.attributes.volumnrange_product_need')}} :</strong>
-                            {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => trans('validation.attributes.volumnrange_product_need'),'class' => 'form-control min-width-100pc')) !!}
-                        </div>
+
 
                         <div class="form-group pd-top-10 col-md-6 {{ $errors->has('province') ? 'has-error' : '' }}">
                             <strong> {{ trans('messages.text_product_province') }}:</strong>
@@ -340,6 +331,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                            <strong> {{ trans('messages.text_grade') }} :</strong>
+                            <select id="grade" name="grade" class="form-control min-width-100pc">
+                                @foreach ($grades as $key => $value)
+                                    <option>{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br/>
                     </div>
                 </div>
             </div>
