@@ -52,14 +52,13 @@ class ShopIndexController extends Controller
             ->orderBy('sequence','ASC')
             ->orderBy('updated_at','DESC')
             ->limit(8);
-        $products = $query->get();
 
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
             ->where('is_active', 1)
             ->where('start_date','<=', $dateNow)
             ->where('end_date','>=', $dateNow)
-            ->orderBy('sequence','desc')
+            ->orderBy('sequence','asc')
             ->get();
 
         $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
