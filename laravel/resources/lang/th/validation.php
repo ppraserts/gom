@@ -214,8 +214,11 @@ return [
         'productstatus'=> 'สถานะรายการสินค้า',
         'pricerange_start'=> 'ราคาเริ่มต้น',
         'pricerange_end'=> 'ราคาสิ้นสุด',
+        'pricerange_start_unit'=> 'ราคาต่อหน่วย เริ่มต้นที่',
+        'pricerange_end_unit'=> 'ราคาต่อหน่วย สิ้นสุดที่',
         'volumnrange_start'=> 'ปริมาณเริ่มต้น',
         'volumnrange_product_need'=> 'ปริมาณที่ต้องการซื้อขั้นต่ำ',
+        'volumnrange_product_need_buy'=> 'ปริมาณที่ต้องการซื้อ',
         'volumnrange_end'=> 'ปริมาณสิ้นสุด',
         'min_order' => 'ปริมาณที่ต้องการขายขั้นต่ำ',
         'units'=> 'หน่วยนับ',
@@ -245,6 +248,7 @@ return [
         'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
         'censor_word' => 'รูปแบบการเซ็นเซอร์',
         'shop_bank' => 'บัญชีธนาคาร',
+        'product_stock' => 'บริมาณคงเหลือ',
     ],
 
 ];

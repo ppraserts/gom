@@ -4,6 +4,8 @@ namespace App\Http\Controllers\frontend;
 use DB,Response,Validator;
 use App\Order;
 use App\OrderItem;
+use App\Shop;
+use Session;
 use App\OrderStatusHistory;
 use App\OrderPayment;
 use Illuminate\Http\Request;
@@ -82,8 +84,12 @@ class OrderController extends Systems
             ->with($data);
     }
 
-    public function orderdetail($order_id){
+    public function orderdetail(Request $request,$order_id){
 //        $user = auth()->guard('user')->user();
+        $orderType = $request->input('status');
+        if(!empty($orderType)){
+            Session::put('orderType',$orderType);
+        }
         $orderId = $order_id;
         $order = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
             ->join('users', 'users.id', '=', 'orders.user_id')
@@ -104,7 +110,9 @@ class OrderController extends Systems
     public function getHtmlConfirmSale(Request $request, $confirm_sale_type = ''){
         if($request->ajax()){
             if(!empty($confirm_sale_type) and $confirm_sale_type == 1){
-                $view_ele =  view('frontend.order_element.payment_channel');
+                $user = auth()->guard('user')->user();
+                $shop = Shop::where('user_id', $user->id)->first();
+                $view_ele =  view('frontend.order_element.payment_channel',compact('shop'));
                 $dataHtml = $view_ele->render();
                 return Response::json(array('r' => 'Y', 'data_html' => $dataHtml));
             }

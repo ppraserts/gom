@@ -132,6 +132,7 @@ return [
     'menu_order_list' => 'รายการสั่งซื้อ',
     'menu_shop_order_list' => 'รายการขาย',
     'order_detail' => 'รายละเอียดการสั่งซื้อ',
+    'order_detail_sale' => 'รายละเอียดการขาย',
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'product_list' => 'รายการสินค้า',
     'baht' => ' บาท',
@@ -164,6 +165,7 @@ return [
     'text_push_payment' => 'แจ้งชำระเงิน',
     'message_validate_delivery_chanel' => 'กรุณากรอกช่องทางการจัดส่ง',
     'message_validate_delivery_date' => 'กรุณาเลือกวันที่จัดส่ง',
+    'message_validate_order_channel' => 'กรุณาระบุช่องทางการชำระเงิน',
     'image_file_size_limit' => 'ขนาดไฟล์รูปต้องไม่เกิน',
     'image_size' => 'ขนาดรูปที่ควรใช้',
     'english_only' => 'ภาษาอังกฤษเท่านั้น',
@@ -228,4 +230,10 @@ return [
     'quote_price'=> 'ราคาที่เสนอ',
     'remark'=> 'หมายเหตุ',
     'text_go_to_shop' => 'เข้าสู่หน้าร้าน',
+    'text_is_not_bank' => 'ไม่พบบัญชีธนาคารกรุณากรอกบัญชีธนาคาร',
+    'ms_please_waiting' => 'โปรดรอสักครู่ระบบกำลังอัพเดทข้อมูล...',
+
+    'ms_product_stock' => 'บริมาณคงเหลือจะมากกว่าปริมาณทั้งหมดไม่ได้',
+    'ms_product_stock' => 'บริมาณคงเหลือต้องมากกว่าหรือเท่ากับ 0',
+    'ms_min_order' => 'ปริมาณที่ต้องการขายขั้นต่ำต้องมากกว่าหรือเท่ากับ 1',
 ];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
-use Auth;
+use Auth,DB,Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -50,4 +50,18 @@ class SearchController extends Controller
 		$product_name = Product::where('id', '=', $products_id)->select('product_name_th')->value('product_name_th');
 		return $product_name;
 	}
+
+	public function unsubscribe(Request $request){
+        $uemail = $request->input('uemail');
+
+        $key = $request->input('key');
+        if(!empty($uemail) and md5($uemail) == $key){
+            DB::table('users')
+                ->where('email', $uemail)
+                ->update(['requset_email_system' => 0]);
+            return view('frontend.promotion_element.redirect_unsubscribe');
+            //return redirect('result');
+        }
+        return view('errors.404');
+    }
 }

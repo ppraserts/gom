@@ -31,6 +31,8 @@ class ProductsSaleEditController extends Controller
         'volumn' => 'required|numeric',
         'units' => 'required',
         'min_order' => 'min:1',
+        'package_unit' => 'required',
+        'product_stock' => 'required',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -45,7 +47,9 @@ class ProductsSaleEditController extends Controller
         'volumn' => 'required|numeric',
         'units' => 'required',
         'min_order' => 'min:1',
-        'province' => 'required',
+        'package_unit' => 'required',
+        'product_stock' => 'required',
+//        'province' => 'required',
         'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -198,6 +202,7 @@ class ProductsSaleEditController extends Controller
 //        $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
         $productRequest->volumn = $request->volumn;
         $productRequest->min_order = $request->min_order;
+        $productRequest->package_unit = $request->package_unit;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->units = $request->units;
 //        $productRequest->city = $request->city;
@@ -213,7 +218,14 @@ class ProductsSaleEditController extends Controller
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
         $productRequest->selling_period =  $request->selling_period;
-        $productRequest->selling_type = $request->selling_type;
+        $productRequest->product_stock =  $request->product_stock;
+        if(count($request->selling_type) == 2){
+            $productRequest->selling_type == 'all';
+        }else{
+            $productRequest->selling_type = $request->selling_type[0];
+        }
+
+
 
         $arr_checked_product_standards = Input::get('product_standard');
         $productRequest->product_other_standard = $request->product_other_standard;
