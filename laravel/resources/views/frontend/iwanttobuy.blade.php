@@ -160,24 +160,31 @@ $url = "user/iwanttobuy";
                                 <h4>{{ $product_name }}</h4>
                                 จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }}
                                 - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}<br>
+                                <span class="hidden-sm">
+                                    {{trans('messages.orderbyprice')}} : {{ floatval($col_md_4_item['pricerange_start']) }}
+                                    - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
+                                </span>
+                                <br/>
                                 <span class="glyphicon glyphicon-tag"></span>
                                 <i>{{ $col_md_4_item['product_title'] }}</i><br>
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
                                 <br/><br/>
-
-
                             </div>
                         </div>
                         <div class="separator clear-left">
-                            <p class="btn-add">
-                                <span class="hidden-sm">THB {{ floatval($col_md_4_item['pricerange_start']) }}
-                                    - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
-                            </p>
-                            <p class="btn-details">
+                            <p style="text-align: left;">
                                 <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}"
-                                   class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="hidden-sm">
+                                    {{ trans('messages.button_moredetail')}}
+                                </a>
+                            </p>
+                            <p style="text-align: left;">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="hidden-sm">
+                                    {{ trans('messages.edit')}}
+                                </a>
+                            </p>
                         </div>
                         <div class="clearfix">
                         </div>

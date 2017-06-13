@@ -35,8 +35,8 @@ use App\Http\Controllers\frontend\MarketController;
                                     <?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?>
                                 </h4>
                                 <?php
-                                $avg_score=0;
-                                if(!empty($col_md_4_item['avg_score'])){
+                                $avg_score = 0;
+                                if (!empty($col_md_4_item['avg_score'])) {
                                     $avg_score = round($col_md_4_item['avg_score']);
                                 }
                                 ?>
@@ -144,36 +144,46 @@ use App\Http\Controllers\frontend\MarketController;
         <div class="row">
             <?php
             $arr = (array)$itemsbuy;
-            foreach(array_chunk($arr, 3, true) as $div_item)
-            {
-            foreach ($div_item as $col_md_4_items)
-            {
+            foreach(array_chunk($arr, 3, true) as $div_item){
+            foreach ($div_item as $col_md_4_items){
             $col_md_4_item = (array)$col_md_4_items;
             ?>
             <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
                 <div class="col-item">
                     <div class="info">
                         <div class="row">
-                            <div class="price col-md-9">
-                                <h4>{{ $col_md_4_item['product_title'] }}
-                                    : {{ floatval($col_md_4_item['volumnrange_start']) }}
-                                    - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
+                            <div class="price col-md-12">
+                                <h4>
+                                    @if(!empty($col_md_4_item['product_title']))
+                                    {{mb_strimwidth($col_md_4_item['product_title'], 0, 25, '...', 'UTF-8')}}
+                                    @else
+                                        -
+                                    @endif
+                                </h4>
+                                จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }}
+                                - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}
+                                <br/>
+                                <span class="hidden-sm">
+                                    {{trans('messages.orderbyprice')}} : {{ floatval($col_md_4_item['pricerange_start']) }}
+                                    - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
+                                </span>
+                                <br/>
+                                <span class="glyphicon glyphicon-tag"></span>
+                                {{mb_strimwidth($col_md_4_item['product_title'], 0, 33, '...', 'UTF-8')}}
+                                <br>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                                {{mb_strimwidth($col_md_4_item['city'].' '.$col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
                                 <br/><br/>
                             </div>
-                            <div class="rating hidden-sm col-md-3">
-                            </div>
+
                         </div>
                         <div class="separator clear-left">
-                            <p class="btn-add">
-                                <span class="hidden-sm"> {{ floatval($col_md_4_item['pricerange_start']) }}
-                                    - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}</span>
+                            <p style="text-align: left;">
+                               <i class="fa fa-list"></i>
+                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">
+                                    {{ trans('messages.button_moredetail')}}
+                                </a>
                             </p>
-                            <p class="btn-details">
-                                <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                   class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
                         </div>
                         <div class="clearfix">
                         </div>
@@ -203,10 +213,12 @@ use App\Http\Controllers\frontend\MarketController;
             <div class="modal-dialog modal-md vertical-align-center">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title text-success" style="color: #00cc66"> สินค้า
-                            ได้ถูกเพิ่มเข้าไปยังตะกร้าสินค้าของคุณ</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" style="color: #00cc66">
+                            สินค้าได้ถูกเพิ่มเข้าไปยังตะกร้าสินค้าของคุณ
+                        </h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
