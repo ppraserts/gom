@@ -160,19 +160,20 @@ use App\Http\Controllers\frontend\MarketController;
                                         -
                                     @endif
                                 </h4>
-                                จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }}
-                                - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}
+                                จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
                                 <br/>
                                 <span class="hidden-sm">
                                     {{trans('messages.orderbyprice')}} : {{ floatval($col_md_4_item['pricerange_start']) }}
                                     - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
                                 </span>
                                 <br/>
-                                <span class="glyphicon glyphicon-tag"></span>
-                                {{mb_strimwidth($col_md_4_item['product_title'], 0, 33, '...', 'UTF-8')}}
-                                <br>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                {{mb_strimwidth($col_md_4_item['city'].' '.$col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
+                                @if(!empty($col_md_4_item['city']) and !empty($col_md_4_item['province']))
+                                    {{mb_strimwidth($col_md_4_item['city'].' '.$col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
+                                @else
+                                    {{trans('messages.allprovince')}}
+                                @endif
+
                                 <br/><br/>
                             </div>
 
