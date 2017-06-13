@@ -7,8 +7,11 @@ use App\OrderItem;
 use App\Product;
 use App\ProductCategory;
 use App\ProductRequest;
+use App\ProductRequestMarket;
 use App\Province;
 use App\Standard;
+use App\Market;
+use App\UserMarket;
 use App\Units;
 use DB;
 use File;
@@ -33,6 +36,7 @@ class ProductsSaleEditController extends Controller
         'min_order' => 'min:1',
         'package_unit' => 'required',
         'product_stock' => 'required',
+        'product_markets' => 'required',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -49,6 +53,7 @@ class ProductsSaleEditController extends Controller
         'min_order' => 'min:1',
         'package_unit' => 'required',
         'product_stock' => 'required',
+        'product_markets' => 'required',
 //        'province' => 'required',
         'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -100,7 +105,6 @@ class ProductsSaleEditController extends Controller
         $unitsItem = Units::orderBy('sequence', 'ASC')
             ->get();
 
-
         for($i = 0;$i < $standards->count();$i++){
             $standards[$i]->checked = false;
             foreach ($item->standards as $standard){
@@ -110,12 +114,27 @@ class ProductsSaleEditController extends Controller
             }
         }
 
+        $markets = Market::join('user_market','user_market.market_id','=','markets.id')
+            ->select('markets.*')
+            ->where('user_market.user_id',$useritem->id)
+            ->get();
+        $productRequestMarkets = ProductRequestMarket::where('product_request_id',$id)->get();
+
+        for($i = 0;$i < $markets->count();$i++){
+            $markets[$i]->checked = false;
+            foreach ($productRequestMarkets as $productRequestMarket){
+                if ($markets[$i]->id == $productRequestMarket->market_id){
+                    $markets[$i]->checked = true;
+                }
+            }
+        }
+
         /*echo $standards;
         exit();*/
 
         return view('frontend.productsaleedit', compact('item'
             , 'useritem', 'productCategoryitem', 'grades'
-            , 'unitsItem', 'provinceItem', 'product_name' , 'standards' ,'showDelete'));
+            , 'unitsItem', 'provinceItem', 'product_name' , 'standards' ,'showDelete', 'markets'));
     }
 
 
@@ -247,6 +266,24 @@ class ProductsSaleEditController extends Controller
                 }
             }
             $productRequest->update();
+        }
+
+        $arr_markets = Input::get('product_markets');
+
+        $productRequestMarkets = ProductRequestMarket::where('product_request_id',$id)->get();
+        foreach ($productRequestMarkets as $productRequestMarket){
+            $productRequestMarket->delete();
+        }
+
+        if(is_array($arr_markets)){
+//            $user->markets()->detach();
+            foreach ($arr_markets as $item){
+                $productRequestMarket = new ProductRequestMarket();
+                $productRequestMarket->product_request_id = $id;
+                $productRequestMarket->market_id = $item;
+                $productRequestMarket->save();
+//                $user->markets()->save(Market::find($item));
+            }
         }
 
 //        $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
