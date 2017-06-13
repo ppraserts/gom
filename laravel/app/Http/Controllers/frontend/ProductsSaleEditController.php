@@ -240,8 +240,8 @@ class ProductsSaleEditController extends Controller
             }
             $id = $productRequest->id;
         } else {
+            $productRequest->standards()->detach();
             if(is_array($arr_checked_product_standards)){
-                $productRequest->standards()->detach();
                 foreach ($arr_checked_product_standards as $item){
                     $productRequest->standards()->save(Standard::find($item));
                 }

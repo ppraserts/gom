@@ -29,6 +29,7 @@ class User extends Authenticatable
         ,'users_taxcode'
         ,'users_company_th'
         ,'users_company_en'
+        ,'other_standard'
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable
                     'users_mobilephone' => $input['users_mobilephone'],
                     'users_phone' => $input['users_phone'],
                     'users_fax' => '',
+                    'users_fax' => '',
                     'users_imageprofile' => '',
                     'users_latitude' => 0,
                     'users_longitude' => 0,
@@ -83,6 +85,7 @@ class User extends Authenticatable
                     'users_taxcode' => '',
                     'users_company_th' => '',
                     'users_company_en' => '',
+                    'other_standard' => $input['other_standard'],
                 ]);
     }
 
@@ -118,7 +121,13 @@ class User extends Authenticatable
                     'users_taxcode' => $input['users_taxcode'],
                     'users_company_th' => $input['users_company_th'],
                     'users_company_en' => $input['users_company_en'],
+                    'other_standard' => $input['other_standard'],
                 ]);
+    }
+
+    public function markets()
+    {
+        return $this->belongsToMany('App\Market');
     }
 
 }
