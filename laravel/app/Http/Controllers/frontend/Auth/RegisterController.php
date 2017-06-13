@@ -78,6 +78,7 @@ class RegisterController extends Controller
      */
     protected function saveRegisterForm(Request $request)
     {
+
         $rules = array(
             'iwantto' => 'required',
             'users_idcard' => 'required|min:13|max:20',

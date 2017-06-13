@@ -71,14 +71,21 @@ class UsersController extends Controller
 
         $data = array('mode' => 'edit');
         $item = User::find($id);
-        $standards = Standard::join('user_standard', 'user_standard.id', '=', 'standards.id')
+        $standards = Standard::join('user_standard', 'user_standard.standard_id', '=', 'standards.id')
             ->where('user_standard.user_id', $id)->get();
+
         $standard = null;
+        $standardArr = array();
         if ($standards!=null){
-            $standardArr = array();
             foreach ($standards as $standard_item){
                 array_push($standardArr,$standard_item->name);
             }
+
+        }
+        if (!empty($item->other_standard)){
+            array_push($standardArr,$item->other_standard);
+        }
+        if (!empty($standardArr)){
             $standard = implode(", ",$standardArr);
         }
 
