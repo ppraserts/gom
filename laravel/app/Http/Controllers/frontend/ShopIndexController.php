@@ -45,13 +45,15 @@ class ShopIndexController extends Controller
             $status_comment = 1;
         }
 
-        $query = DB::table('product_requests')
-            ->where('users_id', $shop->user_id)
+        $products = ProductRequest::where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
             ->select('*')
             ->orderBy('sequence','ASC')
             ->orderBy('updated_at','DESC')
-            ->limit(8);
+            ->limit(8)
+            ->get();
+
+//        return $products;
 
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
