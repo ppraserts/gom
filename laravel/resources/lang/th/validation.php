@@ -222,6 +222,8 @@ return [
         'volumnrange_end'=> 'ปริมาณสิ้นสุด',
         'min_order' => 'ปริมาณที่ต้องการขายขั้นต่ำ',
         'units'=> 'หน่วยนับ',
+        'units_package'=> 'หน่วยนับขนาดบรรจุ',
+        'package_unit'=> 'หน่วยนับ',
         'city'=> 'อำเภอ',
         'province'=> 'จังหวัด',
         'production_province'=> 'พื้นที่ผลิต',

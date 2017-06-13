@@ -446,9 +446,10 @@
                         <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
                         {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.units') }}
-                            :</strong>
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.units_package') }} :
+                        </strong>
                         <select id="units" name="units" class="form-control">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
