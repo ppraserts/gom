@@ -5,7 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderItem;
-use DB;
+use DB,Response;
 use App\OrderStatusHistory;
 use App\ProductRequest;
 use Illuminate\Http\Request;
@@ -162,8 +162,40 @@ class ShoppingCartController extends Controller
         return redirect()->route('shoppingcart.index');
     }
 
-    public function incrementQuantityCartItem($user_id, $product_request_id, $unit_price, $is_added)
+    public function incrementQuantityCartItem(Request $request,$user_id, $product_request_id, $unit_price, $is_added)
     {
+        if($request->ajax()){
+            if ($user_id != null && $product_request_id != null && $is_added != null) {
+                $carts_in_session = session('carts');
+                if (is_array($carts_in_session)) {
+                    if (boolval($is_added)) {
+                        //remove
+                        foreach ($carts_in_session as $key => $item) {
+                            if ($item['product_request_id'] == trim($product_request_id)) {
+                                $min_order = $item['user_id'];
+                                unset($carts_in_session[$key]);
+                            }
+                        }
+                        //add
+                        $new_cart_item = array(
+                            "product_request_id" => $product_request_id,
+                            "unit_price" => $unit_price,
+                            "user_id" => $user_id,
+                            "qty" => $is_added,
+                            "min_order" => $min_order
+                        );
+                        array_push($carts_in_session, $new_cart_item);
+                        Session::forget('key');
+                        $this->saveCartsToSession($carts_in_session);
+
+                        return response()->json(array('R'=>'Y'));
+                    }
+                }
+                return response()->json(array('R'=>'N'));
+            }else{
+                return response()->json(array('R'=>'N'));
+            }
+        }
         if ($user_id != null && $product_request_id != null && $is_added != null) {
             $carts_in_session = session('carts');
             if (is_array($carts_in_session)) {
