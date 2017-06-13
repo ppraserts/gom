@@ -10,7 +10,7 @@ class Standard extends Model
     protected $table = "standards";
     public $fillable = ['name'];
 
-    public function productRequests(){
-        return $this->belongsToMany( 'App\ProductRequest' );
+    public function users(){
+        return $this->belongsToMany( 'App\Model\frontend\User' );
     }
 }

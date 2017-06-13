@@ -84,7 +84,7 @@ $controllerAction = "users.update";
         @endif
 
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-xs-7 col-sm-7 col-md-7">
                 @if($item->users_imageprofile != "")
                     <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt="" class="img-circle">
                 @endif
@@ -95,6 +95,17 @@ $controllerAction = "users.update";
                         <input value="1" type="checkbox" id="is_active"
                                name="is_active" {{ $item->is_active == 0? '' : 'checked' }}>
                     </strong>
+                </div>
+                <div class="form-group">
+                    {{ trans('validation.attributes.market') }}
+                    :
+                    @for($i = 0 ; $i < count($markets) ; $i++)
+                        {{--<label class="checkbox-inline">--}}
+                            <input name="markets[]" type="checkbox"
+                                   value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}} style="margin-left: 10px;">
+                            {{$markets[$i]->market_title_th}}
+                        {{--</label>--}}
+                    @endfor
                 </div>
                 <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.iwantto') }}
@@ -170,7 +181,7 @@ $controllerAction = "users.update";
                     <strong>{{ $item->users_city }}</strong>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-xs-5 col-sm-5 col-md-5">
                 <div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_province') }}
                     :

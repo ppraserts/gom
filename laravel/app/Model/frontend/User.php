@@ -121,4 +121,9 @@ class User extends Authenticatable
                 ]);
     }
 
+    public function markets()
+    {
+        return $this->belongsToMany('App\Market');
+    }
+
 }

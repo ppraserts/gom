@@ -184,6 +184,7 @@ return [
         'users_longitude' => 'ลองจิจูด',
         'users_imageprofile' => 'รูปภาพส่วนตัว',
         'is_active' => 'เปิดใช้งาน',
+        'market' => 'ตลาด',
         'market_title_th' => 'ตลาด(ไทย)',
         'market_title_en' => 'ตลาด(อังกฤษ)',
         'market_description_th' =>  'รายละเอียดตลาด(ไทย)',
