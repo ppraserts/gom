@@ -171,6 +171,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     //Route::get('userproduct/index','frontend\ProductController@index');
     Route::post('recommend-promotion/{id}','frontend\PromotionsController@recommendPromotion');
 
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {

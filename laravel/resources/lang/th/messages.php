@@ -243,4 +243,6 @@ return [
     'text_product_stock' => 'จำนวนสินค้าคงเหลือ',
     'text_unit_sale' => 'ปริมาณที่ต้องการขายขั้นต่ำ',
     'text_unit_product' => 'จำนวนสินค้า',
+    'text_min_order' => 'ปริมาณต้องการขายขั้นต่ำ',
+    'ms_validate_address_delivery' => 'ที่อยู่จัดส่งสินค้าต้องไม่เป็นค่าว่าง',
 ];
