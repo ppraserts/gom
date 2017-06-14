@@ -76,32 +76,34 @@ class UsersController extends Controller
 
         $standard = null;
         $standardArr = array();
-        if ($standards!=null){
-            foreach ($standards as $standard_item){
-                array_push($standardArr,$standard_item->name);
+        if ($standards != null) {
+            foreach ($standards as $standard_item) {
+                array_push($standardArr, $standard_item->name);
             }
 
         }
-        if (!empty($item->other_standard)){
-            array_push($standardArr,$item->other_standard);
+        if (!empty($item->other_standard)) {
+            array_push($standardArr, $item->other_standard);
         }
-        if (!empty($standardArr)){
-            $standard = implode(", ",$standardArr);
+        if (!empty($standardArr)) {
+            $standard = implode(", ", $standardArr);
         }
+
 
         $markets = Market::all();
-        $userMarkets = UserMarket::where('user_id',$id)->get();
+        $userMarkets = UserMarket::where('user_id', $id)->get();
 
-        for($i = 0;$i < $markets->count();$i++){
+        for ($i = 0; $i < $markets->count(); $i++) {
             $markets[$i]->checked = false;
-            foreach ($userMarkets as $userMarket){
-                if ($markets[$i]->id == $userMarket->market_id){
+            foreach ($userMarkets as $userMarket) {
+                if ($markets[$i]->id == $userMarket->market_id) {
                     $markets[$i]->checked = true;
                 }
             }
         }
 
-        return view('backend.usersedit', compact('item', 'countinactiveusers', 'countinactivecompanyusers', 'standard','markets'))->with($data);
+
+        return view('backend.usersedit', compact('item', 'countinactiveusers', 'countinactivecompanyusers', 'standard', 'markets'))->with($data);
     }
 
     public function update(Request $request, $id)
@@ -114,14 +116,14 @@ class UsersController extends Controller
 
         $arr_markets = Input::get('markets');
 
-        $userMarkets = UserMarket::where('user_id',$id)->get();
-        foreach ($userMarkets as $userMarket){
+        $userMarkets = UserMarket::where('user_id', $id)->get();
+        foreach ($userMarkets as $userMarket) {
             $userMarket->delete();
         }
 
-        if(is_array($arr_markets)){
+        if (is_array($arr_markets)) {
 //            $user->markets()->detach();
-            foreach ($arr_markets as $item){
+            foreach ($arr_markets as $item) {
                 $userMarket = new UserMarket();
                 $userMarket->user_id = $id;
                 $userMarket->market_id = $item;

@@ -328,16 +328,16 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                    <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
 
                         @if($item->selling_type == 'retail')
                             <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
                             <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
-                        @elseif($item->selling_type == 'wholesale'){
+                        @elseif($item->selling_type == 'wholesale')
                             <input type="checkbox" name="selling_type[]" value="retail"> ขายปลีก
                             <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
-                        @elseif($item->selling_type == 'all'){
+                        @elseif($item->selling_type == 'all')
                             <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
                             <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
                         @else
@@ -345,6 +345,16 @@
                             <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
                         @endif
                         {{--<input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่--}}
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 form-inline">
+                        <strong style="margin-right: 20px;">* {{ trans('validation.attributes.market') }}</strong>
+                        @for($i = 0 ; $i < count($markets) ; $i++)
+                            <label class="checkbox-inline">
+                                <input name="product_markets[]" type="checkbox"
+                                       value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}>
+                                {{$markets[$i]->market_title_th}}
+                            </label>
+                        @endfor
                     </div>
                 </div>
                 {{-- row--}}
