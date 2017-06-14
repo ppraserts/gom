@@ -185,6 +185,7 @@ return [
         'users_imageprofile' => 'รูปภาพส่วนตัว',
         'is_active' => 'เปิดใช้งาน',
         'market' => 'ตลาด',
+        'product_markets' => 'ตลาด',
         'market_title_th' => 'ตลาด(ไทย)',
         'market_title_en' => 'ตลาด(อังกฤษ)',
         'market_description_th' =>  'รายละเอียดตลาด(ไทย)',

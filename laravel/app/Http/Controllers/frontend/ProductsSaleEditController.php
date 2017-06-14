@@ -60,6 +60,10 @@ class ProductsSaleEditController extends Controller
         'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
     ];
 
+    private $messages = [
+        'product_markets.required' => 'ข้อมูล ตลาด จำเป็นต้องเลือก',
+    ];
+
 
     public function __construct()
     {
@@ -69,7 +73,7 @@ class ProductsSaleEditController extends Controller
     public function show($id)
     {
         $useritem = auth()->guard('user')->user();
-        $showDelete =false;
+        $showDelete = false;
         $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
             ->get();
         $grades = config('constants.grades');
@@ -105,25 +109,25 @@ class ProductsSaleEditController extends Controller
         $unitsItem = Units::orderBy('sequence', 'ASC')
             ->get();
 
-        for($i = 0;$i < $standards->count();$i++){
+        for ($i = 0; $i < $standards->count(); $i++) {
             $standards[$i]->checked = false;
-            foreach ($item->standards as $standard){
-                if ($standards[$i]->id == $standard->id){
+            foreach ($item->standards as $standard) {
+                if ($standards[$i]->id == $standard->id) {
                     $standards[$i]->checked = true;
                 }
             }
         }
 
-        $markets = Market::join('user_market','user_market.market_id','=','markets.id')
+        $markets = Market::join('user_market', 'user_market.market_id', '=', 'markets.id')
             ->select('markets.*')
-            ->where('user_market.user_id',$useritem->id)
+            ->where('user_market.user_id', $useritem->id)
             ->get();
-        $productRequestMarkets = ProductRequestMarket::where('product_request_id',$id)->get();
+        $productRequestMarkets = ProductRequestMarket::where('product_request_id', $id)->get();
 
-        for($i = 0;$i < $markets->count();$i++){
+        for ($i = 0; $i < $markets->count(); $i++) {
             $markets[$i]->checked = false;
-            foreach ($productRequestMarkets as $productRequestMarket){
-                if ($markets[$i]->id == $productRequestMarket->market_id){
+            foreach ($productRequestMarkets as $productRequestMarket) {
+                if ($markets[$i]->id == $productRequestMarket->market_id) {
                     $markets[$i]->checked = true;
                 }
             }
@@ -134,7 +138,7 @@ class ProductsSaleEditController extends Controller
 
         return view('frontend.productsaleedit', compact('item'
             , 'useritem', 'productCategoryitem', 'grades'
-            , 'unitsItem', 'provinceItem', 'product_name' , 'standards' ,'showDelete', 'markets'));
+            , 'unitsItem', 'provinceItem', 'product_name', 'standards', 'showDelete', 'markets'));
     }
 
 
@@ -146,7 +150,7 @@ class ProductsSaleEditController extends Controller
 
         if ($id == 0)
             $this->validate($request, $this->rules);
-        else{
+        else {
             /*if($request->is_packing != null && $request->is_packing == 1){
 
             }*/
@@ -155,25 +159,25 @@ class ProductsSaleEditController extends Controller
 
         $product_id = $request->products_id;
         $productExist = false;
-        if ($request->products_id > 0){
+        if ($request->products_id > 0) {
             $product = Product::find($product_id);
-            if ($product == null || $product->product_name_th != $request->fake_products_name){
+            if ($product == null || $product->product_name_th != $request->fake_products_name) {
                 $productExist = false;
-            }else{
+            } else {
                 $productExist = true;
             }
-        }else if ($product_id == ''){
-            if ($request->fake_products_name != ''){
-                $product = Product::where('product_name_th','=',$request->fake_products_name)
-                    ->where('productcategory_id','=',$request->productcategorys_id)->first();
-                if ($product!=null){
+        } else if ($product_id == '') {
+            if ($request->fake_products_name != '') {
+                $product = Product::where('product_name_th', '=', $request->fake_products_name)
+                    ->where('productcategory_id', '=', $request->productcategorys_id)->first();
+                if ($product != null) {
                     $productExist = true;
                     $product_id = $product->id;
                 }
             }
         }
 
-        if (!$productExist){
+        if (!$productExist) {
             $product = new Product();
             $product->product_name_th = $request->fake_products_name;
             $product->product_name_en = $request->fake_products_name;
@@ -201,7 +205,7 @@ class ProductsSaleEditController extends Controller
             $uploadImage2 = $this->UploadImage($request, 'product2_file');
             $this->RemoveFolderImage($productRequest->product2_file);
             $productRequest->product2_file = $uploadImage2["imageName"];
-        }else if ($request->product2_file == "" && $productRequest->product2_file !=""){
+        } else if ($request->product2_file == "" && $productRequest->product2_file != "") {
             $this->RemoveFolderImage($productRequest->product2_file);
             $productRequest->product2_file = "";
         }
@@ -209,7 +213,7 @@ class ProductsSaleEditController extends Controller
             $uploadImage3 = $this->UploadImage($request, 'product3_file');
             $this->RemoveFolderImage($productRequest->product3_file);
             $productRequest->product3_file = $uploadImage3["imageName"];
-        }else if ($request->product3_file == "" && $productRequest->product3_file !=""){
+        } else if ($request->product3_file == "" && $productRequest->product3_file != "") {
             $this->RemoveFolderImage($productRequest->product3_file);
             $productRequest->product3_file = "";
         }
@@ -236,14 +240,13 @@ class ProductsSaleEditController extends Controller
         $productRequest->province_selling = $request->province_selling;
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
-        $productRequest->selling_period =  $request->selling_period;
-        $productRequest->product_stock =  $request->product_stock;
-        if(count($request->selling_type) == 2){
+        $productRequest->selling_period = $request->selling_period;
+        $productRequest->product_stock = $request->product_stock;
+        if (count($request->selling_type) == 2) {
             $productRequest->selling_type == 'all';
-        }else{
+        } else {
             $productRequest->selling_type = $request->selling_type[0];
         }
-
 
 
         $arr_checked_product_standards = Input::get('product_standard');
@@ -252,16 +255,16 @@ class ProductsSaleEditController extends Controller
         if ($id == 0) {
             $productRequest->save();
             //Save to product_request_standard :: many to many relationship
-            if(is_array($arr_checked_product_standards)){
-                foreach ($arr_checked_product_standards as $item){
+            if (is_array($arr_checked_product_standards)) {
+                foreach ($arr_checked_product_standards as $item) {
                     $productRequest->standards()->save(Standard::find($item));
                 }
             }
             $id = $productRequest->id;
         } else {
             $productRequest->standards()->detach();
-            if(is_array($arr_checked_product_standards)){
-                foreach ($arr_checked_product_standards as $item){
+            if (is_array($arr_checked_product_standards)) {
+                foreach ($arr_checked_product_standards as $item) {
                     $productRequest->standards()->save(Standard::find($item));
                 }
             }
@@ -270,14 +273,14 @@ class ProductsSaleEditController extends Controller
 
         $arr_markets = Input::get('product_markets');
 
-        $productRequestMarkets = ProductRequestMarket::where('product_request_id',$id)->get();
-        foreach ($productRequestMarkets as $productRequestMarket){
+        $productRequestMarkets = ProductRequestMarket::where('product_request_id', $id)->get();
+        foreach ($productRequestMarkets as $productRequestMarket) {
             $productRequestMarket->delete();
         }
 
-        if(is_array($arr_markets)){
+        if (is_array($arr_markets)) {
 //            $user->markets()->detach();
-            foreach ($arr_markets as $item){
+            foreach ($arr_markets as $item) {
                 $productRequestMarket = new ProductRequestMarket();
                 $productRequestMarket->product_request_id = $id;
                 $productRequestMarket->market_id = $item;
@@ -307,18 +310,15 @@ class ProductsSaleEditController extends Controller
 
         $deleteItem->delete();
 
-        if (isset($deleteItem->product1_file))
-        {
+        if (isset($deleteItem->product1_file)) {
             $this->RemoveFolderImage($deleteItem->product1_file);
         }
 
-        if (isset($deleteItem->product2_file))
-        {
+        if (isset($deleteItem->product2_file)) {
             $this->RemoveFolderImage($deleteItem->product2_file);
         }
 
-        if (isset($deleteItem->product3_file))
-        {
+        if (isset($deleteItem->product3_file)) {
             $this->RemoveFolderImage($deleteItem->product3_file);
         }
 
@@ -363,7 +363,7 @@ class ProductsSaleEditController extends Controller
         $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_product');
-        $imageName = $image_directory . time() .".".$ext;
+        $imageName = $image_directory . time() . "." . $ext;
         $img = Image::make($imageTempName);
         $img->save($imageName);
         $img->destroy();
