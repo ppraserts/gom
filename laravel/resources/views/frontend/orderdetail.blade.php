@@ -106,7 +106,9 @@ $pagetitle = trans('message.menu_order_list');
                             @foreach ($order->orderItems as $key => $item)
                                 <tr>
                                     <td style="text-align:center;">{{ ++$i }}</td>
-                                    <td>{{ $item->product_name_th }}</td>
+                                    <td>
+                                        {{ $item->product_name_th }}
+                                    </td>
                                     <td style="text-align:center;">{{ $item->quantity ." ". $item->units }}</td>
                                     <td style="text-align:center;">{{ $item->unit_price . trans('messages.baht') }}</td>
                                     <td style="text-align:center;">{{ $item->total . trans('messages.baht') }}</td>
@@ -186,6 +188,7 @@ $pagetitle = trans('message.menu_order_list');
             $user = auth()->guard('user')->user();
             $userId = $user->id;
             ?>
+
             @if($order->buyer->id == $userId and $status_id == 7)
                 @include('frontend.order_element.payment')
             @endif
