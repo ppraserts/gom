@@ -11,7 +11,7 @@
 
         ขณะนี้ ทางร้านค้า{{$shop_title}} มีโปรโมชั่นดีๆ ที่น่าสนใจมานำเสนอ ท่านสามารถคลิกดูรายละเอียดเพิ่มเติมได้ที่
         <a href="{{$link.'?rid='.$pormotion_recomment_id.'&key='.$encode_id}}"
-           target="_blank">{{$link.'?rid='.$pormotion_recomment_id.'&key='.$encode_id}}</a><br/><br/>
+           target="_blank">{{empty($promotion_title) ? $link.'?rid='.$pormotion_recomment_id.'&key='.$encode_id : $promotion_title}}</a><br/><br/>
     </p>
     <p>
         นอกจากนี้ยังมีสินค้าเกษตรคุณภาพอื่นๆ อีกมากมายให้ท่านได้เลือกซื้อเลือกชมได้ที่ <a href="{{url($shop_name)}}"
@@ -26,7 +26,7 @@
 
     <strong>ร้าน{{$shop_title}}</strong> <br/>
     ที่อยู่ : {{$users_addressname . " "}}
-    @if(!empty($users_street)){$$users_street . " "}}@endif
+    @if(!empty($users_street)){{$users_street . " "}}@endif
     @if(!empty($users_district)){{$users_district . " "}}@endif
     @if(!empty($users_city)){{$users_city . " "}}@endif
     @if(!empty($users_province)){{$users_province . " "}}@endif

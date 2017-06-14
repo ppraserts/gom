@@ -13,7 +13,7 @@
                 <tr>
                     <th>{{ trans('messages.text_date') }}</th>
                     <th>{{ trans('messages.text_count_email') }}</th>
-                    <th width="360px">{{ trans('messages.Description') }}</th>
+                    {{--<th width="360px">{{ trans('messages.Description') }}</th>--}}
                     <th width="160px">{{ trans('messages.text_count_read_recomment_promotion') }}</th>
                 </tr>
                 </thead>
@@ -23,7 +23,7 @@
                         <tr>
                             <td>{{ $recommend->recommend_date }}</td>
                             <td>{{ $recommend->count_email }}</td>
-                            <td>{{ mb_strimwidth($recommend->detail, 0, 150, '...', 'UTF-8') }}</td>
+                            {{--<td>{{ mb_strimwidth($recommend->detail, 0, 150, '...', 'UTF-8') }}</td>--}}
                             <td>{{ $recommend->sum_recommend }}</td>
                         </tr>
                     @endforeach

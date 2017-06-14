@@ -16,6 +16,7 @@ use App\Market;
 use App\Contactus;
 use App\ContactUsForm;
 use App\Province;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,15 @@ class HomeController extends Controller
     }
 
     public function index(){
-        return view('index');
+        $markets = Market::all();
+        $market_params = array();
+        foreach ($markets as $market){
+            array_push($market_params, "markets[]=".$market->id);
+        }
+        if (!empty($market_params)) {
+            $market_params = implode("&", $market_params);
+        }
+        return view('index', compact('market_params'));
     }
 
     /**

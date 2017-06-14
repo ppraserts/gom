@@ -51,7 +51,7 @@
 
                                         ขณะนี้ ทางร้านค้า{{$shop->shop_title}} มีโปรโมชั่นดีๆ ที่น่าสนใจมานำเสนอ ท่านสามารถคลิกดูรายละเอียดเพิ่มเติมได้ที่
                                         <a href="{{url($shop->shop_name."/promotion/".$item->id)}}"
-                                           target="_blank">{{url($shop->shop_name."/promotion/".$item->id)}}</a><br/><br/>
+                                           target="_blank">{{empty($item->promotion_title) ? url($shop->shop_name."/promotion/".$item->id) : $item->promotion_title}}</a><br/><br/>
                                     </p>
                                     <p>
                                         นอกจากนี้ยังมีสินค้าเกษตรคุณภาพอื่นๆ อีกมากมายให้ท่านได้เลือกซื้อเลือกชมได้ที่ <a href="{{url($shop->shop_name)}}"

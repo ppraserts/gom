@@ -41,7 +41,7 @@
                             </a>
                         </div>
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <a href="{{url('result')}}" target="_self">
+                            <a href="{{url('result?'.$market_params)}}" target="_self">
                                 <div class="thumbnail view-section">
                                     <img src="images/icon-view.png" alt="">
                                     <div class="caption">
