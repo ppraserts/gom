@@ -240,9 +240,9 @@
 
     $(document).ready(function(){
         $("#form-productsaleedit").submit(function (e) {
-            var volumn = $("input[name=volumn]").val();
-            var min_order = $("input[name=min_order]").val();
-            var product_stock = $("input[name=product_stock]").val();
+            var volumn = parseInt($("input[name=volumn]").val());
+            var min_order = parseInt($("input[name=min_order]").val());
+            var product_stock = parseInt($("input[name=product_stock]").val());
 
             if(min_order <= 0){
                 $("input[name=min_order]").focus();
