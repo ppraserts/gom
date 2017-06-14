@@ -244,7 +244,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->selling_period = $request->selling_period;
         $productRequest->product_stock = $request->product_stock;
         if (count($request->selling_type) == 2) {
-            $productRequest->selling_type == 'all';
+            $productRequest->selling_type = 'all';
         } else {
             $productRequest->selling_type = $request->selling_type[0];
         }

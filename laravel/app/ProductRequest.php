@@ -369,7 +369,7 @@ class ProductRequest extends Model
         return $results;
     }*/
 
-    public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn)
+    public function GetSearchProductRequests($iwantto, $category, $search, $qrcode, $province, $price, $volumn,$markets = '')
     {
 
         $sqlSearchByShopName = '';
@@ -408,6 +408,13 @@ class ProductRequest extends Model
                                           , b.product_name_th
                                           , b.product_name_en)  like '%$search%' )";
             }
+        }
+
+        $join_market = "";
+        if (is_array($markets)) {
+            $join_market = " join product_request_market m on a.id = m.product_request_id";
+            $markets = implode("','",$markets);
+            $sqlcondition .= " and m.market_id IN ('".$markets."')";
         }
 
         if ($province != "") {
@@ -471,6 +478,7 @@ class ProductRequest extends Model
                             FROM `product_requests` a
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
+                            $join_market
                             LEFT JOIN comments c on a.id = c.product_id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition 
@@ -517,9 +525,11 @@ class ProductRequest extends Model
                             join users u on a.`users_id` =u.id
                             join products b on a.products_id = b.id
                             join shops s on u.id = s.user_id
+                            $join_market
                             LEFT JOIN comments c on a.id = c.product_id
                             where a.`iwantto` = '$iwantto'
                             $sqlcondition $sqlSearchByShopName 
+                            GROUP BY a.id
                             order by avg_score desc, a.sequence asc, a.updated_at desc
               "));
         }
