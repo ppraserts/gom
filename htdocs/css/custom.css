@@ -105,6 +105,11 @@ body {
     padding-top: 10px;
 }
 
+.market-checkbox {
+    text-align: center;;
+    width: 800px;
+}
+
 .searchboxs {
     text-align: center;;
 }

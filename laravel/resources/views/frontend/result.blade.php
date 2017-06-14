@@ -3,7 +3,7 @@ use App\Http\Controllers\frontend\MarketController;
 ?>
 @extends('layouts.main')
 @section('content')
-    @include('shared.search')
+    @include('shared.resultsearch')
     <br/>
     <h3>{{ trans('messages.i_want_to_sale') }}</h3>
     @if(count((array)$itemssale)>0)

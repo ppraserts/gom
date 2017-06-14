@@ -51,7 +51,7 @@
                             </a>
                         </div>
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <a href="{{url('/home')}}" target="_self">
+                            <a href="{{url('/choosemarket?market=sale')}}" target="_self">
                                 <div class="thumbnail shop-section">
                                     <img src="images/icon-shop.png" alt="">
                                     <div class="caption">
