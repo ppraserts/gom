@@ -18,20 +18,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(count($pormotion_recomments) > 0)
-                    @foreach ($pormotion_recomments as $recomment)
+                @if(count($promotion_recommends) > 0)
+                    @foreach ($promotion_recommends as $recommend)
                         <tr>
-                            <td>{{ $recomment->recommend_date }}</td>
-                            <td>{{ $recomment->count_email }}</td>
-                            <td>{{ mb_strimwidth($recomment->detail, 0, 150, '...', 'UTF-8') }}</td>
-                            <td>{{ $recomment->sum_recommend }}</td>
+                            <td>{{ $recommend->recommend_date }}</td>
+                            <td>{{ $recommend->count_email }}</td>
+                            <td>{{ mb_strimwidth($recommend->detail, 0, 150, '...', 'UTF-8') }}</td>
+                            <td>{{ $recommend->sum_recommend }}</td>
                         </tr>
                     @endforeach
                 @endif
                 </tbody>
             </table>
-            @if(count($pormotion_recomments) > 0)
-                {!! $pormotion_recomments->appends(Request::all()) !!}
+            @if(count($promotion_recommends) > 0)
+                {!! $promotion_recommends->appends(Request::all()) !!}
             @endif
         </div>
     </div>
