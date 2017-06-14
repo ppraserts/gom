@@ -240,9 +240,9 @@
 
     $(document).ready(function(){
         $("#form-productsaleedit").submit(function (e) {
-            var volumn = $("input[name=volumn]").val();
-            var min_order = $("input[name=min_order]").val();
-            var product_stock = $("input[name=product_stock]").val();
+            var volumn = parseInt($("input[name=volumn]").val());
+            var min_order = parseInt($("input[name=min_order]").val());
+            var product_stock = parseInt($("input[name=product_stock]").val());
 
             if(min_order <= 0){
                 $("input[name=min_order]").focus();
@@ -460,14 +460,17 @@
                         <strong>
                             * {{ trans('validation.attributes.units_package') }} :
                         </strong>
-                        <select id="units" name="units" class="form-control">
+                        <select id="units" name="package_unit" class="form-control">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
-                                @if($item->units == $unit->{ "units_".Lang::locale()})
-                                    <option selected
-                                            value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                                    <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
                                 @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -497,20 +500,18 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('unit') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.units') }} :</strong>
-                        <select id="units" name="package_unit" class="form-control">
+                        <select id="units" name="units" class="form-control">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
-                                @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                                    <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
-                                    </option>
+                                @if($item->units == $unit->{ "units_".Lang::locale()})
+                                    <option selected
+                                            value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
                                 @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
-                                    </option>
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
                                 @endif
                             @endforeach
                         </select>
+
                     </div>
                 </div>
                 <div class="row " style="margin-top: 15px;">

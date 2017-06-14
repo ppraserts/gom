@@ -5,6 +5,7 @@ use DB,Response,Validator;
 use App\Order;
 use App\OrderItem;
 use App\Shop;
+use App\ProductRequest;
 use Session;
 use App\OrderStatusHistory;
 use App\OrderPayment;
@@ -99,8 +100,8 @@ class OrderController extends Systems
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
         $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
-        /*echo $order;
-        exit();*/
+        //return $order;
+
 //        $user = auth()->guard('user')->user();
 //        $userId = $user->id;
         //return $order;
@@ -195,7 +196,7 @@ class OrderController extends Systems
                 $upload = Systems::uploadPaymentImage($image,$part_directory);
                 if ($upload == 'errors') {
                     Session::flash('flash_message','Allow a specific extension, only *.jpg , *.png, *.pdf, *.docx, *.xlsx');
-                    return redirect('products/create');
+                    return redirect('user/orderdetail/'.$order_id);
                 } else {
                     $image_name = $upload;
                 }
@@ -225,6 +226,7 @@ class OrderController extends Systems
 //            $orderStatusHistory->note = $note;
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
+
             return redirect('user/orderdetail/'.$order_id);
         }
 
@@ -237,12 +239,33 @@ class OrderController extends Systems
                 $upload = Systems::uploadPaymentImage($image,$part_directory);
                 if ($upload == 'errors') {
                     Session::flash('flash_message','Allow a specific extension, only *.jpg , *.png, *.pdf, *.docx, *.xlsx');
-                    return redirect('products/create');
+                    return redirect('user/orderdetail/'.$order_id);
                 } else {
                     $image_name = $upload;
                 }
             }
 
+            $checkOrder = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+                ->join('users', 'users.id', '=', 'orders.user_id')
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->join('product_requests', 'order_items.product_request_id', '=', 'product_requests.id')
+                ->select('orders.*', 'order_status.status_name','order_status.id as orderStatusId',
+                    'users.users_firstname_th','users.users_lastname_th','users.id as userId','order_items.quantity',
+                    'product_requests.id as product_requestId','product_requests.product_stock','product_requests.product_title')
+                ->where('orders.id', $order_id)->get();
+
+            if(count($checkOrder) > 0) {
+                foreach ($checkOrder as $val) {
+                    if ($val->product_stock >= $val->quantity) {
+                        $qty = $val->product_stock - $val->quantity;
+                        $data['product_stock'] = $qty;
+                        ProductRequest::where('id', $val->product_requestId)->update($data);
+                    }else if ($val->product_stock != 0 and  $val->product_stock < $val->quantity) {
+                        $data['product_stock'] = 0;
+                        ProductRequest::where('id', $val->product_requestId)->update($data);
+                    }
+                }
+            }
 
             $status_id = 4;
             $status_text = 'จัดส่งแล้ว';
@@ -260,6 +283,7 @@ class OrderController extends Systems
                 $orderStatusHistory->image_payment_url = $image_name;
             }
             $orderStatusHistory->save();
+
 
             $order['order_status'] = $status_id;
             Order::find($order_id)->update($order);

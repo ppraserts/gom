@@ -34,6 +34,7 @@ class OrderItem extends Model
             ,p.product_name_th
             ,pr.units
             ,pr.price 
+            ,pr.product_stock
             FROM order_items o 
             INNER JOIN  product_requests pr ON pr.id = o.product_request_id 
             INNER JOIN  products p ON p.id = pr.products_id
