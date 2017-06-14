@@ -223,6 +223,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->product_description = $request->product_description;
         $productRequest->price = $request->price;
 //        $productRequest->is_showprice = $request->is_showprice == "" ? 0 : 1;
+        $productRequest->is_showprice = 1;
         $productRequest->volumn = $request->volumn;
         $productRequest->min_order = $request->min_order;
         $productRequest->package_unit = $request->package_unit;

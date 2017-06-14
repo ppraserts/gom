@@ -132,15 +132,16 @@
                                     </div>
                                 </td>
                                 <td class="col-sm-2 col-md-2">
-                                    <div class="input-append text-left">
-                                        @if($cart["qty"] > $cart["min_order"])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'], 'is_added'=> 0 )) }}"
-                                           class="btn btn-default minus">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                        @else
-                                            <span class="btn btn-default minus disabled"><i class="fa fa-minus"></i></span>
-                                        @endif
+                                    <div class="input-append text-center">
+                                        {{--@if($cart["qty"] > $cart["min_order"])--}}
+                                            {{--<a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key ,--}}
+                                            {{--'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'], 'is_added'=> 0 )) }}"--}}
+                                               {{--class="btn btn-default minus">--}}
+                                                {{--<i class="fa fa-minus"></i>--}}
+                                            {{--</a>--}}
+                                        {{--@else--}}
+                                            {{--<span class="btn btn-default minus disabled"><i class="fa fa-minus"></i></span>--}}
+                                        {{--@endif--}}
 
                                         @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"] and $cart["qty"] < $cart['product_request']['product_stock'])
 
@@ -156,18 +157,18 @@
                                                 <input class="text-center btn btn-default disabled" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
                                                        id="appendedInputButtons" size="16" type="button">
                                         @endif
-                                        @if($cart['product_request']['volumn'] > 0
-                                        and $cart['product_request']['volumn'] > $cart["qty"]
-                                        and  $cart["qty"] < $cart['product_request']['product_stock'])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'] , 'is_added'=> 1)) }}"
-                                           class="btn btn-default plus">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        @else
-                                            <span class="btn btn-default plus disabled">
-                                                <i class="fa fa-plus"></i>
-                                            </span>
-                                        @endif
+                                        {{--@if($cart['product_request']['volumn'] > 0--}}
+                                        {{--and $cart['product_request']['volumn'] > $cart["qty"]--}}
+                                        {{--and  $cart["qty"] < $cart['product_request']['product_stock'])--}}
+                                        {{--<a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'] , 'is_added'=> 1)) }}"--}}
+                                           {{--class="btn btn-default plus">--}}
+                                            {{--<i class="fa fa-plus"></i>--}}
+                                        {{--</a>--}}
+                                        {{--@else--}}
+                                            {{--<span class="btn btn-default plus disabled">--}}
+                                                {{--<i class="fa fa-plus"></i>--}}
+                                            {{--</span>--}}
+                                        {{--@endif--}}
                                         {{$cart['product_request']['units']}}
                                     </div>
                                 </td>
