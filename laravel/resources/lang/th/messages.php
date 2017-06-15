@@ -76,7 +76,7 @@ return [
     'i_want_to_sale' => 'ต้องการขาย',
     'gender_male' => 'ชาย',
     'gender_female' => 'หญิง',
-    'email_subject_newregister' => 'ยินดีต้อนรับสู่ Greenmart Online Market',
+    'email_subject_newregister' => 'ยินดีต้อนรับสู่ DGTFarm',
     'message_success_contactusform' => 'เราได้รับข้อมูลการติดต่อและจะรีบดำเนินการติดต่อกลับให้เร็วที่สุด.',
     'inbox_message' => 'กล่องข้อความ',
     'download' => 'ดาวน์โหลดเอกสาร',

@@ -115,9 +115,9 @@ class RegisterController extends Controller
         Mail::send('emails.register', $data, function ($message) use($request, $sendemailTo, $sendemailFrom)
         {
             $message->from($sendemailFrom
-                    , "Greenmart Online Market");
+                    , "DGTFarm");
             $message->to($sendemailTo)
-                    ->subject("Greenmart Online Market : ".trans('messages.email_subject_newregister'));
+                    ->subject("DGTFarm : ".trans('messages.email_subject_newregister'));
 
         });
         */
@@ -170,9 +170,9 @@ class RegisterController extends Controller
         );
         Mail::send('emails.register', $data, function ($message) use ($request, $sendemailTo, $sendemailFrom) {
             $message->from($sendemailFrom
-                , "Greenmart Online Market");
+                , "DGTFarm");
             $message->to($sendemailTo)
-                ->subject("Greenmart Online Market : " . trans('messages.email_subject_newregister'));
+                ->subject("DGTFarm : " . trans('messages.email_subject_newregister'));
 
         });
 

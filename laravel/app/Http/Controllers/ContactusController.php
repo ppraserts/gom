@@ -85,7 +85,7 @@ class ContactusController extends Controller
             $message->from($request->contactusform_email
                     , $request->contactusform_name." ".$request->contactusform_surname);
             $message->to($sendemailTo)
-                    ->subject("Greenmart Online Market : ".$request->contactusform_subject);
+                    ->subject("DGTFarm : ".$request->contactusform_subject);
             if($request->contactusform_file != "")
             {
               $message->attach(url($ContactUsForm->contactusform_file));
