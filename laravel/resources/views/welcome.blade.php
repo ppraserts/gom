@@ -3,7 +3,7 @@
 @include('shared.search')
       @if(Request::input('market')=="buy")
       <!-- Menu3 -->
-      <h1 class="one"><span>{{ trans('messages.i_want_to_buy') }}</span></h1>
+      <h1 style="display:none" class="one"><span>{{ trans('messages.i_want_to_buy') }}</span></h1>
       <div class="row marketmenuboxs">
         @foreach ($marketItem as $key => $item)
                 <div class="col-md-4 col-sm-6">
@@ -25,7 +25,7 @@
       </div>
       @endif
       @if(Request::input('market')=="sale")
-	    <h1 class="one"><span>{{ trans('messages.i_want_to_sale') }}</span></h1>
+	    <h1 style="display:none" class="one"><span>{{ trans('messages.i_want_to_sale') }}</span></h1>
         <div class="row marketmenuboxs">
         @foreach ($marketItem as $key => $item)
                 <div class="col-md-4 col-sm-6">
