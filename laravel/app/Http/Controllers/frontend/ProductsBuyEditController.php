@@ -201,9 +201,9 @@ class ProductsBuyEditController extends Controller
         sleep(0.1);
         Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
             $message->from($sendemailFrom
-                , "Greenmart Online Market");
+                , "DGTFarm");
             $message->to($sendemailTo)
-                ->subject("Greenmart Online Market : " . trans('messages.email_subject_matching'));
+                ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
 
         });
     }
