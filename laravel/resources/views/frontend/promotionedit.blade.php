@@ -209,16 +209,20 @@ if ($mode == "create") {
                 <input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id; ?>"/>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    {{ trans('messages.button_save')}}</button>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">แนะนำโปรโมชั่น
+                    {{ trans('messages.button_save')}}
                 </button>
+                @if($mode == "edit" && $show_recommend)
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                    แนะนำโปรโมชั่น
+                </button>
+                @endif
             </div>
 
         </div>
         {!! Form::close() !!}
         @if($mode!="create")
             @include('frontend.promotion_element.modal')
-            @if(count($pormotion_recomments) > 0)
+            @if(count($promotion_recommends) > 0)
                 @include('frontend.promotion_element.list_recommen_promotion')
             @endif
         @endif

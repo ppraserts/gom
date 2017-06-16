@@ -142,7 +142,6 @@
             });
         });
 
-
         $('.typeahead').bind('typeahead:select', function (ev, suggestion) {
             $('#products_id').val(suggestion.id);
         });
@@ -186,12 +185,8 @@
             startView: 2,
             maxViewMode: 2
         });
-
-
         initialViews();
-
         hideSuccessMessage();
-
 
     });
 
@@ -215,10 +210,13 @@
     function initialViews() {
 
         //Selling Period
-        var selling_period = '{{$item->selling_period}}';
+        var selling_period = '<?php echo $item->selling_period?>';
         if (selling_period == 'year') {
             $('.div_selling_period_date').hide();
+        }else if (selling_period == 'peri') {
+            $('.div_selling_period_date').show();
         } else {
+            $('.div_selling_period_date').hide();
             $("input[type=radio][name=selling_period]:first").attr('checked', true);
         }
     }
@@ -239,13 +237,39 @@
         });
         $("#head-title").text('{{ trans('messages.add_sale') }}');
     }
+
+    $(document).ready(function(){
+        $("#form-productsaleedit").submit(function (e) {
+            var volumn = parseInt($("input[name=volumn]").val());
+            var min_order = parseInt($("input[name=min_order]").val());
+            var product_stock = parseInt($("input[name=product_stock]").val());
+
+            if(min_order <= 0){
+                $("input[name=min_order]").focus();
+                $("#ms_min_order").html("<?php echo trans('messages.ms_min_order')?>");
+                return false;
+            }
+            if(product_stock <= -1){
+                $("input[name=product_stock]").focus();
+                $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
+                return false;
+            }
+            if(volumn != '' && product_stock != ''){
+                if(product_stock > volumn){
+                    $("input[name=product_stock]").focus();
+                    $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
+                    return false;
+                }
+            }
+        })
+    });
 </script>
 @endpush
 
 @section('content')
     @include('shared.usermenu', array('setActive'=>'iwanttosale'))
     <br/>
-    <form enctype="multipart/form-data" class="form-horizontal" role="form" method="post"
+    <form enctype="multipart/form-data" class="form-horizontal" id="form-productsaleedit" role="form" method="post"
           action="{{ url('user/productsaleupdate') }}">
         {{ csrf_field() }}
         {{ Form::hidden('product1_file_temp', $item->product1_file) }}
@@ -304,15 +328,33 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                    <div class="col-xs-4 col-sm-4 col-md-4 ">
                         <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
-                        <input type="radio" name="selling_type" value="retail"
-                               checked {{ $item->selling_type == 'retail'? 'checked="checked"' : '' }}> ขายปลีก
-                        <input type="radio" name="selling_type"
-                               value="wholesale" {{ $item->selling_type == 'wholesale'? 'checked="checked"' : '' }}>
-                        ชายส่ง
-                        <input type="radio" name="selling_type"
-                               value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่
+
+                        @if($item->selling_type == 'retail')
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                        @elseif($item->selling_type == 'wholesale')
+                            <input type="checkbox" name="selling_type[]" value="retail"> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                        @elseif($item->selling_type == 'all')
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                        @else
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                        @endif
+                        {{--<input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่--}}
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 form-inline">
+                        <strong style="margin-right: 20px;">* {{ trans('validation.attributes.market') }}</strong>
+                        @for($i = 0 ; $i < count($markets) ; $i++)
+                            <label class="checkbox-inline">
+                                <input name="product_markets[]" type="checkbox"
+                                       value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}>
+                                {{$markets[$i]->market_title_th}}
+                            </label>
+                        @endfor
                     </div>
                 </div>
                 {{-- row--}}
@@ -366,7 +408,7 @@
 
                 <div class="row" style="margin-top: 15px;">
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.production_province') }}:</strong>
+                        <strong> {{ trans('validation.attributes.production_province') }} : </strong>
                         <select id="province" name="province" class="form-control">
                             <option value="">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
@@ -414,9 +456,50 @@
                         <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
                         {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.units') }}
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.units_package') }} :
+                        </strong>
+                        <select id="units" name="package_unit" class="form-control">
+                            <option value="">{{ trans('validation.attributes.units') }}</option>
+                            @foreach ($unitsItem as $key => $unit)
+                                @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                                    <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
+                                @else
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                        <strong>เกรด :</strong>
+                        <select id="grade" name="grade" class="form-control">
+                            @foreach ($grades as $key => $value)
+                                <option>{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
+                        <strong>* {{ trans('validation.attributes.volumn') }}
                             :</strong>
+                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <strong>* {{ trans('validation.attributes.min_order') }}
+                            :</strong>
+                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
+                        <small class="alert-danger" id="ms_min_order"></small>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('unit') ? 'has-error' : '' }}">
+                        <strong>* {{ trans('validation.attributes.units') }} :</strong>
                         <select id="units" name="units" class="form-control">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
@@ -428,43 +511,31 @@
                                 @endif
                             @endforeach
                         </select>
+
                     </div>
+                </div>
+                <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.price') }}
-                            :</strong>
+                        <strong>* {{ trans('validation.attributes.price') }} :</strong>
                         {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
                     </div>
-                </div>
-                <div class="row" style="margin-top: 15px;">
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
-                        <strong>เกรด :</strong>
-                        <select id="grade" name="grade" class="form-control">
-                            @foreach ($grades as $key => $value)
-                                <option>{{$value}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.volumn') }}
-                            :</strong>
-                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
-                    </div>
                     <div class="col-xs-6 col-sm-6 col-md-4">
-                        <strong>{{ trans('validation.attributes.min_order') }}
-                            :</strong>
-                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
+                        <strong>*  {{ trans('validation.attributes.product_stock') }}:</strong>
+                        {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control')) !!}
+                        <small class="alert-danger" id="ms_product_stock"></small>
                     </div>
                 </div>
-
                 <div class="row " style="margin-top: 15px;">
                     <div class="col-xs-4 col-sm-4 col-md-4 ">
-                        <label class="control-label"><strong>{{ trans('validation.attributes.selling_period') }}
-                                :</strong></label>
-                        <input type="radio" name="selling_period"
-                               value="period" {{ $item->selling_period == 'period'? 'checked="checked"' : '' }}>
-                        ช่วงเวลา
+                        <label class="control-label">
+                            <strong>{{ trans('validation.attributes.selling_period') }} :</strong>
+                        </label>
+
                         <input type="radio" name="selling_period"
                                value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
+                        <input type="radio" name="selling_period" value="period" {{ $item->selling_period == 'peri'? 'checked="checked"' : '' }}>
+                        ช่วงเวลา
+
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4 div_selling_period_date form-inline">
                         <strong> {{ trans('validation.attributes.product_selling_start_date') }}:</strong>
@@ -484,6 +555,7 @@
                       </span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="row " style="margin-top: 15px;">

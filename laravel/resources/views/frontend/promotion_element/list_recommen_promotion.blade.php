@@ -12,26 +12,26 @@
                 <thead>
                 <tr>
                     <th>{{ trans('messages.text_date') }}</th>
-                    <th>{{ trans('messages.text_email') }}</th>
-                    <th width="360px">{{ trans('messages.Description') }}</th>
+                    <th>{{ trans('messages.text_count_email') }}</th>
+                    {{--<th width="360px">{{ trans('messages.Description') }}</th>--}}
                     <th width="160px">{{ trans('messages.text_count_read_recomment_promotion') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if(count($pormotion_recomments) > 0)
-                    @foreach ($pormotion_recomments as $recomment)
+                @if(count($promotion_recommends) > 0)
+                    @foreach ($promotion_recommends as $recommend)
                         <tr>
-                            <td>{{ $recomment->recommend_date }}</td>
-                            <td>{{ $recomment->email }}</td>
-                            <td>{{ mb_strimwidth($recomment->detail, 0, 150, '...', 'UTF-8') }}</td>
-                            <td>{{ $recomment->count_recommend }}</td>
+                            <td>{{ $recommend->recommend_date }}</td>
+                            <td>{{ $recommend->count_email }}</td>
+                            {{--<td>{{ mb_strimwidth($recommend->detail, 0, 150, '...', 'UTF-8') }}</td>--}}
+                            <td>{{ $recommend->sum_recommend }}</td>
                         </tr>
                     @endforeach
                 @endif
                 </tbody>
             </table>
-            @if(count($pormotion_recomments) > 0)
-                {!! $pormotion_recomments->appends(Request::all()) !!}
+            @if(count($promotion_recommends) > 0)
+                {!! $promotion_recommends->appends(Request::all()) !!}
             @endif
         </div>
     </div>

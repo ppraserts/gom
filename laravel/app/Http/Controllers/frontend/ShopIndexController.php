@@ -45,24 +45,29 @@ class ShopIndexController extends Controller
             $status_comment = 1;
         }
 
-        $query = DB::table('product_requests')
-            ->where('users_id', $shop->user_id)
+        $products = ProductRequest::where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
             ->select('*')
             ->orderBy('sequence','ASC')
             ->orderBy('updated_at','DESC')
-            ->limit(8);
-        $products = $query->get();
+            ->limit(8)
+            ->get();
+
+//        return $products;
 
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id',$shop->id)
             ->where('is_active', 1)
             ->where('start_date','<=', $dateNow)
             ->where('end_date','>=', $dateNow)
-            ->orderBy('sequence','desc')
+            ->orderBy('sequence','asc')
             ->get();
 
-        $comments = Comment::where('shop_id',$shop->id)->orderBy('created_at','desc')->paginate(25); //show list 15/page
+        $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
+            ->select(DB::raw('comments.*, users.users_firstname_th, users.users_lastname_th'))
+            ->where('shop_id',$shop->id)
+            ->orderBy('created_at','desc')
+            ->paginate(25); //show list 15/page
 
         return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment'))
             ->with('comments', $comments)
@@ -139,7 +144,11 @@ class ShopIndexController extends Controller
         if(!empty($request->input('rid')) and !empty($request->input('key'))){
             $pr_id = $request->input('rid');
             $key = $request->input('key');
-            if($key == md5($pr_id)){
+            if(!empty($key)){
+                $promotion = PormotionRecomment::where('key',$key)->where('id', $pr_id)->first();
+                if(count($promotion) <= 0){
+                    return view('errors.404');
+                }
                 $pormotion_recomment = PormotionRecomment::find($pr_id);
                 $data['count_recommend'] = 1 + $pormotion_recomment->count_recommend;
                 PormotionRecomment::where('id',$pr_id)->update($data);
@@ -149,9 +158,7 @@ class ShopIndexController extends Controller
         }
 
         $shop = Shop::where('shop_name', $shop)->get();
-
         $promotion = Promotions::find($id);
-//        var_dump($promotion);
         if ($promotion!=null & $shop->count()>0)
         {
             return view('frontend.promotiondetail')->with('promotion',$promotion);
@@ -179,6 +186,7 @@ class ShopIndexController extends Controller
         if(!empty($shop_id) and md5($shop_id) == $shop_key){
             $config = Config::find(1);
             $badwords = BadWord::all();
+            $user = auth()->guard('user')->user();
             foreach ($badwords as $word){
                 $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
             }
@@ -187,6 +195,7 @@ class ShopIndexController extends Controller
             $comment['shop_id'] = $shop_id;
             $comment['created_at'] = date('Y-m-d H:i:s');
             $comment['status']= 1;
+            $comment['user_id']= $user->id;
             Comment::insertGetId($comment);
             Session::flash('success','Comment successfully.');
             return redirect($shop_name.'#commentBox');

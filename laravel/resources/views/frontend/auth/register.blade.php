@@ -168,7 +168,10 @@
                                         {{$standards[$i]->name}}
                                     </label>
                                 @endfor
-
+                                    <div class="form-inline">
+                                    <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
+                                    {!! Form::text('other_standard', null, array('class' => 'form-control')) !!}
+                                    </div>
                                 @if ($errors->has('users_standard'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('users_standard') }}</strong>

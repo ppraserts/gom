@@ -73,7 +73,7 @@ return [
     'i_want_to_sale' => 'Supply Opportunities',
     'gender_male' => 'Male',
     'gender_female' => 'Female',
-    'email_subject_newregister' => 'Welcome to Greenmart Online Market',
+    'email_subject_newregister' => 'Welcome to DGTFarm',
     'message_success_contactusform' => 'We already get your contact and we will contact you as soon as possible, Thank you!!',
     'inbox_message' => 'Inbox Message',
     'download' => 'Download',

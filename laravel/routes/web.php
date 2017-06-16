@@ -34,6 +34,8 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/result', 'frontend\SearchController@index');
     Route::get('/market', 'frontend\MarketController@index');
 
+    Route::get('/unsubscribe', 'frontend\SearchController@unsubscribe');
+
     Route::get('/clear-cache', function() {
         $exitCode = Artisan::call('cache:clear');
         return Redirect::back();
@@ -176,6 +178,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('reports/buy/download','frontend\ReportsController@actionDownload');
     Route::get('reports/sale','frontend\ReportsController@SaleItemIndex');
     Route::post('reports/sale','frontend\ReportsController@SaleItemFilter');
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {

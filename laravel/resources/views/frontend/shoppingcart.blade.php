@@ -84,7 +84,7 @@
                     @php
                         $user = DB::table('users')->where('id' , $key)->first();
                     @endphp
-                    <h3>ร้าน {{$user->users_firstname_th.' '.$user->users_lastname_th}}</h3>
+                    <h3>{{trans('messages.i_sale')." ".$user->users_firstname_th.' '.$user->users_lastname_th}}</h3>
                 </div>
                 <div class="col-sm-12 col-md-12 ">
                     <table id="table_cart" class="table table-hover">
@@ -106,7 +106,7 @@
                         @foreach($carts as $row=> $cart)
                             @php
                                 $int_count ++;
-                                $total += intval($cart["qty"])*floatval($cart['product_request']['price']);
+                                $total += intval($cart["qty"])*floatval($cart['unit_price']);
                                 if(count($carts) == $int_count){
                                     $total_net += $total;
                                 }
@@ -122,49 +122,67 @@
                                         <div class="media-body">
                                             <h4 class="media-heading"><a href="#">{{$cart['product_request']['product_title']}}</a></h4>
                                             <h5 class="media-heading"><a href="#"></a></h5>
-                                            <span class="text-success"><strong>
+                                            <span class="text-success">
                                             <span class="glyphicon glyphicon-map-marker"></span>
+                                                <strong>
                                                {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}
+                                                </strong>
                                             </span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="col-sm-2 col-md-2">
-                                    <div class="input-append text-left">
-                                        @if($cart["qty"] > $cart["min_order"])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'], 'is_added'=> 0 )) }}"
-                                           class="btn btn-default minus">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
+                                    <div class="input-append text-center">
+                                        {{--@if($cart["qty"] > $cart["min_order"])--}}
+                                            {{--<a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key ,--}}
+                                            {{--'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'], 'is_added'=> 0 )) }}"--}}
+                                               {{--class="btn btn-default minus">--}}
+                                                {{--<i class="fa fa-minus"></i>--}}
+                                            {{--</a>--}}
+                                        {{--@else--}}
+                                            {{--<span class="btn btn-default minus disabled"><i class="fa fa-minus"></i></span>--}}
+                                        {{--@endif--}}
+
+                                        @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"] and $cart["qty"] < $cart['product_request']['product_stock'])
+
+
+                                        <input class="text-center btn btn-default product_quantity"
+                                               title="{{trans('messages.text_edit_num_qty')}}" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
+                                               id="appendedInputButtons" size="16" type="button"
+                                               data-html="{{$cart['product_request']['units']}}"
+                                               data-num="{{$cart['product_request']['product_stock']}}"
+                                               data-minorder="{{$cart['product_request']['min_order']}}"
+                                               data-content="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'] , 'is_added'=> '')) }}">
                                         @else
-                                            <button type="button" class="btn btn-default minus disabled"><i class="fa fa-minus"></i></button>
+                                                <input class="text-center btn btn-default disabled" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
+                                                       id="appendedInputButtons" size="16" type="button">
                                         @endif
-                                        <input class="text-center product_quantity" style="max-width: 40px; height: 33px" value="{{$cart["qty"]}}"
-                                               id="appendedInputButtons" size="16" type="text">
-                                        @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"])
-                                        <a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['product_request']['price'] , 'is_added'=> 1)) }}"
-                                           class="btn btn-default plus">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        @else
-                                            <button class="btn btn-default plus disabled">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        @endif
+                                        {{--@if($cart['product_request']['volumn'] > 0--}}
+                                        {{--and $cart['product_request']['volumn'] > $cart["qty"]--}}
+                                        {{--and  $cart["qty"] < $cart['product_request']['product_stock'])--}}
+                                        {{--<a href="{{ route('shoppingcart.incrementQuantityCartItem' , array('user_id'=> $key , 'product_request_id'=> $cart['product_request']['id'] , 'unit_price'=> $cart['unit_price'] , 'is_added'=> 1)) }}"--}}
+                                           {{--class="btn btn-default plus">--}}
+                                            {{--<i class="fa fa-plus"></i>--}}
+                                        {{--</a>--}}
+                                        {{--@else--}}
+                                            {{--<span class="btn btn-default plus disabled">--}}
+                                                {{--<i class="fa fa-plus"></i>--}}
+                                            {{--</span>--}}
+                                        {{--@endif--}}
                                         {{$cart['product_request']['units']}}
                                     </div>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <strong>
                                         <span class="product_price">
-                                            {{$cart['product_request']['price']}}
+                                            {{$cart['unit_price']}}
                                         </span>
                                     </strong>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <strong>
                                         <span class="total">
-                                            {{ number_format (intval($cart["qty"])*floatval($cart['product_request']['price']), 2 ) }}
+                                            {{ number_format (intval($cart["qty"])*floatval($cart['unit_price']), 2 ) }}
                                         </span>
                                     </strong>
                                 </td>
@@ -228,6 +246,56 @@
 
     {{ Form::close() }}
 
+    <!-- Modal -->
+    <div id="qtyModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width: 480px;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{trans('messages.text_edit_num_qty')}}</h4>
+                    <input type="hidden" id="qty_url">
+                    <input type="hidden" id="product_stock">
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group" style="margin-bottom: 5px;">
+                            <label style="width: 137px;">{{trans('messages.text_product_stock')}} : </label>
+                            <input type="number" class="form-control" id="show_product_stock" disabled>
+                            <span class="text_unit"></span>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 5px;">
+                            <label style="width: 137px; vertical-align: bottom;"> {{trans('messages.text_unit_sale')}} : </label>
+                            <input type="number" class="form-control" id="min_order" disabled>
+                            <span class="text_unit"></span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 137px;">{{trans('messages.text_unit_product')}} : </label>
+                            <input type="number" class="form-control" id="qty_new">
+                            <span class="text_unit"></span>
+                            <small class="alert-danger" id="ms_qty_new" style="display: block; margin-top: 5px; margin-left: 135px;"></small>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{trans('messages.text_close')}}</button>
+                    <button type="button" id="update_qty_new" class="btn btn-primary">{{trans('messages.edit')}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <style>
+        .disabled{
+            background: #b4b4b4;
+        }
+        .disabled:hover{
+            opacity: 0.8;
+            background: #b4b4b4 !important;
+        }
+    </style>
 @stop
 
 @push('scripts')
@@ -282,12 +350,58 @@
             $('#hidden_'+key).html(html_address);
         }
         return false;
-
     }
+    $(document).ready(function() {
+        $('.product_quantity').click(function () {
+            var qty = $(this).val();
+            var url_update_qty = $(this).attr('data-content');
+            var product_stock = $(this).attr('data-num');
+            var units = $(this).attr('data-html');
+            var min_order = $(this).attr('data-minorder');
+            $('#qtyModal').modal('show');
+            $('#qty_new').val(qty);
+            $('#min_order').val(min_order);
+            $('#show_product_stock').val(product_stock);
+            $('#qty_url').val(url_update_qty);
+            $('#product_stock').val(product_stock);
+            $('.text_unit').html(units);
+        });
+    });
+    $('#update_qty_new').click(function () {
+        var qty_new = parseInt($('#qty_new').val());
+        var qty_url = $('#qty_url').val();
+        var product_stock = parseInt($('#product_stock').val());
+        var min_order = parseInt($('#min_order').val());
+
+        if(qty_new <= -1){
+            $('#qty_new').focus();
+            $('#ms_qty_new').html('<?php echo trans('messages.ms_qty_product')?>');
+            return false;
+        }
+        if(qty_new > product_stock){
+            $('#qty_new').focus();
+            $('#ms_qty_new').html('<?php echo trans('messages.ms_qty_product_stock')?>');
+            return false;
+        }
+        if(qty_new < min_order){
+            $('#qty_new').focus();
+            $('#ms_qty_new').html('<?php echo trans('messages.ms_qty_min_order')?>');
+            return false;
+        }
 
 
 
+        $('#qtyModal').modal('hide');
+        $.get(qty_url+"/"+qty_new, function(data){
+            if(data.R == 'Y'){
+                location.reload();
+            }else{
+                alert('error....');
+                return false;
+            }
 
+        });
+    });
 
 </script>
 @endpush

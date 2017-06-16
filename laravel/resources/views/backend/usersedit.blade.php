@@ -96,6 +96,21 @@ $controllerAction = "users.update";
                                name="is_active" {{ $item->is_active == 0? '' : 'checked' }}>
                     </strong>
                 </div>
+                @if($item->iwanttosale=='sale')
+                    <div class="form-group form-inline">
+                        <span> {{ trans('validation.attributes.market') }} :</span>
+                        <div>
+                            @for($i = 0 ; $i < count($markets) ; $i++)
+                                {{--<label class="checkbox-inline">--}}
+                                <input name="markets[]" type="checkbox"
+                                       value="{{ $markets[$i]->id}}"
+                                       {{ $markets[$i]->checked ? "checked" : ""}} style="margin-left: 10px;">
+                                {{$markets[$i]->market_title_th}} <br>
+                                {{--</label>--}}
+                            @endfor
+                        </div>
+                    </div>
+                @endif
                 <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.iwantto') }}
                     :
