@@ -125,12 +125,14 @@ function renderHTML($text)
                         </p>
                     @else
                         @if($productRequest['productstatus'] == 'open')
-                            <p>
-                                <button type="button" onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
-                                        class="btn btn-primary">
-                                    <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
-                                </button>
-                            </p>
+                            @if($productRequest->iwantto == "sale")
+                                <p>
+                                    <button type="button" onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
+                                            class="btn btn-primary">
+                                        <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
+                                    </button>
+                                </p>
+                            @endif
                         @endif
                     @endif
                         </div>
@@ -211,14 +213,16 @@ function renderHTML($text)
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 15px;">
-        <div class="col-lg-12">
-            <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
-            <link rel="stylesheet" href="{{url('css/star.css')}}">
-            <link rel="stylesheet" href="{{url('css/comment.css')}}">
-            @include('frontend.product_element.comment')
+    @if($productRequest->iwantto == "sale")
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-lg-12">
+                <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
+                <link rel="stylesheet" href="{{url('css/star.css')}}">
+                <link rel="stylesheet" href="{{url('css/comment.css')}}">
+                @include('frontend.product_element.comment')
+            </div>
         </div>
-    </div>
+    @endif
     <!-- modal product added to cart -->
     @include('frontend.product_element.modal_add_to_cart')
     <!-- /.modal -->
