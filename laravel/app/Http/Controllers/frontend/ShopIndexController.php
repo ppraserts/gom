@@ -184,12 +184,17 @@ class ShopIndexController extends Controller
         }
 
         if(!empty($shop_id) and md5($shop_id) == $shop_key){
+
             $config = Config::find(1);
             $badwords = BadWord::all();
             $user = auth()->guard('user')->user();
-            foreach ($badwords as $word){
-                $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
+            $string = $request->input('comment');
+            if(!empty($config) && !empty($badwords)){
+                foreach ($badwords as $word){
+                    $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
+                }
             }
+
             $comment['score'] = $request->input('star');
             $comment['comment'] = $string;
             $comment['shop_id'] = $shop_id;
