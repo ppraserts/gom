@@ -156,7 +156,7 @@ $adminteam = auth()->guard('admin')->user();
                         @endif
                         @if(strpos($adminteam->allow_menu, 'menu_report') !== false||$adminteam->is_superadmin)
                             <li {{ (Request::is('*admin/report*') ? 'class=active' : '') }}>
-                                <a href="{{ url ('admin/reportuser') }}"><i
+                                <a href="{{ url ('admin/reports/buy') }}"><i
                                             class="glyphicon glyphicon-stats"></i> {{ trans('messages.menu_report') }}
                                 </a>
                             </li>

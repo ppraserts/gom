@@ -205,6 +205,14 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('adminteam','backend\AdminteamController');
     Route::resource('badword','backend\BadWordController');
     Route::post('censor','backend\BadWordController@censor');
+    //Reports
+    Route::get('reports/buy','backend\ReportsController@index');
+    Route::post('reports/buy','backend\ReportsController@actionFilter');
+    Route::post('reports/buy/export','backend\ReportsController@actionExportExcel');
+    Route::get('reports/buy/download','backend\ReportsController@actionDownload');
+    Route::get('reports/sale','backend\ReportsController@SaleItemIndex');
+    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
+    Route::get('reports/orderdetail/{order_id}','backend\ReportsController@orderdetail');
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
