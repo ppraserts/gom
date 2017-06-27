@@ -7,7 +7,7 @@ $pagetitle = trans('messages.menu_order_list');
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">
-            @include('frontend.reports.menu_reports')
+            @include('backend.reports.menu_reports')
         </div>
         @if (count($errors) > 0)
                 <div class="row" style="margin-top: 15px;">
@@ -125,6 +125,7 @@ $pagetitle = trans('messages.menu_order_list');
 @endsection
 
 @push('scripts')
+<link href="{{url('css/view-backend/reports.css')}}" type="text/css" rel="stylesheet">
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script type="text/javascript">
