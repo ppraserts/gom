@@ -80,11 +80,7 @@ $pagetitle = trans('message.menu_order_list');
                     </button>
                 </div>
             </form>
-            <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-                <button class="btn btn-primary pull-left" id="export" type="button">
-                    Export
-                </button>
-            </div>
+
         </div>
         <div class="row" style="margin-top: 10px">
             <div class="table-responsive">
@@ -119,6 +115,11 @@ $pagetitle = trans('message.menu_order_list');
                     @endforeach
                     </tbody>
                 </table>
+
+                    <button class="btn btn-primary pull-right" id="export" type="button">
+                        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> {{ trans('messages.text_export') }}
+                    </button>
+
                 {!! $orderLists->appends(Request::all()) !!}
             </div>
         </div>

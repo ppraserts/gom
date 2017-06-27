@@ -72,11 +72,9 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-right" id="export" type="button">
-                        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> {{ trans('messages.text_export') }}
-                    </button>
-                </div>
+                <button class="btn btn-primary pull-right" id="export" type="button">
+                    <span class="glyphicon glyphicon-export" aria-hidden="true"></span> {{ trans('messages.text_export') }}
+                </button>
                 {!! $results->appends(Request::all()) !!}
             </div>
         </div>
