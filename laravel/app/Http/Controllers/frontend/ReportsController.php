@@ -111,7 +111,7 @@ class ReportsController extends Controller
                 );
             }
             $data = $arr;
-            $info = Excel::create('Laravel_Excel', function($excel) use($data) {
+            $info = Excel::create('orders-list-buy-excel', function($excel) use($data) {
 
                 $excel->sheet('Sheetname', function($sheet) use($data) {
                     $sheet->cell('A1:E1', function($cell) {

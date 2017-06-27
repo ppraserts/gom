@@ -108,6 +108,7 @@ return [
     'email_subject_matching' => 'รายการจับคู่ที่ตรงกับคุณ',
     'menu_adminteam' => 'ผู้ดูแลระบบ',
     'shop_setting' => 'ตั้งค่าร้านค้า',
+    'shop' => 'ร้านค้า',
     'shop_image' => 'เปลี่ยนรูปภาพส่วนบนร้านค้า (Header)',
     'title' => 'หัวเรื่อง',
     'sub_title' => 'หัวเรื่องย่อย',
@@ -247,4 +248,12 @@ return [
     'email_promotion_subject' => '[DGTFarm]-แจ้งรายการส่งเสริมการขายสินค้าเกษตรผ่านเว็บไซต์ www.DGTFarm.com',
     'text_min_order' => 'ปริมาณต้องการขายขั้นต่ำ',
     'ms_validate_address_delivery' => 'ที่อยู่จัดส่งสินค้าต้องไม่เป็นค่าว่าง',
+
+    'text_report_menu_shop' => 'รายงานร้านค้ายอดนิยม',
+    'text_shop_id' => 'ไอดีร้านค้า',
+    'text_shop_url' => 'ที่อยู่ร้านค้า',
+    'text_shop_title' => 'หัวข้อร้านค้า',
+    'text_shop_score' => 'คะแนนเฉลี่ยนของร้านค้า',
+    'text_star' => 'ดาว',
+    'text_export' => 'ส่งออก',
 ];

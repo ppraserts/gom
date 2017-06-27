@@ -259,6 +259,8 @@ return [
         'message_validate_filter' => 'กรุณากรอกหัวข้อในการค้นหา',
         'shop_bank' => 'บัญชีธนาคาร',
         'product_stock' => 'บริมาณคงเหลือ',
+        'message_validate_shop' => 'กรุณาเลือกร้านค้า',
+        'shop'=> 'ร้านค้า',
     ],
 
 ];

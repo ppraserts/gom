@@ -177,9 +177,11 @@ $adminteam = auth()->guard('admin')->user();
 
         <div id="page-wrapper">
             <div class="row">
+                @if(Request::segment(2) != 'reports')
                 <div class="col-lg-12">
                     <h1 class="page-header">@yield('page_heading_image') @yield('page_heading')</h1>
                 </div>
+                @endif
                 <!-- /.col-lg-12 -->
             </div>
             <div class="row">
