@@ -11,13 +11,13 @@
     <li  @if(Request::segment(3) == 'product') class="active" @endif>
         <a href="{{url('admin/reports/product')}}">รายงานสินค้ายอดนิยม</a>
     </li>
-    <li  @if(Request::segment(3) == 'product') class="active" @endif>
-        <a href="{{url('admin/reports/product')}}">รายงานติดตามสถานะสั่งซื้อสินค้า</a>
+    <li  @if(Request::segment(3) == 'x') class="active" @endif>
+        <a href="#">รายงานติดตามสถานะสั่งซื้อสินค้า</a>
     </li>
-    <li  @if(Request::segment(3) == 'product') class="active" @endif>
-        <a href="{{url('admin/reports/product')}}">รายงานการจับคู่สินค้า</a>
+    <li  @if(Request::segment(3) == 'y') class="active" @endif>
+        <a href="#">รายงานการจับคู่สินค้า</a>
     </li>
-    <li  @if(Request::segment(3) == 'product') class="active" @endif>
-        <a href="{{url('admin/reports/product')}}">รายงานประวัติการซื้อขาย</a>
+    <li  @if(Request::segment(3) == 'z') class="active" @endif>
+        <a href="#">รายงานประวัติการซื้อขาย</a>
     </li>
 </ul>

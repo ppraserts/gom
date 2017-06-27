@@ -254,6 +254,13 @@ return [
     'text_shop_url' => 'ที่อยู่ร้านค้า',
     'text_shop_title' => 'หัวข้อร้านค้า',
     'text_shop_score' => 'คะแนนเฉลี่ยนของร้านค้า',
+
+    'text_report_menu_product' => 'รายงานสินค้ายอดนิยม',
+    'text_product_id' => 'ไอดีสินค้า',
+    'text_product_th' => 'ชื่อสินค้าภาษาไทย',
+    'text_product_en' => 'ชื่อสินค้าภาษาอังกฤษ',
+    'text_product_score' => 'คะแนนเฉลี่ยนของสินค้า',
+
     'text_star' => 'ดาว',
     'text_export' => 'ส่งออก',
 ];

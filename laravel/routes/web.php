@@ -213,11 +213,15 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::get('reports/sale','backend\ReportsController@SaleItemIndex');
     Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
     Route::get('reports/orderdetail/{order_id}','backend\ReportsController@orderdetail');
-
-    Route::get('reports/shop','backend\ReportController@reportShop');
-    Route::post('reports/shop','backend\ReportController@shopFilter');
-    Route::post('reports/shop/export','backend\ReportController@shopExportExcel');
-    Route::get('reports/shop/download','backend\ReportController@actionDownload');
+    //Reports shops
+    Route::get('reports/shop','backend\ReportShopsController@reportShop');
+    Route::post('reports/shop','backend\ReportShopsController@shopFilter');
+    Route::post('reports/shop/export','backend\ReportShopsController@shopExportExcel');
+    Route::get('reports/shop/download','backend\ReportShopsController@actionDownload');
+    //Reports Products
+    Route::get('reports/product','backend\ReportProductsController@index');
+    Route::post('reports/product','backend\ReportProductsController@filter');
+    Route::post('reports/product/export','backend\ReportProductsController@exportExcel');
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
