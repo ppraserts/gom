@@ -79,9 +79,9 @@ class ReportsController extends Controller
 
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
-            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
-            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+//            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+//            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+//            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
             $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
 //            $orderList->where('orders.buyer_id', $user->id);
             if(!empty($request->input('start_date'))){
@@ -98,8 +98,9 @@ class ReportsController extends Controller
             }
             $orderList->groupBy('orders.id');
             $orderList->orderBy('orders.id', 'DESC');
-            $orderList->paginate(config('app.paginate'));
-            $orderLists = $orderList->paginate(config('app.paginate'));
+            $orderLists = $orderList->get();
+//            $orderList->paginate(config('app.paginate'));
+//            $orderLists = $orderList->paginate(config('app.paginate'));
 
             $arr[] = array(
                 trans('messages.order_id'),
@@ -118,6 +119,7 @@ class ReportsController extends Controller
                 );
             }
             $data = $arr;
+//            return $data;
             $info = Excel::create('Laravel_Excel', function($excel) use($data) {
 
                 $excel->sheet('Sheetname', function($sheet) use($data) {
@@ -168,6 +170,7 @@ class ReportsController extends Controller
         foreach ($orderSaleItem as $value){
            $sumAll = $sumAll + $value->total_amounts;
         }
+//        return $orderSaleItem;
         return view('backend.reports.sale_item_list', compact('orderSaleItem','products','sumAll'));
     }
 

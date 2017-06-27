@@ -6,7 +6,7 @@
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">
-            @include('frontend.reports.menu_reports')
+            @include('backend.reports.menu_reports')
         </div>
 
         <div class="row">

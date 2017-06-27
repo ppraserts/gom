@@ -248,7 +248,7 @@ return [
     'email_promotion_subject' => '[DGTFarm]-แจ้งรายการส่งเสริมการขายสินค้าเกษตรผ่านเว็บไซต์ www.DGTFarm.com',
     'text_min_order' => 'ปริมาณต้องการขายขั้นต่ำ',
     'ms_validate_address_delivery' => 'ที่อยู่จัดส่งสินค้าต้องไม่เป็นค่าว่าง',
-
+    'export_excel' => 'ส่งออกข้อมูลในรูปแบบ Excel',
     'text_report_menu_shop' => 'รายงานร้านค้ายอดนิยม',
     'text_shop_id' => 'ไอดีร้านค้า',
     'text_shop_url' => 'ที่อยู่ร้านค้า',
