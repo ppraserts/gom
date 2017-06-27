@@ -72,18 +72,16 @@
                     @endforeach
                     </tbody>
                 </table>
-
-                {!! $results->appends(Request::all()) !!}
-                <div class="row">
-                    <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
-                    <div class="col-md-6">
-                        <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                            <button class="btn btn-primary pull-right" id="export" type="button">
-                                <span class="glyphicon glyphicon-export"></span>
-                                {{ trans('messages.export_excel') }}
-                            </button>
-                        </div>
-                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
+            <div class="col-md-6">
+                <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                    <button class="btn btn-primary pull-right" id="export" type="button">
+                        <span class="glyphicon glyphicon-export"></span>
+                        {{ trans('messages.export_excel') }}
+                    </button>
                 </div>
             </div>
         </div>
