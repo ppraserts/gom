@@ -222,6 +222,12 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::get('reports/product','backend\ReportProductsController@index');
     Route::post('reports/product','backend\ReportProductsController@filter');
     Route::post('reports/product/export','backend\ReportProductsController@exportExcel');
+    //Report OrderStatusHistory
+    Route::get('reports/orders','backend\OrderStatusHistoryController@orderList');
+    Route::get('reports/orders/{id}/show','backend\OrderStatusHistoryController@show');
+//    Route::get('reports/orders','backend\OrderStatusHistoryController@filter');
+
+
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');

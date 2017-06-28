@@ -11,8 +11,10 @@
     <li  @if(Request::segment(3) == 'product') class="active" @endif>
         <a href="{{url('admin/reports/product')}}">รายงานสินค้ายอดนิยม</a>
     </li>
-    <li  @if(Request::segment(3) == 'x') class="active" @endif>
-        <a href="#">รายงานติดตามสถานะสั่งซื้อสินค้า</a>
+    <li  @if(Request::segment(3) == 'orders') class="active" @endif>
+        <a href="{{url('admin/reports/orders')}}">
+            {{ trans('messages.text_report_menu_order_status_history') }}
+        </a>
     </li>
     <li  @if(Request::segment(3) == 'y') class="active" @endif>
         <a href="#">รายงานการจับคู่สินค้า</a>
