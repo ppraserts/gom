@@ -264,4 +264,5 @@ return [
 
     'text_star' => 'ดาว',
     'text_export' => 'ส่งออก',
+    'shop_name' => 'ชื่อร้าน',
 ];

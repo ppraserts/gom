@@ -1,8 +1,9 @@
 <?php
-//$pagetitle = trans('messages.menu_order_list');
+$pagetitle = trans('message.menu_order_list');
 ?>
 @extends('layouts.dashboard')
-@section('page_heading','รายงานยอดจำหน่ายสินค้า')
+@section('page_heading',$pagetitle)
+@section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">
@@ -10,8 +11,8 @@
         </div>
 
         <div class="row">
-            <h2>รายงานยอดจำหน่ายสินค้า</h2>
-            <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="my-form" method="POST">
+            <h2>รายงานยอดจำหน่ายร้านค้า</h2>
+            <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="POST">
                 {{csrf_field()}}
                 <style>
                     .form-horizontal .form-group {
@@ -46,19 +47,19 @@
                 </div>
 
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_product_type_name') }} :</label>
+                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.shop_name') }} :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
-                        <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name" data-live-search="true"
+                        <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id" data-live-search="true"
                                 multiple>
-                            @if(count($products))
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}" @if(!empty($productTypeNameArr)) @if(in_array($product->id, $productTypeNameArr)) selected @endif @endif>
-                                        {{$product->product_name_th}}
+                            @if(count($allShops))
+                                @foreach($allShops as $shop)
+                                    <option value="{{$shop->id}}" @if(!empty($shopNameArr)) @if(in_array($shop->id, $shopNameArr)) selected @endif @endif>
+                                        {{$shop->shop_name}}
                                     </option>
                                 @endforeach
                             @endif
                         </select>
-                        <small class="alert-danger" id="ms_product_type_name"></small>
+                        <small class="alert-danger" id="ms_shop_select_id"></small>
                     </div>
                 </div>
 
@@ -70,7 +71,7 @@
             </form>
         </div>
         <div class="row" style="margin-top: 10px">
-            @if(count($orderSaleItem) > 0)
+            @if(count($shops) > 0)
             <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
             @else
                 <div style="margin: 0px auto; padding-top:2%;">
@@ -146,7 +147,7 @@
         $('#my-form').submit(function() {
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
-            var product_type_name = $("#product_type_name option:selected").val();
+            var shop_select_id = $("#shop_select_id option:selected").val();
 
             if(!start_date) {
                 $("#start_date").focus();
@@ -183,19 +184,19 @@
                     return false;
                 }
             }
-            if(!product_type_name) {
-                $("#product_type_name").focus();
-                $("#ms_product_type_name").html('<?php echo Lang::get('validation.attributes.message_validate_product_type_name')?>');
+            /*if(!shop_select_id) {
+                $("#shop_select_id").focus();
+                $("#ms_shop_select_id").html('<?php echo trans('messages.shop_name')?>');
                 return false;
-            }else{
-                $("#ms_product_type_name").html('');
-            }
+            }else{*/
+                $("#ms_shop_select_id").html('');
+//            }
 
         });
     });
 
 </script>
-<?php if(count($orderSaleItem) > 0){ ?>
+<?php if(count($shops) > 0){ ?>
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
 <style type="text/css">
@@ -210,7 +211,7 @@ demo.css
                 type: 'column'
             },
             title: {
-                text: 'ยอดจำหน่ายสินค้ารวมทั้งหมด'
+                text: 'ยอดจำหน่ายสินค้ารวมของร้านค้าทั้งหมด'
             },
             subtitle: {
                 text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">ยอดรวม : {{ number_format($sumAll)}} บาท </span>'
@@ -253,11 +254,11 @@ demo.css
             series: [{
                 name: '',
                 colorByPoint: true,
-                data: [<?php $n=1; foreach ($orderSaleItem as $val){ ?>{
-                    name: '<?php echo $val->product_name_en?>',
-                    y: <?php echo $val->total_amounts?>,
-                    drilldown: '<?php echo $val->product_name_en?>'
-                }<?php if(count($orderSaleItem) == $n){ }else{?>,<?php }}?>]
+                data: [<?php $n=1; foreach ($shops as $val){ ?>{
+                    name: '<?php echo $val->shop_name?>',
+                    y: <?php echo $val->total?>,
+                    drilldown: '<?php echo $val->shop_name?>'
+                }<?php if(count($shops) == $n){ }else{?>,<?php }}?>]
             }],
 
         });

@@ -5,6 +5,9 @@
     <li  @if(Request::segment(3) == 'sale') class="active" @endif>
         <a href="{{url('admin/reports/sale')}}">รายงานยอดจำหน่ายสินค้า</a>
     </li>
+    <li  @if(Request::segment(3) == 'salebyshop') class="active" @endif>
+        <a href="{{url('admin/reports/salebyshop')}}">รายงานยอดจำหน่ายร้านค้า</a>
+    </li>
     <li  @if(Request::segment(3) == 'shop') class="active" @endif>
         <a href="{{url('admin/reports/shop')}}">รายงานร้านค้ายอดนิยม</a>
     </li>
