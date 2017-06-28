@@ -141,6 +141,7 @@ class ReportsController extends Controller
         $product->join('products', 'products.id', '=', 'product_requests.products_id');
         $product->select(DB::raw('products.*'));
         $product->where('orders.user_id', $user->id);
+        $product->groupBy('products.id');
         $product->orderBy('products.id', 'DESC');
         $products = $product->get();
         //
@@ -203,6 +204,7 @@ class ReportsController extends Controller
             $product->join('products', 'products.id', '=', 'product_requests.products_id');
             $product->select(DB::raw('products.*'));
             $product->where('orders.user_id', $user->id);
+            $product->groupBy('products.id');
             $product->orderBy('products.id', 'DESC');
             $products = $product->get();
             //
