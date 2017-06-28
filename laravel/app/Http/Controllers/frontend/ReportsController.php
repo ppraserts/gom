@@ -156,12 +156,23 @@ class ReportsController extends Controller
         $orderList->where('orders.order_status', '!=', 5);
         $orderList->groupBy('products.id');
         $orderList->orderBy('orders.id', 'DESC');
-        $orderSaleItem = $orderList->paginate(config('app.paginate'));
+//        $orderSaleItem = $orderList->paginate(config('app.paginate'));
         //return $orderSaleItem;
+        $orderSaleItem = $orderList->get();
         $sumAll=0;
         foreach ($orderSaleItem as $value){
            $sumAll = $sumAll + $value->total_amounts;
         }
+//mock data
+//        $arr = array();
+//        for ($i=0; $i <= 100; $i++){
+//            $object = (object)[];
+//            $object->total_amounts = $i;
+//            $object->product_name_th = 'xx'.$i;
+//            $object->product_name_en='ccc'.$i;
+//            array_push($arr,$object);
+//        }
+//        $orderSaleItem = $arr;
         return view('frontend.reports.sale_item_list', compact('orderSaleItem','products','sumAll'));
     }
 
@@ -195,7 +206,8 @@ class ReportsController extends Controller
             $orderList->groupBy('products.id');
             $orderList->orderBy('orders.id', 'DESC');
             $orderList->paginate(config('app.paginate'));
-            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+//            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+            $orderSaleItem = $orderList->get();
             //products
             $product = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $product->join('users', 'users.id', '=', 'orders.user_id');
