@@ -257,13 +257,14 @@ return [
 
     'text_report_menu_product' => 'รายงานสินค้ายอดนิยม',
     'text_report_menu_order_status_history' => 'รายงานติดตามสถานะสั่งซื้อสินค้า',
-    'text_report_menu_order_history_sale_buy' => 'รายงานประวัติการซื้อขาย',
     'text_product_id' => 'ไอดีสินค้า',
     'text_product_th' => 'ชื่อสินค้าภาษาไทย',
     'text_product_en' => 'ชื่อสินค้าภาษาอังกฤษ',
     'text_product_score' => 'คะแนนเฉลี่ยนของสินค้า',
+
     'text_star' => 'ดาว',
     'text_export' => 'ส่งออก',
+    'shop_name' => 'ชื่อร้าน',
     'please_select_type_sale_buy' => 'กรุณาเลือกประเภทซื้อขาย',
     'please_select_user'=>'กรุณาเลือกสมาชิก',
     'data_not_found'=>'ไม่พบข้อมูล',

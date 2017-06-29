@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\backend;
+
 use App\OrderItem;
 use App\OrderStatusHistory;
+use App\User;
 use Illuminate\Routing\Controller;
 
-use DB,Validator, Response;
+use DB, Validator, Response;
 use App\Order;
 use Excel;
 use Storage;
@@ -29,11 +31,11 @@ class ReportsController extends Controller
         $products = Product::all();
         $orderLists = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
             ->join('users', 'users.id', '=', 'orders.user_id')
-            ->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th')
+            ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
 //            ->where('orders.buyer_id', $user->id)
             ->orderBy('orders.id', 'DESC')
             ->paginate(config('app.paginate'));
-        return view('backend.reports.orderlist', compact('orderLists','products'));
+        return view('backend.reports.orderlist', compact('orderLists', 'products'));
     }
 
     public function actionFilter(Request $request)
@@ -44,12 +46,14 @@ class ReportsController extends Controller
             'end_date' => 'required',
             'product_type_name' => 'required'
         ]);
-        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
 
         $orderLists = '';
-        if($request->isMethod('post')){
-           $start_date = DateFuncs::convertYear($request->input('start_date'));
-           $end_date = DateFuncs::convertYear($request->input('end_date'));
+        if ($request->isMethod('post')) {
+            $start_date = DateFuncs::convertYear($request->input('start_date'));
+            $end_date = DateFuncs::convertYear($request->input('end_date'));
             $productTypeNameArr = $request->input('product_type_name');
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
@@ -59,21 +63,21 @@ class ReportsController extends Controller
             $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
 //            $orderList->where('orders.buyer_id', $user->id);
             $orderList->whereIn('products.id', $productTypeNameArr);
-            $orderList->where('orders.order_date','>=', $start_date);
-            $orderList->where('orders.order_date','<=', $end_date);
+            $orderList->where('orders.order_date', '>=', $start_date);
+            $orderList->where('orders.order_date', '<=', $end_date);
             $orderList->groupBy('orders.id');
             $orderList->orderBy('orders.id', 'DESC');
             $orderList->paginate(config('app.paginate'));
             $orderLists = $orderList->paginate(config('app.paginate'));
 
             $products = Product::all();
-            return view('backend.reports.orderlist', compact('orderLists','products','productTypeNameArr'));
+            return view('backend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr'));
         }
     }
 
     public function actionExportExcel(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
 //            $user = auth()->guard('user')->user();
             //return $request->input('product_type_name');
 
@@ -84,15 +88,15 @@ class ReportsController extends Controller
 //            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
             $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
 //            $orderList->where('orders.buyer_id', $user->id);
-            if(!empty($request->input('start_date'))){
+            if (!empty($request->input('start_date'))) {
                 $start_date = DateFuncs::convertYear($request->input('start_date'));
-                $orderList->where('orders.order_date','>=', $start_date);
+                $orderList->where('orders.order_date', '>=', $start_date);
             }
-            if(!empty($request->input('end_date'))) {
+            if (!empty($request->input('end_date'))) {
                 $end_date = DateFuncs::convertYear($request->input('end_date'));
-                $orderList->where('orders.order_date','<=', $end_date);
+                $orderList->where('orders.order_date', '<=', $end_date);
             }
-            if(!empty($request->input('product_type_name'))) {
+            if (!empty($request->input('product_type_name'))) {
                 $productTypeNameArr = $request->input('product_type_name');
                 $orderList->whereIn('products.id', $productTypeNameArr);
             }
@@ -109,10 +113,10 @@ class ReportsController extends Controller
                 trans('messages.order_total'),
                 trans('messages.order_status')
             );
-            foreach ($orderLists as $v){
+            foreach ($orderLists as $v) {
                 $arr[] = array(
                     $v->id,
-                    $v->users_firstname_th. " ". $v->users_lastname_th,
+                    $v->users_firstname_th . " " . $v->users_lastname_th,
                     $v->order_date,
                     $v->total_amount . trans('messages.baht'),
                     $v->status_name
@@ -120,22 +124,22 @@ class ReportsController extends Controller
             }
             $data = $arr;
 //            return $data;
-            $info = Excel::create('Laravel_Excel', function($excel) use($data) {
+            $info = Excel::create('Laravel_Excel', function ($excel) use ($data) {
 
-                $excel->sheet('Sheetname', function($sheet) use($data) {
-                    $sheet->cell('A1:E1', function($cell) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data) {
+                    $sheet->cell('A1:E1', function ($cell) {
                         $cell->setFontWeight('bold');
                     });
                     $sheet->rows($data);
                 });
             })->store('xls', false, true);
-            return response()->json(array('file'=>$info['file']));
+            return response()->json(array('file' => $info['file']));
         }
     }
 
     public function actionDownload(Request $request)
     {
-        $path  = storage_path().'/exports/'.$request->input('file');
+        $path = storage_path() . '/exports/' . $request->input('file');
         return response()->download($path);
     }
 
@@ -150,6 +154,7 @@ class ReportsController extends Controller
         $product->join('products', 'products.id', '=', 'product_requests.products_id');
         $product->select(DB::raw('products.*'));
 //        $product->where('orders.user_id', $user->id);
+        $product->groupBy('products.id');
         $product->orderBy('products.id', 'DESC');
         $products = $product->get();
         //
@@ -166,12 +171,33 @@ class ReportsController extends Controller
         $orderList->orderBy('orders.id', 'DESC');
         $orderSaleItem = $orderList->paginate(config('app.paginate'));
         //return $orderSaleItem;
-        $sumAll=0;
-        foreach ($orderSaleItem as $value){
-           $sumAll = $sumAll + $value->total_amounts;
+        $sumAll = 0;
+        foreach ($orderSaleItem as $value) {
+            $sumAll = $sumAll + $value->total_amounts;
         }
 //        return $orderSaleItem;
-        return view('backend.reports.sale_item_list', compact('orderSaleItem','products','sumAll'));
+        return view('backend.reports.sale_item_list', compact('orderSaleItem', 'products', 'sumAll'));
+    }
+
+    //Report List Sale Item
+    public function SaleItemByShop()
+    {
+//        $user = auth()->guard('user')->user();
+        $shops = User::join('orders', 'orders.user_id', '=', 'users.id')
+            ->join('shops', 'shops.user_id', '=', 'users.id')
+            ->select(DB::raw('SUM(orders.total_amount) as total,shops.shop_name,shops.id'))
+            ->groupBy('shops.id')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        $allShops = $shops;
+
+        $sumAll = 0;
+        foreach ($shops as $value) {
+            $sumAll = $sumAll + $value->total;
+        }
+//        return $shops;
+        return view('backend.reports.sale_item_by_shop', compact('shops','allShops', 'sumAll'));
     }
 
     public function SaleItemFilter(Request $request)
@@ -182,10 +208,12 @@ class ReportsController extends Controller
             'end_date' => 'required',
             'product_type_name' => 'required'
         ]);
-        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
 
         $orderSaleItem = '';
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             $start_date = DateFuncs::convertYear($request->input('start_date'));
             $end_date = DateFuncs::convertYear($request->input('end_date'));
             $productTypeNameArr = $request->input('product_type_name');
@@ -198,8 +226,8 @@ class ReportsController extends Controller
         , products.product_name_en'));
 //            $orderList->where('orders.user_id', $user->id);
             $orderList->whereIn('products.id', $productTypeNameArr);
-            $orderList->where('orders.order_date','>=', $start_date);
-            $orderList->where('orders.order_date','<=', $end_date);
+            $orderList->where('orders.order_date', '>=', $start_date);
+            $orderList->where('orders.order_date', '<=', $end_date);
             $orderList->where('orders.order_status', '!=', 5);
             $orderList->groupBy('products.id');
             $orderList->orderBy('orders.id', 'DESC');
@@ -216,37 +244,80 @@ class ReportsController extends Controller
             $product->orderBy('products.id', 'DESC');
             $products = $product->get();
             //
-            $sumAll=0;
-            foreach ($orderSaleItem as $value){
+            $sumAll = 0;
+            foreach ($orderSaleItem as $value) {
                 $sumAll = $sumAll + $value->total_amounts;
             }
             //return $orderSaleItem;
-            return view('backend.reports.sale_item_list', compact('orderSaleItem','products','productTypeNameArr','sumAll'));
+            return view('backend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr', 'sumAll'));
         }
     }
 
 
-    public function orderdetail(Request $request,$order_id){
+    public function SaleItemByShopFilter(Request $request)
+    {
+        $v = Validator::make($request->all(), [
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
+
+
+        if ($request->isMethod('post')) {
+            $start_date = DateFuncs::convertYear($request->input('start_date'));
+            $end_date = DateFuncs::convertYear($request->input('end_date'));
+            $shop_select_arr = $request->input('shop_select_id');
+            $shop = User::join('orders', 'orders.user_id', '=', 'users.id');
+            $shop->join('shops', 'shops.user_id', '=', 'users.id');
+            $shop->select(DB::raw('SUM(orders.total_amount) as total,shops.shop_name,shops.id'));;
+            if (!empty($shop_select_arr)) {
+                $shop->whereIn('shops.id', $shop_select_arr);
+            }
+            $shop->where('orders.order_date', '>=', $start_date);
+            $shop->where('orders.order_date', '<=', $end_date);
+            $shop->groupBy('shops.id');
+            $shop->orderBy('total', 'DESC');
+            $shops = $shop->get();;
+
+            $sumAll = 0;
+            foreach ($shop as $value) {
+                $sumAll = $sumAll + $value->total;
+            }
+
+            $allShops = User::join('orders', 'orders.user_id', '=', 'users.id')
+                ->join('shops', 'shops.user_id', '=', 'users.id')
+                ->select('shops.*')
+                ->groupBy('shops.id')
+                ->get();
+//            return $shopsList;
+            return view('backend.reports.sale_item_by_shop', compact('shops', 'allShops', 'sumAll'));
+        }
+    }
+
+    public function orderdetail(Request $request, $order_id)
+    {
 //        $user = auth()->guard('user')->user();
         $orderType = $request->input('status');
-        if(!empty($orderType)){
-            Session::put('orderType',$orderType);
+        if (!empty($orderType)) {
+            Session::put('orderType', $orderType);
         }
         $orderId = $order_id;
         $order = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
             ->join('users', 'users.id', '=', 'orders.user_id')
-            ->select('orders.*', 'order_status.status_name','order_status.id as orderStatusId','users.users_firstname_th','users.users_lastname_th','users.id as userId')
+            ->select('orders.*', 'order_status.status_name', 'order_status.id as orderStatusId', 'users.users_firstname_th', 'users.users_lastname_th', 'users.id as userId')
             ->where('orders.id', $order_id)->first();
 //        $order->orderItems = OrderItem::with(['product','productRequest'])->where('order_id',$order_id)->get();
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
-        $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
+        $order->statusHistory = OrderStatusHistory::where('order_id', $order_id)->get();
         //return $order;
 
 //        $user = auth()->guard('user')->user();
 //        $userId = $user->id;
         //return $order;
-        return view('backend.orderdetail', compact('order','orderId'));
+        return view('backend.orderdetail', compact('order', 'orderId'));
     }
 
 }
