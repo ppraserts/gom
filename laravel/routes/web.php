@@ -226,6 +226,10 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::get('reports/orders','backend\OrderStatusHistoryController@orderList');
     Route::get('reports/orders/{id}/show','backend\OrderStatusHistoryController@show');
 //    Route::get('reports/orders','backend\OrderStatusHistoryController@filter');
+    //Report OrderHistoryByemp
+    Route::get('reports/order-history-sale-buy','backend\ReportOrderHistoryController@index');
+    Route::post('reports/order-history-sale-buy','backend\ReportOrderHistoryController@filter');
+    Route::post('reports/order-history-sale-buy/export','backend\ReportOrderHistoryController@exportExcel');
 
 
 });

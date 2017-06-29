@@ -261,6 +261,10 @@ return [
         'product_stock' => 'บริมาณคงเหลือ',
         'message_validate_shop' => 'กรุณาเลือกร้านค้า',
         'shop'=> 'ร้านค้า',
+        'user'=>'สมาชิก',
+        'type_sale_buy'=>'ประเภทซื้อขาย',
+
+
     ],
 
 ];
