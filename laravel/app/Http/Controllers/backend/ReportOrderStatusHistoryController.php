@@ -93,7 +93,7 @@ class ReportOrderStatusHistoryController extends Controller
             }
 
             $data = $arr;
-            $info = Excel::create('order-history-sale-buy-excell', function($excel) use($data,$d_start,$d_end,$filter_text) {
+            $info = Excel::create('order-status-history-excell', function($excel) use($data,$d_start,$d_end,$filter_text) {
                 $excel->sheet('Sheetname', function($sheet) use($data,$d_start,$d_end,$filter_text) {
                     $sheet->mergeCells('A1:G1');
                     $sheet->mergeCells('A2:C3');
