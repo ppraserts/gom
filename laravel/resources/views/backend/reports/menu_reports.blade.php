@@ -23,6 +23,8 @@
         <a href="#">รายงานการจับคู่สินค้า</a>
     </li>
     <li  @if(Request::segment(3) == 'order-history-sale-buy') class="active" @endif>
-        <a href="{{url('order-history-sale-buy')}}">รายงานประวัติการซื้อขาย</a>
+        <a href="{{url('admin/reports/order-history-sale-buy')}}">
+            {{ trans('messages.text_report_menu_order_history_sale_buy') }}
+        </a>
     </li>
 </ul>
