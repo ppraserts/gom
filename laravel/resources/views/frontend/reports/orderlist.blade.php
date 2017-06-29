@@ -199,11 +199,11 @@ $pagetitle = trans('message.menu_order_list');
                 $("#ms_start_date").html('');
             }
             if(!end_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
+                $("#end_date").focus();
+                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
                 return false;
             }else{
-                $("#ms_start_date").html('');
+                $("#ms_end_date").html('');
             }
 
             if(start_date != '') {

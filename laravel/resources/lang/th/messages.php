@@ -269,4 +269,5 @@ return [
     'please_select_type_sale_buy' => 'กรุณาเลือกประเภทซื้อขาย',
     'please_select_user'=>'กรุณาเลือกสมาชิก',
     'data_not_found'=>'ไม่พบข้อมูล',
+    'show_all'=>'แสดงทั้งหมด',
 ];
