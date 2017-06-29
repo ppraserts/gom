@@ -61,7 +61,7 @@ $pagetitle = trans('messages.menu_order_list');
 
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
                     <label class="col-sm-1"
-                           style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_product_type_name') }}
+                           style="padding-right: 0; padding-left: 0;">{{ trans('messages.text_product_type_name') }}
                         :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
                         <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name"
@@ -239,13 +239,8 @@ $pagetitle = trans('messages.menu_order_list');
                     return false;
                 }
             }
-            if (!product_type_name) {
-                $("#product_type_name").focus();
-                $("#ms_product_type_name").html('<?php echo Lang::get('validation.attributes.message_validate_product_type_name')?>');
-                return false;
-            } else {
-                $("#ms_product_type_name").html('');
-            }
+
+            $("#ms_product_type_name").html('');
 
         });
     });
@@ -255,6 +250,7 @@ $pagetitle = trans('messages.menu_order_list');
     $("#export").click(function () {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
+        var filter = $("#filter").val();
         //var product_type_name = $("#product_type_name option:selected").val();
         var product_type_name = [];
         $('#product_type_name option:selected').each(function (i, selected) {

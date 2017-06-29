@@ -34,7 +34,7 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
 
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">* {{ trans('messages.text_end_date') }} :</label>
+                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">{{ trans('messages.text_end_date') }} :</label>
                     <div class="col-sm-10" style="padding-right: 0px;">
                         <div class='input-group date' id='pick_end_date'>
                             {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
@@ -47,7 +47,7 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
 
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.shop_name') }} :</label>
+                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">{{ trans('messages.shop_name') }} :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
                         <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id" data-live-search="true"
                                 multiple>
@@ -211,7 +211,7 @@ demo.css
                 type: 'column'
             },
             title: {
-                text: 'ยอดจำหน่ายสินค้ารวมของร้านค้าทั้งหมด'
+                text: 'ยอดจำหน่ายสินค้า {{(isset($start_date) && isset($end_date)) ? ('วันที่ '. \App\Helpers\DateFuncs::mysqlToThaiDateString($start_date) . ' ถึง '.\App\Helpers\DateFuncs::mysqlToThaiDateString($end_date)) : ""}}'
             },
             subtitle: {
                 text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">ยอดรวม : {{ number_format($sumAll)}} บาท </span>'

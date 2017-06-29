@@ -56,14 +56,32 @@ class DateFuncs
         if ($date != null && $date != '') {
             $date_formatted = date("Y-m-d", strtotime($date));
             $thaiDate = self::thai_date($date_formatted);
-           // dump(date("Y-m-d", strtotime($date)));
+            // dump(date("Y-m-d", strtotime($date)));
             return $thaiDate;
         }
         return '';
     }
 
-    public static  function getCurrentYear()
+    public static function getCurrentYear()
     {
         return date("Y");
+    }
+
+    public static function mysqlToThaiDateString($strDate)
+    {
+        if (empty($strDate)){
+            return '';
+        }
+        $strYear = date("Y", strtotime($strDate)) + 543;
+        $strMonth = date("n", strtotime($strDate));
+        $strDay = date("j", strtotime($strDate));
+//        $strHour = date("H", strtotime($strDate));
+//        $strMinute = date("i", strtotime($strDate));
+//        $strSeconds = date("s", strtotime($strDate));
+        $strMonthCut = array("มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม", "พฤศจิกายน","ธันวาคม");
+        $strMonthThai = $strMonthCut[$strMonth-1];
+        return "$strDay $strMonthThai $strYear";
+
+
     }
 }

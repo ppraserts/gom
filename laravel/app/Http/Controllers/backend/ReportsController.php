@@ -43,8 +43,7 @@ class ReportsController extends Controller
 //        $user = auth()->guard('user')->user();
         $v = Validator::make($request->all(), [
             'start_date' => 'required',
-            'end_date' => 'required',
-            'product_type_name' => 'required'
+            'end_date' => 'required'
         ]);
         if ($v->fails()) {
             return redirect()->back()->withErrors($v->errors());
@@ -54,7 +53,6 @@ class ReportsController extends Controller
         if ($request->isMethod('post')) {
             $start_date = DateFuncs::convertYear($request->input('start_date'));
             $end_date = DateFuncs::convertYear($request->input('end_date'));
-            $productTypeNameArr = $request->input('product_type_name');
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
             $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -62,7 +60,10 @@ class ReportsController extends Controller
             $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
             $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
 //            $orderList->where('orders.buyer_id', $user->id);
-            $orderList->whereIn('products.id', $productTypeNameArr);
+            if (!empty($request->input('product_type_name'))) {
+                $productTypeNameArr = $request->input('product_type_name');
+                $orderList->whereIn('products.id', $productTypeNameArr);
+            }
             $orderList->where('orders.order_date', '>=', $start_date);
             $orderList->where('orders.order_date', '<=', $end_date);
             $orderList->groupBy('orders.id');
@@ -133,6 +134,51 @@ class ReportsController extends Controller
                     $sheet->rows($data);
                 });
             })->store('xls', false, true);
+
+            $filter_text = trans('validation.attributes.product_name_th').' : '.implode("|",$productTypeNameArr);;
+            if(empty($filter)){
+                $filter_text = trans('messages.order_id').'/'.trans('messages.order_status').' : '.trans('messages.show_all');
+            }
+
+            /*$info = Excel::create('Laravel_Excel', function ($excel) use ($data,$start_date,$end_date,$filter_text) {
+
+                $excel->sheet('Sheetname', function ($sheet) use ($data,$start_date,$end_date,$filter_text) {
+                    $sheet->mergeCells('A1:G1');
+                    $sheet->mergeCells('A2:C3');
+                    $sheet->mergeCells('D2:G3');
+                    $sheet->setSize(array(
+                        'A1' => array(
+                            'height'    => 50
+                        )
+                    ));
+                    $sheet->setAutoSize(array('A'));
+
+                    $sheet->cells('A1', function($cells) {
+                        $cells->setValue(trans('messages.text_report_menu_order_status_history'));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('center');
+                        $cells->setFont(array(
+                            'size'       => '16',
+                            'bold'       =>  true
+                        ));
+                    });
+                    $sheet->cells('A2', function($cells) use($start_date,$end_date) {
+                        $cells->setValue($start_date.' '. $end_date);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('D2', function($cells) use($filter_text) {
+                        $cells->setValue($filter_text);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->rows($data);
+                });
+            })->store('xls', false, true);*/
             return response()->json(array('file' => $info['file']));
         }
     }
@@ -205,8 +251,7 @@ class ReportsController extends Controller
 //        $user = auth()->guard('user')->user();
         $v = Validator::make($request->all(), [
             'start_date' => 'required',
-            'end_date' => 'required',
-            'product_type_name' => 'required'
+            'end_date' => 'required'
         ]);
         if ($v->fails()) {
             return redirect()->back()->withErrors($v->errors());
@@ -216,7 +261,7 @@ class ReportsController extends Controller
         if ($request->isMethod('post')) {
             $start_date = DateFuncs::convertYear($request->input('start_date'));
             $end_date = DateFuncs::convertYear($request->input('end_date'));
-            $productTypeNameArr = $request->input('product_type_name');
+
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
             $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -225,7 +270,10 @@ class ReportsController extends Controller
             $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
         , products.product_name_en'));
 //            $orderList->where('orders.user_id', $user->id);
-            $orderList->whereIn('products.id', $productTypeNameArr);
+            if (!empty($request->input('product_type_name'))) {
+                $productTypeNameArr = $request->input('product_type_name');
+                $orderList->whereIn('products.id', $productTypeNameArr);
+            }
             $orderList->where('orders.order_date', '>=', $start_date);
             $orderList->where('orders.order_date', '<=', $end_date);
             $orderList->where('orders.order_status', '!=', 5);
@@ -248,8 +296,8 @@ class ReportsController extends Controller
             foreach ($orderSaleItem as $value) {
                 $sumAll = $sumAll + $value->total_amounts;
             }
-            //return $orderSaleItem;
-            return view('backend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr', 'sumAll'));
+//            return $orderSaleItem;
+            return view('backend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr','start_date','end_date', 'sumAll'));
         }
     }
 
@@ -282,7 +330,7 @@ class ReportsController extends Controller
             $shops = $shop->get();;
 
             $sumAll = 0;
-            foreach ($shop as $value) {
+            foreach ($shops as $value) {
                 $sumAll = $sumAll + $value->total;
             }
 
@@ -292,7 +340,7 @@ class ReportsController extends Controller
                 ->groupBy('shops.id')
                 ->get();
 //            return $shopsList;
-            return view('backend.reports.sale_item_by_shop', compact('shops', 'allShops', 'sumAll'));
+            return view('backend.reports.sale_item_by_shop', compact('shops', 'allShops','start_date','end_date', 'sumAll'));
         }
     }
 

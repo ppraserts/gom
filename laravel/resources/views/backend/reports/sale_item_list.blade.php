@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_product_type_name') }} :</label>
+                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">{{ trans('messages.text_product_type_name') }} :</label>
                     <div class='col-sm-11' style="padding-right: 0;">
                         <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name" data-live-search="true"
                                 multiple>
@@ -183,13 +183,8 @@
                     return false;
                 }
             }
-            if(!product_type_name) {
-                $("#product_type_name").focus();
-                $("#ms_product_type_name").html('<?php echo Lang::get('validation.attributes.message_validate_product_type_name')?>');
-                return false;
-            }else{
-                $("#ms_product_type_name").html('');
-            }
+
+            $("#ms_product_type_name").html('');
 
         });
     });
@@ -210,7 +205,7 @@ demo.css
                 type: 'column'
             },
             title: {
-                text: 'ยอดจำหน่ายสินค้ารวมทั้งหมด'
+                text: 'ยอดจำหน่ายสินค้า {{(isset($start_date) && isset($end_date)) ? ('วันที่ '. \App\Helpers\DateFuncs::mysqlToThaiDateString($start_date) . ' ถึง '.\App\Helpers\DateFuncs::mysqlToThaiDateString($end_date)) : ""}}'
             },
             subtitle: {
                 text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">ยอดรวม : {{ number_format($sumAll)}} บาท </span>'
