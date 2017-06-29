@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="row">
-            <h4>{{ trans('messages.text_report_menu_shop') }} :</h4>
+            <h4>{{ trans('messages.text_report_menu_product') }} :</h4>
             <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="POST">
                 {{csrf_field()}}
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">

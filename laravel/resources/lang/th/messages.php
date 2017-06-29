@@ -270,4 +270,5 @@ return [
     'please_select_user'=>'กรุณาเลือกสมาชิก',
     'data_not_found'=>'ไม่พบข้อมูล',
     'show_all'=>'แสดงทั้งหมด',
+    'datetime_export'=>'วันที่/เวลา ที่ส่งออก',
 ];
