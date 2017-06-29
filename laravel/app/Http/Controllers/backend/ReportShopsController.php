@@ -7,6 +7,7 @@ use Excel;
 use Hash;
 use Validator;
 use Illuminate\Http\Request;
+use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
 
 class ReportShopsController extends Controller
@@ -50,6 +51,14 @@ class ReportShopsController extends Controller
         if ($request->ajax()) {
             $shopArr = $request->input('shop_id_arr');
             $results = $this->shopSqlFilter($shopArr);
+            $str_shops = trans('messages.show_all');
+            if(count($shopArr) > 0){
+                $nameShopArrs = $this->getShops($shopArr);
+                foreach ($nameShopArrs as $nameShopArr){
+                    $arrNameShop[] = $nameShopArr->shop_name;
+                }
+                $str_shops = implode(",",$arrNameShop);
+            }
             $arr[] = array(
                 trans('messages.text_shop_id'),
                 trans('messages.text_shop_url'),
@@ -70,11 +79,43 @@ class ReportShopsController extends Controller
                 );
             }
             $data = $arr;
-            $info = Excel::create('shop-excell', function($excel) use($data) {
-                $excel->sheet('Sheetname', function($sheet) use($data) {
-                    $sheet->cell('A1:D1', function($cell) {
-                        $cell->setFontWeight('bold');
+            $info = Excel::create('dgtfarm-shops-excel', function($excel) use($data,$str_shops) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$str_shops) {
+                    $sheet->mergeCells('A1:D1');
+                    $sheet->mergeCells('A2:D3');
+                    $sheet->mergeCells('A4:D5');
+                    $sheet->setSize(array(
+                        'A1' => array(
+                            'height'    => 50
+                        )
+                    ));
+                    $sheet->setAutoSize(array('A'));
+
+                    $sheet->cells('A1', function($cells) {
+                        $cells->setValue(trans('messages.text_report_menu_shop'));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('center');
+                        $cells->setFont(array(
+                            'size'       => '16',
+                            'bold'       =>  true
+                        ));
                     });
+
+                    $sheet->cells('A2', function($cells) use($str_shops) {
+                        $cells->setValue(trans('messages.shop').': '.$str_shops);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('A4', function($cells) {
+                        $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::convertToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
                     $sheet->rows($data);
                 });
             })->store('xls', false, true);
@@ -102,5 +143,10 @@ class ReportShopsController extends Controller
         $result->orderBy('shop_score', 'desc');
         return  $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
 
+    }
+    private function getShops($arrId){
+        return Shop::select(DB::raw('shops.shop_name'))
+            ->whereIn('shops.id', $arrId)
+            ->get();
     }
 }

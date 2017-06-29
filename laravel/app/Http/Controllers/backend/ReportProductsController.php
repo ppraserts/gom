@@ -8,6 +8,7 @@ use Excel;
 use Hash;
 use Validator;
 use Illuminate\Http\Request;
+use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
 
 class ReportProductsController extends Controller
@@ -49,6 +50,16 @@ class ReportProductsController extends Controller
         if ($request->ajax()) {
             $product_arr= $request->input('product_arr');
             $results = $this->sqlFilter($product_arr);
+            $str_type_producy = trans('messages.show_all');
+
+            if(count($product_arr) > 0){
+                $nameProductCategoryArrs = $this->getProductCategory($product_arr);
+                foreach ($nameProductCategoryArrs as $nameProductCategoryArr){
+                    $arrnameProductCategory[] = $nameProductCategoryArr->productcategory_title_th;
+                }
+                $str_type_producy = implode(",",$arrnameProductCategory);
+            }
+
             $arr[] = array(
                 trans('messages.text_product_id'),
                 trans('messages.text_product_th'),
@@ -70,11 +81,43 @@ class ReportProductsController extends Controller
             }
 
             $data = $arr;
-            $info = Excel::create('product-excell', function($excel) use($data) {
-                $excel->sheet('Sheetname', function($sheet) use($data) {
-                    $sheet->cell('A1:D1', function($cell) {
-                        $cell->setFontWeight('bold');
+            $info = Excel::create('dgtfarm-products-excel', function($excel) use($data,$str_type_producy) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$str_type_producy) {
+                    $sheet->mergeCells('A1:D1');
+                    $sheet->mergeCells('A2:D3');
+                    $sheet->mergeCells('A4:D5');
+                    $sheet->setSize(array(
+                        'A1' => array(
+                            'height'    => 50
+                        )
+                    ));
+                    $sheet->setAutoSize(array('A'));
+
+                    $sheet->cells('A1', function($cells) {
+                        $cells->setValue(trans('messages.text_report_menu_product'));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('center');
+                        $cells->setFont(array(
+                            'size'       => '16',
+                            'bold'       =>  true
+                        ));
                     });
+
+                    $sheet->cells('A2', function($cells) use($str_type_producy) {
+                        $cells->setValue(trans('messages.menu_add_product').': '.$str_type_producy);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('A4', function($cells) {
+                        $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::convertToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
                     $sheet->rows($data);
                 });
             })->store('xls', false, true);
@@ -95,5 +138,12 @@ class ReportProductsController extends Controller
         $result->orderBy('product_score', 'desc');
         return  $results = $result->groupBy('products.id')->paginate(30); //limit 100 per page
 
+    }
+
+    private function getProductCategory($arrId){
+        return ProductCategory::select(DB::raw('productcategorys.productcategory_title_th'))
+            ->whereIn('productcategorys.id', $arrId)
+            ->orderBy('productcategorys.sequence', 'asc')
+            ->get();
     }
 }
