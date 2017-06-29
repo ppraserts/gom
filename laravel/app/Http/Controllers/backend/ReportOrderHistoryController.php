@@ -50,6 +50,7 @@ class ReportOrderHistoryController extends Controller
             if ($type_sale_buy == 'sale'){
                 $i_sale_buy = trans('messages.i_sale');
                 $arr[] = array(
+                    trans('messages.order_id'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
                     trans('messages.order_date'),
