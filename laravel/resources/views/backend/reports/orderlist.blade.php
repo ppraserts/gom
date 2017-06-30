@@ -31,9 +31,9 @@ $pagetitle = trans('messages.menu_order_list');
                     }
                 </style>
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label class="col-sm-2"
-                           style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }}
-                        :</label>
+                    <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">*
+                        {{ trans('messages.text_start_date') }}:
+                    </label>
                     <div class="col-sm-10" style="padding-right: 0px;">
                         <div class='input-group date ' id='pick_start_date'>
                             {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
@@ -46,8 +46,9 @@ $pagetitle = trans('messages.menu_order_list');
                 </div>
 
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2"
-                           style="padding-right: 0;padding-left: 0;">* {{ trans('messages.text_end_date') }} :</label>
+                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">
+                        * {{ trans('messages.text_end_date') }} :
+                    </label>
                     <div class="col-sm-10" style="padding-right: 0px;">
                         <div class='input-group date' id='pick_end_date'>
                             {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
@@ -94,6 +95,7 @@ $pagetitle = trans('messages.menu_order_list');
                     <thead>
                     <tr>
                         <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                         <th>{{ trans('messages.i_sale') }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
@@ -104,23 +106,34 @@ $pagetitle = trans('messages.menu_order_list');
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($orderLists as $key => $item)
-                        <tr>
-                            <td style="text-align:center;">{{ $item->id }}</td>
-                            <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                            <td style="text-align:center;">{{ $item->order_date }}</td>
-                            <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->status_name }}</td>
-                            <td style="text-align:center;">
-                                <a class="btn btn-primary"
-                                   href="{{ url ('admin/reports/orderdetail/'.$item->id) }}">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @if(count($orderLists) > 0)
+                        @foreach ($orderLists as $key => $item)
+                            <tr>
+                                <td style="text-align:center;">{{ $item->id }}</td>
+                                <td>
+                                    @if($item->order_type== 'retail')
+                                        {{trans('messages.retail')}}
+                                    @else
+                                        {{trans('messages.wholesale')}}
+                                    @endif
+                                </td>
+                                <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
+                                <td style="text-align:center;">{{ $item->order_date }}</td>
+                                <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
+                                <td style="text-align:center;">{{ $item->status_name }}</td>
+                                <td style="text-align:center;">
+                                    <a class="btn btn-primary"
+                                       href="{{ url ('admin/reports/orderdetail/'.$item->id) }}">
+                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
+            </div>
+            @if(count($orderLists) > 0)
                 <div class="row">
                     <div class="col-md-6">{!! $orderLists->appends(Request::all()) !!}</div>
                     <div class="col-md-6">
@@ -131,9 +144,7 @@ $pagetitle = trans('messages.menu_order_list');
                         </div>
                     </div>
                 </div>
-            </div>
-
-
+            @endif
         </div>
     </div>
 @endsection
@@ -142,10 +153,10 @@ $pagetitle = trans('messages.menu_order_list');
 <link href="{{url('css/view-backend/reports.css')}}" type="text/css" rel="stylesheet">
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-<link href="http://gom.localhost/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
-<script src="http://gom.localhost/js/bootstrap-datepicker.min.js"></script>
-<script src="http://gom.localhost/js/bootstrap-datepicker-thai.js"></script>
-<script src="http://gom.localhost/js/bootstrap-datepicker.th.min.js"></script>
+<link href="{{url('css/bootstrap-datepicker.standalone.min.css')}}" rel="stylesheet">
+<script src="{{url('js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{url('js/bootstrap-datepicker-thai.js')}}"></script>
+<script src="{{url('js/bootstrap-datepicker.th.min.js')}}"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -198,52 +209,6 @@ $pagetitle = trans('messages.menu_order_list');
         }
     });
 
-    $(function () {
-        $('#my-form').submit(function () {
-            var start_date = $("#start_date").val();
-            var end_date = $("#end_date").val();
-            var product_type_name = $("#product_type_name option:selected").val();
-
-            if (!start_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date')?>');
-                return false;
-            } else {
-                $("#ms_start_date").html('');
-            }
-            if (!end_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
-                return false;
-            } else {
-                $("#ms_start_date").html('');
-            }
-
-            if (start_date != '') {
-                if (end_date >= start_date) {
-                    $("#ms_start_date").html('');
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#end_date").focus();
-                    $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-                    return false;
-                }
-            }
-
-            if (end_date != '') {
-                if (start_date <= end_date) {
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#start_date").focus();
-                    $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-                    return false;
-                }
-            }
-
-            $("#ms_product_type_name").html('');
-
-        });
-    });
 
 
     //***********************************************

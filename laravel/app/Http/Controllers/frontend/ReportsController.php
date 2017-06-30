@@ -41,8 +41,8 @@ class ReportsController extends Controller
 
         $orderLists = '';
         if($request->isMethod('post')){
-           $start_date = DateFuncs::convertYear($request->input('start_date'));
-           $end_date = DateFuncs::convertYear($request->input('end_date'));
+            $start_date = DateFuncs::convertYear($request->input('start_date'));
+            $end_date = DateFuncs::convertYear($request->input('end_date'));
             $productTypeNameArr = $request->input('product_type_name');
             $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
@@ -113,7 +113,7 @@ class ReportsController extends Controller
                 );
             }
             $data = $arr;
-            $info = Excel::create(' dgtfarm-orders-buy-excel', function($excel) use($data,$productStr,$str_start_and_end_date) {
+            $info = Excel::create('dgtfarm-orders-buy-excel', function($excel) use($data,$productStr,$str_start_and_end_date) {
                 $excel->sheet('Sheetname', function($sheet) use($data,$productStr,$str_start_and_end_date) {
                     $sheet->mergeCells('A1:F1');
                     $sheet->mergeCells('A2:F3');
@@ -201,7 +201,7 @@ class ReportsController extends Controller
         $orderSaleItem = $orderList->get();
         $sumAll=0;
         foreach ($orderSaleItem as $value){
-           $sumAll = $sumAll + $value->total_amounts;
+            $sumAll = $sumAll + $value->total_amounts;
         }
 //mock data
 //        $arr = array();
@@ -296,7 +296,7 @@ class ReportsController extends Controller
 
     private function getProductCate($productTypeNameArr){
         return Product::select(DB::raw('products.product_name_th'))
-        ->whereIn('products.id', $productTypeNameArr)->get();
+            ->whereIn('products.id', $productTypeNameArr)->get();
     }
 
 
