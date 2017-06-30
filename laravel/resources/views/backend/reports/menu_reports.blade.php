@@ -19,8 +19,8 @@
             {{ trans('messages.text_report_menu_order_status_history') }}
         </a>
     </li>
-    <li  @if(Request::segment(3) == 'y') class="active" @endif>
-        <a href="#">รายงานการจับคู่สินค้า</a>
+    <li  @if(Request::segment(3) == 'matching') class="active" @endif>
+        <a href="{{url('admin/reports/matching')}}">รายงานการจับคู่สินค้า</a>
     </li>
     <li  @if(Request::segment(3) == 'order-history-sale-buy') class="active" @endif>
         <a href="{{url('admin/reports/order-history-sale-buy')}}">

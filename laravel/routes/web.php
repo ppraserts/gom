@@ -233,7 +233,11 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::get('reports/order-history-sale-buy','backend\ReportOrderHistoryController@index');
     Route::post('reports/order-history-sale-buy','backend\ReportOrderHistoryController@filter');
     Route::post('reports/order-history-sale-buy/export','backend\ReportOrderHistoryController@exportExcel');
-
+    //Reports Matching
+    Route::get('reports/matching','backend\ReportMatchingController@index');
+    Route::post('reports/matching','backend\ReportMatchingController@matchingFilter');
+    Route::post('reports/matching/export','backend\ReportMatchingController@exportExcel');
+    Route::get('reports/matching/download','backend\ReportMatchingController@actionDownload');
 
 });
 
