@@ -118,7 +118,7 @@ $pagetitle = trans('messages.menu_order_list');
                                     @endif
                                 </td>
                                 <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                                <td style="text-align:center;">{{ $item->order_date }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->order_date) }}</td>
                                 <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
                                 <td style="text-align:center;">

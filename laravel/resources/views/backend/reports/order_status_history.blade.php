@@ -95,7 +95,7 @@
                                 <th style="font-weight: normal">
                                     {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
                                 </th>
-                                <td style="text-align:center;">{{ $result->order_date }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($result->order_date) }}</td>
                                 <td style="text-align:center;">{{ $result->total_amount . trans('messages.baht') }}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
