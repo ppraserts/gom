@@ -98,36 +98,45 @@ $pagetitle = trans('message.menu_order_list');
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($orderLists as $key => $item)
+                    @if(count($orderLists) > 0)
+                        @foreach ($orderLists as $key => $item)
+                            <tr>
+                                <td style="text-align:center;">{{ $item->id }}</td>
+                                <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
+                                <td style="text-align:center;">{{ $item->order_date }}</td>
+                                <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
+                                <td style="text-align:center;">{{ $item->status_name }}</td>
+                                <td style="text-align:center;">
+                                    <a class="btn btn-primary"
+                                       href="{{ url ('user/orderdetail/'.$item->id) }}">
+                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td style="text-align:center;">{{ $item->id }}</td>
-                            <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                            <td style="text-align:center;">{{ $item->order_date }}</td>
-                            <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
-                            <td style="text-align:center;">{{ $item->status_name }}</td>
-                            <td style="text-align:center;">
-                                <a class="btn btn-primary"
-                                   href="{{ url ('user/orderdetail/'.$item->id) }}">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </a>
-                            </td>
+                            <td colspan="6">{{trans('messages.data_not_found') }}</td>
                         </tr>
-                    @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="row">
+            @if(count($orderLists) > 0)
             <div class="col-md-6">{!! $orderLists->appends(Request::all()) !!}</div>
-            <div class="col-md-6">
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                    <button class="btn btn-primary pull-right" id="export" type="button">
-                        <span class="glyphicon glyphicon-export"></span>
-                        {{ trans('messages.export_excel') }}
-                    </button>
+                <div class="col-md-6">
+                    <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                        <button class="btn btn-primary pull-right" id="export" type="button">
+                            <span class="glyphicon glyphicon-export"></span>
+                            {{ trans('messages.export_excel') }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
 

@@ -68,31 +68,26 @@ class ReportsController extends Controller
     {
         if($request->ajax()){
             $user = auth()->guard('user')->user();
-            //return $request->input('product_type_name');
 
-            $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
-            $orderList->join('users', 'users.id', '=', 'orders.user_id');
-            $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
-            $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-            $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-            $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
-            $orderList->where('orders.buyer_id', $user->id);
-            if(!empty($request->input('start_date'))){
-                $start_date = DateFuncs::convertYear($request->input('start_date'));
-                $orderList->where('orders.order_date','>=', $start_date);
+            $productTypeNameArr = $request->input('product_type_name');
+            $start_date = $request->input('start_date');
+            $end_date = $request->input('end_date');
+            $buyer_id = $user->id;
+            $orderLists = $this->getOrders($buyer_id,$start_date,$end_date,$productTypeNameArr);
+
+            $productStr = trans('messages.show_all');
+            if(!empty($productTypeNameArr)){
+                $res = $this->getProductCate($productTypeNameArr);
+                foreach ($res as $re){
+                    $productStrs[] = $re->product_name_th;
+                }
+                $productStr = implode(",",$productStrs);
             }
-            if(!empty($request->input('end_date'))) {
-                $end_date = DateFuncs::convertYear($request->input('end_date'));
-                $orderList->where('orders.order_date','<=', $end_date);
+            $str_start_and_end_date = trans('messages.text_start_date').' : - '.trans('messages.text_end_date').' : -';
+            if(!empty($start_date) and !empty($end_date)){
+                $str_start_and_end_date = trans('messages.text_start_date').' : '.$start_date.' '.trans('messages.text_end_date').' : '.$end_date;
             }
-            if(!empty($request->input('product_type_name'))) {
-                $productTypeNameArr = $request->input('product_type_name');
-                $orderList->whereIn('products.id', $productTypeNameArr);
-            }
-            $orderList->groupBy('orders.id');
-            $orderList->orderBy('orders.id', 'DESC');
-            $orderList->paginate(config('app.paginate'));
-            $orderLists = $orderList->paginate(config('app.paginate'));
+
 
             $arr[] = array(
                 trans('messages.order_id'),
@@ -111,12 +106,50 @@ class ReportsController extends Controller
                 );
             }
             $data = $arr;
-            $info = Excel::create('orders-list-buy-excel', function($excel) use($data) {
-
-                $excel->sheet('Sheetname', function($sheet) use($data) {
-                    $sheet->cell('A1:E1', function($cell) {
-                        $cell->setFontWeight('bold');
+            $info = Excel::create(' dgtfarm-orders-buy-excel', function($excel) use($data,$productStr,$str_start_and_end_date) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$productStr,$str_start_and_end_date) {
+                    $sheet->mergeCells('A1:E1');
+                    $sheet->mergeCells('A2:E3');
+                    $sheet->mergeCells('A4:E5');
+                    $sheet->mergeCells('A6:E7');
+                    $sheet->setSize(array(
+                        'A1' => array(
+                            'height'    => 50
+                        )
+                    ));
+                    $sheet->setAutoSize(array('A'));
+                    $sheet->cells('A1', function($cells) {
+                        $cells->setValue(trans('messages.menu_order_list'));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('center');
+                        $cells->setFont(array(
+                            'size'       => '16',
+                            'bold'       =>  true
+                        ));
                     });
+
+                    $sheet->cells('A2', function($cells) use($productStr) {
+                        $cells->setValue(trans('messages.menu_add_product').': '.$productStr);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('A4', function($cells) use($str_start_and_end_date) {
+                        $cells->setValue($str_start_and_end_date);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('A6', function($cells) {
+                        $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::convertToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
                     $sheet->rows($data);
                 });
             })->store('xls', false, true);
@@ -228,5 +261,37 @@ class ReportsController extends Controller
             return view('frontend.reports.sale_item_list', compact('orderSaleItem','products','productTypeNameArr','sumAll'));
         }
     }
+
+    private function getOrders($buyer_id,$start_date='',$end_date='',$productTypeNameArr=''){
+        $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+        $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+        $orderList->where('orders.buyer_id', $buyer_id);
+        if(!empty($start_date)) {
+            $start_date = DateFuncs::convertYear($start_date);
+            $orderList->where('orders.order_date', '>=', $start_date);
+        }
+        if(!empty($end_date)) {
+            $end_date = DateFuncs::convertYear($end_date);
+            $orderList->where('orders.order_date', '<=', $end_date);
+        }
+        if(!empty($productTypeNameArr)) {
+            $orderList->whereIn('products.id', $productTypeNameArr);
+        }
+        $orderList->groupBy('orders.id');
+        $orderList->orderBy('orders.id', 'DESC');
+        $orderList->paginate(config('app.paginate'));
+        return $orderLists = $orderList->paginate(config('app.paginate'));
+    }
+
+    private function getProductCate($productTypeNameArr){
+        return Product::select(DB::raw('products.product_name_th'))
+        ->whereIn('products.id', $productTypeNameArr)->get();
+    }
+
+
 
 }
