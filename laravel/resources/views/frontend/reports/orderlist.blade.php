@@ -88,6 +88,7 @@ $pagetitle = trans('message.menu_order_list');
                     <thead>
                     <tr>
                         <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                         <th>{{ trans('messages.i_sale') }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
@@ -102,6 +103,13 @@ $pagetitle = trans('message.menu_order_list');
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
+                                <td>
+                                    @if($item->order_type== 'retail')
+                                        {{trans('messages.retail')}}
+                                    @else
+                                        {{trans('messages.wholesale')}}
+                                    @endif
+                                </td>
                                 <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
                                 <td style="text-align:center;">{{ $item->order_date }}</td>
                                 <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>

@@ -91,14 +91,21 @@ class ReportsController extends Controller
 
             $arr[] = array(
                 trans('messages.order_id'),
+                trans('messages.order_type'),
                 trans('messages.i_sale'),
                 trans('messages.order_date'),
                 trans('messages.order_total'),
                 trans('messages.order_status')
             );
             foreach ($orderLists as $v){
+                if($v->order_type== 'retail') {
+                    $order_type = trans('messages.retail');
+                }else {
+                    $order_type = trans('messages.wholesale');
+                }
                 $arr[] = array(
                     $v->id,
+                    $order_type,
                     $v->users_firstname_th. " ". $v->users_lastname_th,
                     $v->order_date,
                     $v->total_amount . trans('messages.baht'),
@@ -108,10 +115,10 @@ class ReportsController extends Controller
             $data = $arr;
             $info = Excel::create(' dgtfarm-orders-buy-excel', function($excel) use($data,$productStr,$str_start_and_end_date) {
                 $excel->sheet('Sheetname', function($sheet) use($data,$productStr,$str_start_and_end_date) {
-                    $sheet->mergeCells('A1:E1');
-                    $sheet->mergeCells('A2:E3');
-                    $sheet->mergeCells('A4:E5');
-                    $sheet->mergeCells('A6:E7');
+                    $sheet->mergeCells('A1:F1');
+                    $sheet->mergeCells('A2:F3');
+                    $sheet->mergeCells('A4:F5');
+                    $sheet->mergeCells('A6:F7');
                     $sheet->setSize(array(
                         'A1' => array(
                             'height'    => 50
