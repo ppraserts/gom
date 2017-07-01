@@ -55,7 +55,7 @@ $i =0;
                         @foreach ($quotations as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ ++$i }}</td>
-                                <td>{{ DateFuncs::thai_date($item->created_at) }}</td>
+                                <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->created_at) }}</td>
                                 <td>{{ $item->product_name_th }}</td>
                                 <td>{{ $item->product_title }}</td>
                                 <td style="text-align:center;">

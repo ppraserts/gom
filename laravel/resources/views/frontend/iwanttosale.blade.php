@@ -157,7 +157,7 @@ $url = "user/iwanttosale";
                 $col_md_4_item['product1_file'] = '/images/default.jpg';
             }
             ?>
-            <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+            <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
                 <div class="col-item">
                     <div class="photo crop-height">
                         <img src="{{ url($col_md_4_item['product1_file']) }}" class="scale" alt="a">

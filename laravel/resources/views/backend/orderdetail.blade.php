@@ -26,7 +26,7 @@ $pagetitle = trans('messages.menu_order_list');
                       $statusHistory_n = count($order->statusHistory);
                     ?>
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
-                    <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
+                    <p><b>{{ trans('messages.order_date') }} : </b>{{\App\Helpers\DateFuncs::mysqlToThaiDate($order->order_date)}}</p>
                     <p><b>{{ trans('messages.order_status') }} : </b>{{$order->statusHistory[$statusHistory_n-1]['status_text']}}</p>
                     <p><b>{{ trans('messages.order_type') }} : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}</p>
                     <h4><b>{{ trans('messages.total_order') }}
@@ -140,7 +140,7 @@ $pagetitle = trans('messages.menu_order_list');
                                     <td style="text-align:left; max-width: 400px;">
                                         @if($item->status_id == 4)
                                             ช่องทางการจัดส่ง : {{$item->delivery_chanel}}<br/>
-                                            วันที่จัดส่ง :{{$item->order_date}} <br/>
+                                            วันที่จัดส่ง :{{\App\Helpers\DateFuncs::mysqlToThaiDate($item->order_date)}} <br/>
                                             {!! $item->note !!}
                                         @endif
                                         <?php

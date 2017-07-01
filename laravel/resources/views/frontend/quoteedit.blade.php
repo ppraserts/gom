@@ -27,7 +27,7 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    {{  $quotation->created_at }}
+                                    {{ \App\Helpers\DateFuncs::mysqlToThaiDate($quotation->created_at) }}
                                 </td>
                                 <td>{{  $quotation->users_firstname_th . " " .$quotation->users_lastname_th }}</td>
                                 @if(!empty($quotation->users_mobilephone))

@@ -152,7 +152,7 @@ $url = "user/iwanttobuy";
             {
             $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
             ?>
-            <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+            <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
                 <div class="col-item">
                     <div class="info">
                         <div class="row">

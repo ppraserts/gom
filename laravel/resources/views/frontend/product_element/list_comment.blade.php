@@ -50,7 +50,7 @@
             {!! $comment->comment !!}
         </p>
         <span class="date sub-text">
-            {{ trans('messages.text_date')}}: {{date("d M Y", strtotime($comment->created_at))}}
+            {{ trans('messages.text_date')}}: {{\App\Helpers\DateFuncs::mysqlToThaiDate($comment->created_at)}}
         </span>
         @if(!empty($status_comment) and $status_comment == 1)
             <p>

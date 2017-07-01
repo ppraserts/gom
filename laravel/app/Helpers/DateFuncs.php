@@ -85,7 +85,7 @@ class DateFuncs
 
     }
 
-    public static function mysqlToThaiDate($strDate)
+    public static function mysqlToThaiDate($strDate, $skipTime = false)
     {
         if (empty($strDate)){
             return '';
@@ -96,8 +96,12 @@ class DateFuncs
         $strHour = date("H", strtotime($strDate));
         $strMinute = date("i", strtotime($strDate));
 //        $strSeconds = date("s", strtotime($strDate));
+        if ($skipTime){
+            return "$strDay/$strMonth/$strYear";
+        }
         return "$strDay/$strMonth/$strYear, $strHour:$strMinute";
 
 
     }
+
 }

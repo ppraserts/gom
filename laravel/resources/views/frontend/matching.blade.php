@@ -56,7 +56,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
             }
             ?>
             @if($userItem->iwanttobuy == "buy")
-                <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+                <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
                     <div class="col-item">
                         <div class="photo">
                             <img style="height:150px; width:350px;" src="{{ url($col_md_4_item['product1_file']) }}"
@@ -152,7 +152,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
             }
             ?>
             @if($userItem->iwanttosale == "sale")
-                <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+                <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
                     <div class="col-item">
                         <div class="info">
                             <div class="row">
