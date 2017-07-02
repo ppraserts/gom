@@ -41,21 +41,21 @@
                             </a>
                         </div>
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <a href="{{url('result?'.$market_params)}}" target="_self">
-                                <div class="thumbnail view-section">
-                                    <img src="images/icon-view.png" alt="">
+                            <a href="{{url('/choosemarket?market=sale')}}" target="_self">
+                                <div class="thumbnail shop-section">
+                                    <img src="images/icon-shop.png" alt="">
                                     <div class="caption">
-                                        <h4>ชมสินค้า</h4>
+                                        <h4>ชมตลาด</h4>
                                     </div>
                                 </div>
                             </a>
                         </div>
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <a href="{{url('/choosemarket?market=sale')}}" target="_self">
-                                <div class="thumbnail shop-section">
-                                    <img src="images/icon-shop.png" alt="">
+                            <a href="{{url('home')}}" target="_self">
+                                <div class="thumbnail view-section">
+                                    <img src="images/icon-view.png" alt="">
                                     <div class="caption">
-                                        <h4>เข้าตลาด</h4>
+                                        <h4>จับคู่ซื้อขาย</h4>
                                     </div>
                                 </div>
                             </a>
