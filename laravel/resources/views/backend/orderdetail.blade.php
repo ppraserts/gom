@@ -135,7 +135,7 @@ $pagetitle = trans('messages.menu_order_list');
                             <?php $i = 0; $status_id = ''; ?>
                             @foreach ($order->statusHistory as $key => $item)
                                 <tr>
-                                    <td style="text-align:center;">{{ $item->created_at}}</td>
+                                    <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->created_at)}}</td>
                                     <td style="text-align:center;">{{ $item->status_text}}</td>
                                     <td style="text-align:left; max-width: 400px;">
                                         @if($item->status_id == 4)
