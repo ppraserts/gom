@@ -66,7 +66,10 @@ $pagetitle = trans('messages.menu_order_list');
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}">{{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}</option>
+                            <option value="{{ $itemcategory->id }}" @if(!empty($productCategoryID) && $itemcategory->id == $productCategoryID)) selected @endif>
+                                {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
+
+                            </option>
                         @endforeach
                     </select>
 
@@ -77,9 +80,16 @@ $pagetitle = trans('messages.menu_order_list');
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="product_type_name" id="product_type_name"  data-live-search="true"
+                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true"
                             multiple>
-
+                        @if(!empty($products) && count($products))
+                            @foreach($products as $product)
+                                <option value="{{$product->id}}"
+                                        @if(!empty($productTypeNameArr)) @if(in_array($product->id, $productTypeNameArr)) selected @endif @endif>
+                                    {{$product->product_name_th}}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>
@@ -193,7 +203,9 @@ $pagetitle = trans('messages.menu_order_list');
        var cateId = this.value;
         $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
             if(data.R == 'Y'){
+                console.log(data.res);
                 $("#product_type_name" ).html(data.res);
+                $('#product_type_name').selectpicker('refresh');
             }
         });
     })

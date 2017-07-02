@@ -13,7 +13,7 @@ $pagetitle = trans('message.menu_order_list');
 
         <div class="row">
             <h2>รายงานยอดจำหน่ายสินค้า</h2>
-            <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="my-form" method="POST">
+            <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="my-form" method="GET">
                 {{csrf_field()}}
                 <style>
                     .form-horizontal .form-group {

@@ -54,8 +54,15 @@ class ReportsController extends Controller
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
 //            $orderList->where('orders.buyer_id', $user->id);
-        if (!empty($request->input('product_type_name'))) {
-            $productTypeNameArr = $request->input('product_type_name');
+
+        if (!empty($request->input('productcategorys_id'))){
+            $productCategoryID = $request->input('productcategorys_id');
+            $products = Product::where('productcategory_id',$request->input('productcategorys_id'))->get();
+            $orderList->where('products.productcategory_id', $request->input('productcategorys_id'));
+        }
+
+        if (!empty($request->input('pid'))) {
+            $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -68,8 +75,12 @@ class ReportsController extends Controller
         $orderList->orderBy('orders.id', 'DESC');
         $orderLists = $orderList->paginate(config('app.paginate'));
         $productCategoryitem = ProductCategory::all();
-        $products = Product::all();
-        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr','productCategoryitem'));
+
+
+//        else{
+//            $products = Product::where('productcategory_id',0)->get();
+//        }
+        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productCategoryID','productTypeNameArr','productCategoryitem'));
 
     }
 
@@ -340,7 +351,7 @@ class ReportsController extends Controller
     }
     public function getProductByCate($productCateId)
     {
-        $products = Product::select(DB::raw('products.product_name_th'))
+        $products = Product::select(DB::raw('products.id,products.product_name_th'))
             ->where('products.productcategory_id', $productCateId)->get();
 
         $dataView = View::make('backend.reports.ele_products')->with('products', $products);

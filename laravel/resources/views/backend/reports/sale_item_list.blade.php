@@ -30,53 +30,61 @@
                         margin-left: 0px;
                     }
                 </style>
-                <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }} :</label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
-                        <div class='input-group date ' id='pick_start_date'>
+                <div class="row">
+                    <div class="form-group col-md-6" style="padding-left: 0px;">
+                        <strong style="padding-right: 0; padding-left: 0;">*
+                            {{ trans('messages.text_start_date') }}:
+                        </strong>
+                        <div class='input-group date' id='pick_start_date'>
                             {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <small class="alert-danger" id="ms_start_date"></small>
                     </div>
-                </div>
-
-                <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">* {{ trans('messages.text_end_date') }} :</label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
+                    <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                        <strong style="padding-right: 0;padding-left: 0;">
+                            * {{ trans('messages.text_end_date') }} :
+                        </strong>
                         <div class='input-group date' id='pick_end_date'>
                             {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <small class="alert-danger" id="ms_end_date"></small>
                     </div>
                 </div>
-
-                <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">{{ trans('messages.text_product_type_name') }} :</label>
-                    <div class='col-sm-11' style="padding-right: 0;">
-                        <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name" data-live-search="true"
-                                multiple>
-                            @if(count($products))
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}" @if(!empty($productTypeNameArr)) @if(in_array($product->id, $productTypeNameArr)) selected @endif @endif>
-                                        {{$product->product_name_th}}
-                                    </option>
-                                @endforeach
-                            @endif
+                <div class="row">
+                    <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                         style="padding-left: 0;">
+                        <strong>
+                            {{ trans('validation.attributes.productcategorys_id') }}:
+                        </strong>
+                        <select id="productcategorys_id" name="productcategorys_id" class="form-control">
+                            <option value="">{{ trans('messages.menu_product_category') }}</option>
+                            @foreach ($productCategoryitem as $key => $itemcategory)
+                                <option value="{{ $itemcategory->id }}">{{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}</option>
+                            @endforeach
                         </select>
-                        <small class="alert-danger" id="ms_product_type_name"></small>
+
+                    </div>
+
+
+                    <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                        <strong style="padding-right: 0; padding-left: 0;">
+                            {{ trans('messages.text_product_type_name') }} :
+                        </strong>
+                        <select class="form-control" name="product_type_name" id="product_type_name">
+
+                        </select>
                     </div>
                 </div>
-
-                <div class="col-md-1" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-right btn-sm" type="submit">
-                        <i class="fa fa-search"></i> {{ trans('messages.search') }}
-                    </button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="btn btn-primary pull-left" type="submit">
+                            <i class="fa fa-search"></i> {{ trans('messages.search') }}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
