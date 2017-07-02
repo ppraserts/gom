@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\OrderItem;
 use App\OrderStatusHistory;
+use App\ProductCategory;
 use App\User;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Http\Controllers\Controller;
@@ -69,9 +70,9 @@ class ReportsController extends Controller
         $orderList->groupBy('orders.id');
         $orderList->orderBy('orders.id', 'DESC');
         $orderLists = $orderList->paginate(config('app.paginate'));
-
+        $productCategoryitem = ProductCategory::all();
         $products = Product::all();
-        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr'));
+        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr','productCategoryitem'));
 
     }
 

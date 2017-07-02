@@ -193,8 +193,6 @@ class ReportsController extends Controller
 
         $orderSaleItem = '';
 
-        $start_date = DateFuncs::convertYear($request->input('start_date'));
-        $end_date = DateFuncs::convertYear($request->input('end_date'));
         $productTypeNameArr = $request->input('product_type_name');
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
@@ -265,7 +263,6 @@ class ReportsController extends Controller
         $orderList->orderBy('orders.id', 'DESC');
         return $orderLists = $orderList->get();
     }
-
 
     private function getProductCate($productTypeNameArr)
     {
