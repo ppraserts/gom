@@ -26,9 +26,10 @@
         if ($dialog) {
             $dialog.remove();
         }
+        var btn_close = $('#btn_close').val();
         return $(
             '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
-            '<div class="modal-dialog modal-m">' +
+            '<div class="modal-dialog modal-m" style="width: 35%;">' +
             '<div class="modal-content">' +
             '<div class="modal-header" style="display: none;"></div>' +
             '<div class="modal-body">' +
@@ -36,7 +37,7 @@
             '<div class="progress-bar" style="width: 100%"></div>' +
             '</div>' +
             '</div>' +
-            '<p class="text-right"style="padding-right: 10px;"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></p>' +
+            '<p class="text-right"style="padding-right: 10px;"><button type="button" id="btn-close" class="btn btn-default" data-dismiss="modal">' + btn_close + '</button></p>' +
             '</div>' +
             '</div>' +
             '</div>'

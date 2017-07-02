@@ -51,9 +51,9 @@
                 dialogSize: 'sm',
                 progressType: 'danger'
             });
-            // setTimeout(function () {
-            //   waitingDialog.hide();
-            // }, 3000);
+            setTimeout(function() {
+                waitingDialog.hide();
+            }, 3000);
         });
         $(".callback").click(function() {
             waitingDialog.show('Loading Something...', {

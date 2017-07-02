@@ -126,17 +126,24 @@
                 </div>
             @endif
         @endif
+        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 @push('scripts')
 <link href="{{url('css/view-backend/reports.css')}}" type="text/css" rel="stylesheet">
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+
 <script>
     $("#export").click(function () {
         var type_sale_buy = $('#type_sale_buy option:selected').val()
         var user_id = $('#user option:selected').val()
         var key_token = $('input[name=_token]').val();
+        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
+            //headerText: 'jQueryScript',
+            //dialogSize: 'sm',
+            progressType: 'success'
+        });
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
@@ -145,10 +152,15 @@
             } echo url('admin/reports/order-history-sale-buy/export' . $page)?>",
             data: { type_sale_buy: type_sale_buy, user_id:user_id },
             success: function (response) {
-                window.open(
-                    "<?php echo url('admin/reports/shop/download/?file=')?>" + response.file,
-                    '_blank'
-                );
+                $('.modal-content').empty();
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
+                $(".a-download").click(function () {
+                    waitingDialog.hide();
+                    window.open(
+                        "<?php echo url('admin/reports/shop/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                });
                 return false;
             },
             error: function (response) {

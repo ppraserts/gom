@@ -145,12 +145,14 @@ $pagetitle = trans('message.menu_order_list');
             </div>
         </div>
         @endif
+        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 
 @push('scripts')
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+<script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({
@@ -264,7 +266,12 @@ $pagetitle = trans('message.menu_order_list');
         $('#product_type_name option:selected').each(function(i, selected){
             product_type_name[i] = $(selected).val();
         });
-        //console.log(product_type_name); return false;
+        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
+            //headerText: 'jQueryScript',
+            //dialogSize: 'sm',
+            progressType: 'success'
+        });
+
         var key_token = $('input[name=_token]').val();
             $.ajax({
                 headers: {'X-CSRF-TOKEN': key_token},
@@ -272,10 +279,15 @@ $pagetitle = trans('message.menu_order_list');
                 url: "<?php $page =''; if(!empty(Request::input('page'))){ $page = '?page='.Request::input('page'); } echo url('user/reports/buy/export'.$page)?>",
                 data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
                 success: function (response) {
-                    window.open(
-                        "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
-                        '_blank'
-                    );
+                    $('.modal-content').empty();
+                    $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
+                    $(".a-download").click(function () {
+                        waitingDialog.hide();
+                        window.open(
+                            "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
+                            '_blank'
+                        );
+                    });
                     return false;
                 },
                 error: function (response) {

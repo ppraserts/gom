@@ -75,10 +75,9 @@ $pagetitle = trans('message.menu_order_list');
             <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
             @else
                 <div style="margin: 0px auto; padding-top:2%;">
-                    Data not found
+                    {{trans('messages.data_not_found')}}
                 </div>
             @endif
-
         </div>
     </div>
 @endsection
@@ -86,10 +85,12 @@ $pagetitle = trans('message.menu_order_list');
 <link href="{{url('css/view-backend/reports.css')}}" type="text/css" rel="stylesheet">
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-<link href="http://gom.localhost/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
-<script src="http://gom.localhost/js/bootstrap-datepicker.min.js"></script>
-<script src="http://gom.localhost/js/bootstrap-datepicker-thai.js"></script>
-<script src="http://gom.localhost/js/bootstrap-datepicker.th.min.js"></script>
+
+<link href="{{url('css/bootstrap-datepicker.standalone.min.css')}}" rel="stylesheet">
+<script src="{{url('js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{url('js/bootstrap-datepicker-thai.js')}}"></script>
+<script src="{{url('js/bootstrap-datepicker.th.min.js')}}"></script>
+
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
 <script type="text/javascript">

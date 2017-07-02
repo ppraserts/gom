@@ -224,11 +224,12 @@ return [
     'text_input_detail_promotion' => 'กรอกรายละเอียดแนะนำโปรโมชั่น',
     'text_ex_email_seand' => 'ตัวอย่างอีเมลที่ส่ง',
     'text_close' => 'ปิด',
+    'btn_close' => 'ยกเลิก',
     'text_start_date' => 'วันที่เริ่มต้น',
     'text_end_date' => 'วันที่สิ้นสุด',
     'text_product_type_name' => 'ชนิดสินค้า',
     'text_filter' => 'หัวข้อ ',
-
+    'text_count_email' => 'จำนวนอีเมลที่ส่ง ',
     'quote_price'=> 'ราคาที่เสนอ',
     'remark'=> 'หมายเหตุ',
     'text_go_to_shop' => 'เข้าสู่หน้าร้าน',
@@ -273,4 +274,5 @@ return [
     'datetime_export'=>'วันที่/เวลา ที่ส่งออก',
     'matching_report'=>'รายงานการจับคู่สินค้า',
     'product_price_need_buy'=> 'ราคาที่ต้องการซื้อ',
+    'text_loading_lease_wait'=> 'กำลังโหลดโปรดรอ...',
 ];

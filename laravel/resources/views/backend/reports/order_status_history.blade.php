@@ -126,6 +126,7 @@
                 </div>
             </div>
         @endif
+        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 
@@ -239,11 +240,13 @@
         var end_date = $("#end_date").val();
         var filter = $("#filter").val();
         var key_token = $('input[name=_token]').val();
-        waitingDialog.show('Loading, Please wait...', {
+
+        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
             //headerText: 'jQueryScript',
-            dialogSize: 'sm',
-            progressType: 'danger'
+            //dialogSize: 'sm',
+            progressType: 'success'
         });
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
@@ -253,7 +256,7 @@
             data: { start_date: start_date, end_date:end_date, filter:filter },
             success: function (response) {
                 $('.modal-content').empty();
-                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;">Download File</button><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div>');
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
                 $(".a-download").click(function () {
                     waitingDialog.hide();
                     window.open(
