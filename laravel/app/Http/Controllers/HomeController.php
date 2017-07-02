@@ -30,14 +30,14 @@ class HomeController extends Controller
     }
 
     public function index(){
-        $markets = Market::all();
+        /*$markets = Market::all();
         $market_params = array();
         foreach ($markets as $market){
             array_push($market_params, "markets[]=".$market->id);
         }
         if (!empty($market_params)) {
             $market_params = implode("&", $market_params);
-        }
+        }*/
         return view('index', compact('market_params'));
     }
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
         //echo Hash::check('12345', $user->password);
         //echo $user = auth()->authenticate();
         //echo auth()->user()->password;
-        $aboutusItem = AboutUs::find(1);
+        /*$aboutusItem = AboutUs::find(1);
         $bannerItem = SlideImage::where('slideimage_type', '=', 'B')
             ->orderBy('slideimage_type', 'ASC')
             ->orderBy('sequence', 'ASC')
@@ -69,14 +69,16 @@ class HomeController extends Controller
             ->get();
 
         $marketItem = Market::orderBy('sequence', 'ASC')
-            ->get();
+            ->get();*/
 
-        return view('choosemarket', compact('aboutusItem'
+        return view('choosewantto');
+
+        /*return view('choosemarket', compact('aboutusItem'
             , 'bannerItem'
             , 'slideItem'
             , 'mediaItem'
             , 'productCategoryitem'
-            , 'marketItem'));
+            , 'marketItem'));*/
     }
 
     public function index2(Request $request)

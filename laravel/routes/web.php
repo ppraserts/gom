@@ -248,4 +248,6 @@ Route::get('/{shop}', 'frontend\ShopIndexController@index');
 Route::post('/{shop}/{id}/{key}', 'frontend\ShopIndexController@storeComment');
 Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 
+Route::get('/migrate/usermarket/{key}', 'frontend\MigrateController@user_market');
+Route::get('/migrate/productmarket/{key}', 'frontend\MigrateController@product_market');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');
