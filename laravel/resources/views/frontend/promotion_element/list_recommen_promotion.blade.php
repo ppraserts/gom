@@ -21,7 +21,7 @@
                 @if(count($promotion_recommends) > 0)
                     @foreach ($promotion_recommends as $recommend)
                         <tr>
-                            <td>{{ $recommend->recommend_date }}</td>
+                            <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($recommend->recommend_date,true) }}</td>
                             <td>{{ $recommend->count_email }}</td>
                             {{--<td>{{ mb_strimwidth($recommend->detail, 0, 150, '...', 'UTF-8') }}</td>--}}
                             <td>{{ $recommend->sum_recommend }}</td>
