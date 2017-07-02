@@ -207,13 +207,13 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::post('censor','backend\BadWordController@censor');
     //Reports
     Route::get('reports/buy','backend\ReportsController@index');
-    Route::post('reports/buy','backend\ReportsController@actionFilter');
+//    Route::post('reports/buy','backend\ReportsController@actionFilter');
     Route::post('reports/buy/export','backend\ReportsController@actionExportExcel');
     Route::get('reports/buy/download','backend\ReportsController@actionDownload');
     Route::get('reports/sale','backend\ReportsController@SaleItemIndex');
     Route::get('reports/salebyshop','backend\ReportsController@SaleItemByShop');
-    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
-    Route::post('reports/salebyshop','backend\ReportsController@SaleItemByShopFilter');
+//    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
+//    Route::post('reports/salebyshop','backend\ReportsController@SaleItemByShopFilter');
     Route::get('reports/orderdetail/{order_id}','backend\ReportsController@orderdetail');
     //Reports shops
     Route::get('reports/shop','backend\ReportShopsController@reportShop');
@@ -235,7 +235,7 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::post('reports/order-history-sale-buy/export','backend\ReportOrderHistoryController@exportExcel');
     //Reports Matching
     Route::get('reports/matching','backend\ReportMatchingController@index');
-    Route::post('reports/matching','backend\ReportMatchingController@matchingFilter');
+//    Route::post('reports/matching','backend\ReportMatchingController@matchingFilter');
     Route::post('reports/matching/export','backend\ReportMatchingController@exportExcel');
     Route::get('reports/matching/download','backend\ReportMatchingController@actionDownload');
 

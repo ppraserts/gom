@@ -23,8 +23,9 @@ $pagetitle = trans('message.menu_order_list');
         @endif
         <div class="row">
             <h2>{{ trans('messages.menu_order_list') }}</h2>
-            <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="my-form" method="POST">
-                {{csrf_field()}}
+            <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="my-form" method="GET">
+                {{--{{csrf_field()}}--}}
+                <input type="hidden" name="is_search" value="true"/>
                 <style>
                     .form-horizontal .form-group {
                         margin-right: 0px;
@@ -176,86 +177,6 @@ $pagetitle = trans('message.menu_order_list');
             maxViewMode: 2
         });
     });
-
-    $("#start_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(end_date != ''){
-            if (start_date <= end_date) {
-                $("#ms_end_date").html('');
-            } else {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-            }
-        }
-
-    });
-    $("#end_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(start_date != '') {
-            if (end_date >= start_date) {
-                $("#ms_start_date").html('');
-                $("#ms_end_date").html('');
-            } else {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-            }
-        }
-    });
-
-    $(function(){
-        $('#my-form').submit(function() {
-            var start_date = $("#start_date").val();
-            var end_date = $("#end_date").val();
-            var product_type_name = $("#product_type_name option:selected").val();
-
-            if(!start_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date')?>');
-                return false;
-            }else{
-                $("#ms_start_date").html('');
-            }
-            if(!end_date) {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
-                return false;
-            }else{
-                $("#ms_end_date").html('');
-            }
-
-            if(start_date != '') {
-                if (end_date >= start_date) {
-                    $("#ms_start_date").html('');
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#end_date").focus();
-                    $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-                    return false;
-                }
-            }
-
-            if(end_date != ''){
-                if (start_date <= end_date) {
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#start_date").focus();
-                    $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-                    return false;
-                }
-            }
-            if(!product_type_name) {
-                $("#product_type_name").focus();
-                $("#ms_product_type_name").html('<?php echo Lang::get('validation.attributes.message_validate_product_type_name')?>');
-                return false;
-            }else{
-                $("#ms_product_type_name").html('');
-            }
-
-        });
-    });
-
 
     //***********************************************
     $( "#export" ).click(function() {
