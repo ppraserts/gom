@@ -25,7 +25,6 @@ $pagetitle = trans('messages.menu_order_list');
 
         </div>
         <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="my-form" method="GET">
-
             {{--{{csrf_field()}}--}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
@@ -61,8 +60,9 @@ $pagetitle = trans('messages.menu_order_list');
             <div class="row">
                 <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
-                    <strong>* {{ trans('validation.attributes.productcategorys_id') }}
-                        :</strong>
+                    <strong>
+                        {{ trans('validation.attributes.productcategorys_id') }}:
+                    </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
@@ -74,21 +74,11 @@ $pagetitle = trans('messages.menu_order_list');
 
 
                 <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <strong
-                            style="padding-right: 0; padding-left: 0;">{{ trans('messages.text_product_type_name') }}
-                        :</strong>
+                    <strong style="padding-right: 0; padding-left: 0;">
+                        {{ trans('messages.text_product_type_name') }} :
+                    </strong>
+                    <select class="form-control" name="product_type_name" id="product_type_name">
 
-                    <select class="selectpicker form-control" name="product_type_name[]" id="product_type_name"
-                            data-live-search="true"
-                            multiple>
-                        @if(count($products))
-                            @foreach($products as $product)
-                                <option value="{{$product->id}}"
-                                        @if(!empty($productTypeNameArr)) @if(in_array($product->id, $productTypeNameArr)) selected @endif @endif>
-                                    {{$product->product_name_th}}
-                                </option>
-                            @endforeach
-                        @endif
                     </select>
                 </div>
             </div>
@@ -198,6 +188,15 @@ $pagetitle = trans('messages.menu_order_list');
         });
     });
 
+    $('#productcategorys_id').on('change', function() {
+       var cateId = this.value;
+        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
+            if(data.R == 'Y'){
+                $("#product_type_name" ).html(data.res);
+            }
+        });
+    })
+
     //***********************************************
     $("#export").click(function () {
         var start_date = $("#start_date").val();
@@ -209,8 +208,6 @@ $pagetitle = trans('messages.menu_order_list');
         });
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
-            //headerText: 'jQueryScript',
-            //dialogSize: 'sm',
             progressType: 'success'
         });
         $.ajax({

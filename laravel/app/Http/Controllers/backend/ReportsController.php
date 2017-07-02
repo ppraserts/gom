@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use DB, Validator, Response;
 use App\Order;
 use Excel;
+use View;
 use Storage;
 use App\OrderPayment;
 use App\Product;
@@ -34,9 +35,7 @@ class ReportsController extends Controller
 
     public function index(Request $request)
     {
-
         if (!empty($request->input('is_search'))) {
-
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);
             $request['end_date'] = DateFuncs::convertYear($request['end_date']);
 
@@ -47,9 +46,7 @@ class ReportsController extends Controller
                 $this->throwValidationException($request, $validator);
             }
         }
-
         $orderLists = '';
-
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -340,6 +337,15 @@ class ReportsController extends Controller
     {
         return Product::select(DB::raw('products.product_name_th'))
             ->whereIn('products.id', $productTypeNameArr)->get();
+    }
+    public function getProductByCate($productCateId)
+    {
+        $products = Product::select(DB::raw('products.product_name_th'))
+            ->where('products.productcategory_id', $productCateId)->get();
+
+        $dataView = View::make('backend.reports.ele_products')->with('products', $products);
+        $dataHtml = $dataView->render();
+        return Response::json(array('R'=>'Y','res'=>$dataHtml));
     }
 
 }

@@ -215,6 +215,8 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 //    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
 //    Route::post('reports/salebyshop','backend\ReportsController@SaleItemByShopFilter');
     Route::get('reports/orderdetail/{order_id}','backend\ReportsController@orderdetail');
+    Route::get('reports/getproductbycate/{id}','backend\ReportsController@getProductByCate');
+
     //Reports shops
     Route::get('reports/shop','backend\ReportShopsController@reportShop');
     Route::post('reports/shop','backend\ReportShopsController@shopFilter');

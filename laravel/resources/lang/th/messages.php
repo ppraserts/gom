@@ -275,4 +275,5 @@ return [
     'matching_report'=>'รายงานการจับคู่สินค้า',
     'product_price_need_buy'=> 'ราคาที่ต้องการซื้อ',
     'text_loading_lease_wait'=> 'กำลังโหลดโปรดรอ...',
+    'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
 ];
