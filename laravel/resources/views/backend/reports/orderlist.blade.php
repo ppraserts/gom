@@ -22,8 +22,9 @@ $pagetitle = trans('messages.menu_order_list');
         @endif
         <div class="row">
             <h2>{{ trans('messages.menu_order_list') }}</h2>
-            <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="my-form" method="POST">
-                {{csrf_field()}}
+            <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="my-form" method="GET">
+                {{--{{csrf_field()}}--}}
+                <input type="hidden" name="is_search" value="true"/>
                 <style>
                     .form-horizontal .form-group {
                         margin-right: 0px;
@@ -183,35 +184,6 @@ $pagetitle = trans('messages.menu_order_list');
             maxViewMode: 2
         });
     });
-
-    $("#start_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if (end_date != '') {
-            if (start_date <= end_date) {
-                $("#ms_end_date").html('');
-            } else {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-            }
-        }
-
-    });
-    $("#end_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if (start_date != '') {
-            if (end_date >= start_date) {
-                $("#ms_start_date").html('');
-                $("#ms_end_date").html('');
-            } else {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-            }
-        }
-    });
-
-
 
     //***********************************************
     $("#export").click(function () {

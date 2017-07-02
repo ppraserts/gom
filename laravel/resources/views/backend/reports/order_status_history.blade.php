@@ -17,8 +17,9 @@
         @endif
         <div class="row">
             <h4>{{ trans('messages.text_report_menu_order_status_history') }}</h4>
-            <form action="{{url('admin/reports/orders')}}" method="POST" id="my-form">
-                {{csrf_field()}}
+            <form action="{{url('admin/reports/orders')}}" method="GET" id="my-form">
+                {{--{{csrf_field()}}--}}
+                <input type="hidden" name="is_search" value="true"/>
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
                     <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">
                         * {{ trans('messages.text_start_date') }}:
@@ -160,78 +161,6 @@
             todayBtn: false,
             startView: 2,
             maxViewMode: 2
-        });
-    });
-
-    $("#start_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(end_date != ''){
-            if (start_date <= end_date) {
-                $("#ms_end_date").html('');
-            } else {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-            }
-        }
-
-    });
-    $("#end_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(start_date != '') {
-            if (end_date >= start_date) {
-                $("#ms_start_date").html('');
-                $("#ms_end_date").html('');
-            } else {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-            }
-        }
-    });
-
-    $(function(){
-        $('#my-form').submit(function() {
-            var start_date = $("#start_date").val();
-            var end_date = $("#end_date").val();
-
-            if(!start_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date')?>');
-                return false;
-            }else{
-                $("#ms_start_date").html('');
-            }
-            if(!end_date) {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
-                return false;
-            }else{
-                $("#ms_end_date").html('');
-            }
-
-            if(start_date != '') {
-                if (end_date >= start_date) {
-                    $("#ms_start_date").html('');
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#end_date").focus();
-                    $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-                    return false;
-                }
-            }
-
-            if(end_date != ''){
-                if (start_date <= end_date) {
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#start_date").focus();
-                    $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-                    return false;
-                }
-            }
-
-
         });
     });
 

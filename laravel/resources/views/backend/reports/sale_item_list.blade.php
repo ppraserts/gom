@@ -8,11 +8,22 @@
         <div class="row">
             @include('backend.reports.menu_reports')
         </div>
-
+        @if (count($errors) > 0)
+            <div class="row" style="margin-top: 15px;">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <h2>รายงานยอดจำหน่ายสินค้า</h2>
-            <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="my-form" method="POST">
-                {{csrf_field()}}
+            <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="my-form" method="GET">
+                {{--{{csrf_field()}}--}}
+                <input type="hidden" name="is_search" value="true"/>
                 <style>
                     .form-horizontal .form-group {
                         margin-right: 0px;
@@ -113,80 +124,6 @@
             todayBtn: false,
             startView: 2,
             maxViewMode: 2
-        });
-    });
-
-    $("#start_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(end_date != ''){
-            if (start_date <= end_date) {
-                $("#ms_end_date").html('');
-            } else {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-            }
-        }
-
-    });
-    $("#end_date").change(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        if(start_date != '') {
-            if (end_date >= start_date) {
-                $("#ms_start_date").html('');
-                $("#ms_end_date").html('');
-            } else {
-                $("#end_date").focus();
-                $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-            }
-        }
-    });
-
-    $(function(){
-        $('#my-form').submit(function() {
-            var start_date = $("#start_date").val();
-            var end_date = $("#end_date").val();
-            var product_type_name = $("#product_type_name option:selected").val();
-
-            if(!start_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date')?>');
-                return false;
-            }else{
-                $("#ms_start_date").html('');
-            }
-            if(!end_date) {
-                $("#start_date").focus();
-                $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date')?>');
-                return false;
-            }else{
-                $("#ms_start_date").html('');
-            }
-
-            if(start_date != '') {
-                if (end_date >= start_date) {
-                    $("#ms_start_date").html('');
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#end_date").focus();
-                    $("#ms_end_date").html('<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>');
-                    return false;
-                }
-            }
-
-            if(end_date != ''){
-                if (start_date <= end_date) {
-                    $("#ms_end_date").html('');
-                } else {
-                    $("#start_date").focus();
-                    $("#ms_start_date").html('<?php echo Lang::get('validation.attributes.message_validate_end_date_1')?>');
-                    return false;
-                }
-            }
-
-            $("#ms_product_type_name").html('');
-
         });
     });
 

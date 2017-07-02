@@ -18,7 +18,7 @@ class MigrateController extends Controller
             foreach ($users as $user) {
                 foreach ($markets as $market) {
                     if (UserMarket::create(['user_id' => $user->id, 'market_id' => $market->id])) {
-                        echo 'product_request_id = ' . $user->id . " | market_id = " . $market->id . "<br>";
+                        echo 'user_id = ' . $user->id . " | market_id = " . $market->id . "<br>";
                     }
                 }
             }

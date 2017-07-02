@@ -226,7 +226,7 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::post('reports/product/export','backend\ReportProductsController@exportExcel');
     //Report OrderStatusHistory
     Route::get('reports/orders','backend\ReportOrderStatusHistoryController@orderList');
-    Route::post('reports/orders','backend\ReportOrderStatusHistoryController@filter');
+//    Route::post('reports/orders','backend\ReportOrderStatusHistoryController@filter');
     Route::get('reports/orders/{id}/show','backend\ReportOrderStatusHistoryController@show');
     Route::post('reports/orders/export','backend\ReportOrderStatusHistoryController@exportExcel');
     //Report OrderHistoryByemp
@@ -248,6 +248,6 @@ Route::get('/{shop}', 'frontend\ShopIndexController@index');
 Route::post('/{shop}/{id}/{key}', 'frontend\ShopIndexController@storeComment');
 Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 
-Route::get('/migrate/usermarket/{key}', 'frontend\MigrateController@user_market');
-Route::get('/migrate/productmarket/{key}', 'frontend\MigrateController@product_market');
+//Route::get('/migrate/usermarket/{key}', 'MigrateController@user_market');
+//Route::get('/migrate/productmarket/{key}', 'MigrateController@product_market');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');
