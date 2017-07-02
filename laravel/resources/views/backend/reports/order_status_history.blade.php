@@ -127,16 +127,6 @@
             </div>
         @endif
     </div>
-    {{--<button type="button" class="btn btn-warning"--}}
-            {{--onclick="waitingDialog.show('Custom message',--}}
-            {{--{dialogSize: 'sm', progressType: 'warning'});--}}
-            {{--setTimeout(function () {waitingDialog.hide();}, 2000);">--}}
-        {{--Show dialog--}}
-    {{--</button>--}}
-    <button type="button" class="btn btn-warning" id="test">
-        Show dialog
-    </button>
-
 @endsection
 
 @push('scripts')
