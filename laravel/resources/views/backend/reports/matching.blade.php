@@ -163,6 +163,7 @@
 <script src="http://gom.localhost/js/bootstrap-datepicker.min.js"></script>
 <script src="http://gom.localhost/js/bootstrap-datepicker-thai.js"></script>
 <script src="http://gom.localhost/js/bootstrap-datepicker.th.min.js"></script>
+<script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -200,6 +201,9 @@
         });
         //console.log(product_type_name); return false;
         var key_token = $('input[name=_token]').val();
+        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
+            progressType: 'success'
+        });
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
@@ -208,11 +212,16 @@
             } echo url('admin/reports/matching/export' . $page)?>",
             data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
             success: function (response) {
-                    console.log(response);
-                window.open(
-                    "<?php echo url('admin/reports/matching/download/?file=')?>" + response.file,
-                    '_blank'
-                );
+                //console.log(response);
+                $('.modal-content').empty();
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');
+                $(".a-download").click(function () {
+                    waitingDialog.hide();
+                    window.open(
+                        "<?php echo url('admin/reports/matching/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                });
                 return false;
             },
             error: function (response) {
