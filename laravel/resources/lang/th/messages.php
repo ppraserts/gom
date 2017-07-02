@@ -274,6 +274,7 @@ return [
     'datetime_export'=>'วันที่/เวลา ที่ส่งออก',
     'matching_report'=>'รายงานการจับคู่สินค้า',
     'product_price_need_buy'=> 'ราคาที่ต้องการซื้อ',
-    'text_loading_lease_wait'=> 'กำลังโหลดโปรดรอ...',
+    'text_loading_lease_wait'=> 'กำลังส่งออกข้อมูล. กรุณารอซักครู่...',
+    'text_download' => 'ดาวน์โหลด',
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
 ];
