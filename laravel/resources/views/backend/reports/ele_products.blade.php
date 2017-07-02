@@ -1,3 +1,4 @@
+
 @if(count($products))
     <option value="">
         {{ trans('messages.select_product_type_name') }}

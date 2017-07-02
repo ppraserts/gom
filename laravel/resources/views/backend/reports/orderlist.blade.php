@@ -77,7 +77,8 @@ $pagetitle = trans('messages.menu_order_list');
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="form-control" name="product_type_name" id="product_type_name">
+                    <select class="selectpicker form-control" name="product_type_name" id="product_type_name"  data-live-search="true"
+                            multiple>
 
                     </select>
                 </div>
