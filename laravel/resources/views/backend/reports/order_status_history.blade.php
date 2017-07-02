@@ -127,6 +127,16 @@
             </div>
         @endif
     </div>
+    {{--<button type="button" class="btn btn-warning"--}}
+            {{--onclick="waitingDialog.show('Custom message',--}}
+            {{--{dialogSize: 'sm', progressType: 'warning'});--}}
+            {{--setTimeout(function () {waitingDialog.hide();}, 2000);">--}}
+        {{--Show dialog--}}
+    {{--</button>--}}
+    <button type="button" class="btn btn-warning" id="test">
+        Show dialog
+    </button>
+
 @endsection
 
 @push('scripts')
@@ -137,6 +147,7 @@
 <script src="{{url('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{url('js/bootstrap-datepicker-thai.js')}}"></script>
 <script src="{{url('js/bootstrap-datepicker.th.min.js')}}"></script>
+<script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({
@@ -237,8 +248,12 @@
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         var filter = $("#filter").val();
-
         var key_token = $('input[name=_token]').val();
+        waitingDialog.show('Loading, Please wait...', {
+            //headerText: 'jQueryScript',
+            dialogSize: 'sm',
+            progressType: 'danger'
+        });
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
@@ -247,10 +262,15 @@
             } echo url('admin/reports/orders/export' . $page)?>",
             data: { start_date: start_date, end_date:end_date, filter:filter },
             success: function (response) {
-                window.open(
-                    "<?php echo url('admin/reports/shop/download/?file=')?>" + response.file,
-                    '_blank'
-                );
+                $('.modal-content').empty();
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;">Download File</button><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div>');
+                $(".a-download").click(function () {
+                    waitingDialog.hide();
+                    window.open(
+                        "<?php echo url('admin/reports/shop/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                });
                 return false;
             },
             error: function (response) {
