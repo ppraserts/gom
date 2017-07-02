@@ -1,6 +1,6 @@
 
 @if(count($products))
-    <option value="">
+    <option value="" disabled>
         {{ trans('messages.select_product_type_name') }}
     </option>
     @foreach($products as $product)
