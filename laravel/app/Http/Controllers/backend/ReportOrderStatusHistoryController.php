@@ -37,7 +37,7 @@ class ReportOrderStatusHistoryController extends Controller
         $filter = $request->input('filter');
         $start_date = DateFuncs::convertYear($request->input('start_date'));
         $end_date = DateFuncs::convertYear($request->input('end_date'));
-        $results = $this->sqlFilter($start_date,$end_date,$filter);
+        $results = $this->sqlFilterShowPaginate($start_date,$end_date,$filter);
         return view('backend.reports.order_status_history', compact('results'));
     }
 
@@ -137,6 +137,29 @@ class ReportOrderStatusHistoryController extends Controller
     }
 
     private function sqlFilter($start_date='',$end_date='',$filter=''){
+        if(!empty($start_date)) {
+            $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+            $result->join('users', 'users.id', '=', 'orders.user_id');
+            $result->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th');
+            $result->where('orders.order_date', '>=', $start_date);
+            $result->where('orders.order_date', '<=', $end_date);
+            if (!empty($filter)) {
+                $result->where(function ($query) use ($filter) {
+                    $query->where('orders.id', 'like', '%' . $filter . '%');
+                    $query->orWhere('order_status.status_name', 'like', '%' . $filter . '%');
+                });
+            }
+            $result->orderBy('orders.id', 'DESC');
+            return $results = $result->paginate(config('app.paginate'));
+        }
+        return $results = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
+            ->orderBy('orders.id', 'DESC')
+            ->get();
+    }
+
+    private function sqlFilterShowPaginate($start_date='',$end_date='',$filter=''){
         if(!empty($start_date)) {
             $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
             $result->join('users', 'users.id', '=', 'orders.user_id');

@@ -133,7 +133,7 @@
 <link href="{{url('css/view-backend/reports.css')}}" type="text/css" rel="stylesheet">
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-
+<script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script>
     $("#export").click(function () {
         var type_sale_buy = $('#type_sale_buy option:selected').val()
@@ -147,9 +147,7 @@
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
-                $page = '?page=' . Request::input('page');
-            } echo url('admin/reports/order-history-sale-buy/export' . $page)?>",
+            url: "<?php echo url('admin/reports/order-history-sale-buy/export')?>",
             data: { type_sale_buy: type_sale_buy, user_id:user_id },
             success: function (response) {
                 $('.modal-content').empty();

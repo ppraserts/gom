@@ -290,9 +290,9 @@ class ReportsController extends Controller
         }
         $orderList->groupBy('orders.id');
         $orderList->orderBy('orders.id', 'DESC');
-        $orderList->paginate(config('app.paginate'));
-        return $orderLists = $orderList->paginate(config('app.paginate'));
+        return $orderLists = $orderList->get();
     }
+
 
     private function getProductCate($productTypeNameArr){
         return Product::select(DB::raw('products.product_name_th'))

@@ -40,7 +40,19 @@ class ReportShopsController extends Controller
         if($request->isMethod('post')) {
             $shopArr = $request->input('shop');
             $shops = Shop::get();
-            $results = $this->shopSqlFilter($shopArr);
+//            $results = $this->shopSqlFilter($shopArr);
+            $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
+            $result->select(DB::raw('shops.id
+                  ,shops.user_id
+                  ,shops.shop_title
+                  ,shops.shop_subtitle
+                  ,shops.shop_name
+                  ,SUM(comments.score)/COUNT(comments.score) as shop_score'));
+            if(!empty($arrShopId)){
+                $result->whereIn('shops.id', $shopArr);
+            }
+            $result->orderBy('shop_score', 'desc');
+            $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
             return view('backend.reports.shop', compact('shops','results','shopArr'));
         }
 
@@ -141,7 +153,8 @@ class ReportShopsController extends Controller
             $result->whereIn('shops.id', $arrShopId);
         }
         $result->orderBy('shop_score', 'desc');
-        return  $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
+        //return  $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
+        return  $results = $result->groupBy('shops.id')->get();
 
     }
     private function getShops($arrId){

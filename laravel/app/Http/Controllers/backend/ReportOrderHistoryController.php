@@ -35,7 +35,7 @@ class ReportOrderHistoryController extends Controller
         $users = $this->users();
         $type_sale_buy = $request->input('type_sale_buy');
         $user_id = $request->input('user');
-        $results = $this->sqlFilter($type_sale_buy,$user_id);
+        $results = $this->sqlFilterShowPaginate($type_sale_buy,$user_id);
         return view('backend.reports.order_history_sale_buy', compact('users','results','type_sale_buy','user_id'));
     }
 
@@ -138,6 +138,24 @@ class ReportOrderHistoryController extends Controller
     }
 
     private function sqlFilter($type_sale_buy = '',$userId=''){
+
+        $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+        $result->join('users', 'users.id', '=', 'orders.user_id');
+        $result->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th');
+
+        if ($type_sale_buy == 'sale') { //user_id sale
+            $result->where('orders.user_id', $userId);
+            $result->where('users.iwanttosale', $type_sale_buy);
+        }
+        if ($type_sale_buy == 'buy') { //buyer_id buy
+            $result->where('orders.buyer_id', $userId);
+            $result->where('users.iwanttobuy', $type_sale_buy);
+        }
+        $result->orderBy('orders.id', 'DESC');
+        return $results = $result->get();
+    }
+
+    private function sqlFilterShowPaginate($type_sale_buy = '',$userId=''){
 
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $result->join('users', 'users.id', '=', 'orders.user_id');

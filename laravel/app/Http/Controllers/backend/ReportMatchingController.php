@@ -175,7 +175,7 @@ class ReportMatchingController extends Controller
                 $provinceTypeNameArr = $request->input('province_type_name');
                 $matching->whereIn('product_requests.province_selling', $provinceTypeNameArr);
             }
-            $matchings = $matching->paginate();
+            $matchings = $matching->get();
 
             $productStr = trans('messages.show_all');
             if(!empty($productTypeNameArr)){

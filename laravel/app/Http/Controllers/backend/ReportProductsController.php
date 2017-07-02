@@ -27,7 +27,7 @@ class ReportProductsController extends Controller
           ,products.product_name_en
           ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id')
             ->orderBy('product_score', 'desc')
-            ->paginate(30);
+            ->paginate(config('app.paginate'));
         return view('backend.reports.product', compact('productCategorys','results'));
     }
 
@@ -39,7 +39,7 @@ class ReportProductsController extends Controller
         if($request->isMethod('post')) {
             $productArr = $request->input('product');
             $productCategorys = ProductCategory::orderBy('sequence','ASC')->get();
-            $results = $this->sqlFilter($productArr);
+            $results = $this->sqlFilterShowPaginate($productArr);
             return view('backend.reports.product', compact('productCategorys','results','productArr'));
         }
 
@@ -136,7 +136,20 @@ class ReportProductsController extends Controller
             $result->whereIn('products.productcategory_id', $arrProductCatId);
         }
         $result->orderBy('product_score', 'desc');
-        return  $results = $result->groupBy('products.id')->paginate(30); //limit 100 per page
+        return  $results = $result->groupBy('products.id')->get();
+
+    }
+    private function sqlFilterShowPaginate($arrProductCatId =''){
+        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
+        $result->select(DB::raw('products.id
+              ,products.product_name_th
+              ,products.product_name_en
+              ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
+        if(!empty($arrProductCatId)){
+            $result->whereIn('products.productcategory_id', $arrProductCatId);
+        }
+        $result->orderBy('product_score', 'desc');
+        return  $results = $result->groupBy('products.id')->paginate(config('app.paginate')); //limit 100 per page
 
     }
 

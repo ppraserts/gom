@@ -30,7 +30,7 @@
         return $(
             '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
             '<div class="modal-dialog modal-m" style="width: 35%;">' +
-            '<div class="modal-content">' +
+            '<div class="modal-content" style="width: 100%;">' +
             '<div class="modal-header" style="display: none;"></div>' +
             '<div class="modal-body">' +
             '<div class="progress progress-striped active" style="margin-bottom:0;">' +
