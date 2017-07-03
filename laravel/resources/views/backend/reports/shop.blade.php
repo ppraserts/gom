@@ -17,8 +17,9 @@
         @endif
         <div class="row">
             <h4>{{ trans('messages.text_report_menu_shop') }} :</h4>
-            <form action="{{url('admin/reports/shop')}}" class="form-horizontal" id="my-form" method="POST">
-                {{csrf_field()}}
+            {{csrf_field()}}
+            <form action="{{url('admin/reports/shop')}}" class="form-horizontal" id="my-form" method="GET">
+                <input type="hidden" name="is_search" value="true">
                 <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
                     <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">
                         * {{ trans('messages.shop') }} :
@@ -76,13 +77,13 @@
         </div>
         <div class="row">
             <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
-            <div class="col-md-6">
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                    <button class="btn btn-primary pull-right" id="export" type="button">
-                        <span class="glyphicon glyphicon-export"></span>
-                        {{ trans('messages.export_excel') }}
-                    </button>
-                </div>
+            <div class="col-md-6 text-right">
+                @if(count($results) > 0)
+                <button class="btn btn-primary pull-right" id="export" type="button">
+                    <span class="glyphicon glyphicon-export"></span>
+                    {{ trans('messages.export_excel') }}
+                </button>
+                @endif
             </div>
         </div>
         <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
@@ -95,30 +96,13 @@
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
-    $(function () {
-        $('#my-form').submit(function () {
-            var shop = $("#shop option:selected").val();
-            if (!shop) {
-                $("#shop").focus();
-                $("#ms_shop").html('<?php echo Lang::get('validation.attributes.message_validate_shop')?>');
-                return false;
-            } else {
-                $("#ms_shop").html('');
-            }
-        });
-    });
-
-    //***********************************************
     $("#export").click(function () {
-
         var shop_id = [];
         $('#shop option:selected').each(function (i, selected) {
             shop_id[i] = $(selected).val();
         });
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
-            //headerText: 'jQueryScript',
-            //dialogSize: 'sm',
             progressType: 'success'
         });
 

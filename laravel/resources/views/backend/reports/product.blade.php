@@ -17,29 +17,44 @@
         @endif
         <div class="row">
             <h4>{{ trans('messages.text_report_menu_product') }} :</h4>
-            <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="POST">
-                {{csrf_field()}}
-                <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2 text-right" style="padding-right: 0; padding-left: 0;">
-                        * {{ trans('messages.menu_add_product') }} :
-                    </label>
-                    <div class='col-sm-10' style="padding-right: 0;">
-                        <select class="selectpicker form-control" name="product[]" id="product"
-                                data-live-search="true"
-                                multiple>
-                            @if(count($productCategorys))
-                                @foreach($productCategorys as $productCategory)
-                                    <option value="{{$productCategory->id}}" @if(!empty($productArr)) @if(in_array($productCategory->id, $productArr)) selected @endif @endif>
-                                        {{$productCategory->productcategory_title_th}}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <small class="alert-danger" id="ms_product"></small>
-                    </div>
+            {{csrf_field()}}
+            <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="GET">
+                <input type="hidden" name="is_search" value="true">
+                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                     style="padding-left: 0;">
+                    <strong>
+                        * {{ trans('validation.attributes.productcategorys_id') }}:
+                    </strong>
+                    <select id="productcategorys_id" name="productcategorys_id" class="form-control">
+                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        @foreach ($productCategoryitem as $key => $itemcategory)
+                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategory_id) && $itemcategory->id == $productcategory_id) selected @endif>
+                                {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
+                            </option>
+                        @endforeach
+                    </select>
+
                 </div>
-                <div class="col-md-1" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-right btn-sm" type="submit">
+                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                     style="padding-left: 0;">
+                    <strong>
+                         {{ trans('messages.menu_add_product') }} :
+                    </strong>
+                    <select class="selectpicker form-control" name="product_id[]" id="product"
+                            data-live-search="true"
+                            multiple>
+                        @if(!empty($products) && count($products))
+                            @foreach($products as $product)
+                                <option value="{{$product->id}}"
+                                        @if(!empty($product_id_arr)) @if(in_array($product->id, $product_id_arr)) selected @endif @endif>
+                                    {{$product->product_name_th}}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-md-12" style="padding-left: 0; margin-top: 10px;">
+                    <button class="btn btn-primary btn-sm" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -96,39 +111,32 @@
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
-    $(function () {
-        $('#my-form').submit(function () {
-            var product = $("#product option:selected").val();
-            if (!product) {
-                $("#product").focus();
-                $("#ms_product").html('<?php echo Lang::get('validation.attributes.message_validate_shop')?>');
-                return false;
-            } else {
-                $("#ms_product").html('');
+    $('#productcategorys_id').on('change', function() {
+        var cateId = this.value;
+        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
+            if(data.R == 'Y'){
+                $("#product" ).html(data.res);
+                $('#product').selectpicker('refresh');
             }
         });
     });
 
     //***********************************************
     $("#export").click(function () {
-        var product_cate_id = [];
+        var productcategorys_id = $('#productcategorys_id option:selected').val();
+        var product_id = [];
         $('#product option:selected').each(function (i, selected) {
-            product_cate_id[i] = $(selected).val();
+            product_id[i] = $(selected).val();
         });
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
-            //headerText: 'jQueryScript',
-            //dialogSize: 'sm',
             progressType: 'success'
         });
-
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
-                $page = '?page=' . Request::input('page');
-            } echo url('admin/reports/product/export' . $page)?>",
-            data: { product_arr: product_cate_id},
+            url: "<?php echo url('admin/reports/product/export')?>",
+            data: { product_id_arr: product_id, productcategorys_id: productcategorys_id},
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');

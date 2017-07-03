@@ -17,45 +17,38 @@ class ReportShopsController extends Controller
         $this->middleware('admin');
     }
 
-    public function reportShop()
-    {
-        $shops = Shop::get();
-        $results = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id')
-            ->select(DB::raw('shops.id
-          ,shops.user_id
-          ,shops.shop_title
-          ,shops.shop_subtitle
-          ,shops.shop_name
-          ,SUM(comments.score)/COUNT(comments.score) as shop_score'))->groupBy('shops.id')
-            ->orderBy('shop_score', 'desc')
-            ->paginate(30);
-        return view('backend.reports.shop', compact('shops','results'));
-    }
+    private $rules = [
+        'shop' => 'required',
+    ];
 
-    public function  shopFilter(Request $request){
-        $v = Validator::make($request->all(), [
-            'shop' => 'required'
-        ]);
-        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
-        if($request->isMethod('post')) {
-            $shopArr = $request->input('shop');
-            $shops = Shop::get();
-//            $results = $this->shopSqlFilter($shopArr);
-            $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
-            $result->select(DB::raw('shops.id
+    public function reportShop(Request $request)
+    {
+        if (!empty($request->input('is_search'))) {
+            $validator = $this->getValidationFactory()->make($request->all(), $this->rules, [], []);
+            if ($validator->fails()) {
+                $request['shop'] = $request['shop'];
+                $this->throwValidationException($request, $validator);
+            }
+        }
+
+        $shops = Shop::get();
+        $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
+        $result->select(DB::raw('shops.id
                   ,shops.user_id
                   ,shops.shop_title
                   ,shops.shop_subtitle
                   ,shops.shop_name
                   ,SUM(comments.score)/COUNT(comments.score) as shop_score'));
-            if(!empty($arrShopId)){
-                $result->whereIn('shops.id', $shopArr);
-            }
-            $result->orderBy('shop_score', 'desc');
-            $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
-            return view('backend.reports.shop', compact('shops','results','shopArr'));
+        $shopArr = array();
+        if(!empty($request->input('shop'))){
+            $shopArr = $request->input('shop');
+            $result->whereIn('shops.id', $shopArr);
         }
+        $result->orderBy('shop_score', 'desc');
+        $result->groupBy('shops.id');
+        $results = $result->paginate(config('app.paginate'));
 
+        return view('backend.reports.shop', compact('shops','results','shopArr'));
     }
 
     public function shopExportExcel(Request $request)
@@ -153,7 +146,6 @@ class ReportShopsController extends Controller
             $result->whereIn('shops.id', $arrShopId);
         }
         $result->orderBy('shop_score', 'desc');
-        //return  $results = $result->groupBy('shops.id')->paginate(30); //limit 30 per page
         return  $results = $result->groupBy('shops.id')->get();
 
     }
