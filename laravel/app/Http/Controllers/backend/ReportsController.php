@@ -6,7 +6,6 @@ use App\OrderItem;
 use App\OrderStatusHistory;
 use App\ProductCategory;
 use App\User;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Http\Controllers\Controller;
 
 use DB, Validator, Response;
@@ -56,9 +55,9 @@ class ReportsController extends Controller
 //            $orderList->where('orders.buyer_id', $user->id);
 
         if (!empty($request->input('productcategorys_id'))){
-            $productCategoryID = $request->input('productcategorys_id');
-            $products = Product::where('productcategory_id',$request->input('productcategorys_id'))->get();
-            $orderList->where('products.productcategory_id', $request->input('productcategorys_id'));
+            $productcategorys_id = $request->input('productcategorys_id');
+            $products = Product::where('productcategory_id',$productcategorys_id)->get();
+            $orderList->where('products.productcategory_id', $productcategorys_id);
         }
 
         if (!empty($request->input('pid'))) {
@@ -80,7 +79,7 @@ class ReportsController extends Controller
 //        else{
 //            $products = Product::where('productcategory_id',0)->get();
 //        }
-        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productCategoryID','productTypeNameArr','productCategoryitem'));
+        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productcategorys_id','productTypeNameArr','productCategoryitem'));
 
     }
 
@@ -214,8 +213,13 @@ class ReportsController extends Controller
         $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
         , products.product_name_en'));
 //            $orderList->where('orders.user_id', $user->id);
-        if (!empty($request->input('product_type_name'))) {
-            $productTypeNameArr = $request->input('product_type_name');
+        if (!empty($request->input('productcategorys_id'))){
+            $productcategorys_id = $request->input('productcategorys_id');
+            $orderList->where('products.productcategory_id', $productcategorys_id);
+        }
+
+        if (!empty($request->input('pid'))) {
+            $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -239,13 +243,15 @@ class ReportsController extends Controller
 //            $product->where('orders.user_id', $user->id);
         $product->orderBy('products.id', 'DESC');
         $products = $product->get();
+
+        $productCategoryitem = ProductCategory::all();
         //
         $sumAll = 0;
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total_amounts;
         }
 //            return $orderSaleItem;
-        return view('backend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr', 'start_date', 'end_date', 'sumAll'));
+        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'start_date', 'end_date', 'sumAll'));
 
     }
 
@@ -325,7 +331,11 @@ class ReportsController extends Controller
     {
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
-        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+        $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th,SUM(orders.total_amount) as total_amounts, products.product_name_th
+        , products.product_name_en'));
         if (!empty($start_date)) {
             $start_date = DateFuncs::convertYear($start_date);
             $orderList->where('orders.order_date', '>=', $start_date);

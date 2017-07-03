@@ -66,7 +66,7 @@ $pagetitle = trans('messages.menu_order_list');
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}" @if(!empty($productCategoryID) && $itemcategory->id == $productCategoryID)) selected @endif>
+                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)) selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
 
                             </option>
@@ -94,7 +94,7 @@ $pagetitle = trans('messages.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
                     <button class="btn btn-primary pull-left" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
