@@ -22,18 +22,21 @@ $pagetitle = trans('message.menu_order_list');
         @endif
         <div class="row">
             <h2>รายงานยอดจำหน่ายร้านค้า</h2>
-            <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="GET">
-                {{--{{csrf_field()}}--}}
-                <input type="hidden" name="is_search" value="true"/>
-                <style>
-                    .form-horizontal .form-group {
-                        margin-right: 0px;
-                        margin-left: 0px;
-                    }
-                </style>
+        </div>
+        <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="GET">
+            {{--{{csrf_field()}}--}}
+            <input type="hidden" name="is_search" value="true"/>
+            <style>
+                .form-horizontal .form-group {
+                    margin-right: 0px;
+                    margin-left: 0px;
+                }
+            </style>
+            <div class="row">
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }} :</label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
+                    <label style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }}
+                        :</label>
+                    <div style="padding-right: 0px;">
                         <div class='input-group date ' id='pick_start_date'>
                             {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
                             <span class="input-group-addon">
@@ -45,8 +48,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
 
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">{{ trans('messages.text_end_date') }} :</label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
+                    <label style="padding-right: 0;padding-left: 0;">{{ trans('messages.text_end_date') }} :</label>
+                    <div style="padding-right: 0px;">
                         <div class='input-group date' id='pick_end_date'>
                             {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
                             <span class="input-group-addon">
@@ -56,15 +59,20 @@ $pagetitle = trans('message.menu_order_list');
                         <small class="alert-danger" id="ms_end_date"></small>
                     </div>
                 </div>
+            </div>
+            <div class="row">
 
-                <div class="form-group form-group-sm col-md-11" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-1" style="padding-right: 0; padding-left: 0;">{{ trans('messages.shop_name') }} :</label>
-                    <div class='col-sm-11' style="padding-right: 0;">
-                        <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id" data-live-search="true"
+                <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
+                    <label style="padding-right: 0; padding-left: 0;">{{ trans('messages.shop_name') }}
+                        :</label>
+                    <div style="padding-right: 0;">
+                        <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id"
+                                data-live-search="true"
                                 multiple>
                             @if(count($allShops))
                                 @foreach($allShops as $shop)
-                                    <option value="{{$shop->id}}" @if(!empty($shopNameArr)) @if(in_array($shop->id, $shopNameArr)) selected @endif @endif>
+                                    <option value="{{$shop->id}}"
+                                            @if(!empty($shopNameArr)) @if(in_array($shop->id, $shopNameArr)) selected @endif @endif>
                                         {{$shop->shop_name}}
                                     </option>
                                 @endforeach
@@ -73,23 +81,26 @@ $pagetitle = trans('message.menu_order_list');
                         <small class="alert-danger" id="ms_shop_select_id"></small>
                     </div>
                 </div>
-
-                <div class="col-md-1" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-right btn-sm" type="submit">
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-left: 0; padding-right: 0;">
+                    <button class="btn btn-primary pull-left btn-sm" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
-            </form>
-        </div>
-        <div class="row" style="margin-top: 10px">
-            @if(count($shops) > 0)
+            </div>
+    </div>
+    </form>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        @if(count($shops) > 0)
             <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
-            @else
-                <div style="margin: 0px auto; padding-top:2%;">
-                    {{trans('messages.data_not_found')}}
-                </div>
-            @endif
-        </div>
+        @else
+            <div style="margin: 0px auto; padding-top:2%;">
+                {{trans('messages.data_not_found')}}
+            </div>
+        @endif
+    </div>
     </div>
 @endsection
 @push('scripts')
@@ -187,11 +198,12 @@ demo.css
             series: [{
                 name: '',
                 colorByPoint: true,
-                data: [<?php $n=1; foreach ($shops as $val){ ?>{
+                data: [<?php $n = 1; foreach ($shops as $val){ ?>{
                     name: '<?php echo $val->shop_name?>',
                     y: <?php echo $val->total?>,
                     drilldown: '<?php echo $val->shop_name?>'
-                }<?php if(count($shops) == $n){ }else{?>,<?php }}?>]
+                }<?php if(count($shops) == $n){
+                }else{?>,<?php }}?>]
             }],
 
         });

@@ -216,6 +216,7 @@ class ReportsController extends Controller
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
             $orderList->where('products.productcategory_id', $productcategorys_id);
+            $products = Product::where('productcategory_id',$productcategorys_id)->get();
         }
 
         if (!empty($request->input('pid'))) {
@@ -233,16 +234,6 @@ class ReportsController extends Controller
         $orderList->orderBy('orders.id', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderSaleItem = $orderList->paginate(config('app.paginate'));
-        //products
-        $product = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
-        $product->join('users', 'users.id', '=', 'orders.user_id');
-        $product->join('order_items', 'order_items.order_id', '=', 'orders.id');
-        $product->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-        $product->join('products', 'products.id', '=', 'product_requests.products_id');
-        $product->select(DB::raw('products.*'));
-//            $product->where('orders.user_id', $user->id);
-        $product->orderBy('products.id', 'DESC');
-        $products = $product->get();
 
         $productCategoryitem = ProductCategory::all();
         //
