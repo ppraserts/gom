@@ -17,8 +17,10 @@
         @endif
         <div class="row">
             <h4>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h4>
-            <form action="{{url('admin/reports/order-history-sale-buy')}}" method="POST">
-                {{csrf_field()}}
+        </div>
+        <form action="{{url('admin/reports/order-history-sale-buy')}}" method="POST">
+            {{csrf_field()}}
+            <div class="row">
                 <div class="form-group col-sm-5">
                     <select name="type_sale_buy" id="type_sale_buy" class="form-control">
                         <option value="">{{ trans('messages.please_select_type_sale_buy') }}</option>
@@ -32,11 +34,12 @@
                 </div>
                 <div class="form-group col-sm-5">
                     <select class="selectpicker form-control" name="user" id="user"
-                                data-live-search="true">
+                            data-live-search="true">
                         @if(count($users) > 0)
                             <option value="">{{ trans('messages.please_select_user') }}</option>
                             @foreach($users as $user)
-                                <option value="{{$user->id}}" @if(!empty($user_id) and $user_id == $user->id) selected @endif>
+                                <option value="{{$user->id}}"
+                                        @if(!empty($user_id) and $user_id == $user->id) selected @endif>
                                     @if(!empty($user->users_firstname_th))
                                         {{$user->users_firstname_th .' '. $user->users_lastname_th}}
                                     @else
@@ -54,8 +57,8 @@
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
         @if(!empty($results))
             <div class="row" style="margin-top: 10px">
                 <div class="table-responsive">
@@ -65,10 +68,10 @@
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
-                            <th>{{ trans('messages.i_sale') }}</th>
+                                <th>{{ trans('messages.i_sale') }}</th>
                             @endif
                             @if(!empty($type_sale_buy) and $type_sale_buy == 'buy')
-                            <th>{{ trans('messages.i_buy') }}</th>
+                                <th>{{ trans('messages.i_buy') }}</th>
                             @endif
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
@@ -87,7 +90,7 @@
                                         {{ $result->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
                                     </td>
                                     @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
-                                    <td>{{ $result->users_firstname_th. " ". $result->users_lastname_th }}</td>
+                                        <td>{{ $result->users_firstname_th. " ". $result->users_lastname_th }}</td>
                                     @elseif(!empty($type_sale_buy) and $type_sale_buy == 'buy')
                                         <th style="font-weight: normal">
                                             {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
@@ -148,7 +151,7 @@
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
             url: "<?php echo url('admin/reports/order-history-sale-buy/export')?>",
-            data: { type_sale_buy: type_sale_buy, user_id:user_id },
+            data: {type_sale_buy: type_sale_buy, user_id: user_id},
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');

@@ -17,55 +17,63 @@
         @endif
         <div class="row">
             <h4>{{ trans('messages.text_report_menu_order_status_history') }}</h4>
-            <form action="{{url('admin/reports/orders')}}" method="GET" id="my-form">
-                {{--{{csrf_field()}}--}}
-                <input type="hidden" name="is_search" value="true"/>
-                <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label class="col-sm-2" style="padding-right: 0; padding-left: 0;">
+        </div>
+        <form action="{{url('admin/reports/orders')}}" method="GET" id="my-form">
+            {{--{{csrf_field()}}--}}
+            <input type="hidden" name="is_search" value="true"/>
+            <div class="row">
+                <div class="form-group form-group-sm col-md-4" style="padding-left: 0px;">
+                    <strong style="padding-right: 0; padding-left: 0;">
                         * {{ trans('messages.text_start_date') }}:
-                    </label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
-                        <div class='input-group date ' id='pick_start_date'>
-                            {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
-                            <span class="input-group-addon">
+                    </strong>
+
+                    <div class='input-group date ' id='pick_start_date'>
+                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
+                        <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                        </div>
-                        <small class="alert-danger" id="ms_start_date"></small>
                     </div>
+                    <small class="alert-danger" id="ms_start_date"></small>
+
                 </div>
 
-                <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2" style="padding-right: 0;padding-left: 0;">
+                <div class="form-group form-group-sm col-md-4" style="padding-left: 0px;">
+                    <strong style="padding-right: 0;padding-left: 0;">
                         * {{ trans('messages.text_end_date') }} :
-                    </label>
-                    <div class="col-sm-10" style="padding-right: 0px;">
-                        <div class='input-group date' id='pick_end_date'>
-                            {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
-                            <span class="input-group-addon">
+                    </strong>
+
+                    <div class='input-group date' id='pick_end_date'>
+                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
+                        <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                        </div>
-                        <small class="alert-danger" id="ms_end_date"></small>
                     </div>
+                    <small class="alert-danger" id="ms_end_date"></small>
+
                 </div>
 
-                <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
-                    <label class="col-sm-2 text-left" style="padding-right: 0;padding-left: 0;">
-                        {{ trans('messages.order_id').'/'.trans('messages.order_status') }} :
+
+                <div class="form-group form-group-sm col-md-4" style="padding-left: 0px; padding-right: 0;">
+                    <strong text-left" style="padding-right: 0;padding-left: 0;">
+                    {{ trans('messages.order_id').'/'.trans('messages.order_status') }} :
                     </label>
-                    <div class="col-sm-9" style="padding-right: 0px;">
+                    <div style="padding-right: 0px;">
                         <input type="text" id="filter" name="filter" class="form-control" value=""
                                placeholder="{{ trans('messages.order_id').'/'.trans('messages.order_status') }}">
                     </div>
-                    <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">
-                        <button class="btn btn-primary pull-right btn-sm" type="submit">
-                            <i class="fa fa-search"></i> {{ trans('messages.search') }}
-                        </button>
-                    </div>
+
                 </div>
-            </form>
-        </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">
+                    <button class="btn btn-primary pull-left btn-sm" type="submit">
+                        <i class="fa fa-search"></i> {{ trans('messages.search') }}
+                    </button>
+                </div>
+            </div>
+        </form>
+
 
         <div class="row" style="margin-top: 10px">
             <div class="table-responsive">
@@ -180,7 +188,7 @@
             url: "<?php $page = ''; if (!empty(Request::input('page'))) {
                 $page = '?page=' . Request::input('page');
             } echo url('admin/reports/orders/export' . $page)?>",
-            data: { start_date: start_date, end_date:end_date, filter:filter },
+            data: {start_date: start_date, end_date: end_date, filter: filter},
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');

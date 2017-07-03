@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Product;
+use App\ProductCategory;
 use App\Province;
 use App\Http\Controllers\Controller;
 use App\ProductRequest;
@@ -77,8 +78,14 @@ class ReportMatchingController extends Controller
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
-        if (!empty($request->input('product_type_name'))) {
-            $productTypeNameArr = $request->input('product_type_name');
+        if (!empty($request->input('productcategorys_id'))){
+            $productcategorys_id = $request->input('productcategorys_id');
+            $products = Product::where('productcategory_id',$productcategorys_id)->get();
+            $matching->where('products.productcategory_id', $productcategorys_id);
+        }
+
+        if (!empty($request->input('pid'))) {
+            $productTypeNameArr = $request->input('pid');
             $matching->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('province_type_name'))) {
@@ -88,9 +95,9 @@ class ReportMatchingController extends Controller
         $matchings = $matching->paginate();
 //            return $matchings;
 
-        $products = Product::all();
         $provinces = Province::all();
-        return view('backend.reports.matching', compact('matchings', 'products', 'provinces', 'productTypeNameArr', 'provinceTypeNameArr'));
+        $productCategoryitem = ProductCategory::all();
+        return view('backend.reports.matching', compact('matchings', 'products', 'provinces', 'productcategorys_id', 'productTypeNameArr', 'provinceTypeNameArr','productCategoryitem'));
 
     }
 
