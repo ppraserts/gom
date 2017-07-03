@@ -9,55 +9,71 @@ use Hash;
 use Validator;
 use Illuminate\Http\Request;
 use App\Helpers\DateFuncs;
-use App\Http\Controllers\Controller;
-
-class ReportProductsController extends Controller
+//Boots
+use App\Http\Controllers\backend\BaseReportsController as BaseReports;
+class ReportProductsController extends BaseReports
 {
     public function __construct()
     {
         $this->middleware('admin');
     }
 
-    public function index()
+    private $rules = [
+        'productcategorys_id' => 'required',
+    ];
+
+    public function index(Request $request)
     {
-        $productCategorys = ProductCategory::orderBy('sequence','ASC')->get();
-        $results = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id')
-            ->select(DB::raw('products.id
-          ,products.product_name_th
-          ,products.product_name_en
-          ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id')
-            ->orderBy('product_score', 'desc')
-            ->paginate(config('app.paginate'));
-        return view('backend.reports.product', compact('productCategorys','results'));
-    }
-
-    public function  filter(Request $request){
-        $v = Validator::make($request->all(), [
-            'product' => 'required'
-        ]);
-        if ($v->fails()){ return redirect()->back()->withErrors($v->errors()); }
-        if($request->isMethod('post')) {
-            $productArr = $request->input('product');
-            $productCategorys = ProductCategory::orderBy('sequence','ASC')->get();
-            $results = $this->sqlFilterShowPaginate($productArr);
-            return view('backend.reports.product', compact('productCategorys','results','productArr'));
+        if (!empty($request->input('is_search'))) {
+            $validator = $this->getValidationFactory()->make($request->all(), $this->rules, [], []);
+            if ($validator->fails()) {
+                $request['productcategorys_id'] = $request['productcategorys_id'];
+                $this->throwValidationException($request, $validator);
+            }
         }
-
+        $productCategoryitem = BaseReports::productCategorys();
+        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
+        $result->select(DB::raw('products.id
+              ,products.product_name_th
+              ,products.product_name_en
+              ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
+        $productcategory_id= '';
+        if(!empty($request->input('productcategorys_id'))){
+            $productcategory_id = $request->input('productcategorys_id');
+            $result->where('products.productcategory_id', $productcategory_id);
+            $products = BaseReports::productsByCategory($productcategory_id);
+            $product_id_arr = array();
+            if(!empty($request->input('product_id'))){
+                $product_id_arr = $request->input('product_id');
+                $result->whereIn('products.id', $product_id_arr);
+            }
+        }
+        $result->orderBy('product_score', 'desc');
+        $result->groupBy('products.id');
+        $results = $result->paginate(config('app.paginate'));
+        return view('backend.reports.product', compact('productCategoryitem','results','productcategory_id','products','product_id_arr'));
     }
+
 
     public function exportExcel(Request $request)
     {
         if ($request->ajax()) {
-            $product_arr= $request->input('product_arr');
-            $results = $this->sqlFilter($product_arr);
-            $str_type_producy = trans('messages.show_all');
+            $productcategorys_id = $request->input('productcategorys_id');
+            $product_id_arr= $request->input('product_id_arr');
+            $results = $this->sqlFilter($productcategorys_id,$product_id_arr);
 
-            if(count($product_arr) > 0){
-                $nameProductCategoryArrs = $this->getProductCategory($product_arr);
-                foreach ($nameProductCategoryArrs as $nameProductCategoryArr){
-                    $arrnameProductCategory[] = $nameProductCategoryArr->productcategory_title_th;
+            $product_category_name = trans('messages.show_all');
+            if(!empty($productcategorys_id)){
+               $productCategory = BaseReports::productCategory($productcategorys_id);
+                $product_category_name = $productCategory->productcategory_title_th;
+            }
+            $string_arr_product = trans('messages.show_all');
+            if(count($product_id_arr) > 0){
+                $products = BaseReports::productsByCategory($productcategorys_id);
+                foreach ($products as $product){
+                    $arrProduct[] = $product->product_name_th;
                 }
-                $str_type_producy = implode(",",$arrnameProductCategory);
+                $string_arr_product = implode(",",$arrProduct);
             }
 
             $arr[] = array(
@@ -81,11 +97,12 @@ class ReportProductsController extends Controller
             }
 
             $data = $arr;
-            $info = Excel::create('dgtfarm-products-excel', function($excel) use($data,$str_type_producy) {
-                $excel->sheet('Sheetname', function($sheet) use($data,$str_type_producy) {
+            $info = Excel::create('dgtfarm-products-excel', function($excel) use($data,$product_category_name,$string_arr_product) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$product_category_name,$string_arr_product) {
                     $sheet->mergeCells('A1:D1');
                     $sheet->mergeCells('A2:D3');
                     $sheet->mergeCells('A4:D5');
+                    $sheet->mergeCells('A6:D7');
                     $sheet->setSize(array(
                         'A1' => array(
                             'height'    => 50
@@ -103,14 +120,23 @@ class ReportProductsController extends Controller
                         ));
                     });
 
-                    $sheet->cells('A2', function($cells) use($str_type_producy) {
-                        $cells->setValue(trans('messages.menu_add_product').': '.$str_type_producy);
+                    $sheet->cells('A2', function($cells) use($product_category_name) {
+                        $cells->setValue(trans('validation.attributes.productcategorys_id').': '.$product_category_name);
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));
                         $cells->setValignment('center');
                     });
-                    $sheet->cells('A4', function($cells) {
+
+                    $sheet->cells('A4', function($cells) use($string_arr_product) {
+                        $cells->setValue(trans('messages.menu_add_product').': '.$string_arr_product);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
+                    $sheet->cells('A6', function($cells) {
                         $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::convertToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
                         $cells->setFont(array(
                             'bold'       =>  true
@@ -126,37 +152,23 @@ class ReportProductsController extends Controller
     }
 
 
-    private function sqlFilter($arrProductCatId =''){
+    private function sqlFilter($productcategory_id ='',$product_id_arr){
+
         $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
         $result->select(DB::raw('products.id
               ,products.product_name_th
               ,products.product_name_en
               ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
-        if(!empty($arrProductCatId)){
-            $result->whereIn('products.productcategory_id', $arrProductCatId);
+        if(!empty($productcategory_id)){
+            $result->where('products.productcategory_id', $productcategory_id);
+        }
+        if(!empty($product_id_arr)){
+            $result->whereIn('products.id', $product_id_arr);
         }
         $result->orderBy('product_score', 'desc');
+        $result->groupBy('products.id');
         return  $results = $result->groupBy('products.id')->get();
 
     }
-    private function sqlFilterShowPaginate($arrProductCatId =''){
-        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
-        $result->select(DB::raw('products.id
-              ,products.product_name_th
-              ,products.product_name_en
-              ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
-        if(!empty($arrProductCatId)){
-            $result->whereIn('products.productcategory_id', $arrProductCatId);
-        }
-        $result->orderBy('product_score', 'desc');
-        return  $results = $result->groupBy('products.id')->paginate(config('app.paginate')); //limit 100 per page
 
-    }
-
-    private function getProductCategory($arrId){
-        return ProductCategory::select(DB::raw('productcategorys.productcategory_title_th'))
-            ->whereIn('productcategorys.id', $arrId)
-            ->orderBy('productcategorys.sequence', 'asc')
-            ->get();
-    }
 }

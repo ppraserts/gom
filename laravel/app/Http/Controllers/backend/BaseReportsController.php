@@ -3,7 +3,8 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
 use App\Product;
-class BaseReportController extends Controller {
+use DB;
+class BaseReportsController extends Controller {
 
     public static function productsByCategory($productCateId)
     {
@@ -11,7 +12,10 @@ class BaseReportController extends Controller {
             ->where('products.productcategory_id', $productCateId)->get();
     }
     public  static function productCategorys(){
-        return ProductCategory::all();
+        return ProductCategory::orderBy('sequence','ASC')->get();
+    }
+    public  static function productCategory($id){
+        return ProductCategory::where('productcategorys.id', $id)->first();
     }
 
 
