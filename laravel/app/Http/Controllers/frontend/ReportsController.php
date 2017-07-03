@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 
+use App\ProductCategory;
 use DB, Validator, Response;
 use App\Order;
 use Excel;
@@ -41,7 +42,7 @@ class ReportsController extends Controller
 
         $orderLists = '';
 
-        $productTypeNameArr = $request->input('product_type_name');
+
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -49,8 +50,14 @@ class ReportsController extends Controller
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
         $orderList->where('orders.buyer_id', $user->id);
-        if (!empty($request->input('product_type_name'))) {
-            $productTypeNameArr = $request->input('product_type_name');
+        if (!empty($request->input('productcategorys_id'))){
+            $productcategorys_id = $request->input('productcategorys_id');
+            $products = Product::where('productcategory_id',$productcategorys_id)->get();
+            $orderList->where('products.productcategory_id', $productcategorys_id);
+        }
+
+        if (!empty($request->input('pid'))) {
+            $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -63,9 +70,9 @@ class ReportsController extends Controller
         $orderList->orderBy('orders.id', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderLists = $orderList->paginate(config('app.paginate'));
+        $productCategoryitem = ProductCategory::all();
 
-        $products = Product::all();
-        return view('frontend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr'));
+        return view('frontend.reports.orderlist', compact('orderLists', 'products', 'productTypeNameArr','productcategorys_id','productCategoryitem'));
 
     }
 
@@ -193,7 +200,6 @@ class ReportsController extends Controller
 
         $orderSaleItem = '';
 
-        $productTypeNameArr = $request->input('product_type_name');
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -202,8 +208,14 @@ class ReportsController extends Controller
         $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
         , products.product_name_en'));
         $orderList->where('orders.user_id', $user->id);
-        if (!empty($request->input('product_type_name'))) {
-            $productTypeNameArr = $request->input('product_type_name');
+        if (!empty($request->input('productcategorys_id'))){
+            $productcategorys_id = $request->input('productcategorys_id');
+            $orderList->where('products.productcategory_id', $productcategorys_id);
+            $products = Product::where('productcategory_id',$productcategorys_id)->get();
+        }
+
+        if (!empty($request->input('pid'))) {
+            $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -218,24 +230,14 @@ class ReportsController extends Controller
         $orderList->paginate(config('app.paginate'));
 //            $orderSaleItem = $orderList->paginate(config('app.paginate'));
         $orderSaleItem = $orderList->get();
-        //products
-        $product = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
-        $product->join('users', 'users.id', '=', 'orders.user_id');
-        $product->join('order_items', 'order_items.order_id', '=', 'orders.id');
-        $product->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-        $product->join('products', 'products.id', '=', 'product_requests.products_id');
-        $product->select(DB::raw('products.*'));
-        $product->where('orders.user_id', $user->id);
-        $product->groupBy('products.id');
-        $product->orderBy('products.id', 'DESC');
-        $products = $product->get();
-        //
+
         $sumAll = 0;
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total_amounts;
         }
+        $productCategoryitem = ProductCategory::all();
         //return $orderSaleItem;
-        return view('frontend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr', 'sumAll'));
+        return view('frontend.reports.sale_item_list', compact('orderSaleItem', 'products', 'productTypeNameArr', 'sumAll','productCategoryitem'));
 
     }
 

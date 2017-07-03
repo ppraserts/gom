@@ -242,7 +242,7 @@ class ReportsController extends Controller
             $sumAll = $sumAll + $value->total_amounts;
         }
 //            return $orderSaleItem;
-        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'start_date', 'end_date', 'sumAll'));
+        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'sumAll'));
 
     }
 
