@@ -74,13 +74,13 @@ class ReportOrderStatusHistoryController extends Controller
             $filter = $request->input('filter');
             $start_date = DateFuncs::convertYear($request->input('start_date'));
             $end_date = DateFuncs::convertYear($request->input('end_date'));
-            $results = $this->sqlFilter($start_date, $end_date, $filter);
+            $results = $this->getDataToexcel($start_date, $end_date, $filter);
 
             $d_start = trans('messages.text_start_date') . ' : -';
             $d_end = trans('messages.text_end_date') . ' : -';
             if (!empty($request->input('start_date')) and !empty($request->input('end_date'))) {
-                $d_start = trans('messages.text_start_date') . ' : ' . $request->input('start_date');
-                $d_end = trans('messages.text_end_date') . ' : ' . $request->input('end_date');
+                $d_start = trans('messages.text_start_date') . ' : ' .  DateFuncs::dateToThaiDate($start_date);
+                $d_end = trans('messages.text_end_date') . ' : ' . DateFuncs::dateToThaiDate($end_date);
             }
             $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . $filter;
             if (empty($filter)) {
@@ -107,7 +107,7 @@ class ReportOrderStatusHistoryController extends Controller
 
                 $fname_lname_sale = $v->users_firstname_th . " " . $v->users_lastname_th;
                 $fname_lname_buy = $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th;
-                $order_date = DateFuncs::convertToThaiDate($v->order_date);
+                $order_date = DateFuncs::mysqlToThaiDate($v->order_date);
                 $arr[] = array(
                     $v->id,
                     $order_type,
@@ -163,7 +163,7 @@ class ReportOrderStatusHistoryController extends Controller
         }
     }
 
-    /*private function sqlFilter($start_date = '', $end_date = '', $filter = '')
+    private function getDataToexcel($start_date = '', $end_date = '', $filter = '')
     {
         if (!empty($start_date)) {
             $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
@@ -185,6 +185,6 @@ class ReportOrderStatusHistoryController extends Controller
             ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
             ->orderBy('orders.id', 'DESC')
             ->paginate(config('app.paginate'));
-    }*/
+    }
 
 }

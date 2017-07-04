@@ -18,7 +18,7 @@
             </div>
         @endif
         <div class="row">
-            <h2>{{ trans('messages.matching_report') }}</h2>
+            <h4>{{ trans('messages.matching_report') }}</h4>
         </div>
         <form action="{{url('admin/reports/matching')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}

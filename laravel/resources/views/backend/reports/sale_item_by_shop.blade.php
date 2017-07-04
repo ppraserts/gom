@@ -21,7 +21,7 @@ $pagetitle = trans('message.menu_order_list');
             </div>
         @endif
         <div class="row">
-            <h2>รายงานยอดจำหน่ายร้านค้า</h2>
+            <h4>รายงานยอดจำหน่ายร้านค้า</h4>
         </div>
         <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}

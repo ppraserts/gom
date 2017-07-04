@@ -20,7 +20,7 @@
             </div>
         @endif
         <div class="row">
-            <h2>รายงานยอดจำหน่ายสินค้า</h2>
+            <h4>รายงานยอดจำหน่ายสินค้า</h4>
         </div>
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}
