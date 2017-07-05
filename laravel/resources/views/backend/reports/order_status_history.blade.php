@@ -15,8 +15,8 @@
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>{{ trans('messages.text_report_menu_order_status_history') }}</h4>
+        <div class="row text-center">
+            <h2>{{ trans('messages.text_report_menu_order_status_history') }}</h2>
         </div>
         <form action="{{url('admin/reports/orders')}}" method="GET" id="my-form">
             {{--{{csrf_field()}}--}}
@@ -66,8 +66,8 @@
 
             </div>
             <div class="row">
-                <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-left btn-sm" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -76,6 +76,7 @@
 
 
         <div class="row" style="margin-top: 10px">
+            @if(count($results) > 0 && count($errors) < 1)
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -93,7 +94,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($results) > 0 )
                         @foreach ($results as $result)
                             <tr>
                                 <td style="text-align:center;">{{ $result->id }}</td>
@@ -115,12 +115,17 @@
                                 </td>
                             </tr>
                         @endforeach
-                    @endif
+
                     </tbody>
                 </table>
+                @else
+                    <div class="alert alert-warning text-center">
+                        <strong>{{trans('messages.data_not_found')}}</strong>
+                    </div>
+                @endif
             </div>
         </div>
-        @if(count($results) > 0 )
+        @if(count($results) > 0 && count($errors) < 1)
             <div class="row">
                 <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
                 <div class="col-md-6">

@@ -19,8 +19,8 @@
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>รายงานยอดจำหน่ายสินค้า</h4>
+        <div class="row text-center">
+            <h2>รายงานยอดจำหน่ายสินค้า</h2>
         </div>
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}
@@ -92,8 +92,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
-                    <button class="btn btn-primary pull-left" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -101,11 +101,11 @@
         </form>
 
         <div class="row" style="margin-top: 10px">
-            @if(count($orderSaleItem) > 0)
+            @if(count($orderSaleItem) > 0 && count($errors) < 1)
                 <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
             @else
-                <div style="margin: 0px auto; padding-top:2%;">
-                    Data not found
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
                 </div>
             @endif
 

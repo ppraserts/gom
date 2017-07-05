@@ -20,8 +20,9 @@ $pagetitle = trans('messages.menu_order_list');
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>{{ trans('messages.menu_order_list') }}</h4>
+        <div class="row text-center">
+            <h2>{{ trans('messages.menu_order_list') }}</h2>
+
         </div>
         <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}
@@ -65,7 +66,9 @@ $pagetitle = trans('messages.menu_order_list');
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)) selected @endif>
+                            <option value="{{ $itemcategory->id }}"
+                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
+                                    selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
 
                             </option>
@@ -79,7 +82,8 @@ $pagetitle = trans('messages.menu_order_list');
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true"
+                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"
+                            data-live-search="true"
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -93,8 +97,8 @@ $pagetitle = trans('messages.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
-                    <button class="btn btn-primary pull-left" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -105,22 +109,23 @@ $pagetitle = trans('messages.menu_order_list');
 
         <div class="row" style="margin-top: 10px">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
-                        <th>{{ trans('messages.i_sale') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
-                        <th width="130px" style="text-align:center;">
-                            {{ trans('messages.view_order_detail') }}
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($orderLists) > 0)
+
+                @if(count($orderLists) > 0 && count($errors) < 1)
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
+                            <th>{{ trans('messages.i_sale') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
+                            <th width="130px" style="text-align:center;">
+                                {{ trans('messages.view_order_detail') }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
@@ -143,16 +148,22 @@ $pagetitle = trans('messages.menu_order_list');
                                 </td>
                             </tr>
                         @endforeach
-                    @endif
-                    </tbody>
-                </table>
+
+                        </tbody>
+                    </table>
+                @else
+                    <div class="alert alert-warning text-center">
+                        <strong>{{trans('messages.data_not_found')}}</strong>
+                    </div>
+                @endif
             </div>
-            @if(count($orderLists) > 0)
+            @if(count($orderLists) > 0 && count($errors) < 1)
                 <div class="row">
                     <div class="col-md-6">{!! $orderLists->appends(Request::all()) !!}</div>
                     <div class="col-md-6">
                         <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
                             <button class="btn btn-primary pull-right" id="export" type="button">
+                                <span class="glyphicon glyphicon-export"></span>
                                 {{trans('messages.export_excel')}}
                             </button>
                         </div>
@@ -198,12 +209,12 @@ $pagetitle = trans('messages.menu_order_list');
         });
     });
 
-    $('#productcategorys_id').on('change', function() {
-       var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
-            if(data.R == 'Y'){
+    $('#productcategorys_id').on('change', function () {
+        var cateId = this.value;
+        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+            if (data.R == 'Y') {
                 console.log(data.res);
-                $("#product_type_name" ).html(data.res);
+                $("#product_type_name").html(data.res);
                 $('#product_type_name').selectpicker('refresh');
             }
         });

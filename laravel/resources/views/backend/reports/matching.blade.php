@@ -81,7 +81,9 @@
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)) selected @endif>
+                            <option value="{{ $itemcategory->id }}"
+                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
+                                    selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
 
                             </option>
@@ -95,7 +97,8 @@
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true"
+                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"
+                            data-live-search="true"
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -109,8 +112,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
-                    <button class="btn btn-primary pull-left" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -118,47 +121,53 @@
 
         </form>
         <div class="row" style="margin-top: 10px">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
-                        <th style="text-align:center;">{{ trans('validation.attributes.product_title') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.text_product_type_name') }}</th>
-                        <th>{{ trans('messages.i_sale') }}</th>
-                        <th>{{ trans('messages.i_buy') }}</th>
-                        <th style="text-align:center;">{{ trans('validation.attributes.price') }}</th>
-                        {{--<th style="text-align:center;">{{ trans('messages.product_price_need_buy') }}</th>--}}
-                        <th style="text-align:center;">{{ trans('validation.attributes.volumnrange_product_need_buy') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($matchings as $key => $item)
+            @if(count($matchings) > 0 && count($errors) < 1)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
                         <tr>
-                            <td style="text-align:center;">{{ $key+1 }}</td>
-                            <td style="text-align:center;">{{ $item->product_title }}</td>
-                            <td style="text-align:center;">{{ $item->product_name_th }}</td>
-                            <td>{{ $item->seller_firstname. " ". $item->seller_lastname }}</td>
-                            <td>{{ $item->buyer_firstname. " ". $item->buyer_lastname }}</td>
-                            <td style="text-align:center;">{{ $item->price. " " . trans('messages.baht')." / ".$item->units }}</td>
-                            {{--<td style="text-align:center;">{{ $item->pricerange_start . " - ". $item->pricerange_end . trans('messages.baht') }}</td>--}}
-                            <td style="text-align:center;">{{ $item->volumnrange_start . " - ". $item->volumnrange_end ." ". $item->units }}</td>
-
+                            <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
+                            <th style="text-align:center;">{{ trans('validation.attributes.product_title') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.text_product_type_name') }}</th>
+                            <th>{{ trans('messages.i_sale') }}</th>
+                            <th>{{ trans('messages.i_buy') }}</th>
+                            <th style="text-align:center;">{{ trans('validation.attributes.price') }}</th>
+                            {{--<th style="text-align:center;">{{ trans('messages.product_price_need_buy') }}</th>--}}
+                            <th style="text-align:center;">{{ trans('validation.attributes.volumnrange_product_need_buy') }}</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-md-6">{!! $matchings->appends(Request::all()) !!}</div>
-                    <div class="col-md-6">
-                        <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                            <button class="btn btn-primary pull-right" id="export" type="button">
-                                {{trans('messages.export_excel')}}
-                            </button>
+                        </thead>
+                        <tbody>
+                        @foreach ($matchings as $key => $item)
+                            <tr>
+                                <td style="text-align:center;">{{ $key+1 }}</td>
+                                <td style="text-align:center;">{{ $item->product_title }}</td>
+                                <td style="text-align:center;">{{ $item->product_name_th }}</td>
+                                <td>{{ $item->seller_firstname. " ". $item->seller_lastname }}</td>
+                                <td>{{ $item->buyer_firstname. " ". $item->buyer_lastname }}</td>
+                                <td style="text-align:center;">{{ $item->price. " " . trans('messages.baht')." / ".$item->units }}</td>
+                                {{--<td style="text-align:center;">{{ $item->pricerange_start . " - ". $item->pricerange_end . trans('messages.baht') }}</td>--}}
+                                <td style="text-align:center;">{{ $item->volumnrange_start . " - ". $item->volumnrange_end ." ". $item->units }}</td>
+
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-6">{!! $matchings->appends(Request::all()) !!}</div>
+                        <div class="col-md-6">
+                            <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                                <button class="btn btn-primary pull-right" id="export" type="button">
+                                    {{trans('messages.export_excel')}}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
+                </div>
+            @endif
 
 
         </div>
@@ -199,12 +208,12 @@
         });
     });
 
-    $('#productcategorys_id').on('change', function() {
+    $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
-            if(data.R == 'Y'){
+        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+            if (data.R == 'Y') {
                 console.log(data.res);
-                $("#product_type_name" ).html(data.res);
+                $("#product_type_name").html(data.res);
                 $('#product_type_name').selectpicker('refresh');
             }
         });

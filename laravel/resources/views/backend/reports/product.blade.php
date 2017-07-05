@@ -15,12 +15,15 @@
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>{{ trans('messages.text_report_menu_product') }} :</h4>
-            {{csrf_field()}}
-            <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="GET">
-                <input type="hidden" name="is_search" value="true">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+        <div class="row text-center">
+            <h2>{{ trans('messages.text_report_menu_product') }}</h2>
+
+        </div>
+        {{csrf_field()}}
+        <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="GET">
+            <input type="hidden" name="is_search" value="true">
+            <div class="row">
+                <div class="col-md-6 form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         * {{ trans('validation.attributes.productcategorys_id') }}:
@@ -28,17 +31,18 @@
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategory_id) && $itemcategory->id == $productcategory_id) selected @endif>
+                            <option value="{{ $itemcategory->id }}"
+                                    @if(!empty($productcategory_id) && $itemcategory->id == $productcategory_id) selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
                             </option>
                         @endforeach
                     </select>
 
                 </div>
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
-                     style="padding-left: 0;">
+                <div class="col-md-6  form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                     style="padding-left: 0;padding-right: 0;">
                     <strong>
-                         {{ trans('messages.menu_add_product') }} :
+                        {{ trans('messages.menu_add_product') }} :
                     </strong>
                     <select class="selectpicker form-control" name="product_id[]" id="product"
                             data-live-search="true"
@@ -53,54 +57,64 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-12" style="padding-left: 0; margin-top: 10px;">
-                    <button class="btn btn-primary btn-sm" type="submit">
+            </div>
+            <div class="row">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
-            </form>
-
-        </div>
-        <div class="row" style="margin-top: 10px">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th width="120px" style="text-align:center;">{{trans('messages.text_product_id')}}</th>
-                        <th>{{trans('messages.text_product_th')}}</th>
-                        <th style="text-align:center;">{{trans('messages.text_product_en')}}</th>
-                        <th style="text-align:center;">{{trans('messages.text_product_score')}}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($results as $result)
-                        <tr>
-                            <td style="text-align:center;">{{ $result->id }}</td>
-                            <td>{{$result->product_name_th}}</a>  </td>
-                            <td>{{ $result->product_name_en }}</td>
-                            <td>
-                                @if(!empty($result->product_score)){{ number_format($result->product_score,2) }} @else 0 @endif
-                                {{ trans('messages.text_star') }}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
             </div>
+        </form>
+
+        <div class="row" style="margin-top: 10px">
+            @if(count($results) > 0 && count($errors) < 1)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th width="120px" style="text-align:center;">{{trans('messages.text_product_id')}}</th>
+                            <th>{{trans('messages.text_product_th')}}</th>
+                            <th style="text-align:center;">{{trans('messages.text_product_en')}}</th>
+                            <th style="text-align:center;">{{trans('messages.text_product_score')}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($results as $result)
+                            <tr>
+                                <td style="text-align:center;">{{ $result->id }}</td>
+                                <td>{{$result->product_name_th}}</a>  </td>
+                                <td>{{ $result->product_name_en }}</td>
+                                <td>
+                                    @if(!empty($result->product_score)){{ number_format($result->product_score,2) }} @else
+                                        0 @endif
+                                    {{ trans('messages.text_star') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
+                </div>
+            @endif
         </div>
-        <div class="row">
-            <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
-            <div class="col-md-6">
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                    @if(count($results) > 0)
-                    <button class="btn btn-primary pull-right" id="export" type="button">
-                        <span class="glyphicon glyphicon-export"></span>
-                        {{ trans('messages.export_excel') }}
-                    </button>
-                    @endif
+        @if(count($results) > 0 && count($errors) < 1)
+            <div class="row">
+                <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
+                <div class="col-md-6">
+                    <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                        <button class="btn btn-primary pull-right" id="export" type="button">
+                            <span class="glyphicon glyphicon-export"></span>
+                            {{ trans('messages.export_excel') }}
+                        </button>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
         <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
@@ -111,11 +125,11 @@
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
-    $('#productcategorys_id').on('change', function() {
+    $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
-            if(data.R == 'Y'){
-                $("#product" ).html(data.res);
+        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+            if (data.R == 'Y') {
+                $("#product").html(data.res);
                 $('#product').selectpicker('refresh');
             }
         });
@@ -136,7 +150,7 @@
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
             url: "<?php echo url('admin/reports/product/export')?>",
-            data: { product_id_arr: product_id, productcategorys_id: productcategorys_id},
+            data: {product_id_arr: product_id, productcategorys_id: productcategorys_id},
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');

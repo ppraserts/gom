@@ -10,7 +10,17 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row">
             @include('frontend.reports.menu_reports')
         </div>
-
+        @if (count($errors) > 0)
+            <div class="row" style="margin-top: 15px;">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <h2>รายงานยอดจำหน่ายสินค้า</h2>
         </div>
@@ -87,8 +97,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
-                    <button class="btn btn-primary pull-left" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -96,11 +106,11 @@ $pagetitle = trans('message.menu_order_list');
         </form>
 
         <div class="row" style="margin-top: 10px">
-            @if(count($orderSaleItem) > 0)
+            @if(count($orderSaleItem) > 0 && count($errors) < 1)
                 <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
             @else
-                <div style="margin: 0px auto; padding-top:2%;">
-                    Data not found
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
                 </div>
             @endif
 

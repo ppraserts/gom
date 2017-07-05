@@ -15,13 +15,13 @@
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h4>
+        <div class="row text-center">
+            <h2>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h2>
         </div>
         <form action="{{url('admin/reports/order-history-sale-buy')}}" method="POST">
             {{csrf_field()}}
             <div class="row">
-                <div class="form-group col-sm-5">
+                <div class="form-group col-sm-6">
                     <select name="type_sale_buy" id="type_sale_buy" class="form-control">
                         <option value="">{{ trans('messages.please_select_type_sale_buy') }}</option>
                         <option value="sale" @if(!empty($type_sale_buy) and $type_sale_buy == 'sale') selected @endif>
@@ -32,7 +32,7 @@
                         </option>
                     </select>
                 </div>
-                <div class="form-group col-sm-5">
+                <div class="form-group col-sm-6">
                     <select class="selectpicker form-control" name="user" id="user"
                             data-live-search="true">
                         @if(count($users) > 0)
@@ -52,15 +52,18 @@
                         @endif
                     </select>
                 </div>
-                <div class="form-group col-sm-1">
-                    <button class="btn btn-primary pull-right btn-sm" type="submit">
+            </div>
+            <div class="row">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
             </div>
         </form>
-        @if(!empty($results))
-            <div class="row" style="margin-top: 10px">
+
+        <div class="row" style="margin-top: 10px">
+            @if(!empty($results) && count($results) > 0 && count($errors) < 1)
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
@@ -82,53 +85,55 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($results) > 0 )
-                            @foreach ($results as $result)
-                                <tr>
-                                    <td style="text-align:center;">{{ $result->id }}</td>
-                                    <td style="text-align:center;">
-                                        {{ $result->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
-                                    </td>
-                                    @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
-                                        <td>{{ $result->users_firstname_th. " ". $result->users_lastname_th }}</td>
-                                    @elseif(!empty($type_sale_buy) and $type_sale_buy == 'buy')
-                                        <th style="font-weight: normal">
-                                            {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
-                                        </th>
-                                    @endif
 
-                                    <td style="text-align:center;">{{ DateFuncs::convertToThaiDate($result->order_date) }}</td>
-                                    <td style="text-align:center;">{{ $result->total_amount . trans('messages.baht') }}</td>
-                                    <td style="text-align:center;">{{ $result->status_name }}</td>
-                                    <td style="text-align:center;">
-                                        <a class="btn btn-info"
-                                           href="{{ url ('admin/reports/orderdetail/'.$result->id) }}">
-                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
+                        @foreach ($results as $result)
+                            <tr>
+                                <td style="text-align:center;">{{ $result->id }}</td>
+                                <td style="text-align:center;">
+                                    {{ $result->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
+                                </td>
+                                @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
+                                    <td>{{ $result->users_firstname_th. " ". $result->users_lastname_th }}</td>
+                                @elseif(!empty($type_sale_buy) and $type_sale_buy == 'buy')
+                                    <th style="font-weight: normal">
+                                        {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
+                                    </th>
+                                @endif
+
+                                <td style="text-align:center;">{{ DateFuncs::convertToThaiDate($result->order_date) }}</td>
+                                <td style="text-align:center;">{{ $result->total_amount . trans('messages.baht') }}</td>
+                                <td style="text-align:center;">{{ $result->status_name }}</td>
+                                <td style="text-align:center;">
+                                    <a class="btn btn-info"
+                                       href="{{ url ('admin/reports/orderdetail/'.$result->id) }}">
+                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
-            </div>
-            @if(count($results) > 0 )
-                <div class="row">
-                    <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
-                    <div class="col-md-6">
-                        <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                            @if(count($results) > 0)
-                                <button class="btn btn-primary pull-right" id="export" type="button">
-                                    <span class="glyphicon glyphicon-export"></span>
-                                    {{ trans('messages.export_excel') }}
-                                </button>
-                            @endif
-                        </div>
+
+                <div class="col-md-6">{!! $results->appends(Request::all()) !!}</div>
+                <div class="col-md-6">
+                    <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                        @if(count($results) > 0)
+                            <button class="btn btn-primary pull-right" id="export" type="button">
+                                <span class="glyphicon glyphicon-export"></span>
+                                {{ trans('messages.export_excel') }}
+                            </button>
+                        @endif
                     </div>
                 </div>
+
+
+            @else
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
+                </div>
             @endif
-        @endif
+        </div>
         <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection

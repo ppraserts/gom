@@ -20,8 +20,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>รายงานยอดจำหน่ายร้านค้า</h4>
+        <div class="row text-center">
+            <h2>รายงานยอดจำหน่ายร้านค้า</h2>
         </div>
         <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}
@@ -83,8 +83,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0; padding-right: 0;">
-                    <button class="btn btn-primary pull-left btn-sm" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -93,11 +93,11 @@ $pagetitle = trans('message.menu_order_list');
     </form>
     </div>
     <div class="row" style="margin-top: 10px">
-        @if(count($shops) > 0)
+        @if(count($shops) > 0 && count($errors) < 1)
             <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
         @else
-            <div style="margin: 0px auto; padding-top:2%;">
-                {{trans('messages.data_not_found')}}
+            <div class="alert alert-warning text-center">
+                <strong>{{trans('messages.data_not_found')}}</strong>
             </div>
         @endif
     </div>

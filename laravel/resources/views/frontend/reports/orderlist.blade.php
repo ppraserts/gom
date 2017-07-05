@@ -11,7 +11,7 @@ $pagetitle = trans('message.menu_order_list');
             @include('frontend.reports.menu_reports')
         </div>
         @if (count($errors) > 0)
-                <div class="row" style="margin-top: 15px;">
+            <div class="row" style="margin-top: 15px;">
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -67,7 +67,9 @@ $pagetitle = trans('message.menu_order_list');
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}" @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)) selected @endif>
+                            <option value="{{ $itemcategory->id }}"
+                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
+                                    selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
 
                             </option>
@@ -81,7 +83,8 @@ $pagetitle = trans('message.menu_order_list');
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true"
+                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"
+                            data-live-search="true"
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -95,8 +98,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left: 0px; padding-right: 0;">
-                    <button class="btn btn-primary pull-left" type="submit">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <button style="width: 400px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -104,23 +107,23 @@ $pagetitle = trans('message.menu_order_list');
 
         </form>
         <div class="row" style="margin-top: 10px">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
-                        <th>{{ trans('messages.i_sale') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
-                        <th width="130px" style="text-align:center;">
-                            {{ trans('messages.view_order_detail') }}
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($orderLists) > 0)
+            @if(count($orderLists) > 0 && count($errors) <1)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
+                            <th>{{ trans('messages.i_sale') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
+                            <th width="130px" style="text-align:center;">
+                                {{ trans('messages.view_order_detail') }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
@@ -143,18 +146,20 @@ $pagetitle = trans('message.menu_order_list');
                                 </td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr>
-                            <td colspan="6">{{trans('messages.data_not_found') }}</td>
-                        </tr>
-                    @endif
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+
+            @else
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
+                </div>
+            @endif
         </div>
-        <div class="row">
-            @if(count($orderLists) > 0)
-            <div class="col-md-6">{!! $orderLists->appends(Request::all()) !!}</div>
+
+        @if(count($orderLists) > 0 && count($errors) <1)
+            <div class="row">
+                <div class="col-md-6">{!! $orderLists->appends(Request::all()) !!}</div>
                 <div class="col-md-6">
                     <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
                         <button class="btn btn-primary pull-right" id="export" type="button">
@@ -164,9 +169,9 @@ $pagetitle = trans('message.menu_order_list');
                     </div>
                 </div>
             </div>
-        </div>
         @endif
-        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
+    </div>
+    <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 
@@ -198,24 +203,24 @@ $pagetitle = trans('message.menu_order_list');
         });
     });
 
-    $('#productcategorys_id').on('change', function() {
+    $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
-            if(data.R == 'Y'){
+        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+            if (data.R == 'Y') {
                 console.log(data.res);
-                $("#product_type_name" ).html(data.res);
+                $("#product_type_name").html(data.res);
                 $('#product_type_name').selectpicker('refresh');
             }
         });
     })
 
     //***********************************************
-    $( "#export" ).click(function() {
+    $("#export").click(function () {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         //var product_type_name = $("#product_type_name option:selected").val();
         var product_type_name = [];
-        $('#product_type_name option:selected').each(function(i, selected){
+        $('#product_type_name option:selected').each(function (i, selected) {
             product_type_name[i] = $(selected).val();
         });
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
@@ -225,28 +230,30 @@ $pagetitle = trans('message.menu_order_list');
         });
 
         var key_token = $('input[name=_token]').val();
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': key_token},
-                type: "POST",
-                url: "<?php $page =''; if(!empty(Request::input('page'))){ $page = '?page='.Request::input('page'); } echo url('user/reports/buy/export'.$page)?>",
-                data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
-                success: function (response) {
-                    $('.modal-content').empty();
-                    $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
-                    $(".a-download").click(function () {
-                        waitingDialog.hide();
-                        window.open(
-                            "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
-                            '_blank'
-                        );
-                    });
-                    return false;
-                },
-                error: function (response) {
-                    alert('error..');
-                    return false;
-                }
-            })
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': key_token},
+            type: "POST",
+            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
+                $page = '?page=' . Request::input('page');
+            } echo url('user/reports/buy/export' . $page)?>",
+            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
+            success: function (response) {
+                $('.modal-content').empty();
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
+                $(".a-download").click(function () {
+                    waitingDialog.hide();
+                    window.open(
+                        "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                });
+                return false;
+            },
+            error: function (response) {
+                alert('error..');
+                return false;
+            }
+        })
     });
 </script>
 @endpush
