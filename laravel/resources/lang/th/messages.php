@@ -128,6 +128,7 @@ return [
     'required_shop_setting' => 'กรุณาตั้งค่าร้านค้าก่อน!',
     'order_id' => 'เลขที่ใบสั่งซื้อ',
     'order_date' => 'วันที่สั่งซื้อ',
+    'order_sale_date' => 'วันที่ขาย',
     'order_total' => 'ยอดรวม',
     'menu_order_list' => 'รายการสั่งซื้อ',
     'menu_shop_order_list' => 'รายการขาย',

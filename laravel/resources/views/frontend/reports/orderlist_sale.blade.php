@@ -22,8 +22,7 @@ $pagetitle = trans('message.menu_order_list');
             </div>
         @endif
         <div class="row">
-            <h2>{{ trans('messages.menu_order_list') }}</h2>
-
+            <h2>{{ trans('messages.menu_shop_order_list') }}</h2>
         </div>
         <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="my-form" method="GET">
             {{--{{csrf_field()}}--}}
@@ -116,7 +115,7 @@ $pagetitle = trans('message.menu_order_list');
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_sale_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">
@@ -216,8 +215,7 @@ $pagetitle = trans('message.menu_order_list');
                 $('#product_type_name').selectpicker('refresh');
             }
         });
-    })
-
+    });
     //***********************************************
     $("#export").click(function () {
         var start_date = $("#start_date").val();
@@ -230,10 +228,9 @@ $pagetitle = trans('message.menu_order_list');
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
             progressType: 'success'
         });
-
         var productcategorys_id =$('#productcategorys_id option:selected').val();
         var key_token = $('input[name=_token]').val();
-        var type = 'buy';
+        var type = 'sale';
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",

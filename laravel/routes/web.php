@@ -180,6 +180,8 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('reports/sale','frontend\ReportsController@SaleItemFilter');
     Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
 
+    Route::get('reports/list-sale','frontend\ReportsController@listSale');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
