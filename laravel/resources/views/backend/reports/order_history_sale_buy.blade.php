@@ -22,8 +22,11 @@
             {{csrf_field()}}
             <div class="row">
                 <div class="form-group col-sm-6">
+                    <strong style="padding-right: 0; padding-left: 0;">*
+                        {{ trans('messages.type_sale_buy') }}:
+                    </strong>
                     <select name="type_sale_buy" id="type_sale_buy" class="form-control">
-                        <option value="">{{ trans('messages.please_select_type_sale_buy') }}</option>
+                        <option value="">{{ trans('messages.please_select') }}</option>
                         <option value="sale" @if(!empty($type_sale_buy) and $type_sale_buy == 'sale') selected @endif>
                             {{ trans('messages.i_sale') }}
                         </option>
@@ -33,10 +36,13 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6">
+                    <strong style="padding-right: 0; padding-left: 0;">*
+                        {{ trans('messages.member') }}:
+                    </strong>
                     <select class="selectpicker form-control" name="user" id="user"
                             data-live-search="true">
                         @if(count($users) > 0)
-                            <option value="">{{ trans('messages.please_select_user') }}</option>
+                            <option value="">{{ trans('messages.please_select') }}</option>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}"
                                         @if(!empty($user_id) and $user_id == $user->id) selected @endif>
