@@ -193,11 +193,13 @@
         $('#myForm').submit(function () {
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
-            if (start_date >= end_date) {
-                $("#start_date").focus();
-                $('#with_errors_start_date').css('color', '#a94442');
-                $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");
-                return false;
+            if (start_date != '') {
+                if (start_date >= end_date) {
+                    $("#start_date").focus();
+                    $('#with_errors_start_date').css('color', '#a94442');
+                    $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");
+                    return false;
+                }
             }
 
         });
