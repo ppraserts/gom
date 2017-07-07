@@ -19,15 +19,16 @@
             <h2>{{ trans('messages.text_report_menu_shop') }}</h2>
         </div>
         {{csrf_field()}}
-        <form action="{{url('admin/reports/shop')}}" class="form-horizontal" id="my-form" method="GET">
+        <form action="{{url('admin/reports/shop')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             <input type="hidden" name="is_search" value="true">
             <div class="row">
                 <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
                     <strong class="col-sm-1" style="padding-right: 0; padding-left: 0;">
                         * {{ trans('messages.shop') }} :
                     </strong>
-
                     <select class="selectpicker form-control" name="shop[]" id="shop"
+                            data-error={{trans('validation.attributes.message_validate_shop')}}
+                            required='required'
                             data-live-search="true"
                             multiple>
                         @if(count($shops))
@@ -39,8 +40,7 @@
                             @endforeach
                         @endif
                     </select>
-                    <small class="alert-danger" id="ms_shop"></small>
-
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="row">
@@ -110,6 +110,7 @@
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
     $("#export").click(function () {
         var shop_id = [];

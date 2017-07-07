@@ -24,7 +24,7 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row">
             <h2>รายงานยอดจำหน่ายสินค้า</h2>
         </div>
-        <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="my-form" method="GET">
+        <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             {{--{{csrf_field()}}--}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
@@ -39,22 +39,24 @@ $pagetitle = trans('message.menu_order_list');
                         {{ trans('messages.text_start_date') }}:
                     </strong>
                     <div class='input-group date' id='pick_start_date'>
-                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
+                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                     </div>
+                    <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
                     <strong style="padding-right: 0;padding-left: 0;">
                         * {{ trans('messages.text_end_date') }} :
                     </strong>
                     <div class='input-group date' id='pick_end_date'>
-                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
+                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                     </div>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="row">
@@ -160,6 +162,7 @@ $pagetitle = trans('message.menu_order_list');
 <?php if(count($orderSaleItem) > 0){ ?>
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <style type="text/css">
     ${
 demo.css

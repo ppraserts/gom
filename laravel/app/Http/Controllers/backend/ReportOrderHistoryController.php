@@ -18,27 +18,25 @@ class ReportOrderHistoryController extends Controller
         $this->middleware('admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $users = $this->users();
+
+        if (!empty($request->input('is_search'))) {
+            $v = Validator::make($request->all(), [
+                'type_sale_buy' => 'required',
+                'user' => 'required',
+            ]);
+            if ($v->fails()) {
+                return redirect()->back()->withErrors($v->errors());
+            }
+            $type_sale_buy = $request->input('type_sale_buy');
+            $user_id = $request->input('user');
+            $results = $this->sqlFilterShowPaginate($type_sale_buy, $user_id);
+            return view('backend.reports.order_history_sale_buy', compact('users', 'results', 'type_sale_buy', 'user_id'));
+        }
         return view('backend.reports.order_history_sale_buy', compact('users'));
     }
-
-    public function filter(Request $request){
-        $v = Validator::make($request->all(), [
-            'type_sale_buy' => 'required',
-            'user' => 'required',
-        ]);
-        if ($v->fails()){
-            return redirect()->back()->withErrors($v->errors());
-        }
-        $users = $this->users();
-        $type_sale_buy = $request->input('type_sale_buy');
-        $user_id = $request->input('user');
-        $results = $this->sqlFilterShowPaginate($type_sale_buy,$user_id);
-        return view('backend.reports.order_history_sale_buy', compact('users','results','type_sale_buy','user_id'));
-    }
-
 
 
     public function exportExcel(Request $request)

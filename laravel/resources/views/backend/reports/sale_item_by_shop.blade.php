@@ -23,7 +23,7 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row text-center">
             <h2>รายงานยอดจำหน่ายร้านค้า</h2>
         </div>
-        <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="my-form" method="GET">
+        <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             {{--{{csrf_field()}}--}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
@@ -34,37 +34,41 @@ $pagetitle = trans('message.menu_order_list');
             </style>
             <div class="row">
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px;">
-                    <label style="padding-right: 0; padding-left: 0;">* {{ trans('messages.text_start_date') }}
-                        :</label>
+                    <label style="padding-right: 0; padding-left: 0;">
+                        * {{ trans('messages.text_start_date') }} :
+                    </label>
                     <div style="padding-right: 0px;">
                         <div class='input-group date ' id='pick_start_date'>
-                            {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
+                            {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <small class="alert-danger" id="ms_start_date"></small>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm col-md-6" style="padding-left: 0px; padding-right: 0;">
-                    <label style="padding-right: 0;padding-left: 0;">{{ trans('messages.text_end_date') }} :</label>
+                    <label style="padding-right: 0;padding-left: 0;">
+                        * {{ trans('messages.text_end_date') }} :
+                    </label>
                     <div style="padding-right: 0px;">
                         <div class='input-group date' id='pick_end_date'>
-                            {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
+                            {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        <small class="alert-danger" id="ms_end_date"></small>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
             </div>
             <div class="row">
 
                 <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
-                    <label style="padding-right: 0; padding-left: 0;">{{ trans('messages.shop_name') }}
-                        :</label>
+                    <label style="padding-right: 0; padding-left: 0;">
+                        {{ trans('messages.shop_name') }} :
+                    </label>
                     <div style="padding-right: 0;">
                         <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id"
                                 data-live-search="true"
@@ -89,18 +93,16 @@ $pagetitle = trans('message.menu_order_list');
                     </button>
                 </div>
             </div>
-    </div>
-    </form>
-    </div>
-    <div class="row" style="margin-top: 10px">
-        @if(count($shops) > 0 && count($errors) < 1)
-            <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
-        @else
-            <div class="alert alert-warning text-center">
-                <strong>{{trans('messages.data_not_found')}}</strong>
-            </div>
-        @endif
-    </div>
+        </form>
+        <div class="row" style="margin-top: 10px">
+            @if(count($shops) > 0 && count($errors) < 1)
+                <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
+            @else
+                <div class="alert alert-warning text-center">
+                    <strong>{{trans('messages.data_not_found')}}</strong>
+                </div>
+            @endif
+        </div>
     </div>
 @endsection
 @push('scripts')
@@ -143,6 +145,7 @@ $pagetitle = trans('message.menu_order_list');
 <?php if(count($shops) > 0){ ?>
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <style type="text/css">
     ${
 demo.css

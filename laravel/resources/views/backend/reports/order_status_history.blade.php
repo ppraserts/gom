@@ -18,7 +18,7 @@
         <div class="row text-center">
             <h2>{{ trans('messages.text_report_menu_order_status_history') }}</h2>
         </div>
-        <form action="{{url('admin/reports/orders')}}" method="GET" id="my-form">
+        <form action="{{url('admin/reports/orders')}}" id="myForm" method="GET" data-toggle="validator" role="form">
             {{--{{csrf_field()}}--}}
             <input type="hidden" name="is_search" value="true"/>
             <div class="row">
@@ -28,13 +28,12 @@
                     </strong>
 
                     <div class='input-group date ' id='pick_start_date'>
-                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date')) !!}
+                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                     </div>
-                    <small class="alert-danger" id="ms_start_date"></small>
-
+                    <div class="help-block with-errors"></div>
                 </div>
 
                 <div class="form-group form-group-sm col-md-4" style="padding-left: 0px;">
@@ -43,16 +42,13 @@
                     </strong>
 
                     <div class='input-group date' id='pick_end_date'>
-                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date')) !!}
+                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                     </div>
-                    <small class="alert-danger" id="ms_end_date"></small>
-
+                    <div class="help-block with-errors"></div>
                 </div>
-
-
                 <div class="form-group form-group-sm col-md-4" style="padding-left: 0px; padding-right: 0;">
                     <strong text-left" style="padding-right: 0;padding-left: 0;">
                     {{ trans('messages.order_id').'/'.trans('messages.order_status') }} :
@@ -153,6 +149,7 @@
 <script src="{{url('js/bootstrap-datepicker-thai.js')}}"></script>
 <script src="{{url('js/bootstrap-datepicker.th.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({

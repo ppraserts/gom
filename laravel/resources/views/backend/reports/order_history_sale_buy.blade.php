@@ -18,14 +18,17 @@
         <div class="row text-center">
             <h2>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h2>
         </div>
-        <form action="{{url('admin/reports/order-history-sale-buy')}}" method="POST">
-            {{csrf_field()}}
+        <form action="{{url('admin/reports/order-history-sale-buy')}}"  id="myForm" method="GET" data-toggle="validator" role="form">
+            {{--{{csrf_field()}}--}}
+            <input type="hidden" name="is_search" value="true">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <strong style="padding-right: 0; padding-left: 0;">*
                         {{ trans('messages.type_sale_buy') }}:
                     </strong>
-                    <select name="type_sale_buy" id="type_sale_buy" class="form-control">
+                    <select name="type_sale_buy" id="type_sale_buy" class="form-control"
+                            data-error={{trans('messages.please_select_type_sale_buy')}}
+                            required='required'>
                         <option value="">{{ trans('messages.please_select') }}</option>
                         <option value="sale" @if(!empty($type_sale_buy) and $type_sale_buy == 'sale') selected @endif>
                             {{ trans('messages.i_sale') }}
@@ -34,12 +37,15 @@
                             {{ trans('messages.i_buy') }}
                         </option>
                     </select>
+                    <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group col-sm-6">
                     <strong style="padding-right: 0; padding-left: 0;">*
                         {{ trans('messages.member') }}:
                     </strong>
                     <select class="selectpicker form-control" name="user" id="user"
+                            data-error={{trans('messages.please_select_user')}}
+                            required='required'
                             data-live-search="true">
                         @if(count($users) > 0)
                             <option value="">{{ trans('messages.please_select') }}</option>
@@ -57,6 +63,7 @@
                             <option value="">{{ trans('messages.found') }}</option>
                         @endif
                     </select>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="row">
@@ -148,14 +155,13 @@
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script>
     $("#export").click(function () {
         var type_sale_buy = $('#type_sale_buy option:selected').val()
         var user_id = $('#user option:selected').val()
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
-            //headerText: 'jQueryScript',
-            //dialogSize: 'sm',
             progressType: 'success'
         });
         $.ajax({

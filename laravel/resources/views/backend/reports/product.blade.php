@@ -20,7 +20,7 @@
 
         </div>
         {{csrf_field()}}
-        <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="my-form" method="GET">
+        <form action="{{url('admin/reports/product')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             <input type="hidden" name="is_search" value="true">
             <div class="row">
                 <div class="col-md-6 form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
@@ -28,7 +28,9 @@
                     <strong>
                         * {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
-                    <select id="productcategorys_id" name="productcategorys_id" class="form-control">
+                    <select id="productcategorys_id" name="productcategorys_id" class="form-control"
+                            data-error={{trans('validation.attributes.message_validate_product_category')}}
+                            required='required'>
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
@@ -37,7 +39,7 @@
                             </option>
                         @endforeach
                     </select>
-
+                    <div class="help-block with-errors"></div>
                 </div>
                 <div class="col-md-6  form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;padding-right: 0;">
@@ -124,6 +126,7 @@
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
     $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
