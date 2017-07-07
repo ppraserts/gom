@@ -45,6 +45,7 @@ $pagetitle = trans('message.menu_order_list');
                             </span>
                         </div>
                         <div class="help-block with-errors"></div>
+                        <span id="with_errors_start_date"> </span>
                     </div>
                 </div>
 
@@ -118,6 +119,19 @@ $pagetitle = trans('message.menu_order_list');
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
 <script type="text/javascript">
+    $(function () {
+        $('#myForm').submit(function () {
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            if (start_date >= end_date) {
+                $("#start_date").focus();
+                $('#with_errors_start_date').css('color', '#a94442');
+                $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");
+                return false;
+            }
+
+        });
+    });
     $(function () {
         $('#pick_start_date').datepicker({
             format: 'yyyy-mm-dd',
