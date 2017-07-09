@@ -247,7 +247,9 @@ class ShoppingCartController extends Controller
         $arr_more_data = array();
         if ($arr_summary_qty != null) {
             foreach ($arr_summary_qty as $key => $value) {
-                $value['product_request'] = ProductRequest::find($value['product_request_id']);
+                $value['product_request'] = ProductRequest::join('products', 'product_requests.products_id', '=', 'products.id')
+                ->select('product_requests.*', 'products.product_name_th', 'products.product_name_en')
+                ->where('product_requests.id',$value['product_request_id'])->first();
                 $arr_more_data[$key] = $value;
             }
         }

@@ -135,9 +135,9 @@ class OrderController extends Systems
             $orderStatusHistory = new OrderStatusHistory();
             $orderStatusHistory->status_id = $status_id;
             $orderStatusHistory->status_text = $status_text;
-            if (empty($payment_channel)) {
+            //if (empty($payment_channel)) {
                 $orderStatusHistory->note = $note;
-            }
+            //}
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
             $order['order_status'] = $status_id;
