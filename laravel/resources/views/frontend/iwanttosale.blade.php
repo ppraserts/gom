@@ -107,6 +107,11 @@ $url = "user/iwanttosale";
     @endpush
     <br/>
     <div class="row">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         {!! Form::open(['method'=>'GET','url'=>$url,'class'=>'','role'=>'search'])  !!}
         <div class="col-md-2">
             <select id="category" name="category" class="form-control">

@@ -266,6 +266,16 @@ return [
         'type_sale_buy'=>'ประเภทซื้อขาย',
         'start_date' => 'วันที่เริ่มต้น',
         'end_date' => 'วันที่สิ้นสุด',
+        'message_validate_productcategorys_id' => 'กรุณาเลือกกลุ่มสินค้า',
+        'message_validate_products_id' => 'กรุณาเลือกสินค้า',
+        'message_validate_product_package_size' => 'กรุณากรอกขนาดบรรจุ',
+        'message_validate_units' => 'กรุณาเลือกหน่วยนับขนาดบรรจุ',
+        'message_validate_grade' => 'กรุณาเกรด',
+        'message_validate_volumn' => 'กรุณากรอกปริมาณทั้งหมด',
+        'message_validate_min_order' => 'กรุณากรอกปริมาณที่ต้องการขายขั้นต่ำ',
+        'message_validate_min_order_units' => 'กรุณาเลือกหน่วยนับ',
+        'message_validate_price' => 'กรุณากรอกราคาต่อหน่วย(บาท)',
+        'message_validate_product_stock' => 'กรุณากรอกบริมาณคงเหลือ',
 
     ],
 

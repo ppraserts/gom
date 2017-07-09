@@ -2,6 +2,7 @@
 @push('scripts')
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script>
     var product_category_value = 0;
     CKEDITOR.replace('product_description');
@@ -42,14 +43,14 @@
 
     var products_array = [];
 
-    function validate() {
+    //function validate() {
         /*if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) {
             alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
             $('input[name=fake_products_name]').focus();
             return false;
         }*/
-        return true;
-    }
+       // return true;
+    //}
 
     $(function () {
         var query_url = '';
@@ -244,33 +245,75 @@
             var min_order = parseInt($("input[name=min_order]").val());
             var product_stock = parseInt($("input[name=product_stock]").val());
 
+            var selling_type = new Array();
+            $.each($("input[name='selling_type[]']:checked"), function() {
+                selling_type.push($(this).val());
+            });
+            if (selling_type.length === 0) {
+                $('#ms_selling_type').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $("#ms_selling_type").html("<?php echo trans('messages.ms_selling_type')?>");
+                return false;
+            }
+            var markets = new Array();
+            $.each($("input[name='product_markets[]']:checked"), function() {
+                markets.push($(this).val());
+            });
+
+            if (markets.length === 0) {
+                $('#ms_product_markets').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $("#ms_product_markets").html("<?php echo trans('messages.ms_market')?>");
+                return false;
+            }
+
+            var product_standard_arr = new Array();
+            $.each($("input[name='product_standard[]']:checked"), function() {
+                product_standard_arr.push($(this).val());
+            });
+
+            if (product_standard_arr.length === 0) {
+                var orther_product_standard = $("#product_standard").val();
+                if(orther_product_standard.length <= 0) {
+                    $('#ms_product_standard').css({
+                        'color': '#a94442',
+                        'background-color': 'white',
+                        'font-size': '15px'
+                    });
+                    $("#ms_product_standard").html("<?php echo trans('messages.ms_product_standard')?>");
+                }
+                return false;
+            }
+
             if(min_order <= 0){
                 $("input[name=min_order]").focus();
+                $('#ms_min_order').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
                 $("#ms_min_order").html("<?php echo trans('messages.ms_min_order')?>");
                 return false;
             }
             if(product_stock <= -1){
                 $("input[name=product_stock]").focus();
+                $('#ms_product_stock').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
                 $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
                 return false;
             }
             if(volumn != '' && product_stock != ''){
                 if(product_stock > volumn){
                     $("input[name=product_stock]").focus();
+                    $('#ms_product_stock').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
                     $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
                     return false;
                 }
             }
         })
     });
+
 </script>
 @endpush
 
 @section('content')
     @include('shared.usermenu', array('setActive'=>'iwanttosale'))
     <br/>
-    <form enctype="multipart/form-data" class="form-horizontal" id="form-productsaleedit" role="form" method="post"
-          action="{{ url('user/productsaleupdate') }}">
+    <form action="{{ url('user/productsaleupdate') }}" id="form-productsaleedit" method="post"
+           data-toggle="validator" role="form" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ Form::hidden('product1_file_temp', $item->product1_file) }}
         {{ Form::hidden('product2_file_temp', $item->product2_file) }}
@@ -309,13 +352,16 @@
                         <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
                         {{ trans('messages.clone_product')}}</button>
                     @endif
-                    <button type="submit" class="btn btn-primary" onclick="return validate();">
-                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                        {{ trans('messages.button_save')}}</button>
+                    {{--<button type="submit" class="btn btn-primary" onclick="return validate();">--}}
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                        {{ trans('messages.button_save')}}
+                    </button>
                     @if($showDelete)
                         <button id="btnDelete" type="button" class="btn btn-danger">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            {{ trans('messages.button_delete')}}</button>
+                            {{ trans('messages.button_delete')}}
+                        </button>
                     @endif
                 </div>
             </div>
@@ -344,7 +390,8 @@
                             <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
                             <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
                         @endif
-                        {{--<input type="radio" name="selling_type" value="all" {{ $item->selling_type == 'all'? 'checked="checked"' : '' }}> ทั้งคู่--}}
+                        <br/>
+                        <small class="alert-danger" id="ms_selling_type"></small>
                     </div>
                     <div class="col-xs-8 col-sm-8 col-md-8 form-inline">
                         <strong style="margin-right: 20px;">* {{ trans('validation.attributes.market') }}</strong>
@@ -355,31 +402,41 @@
                                 {{$markets[$i]->market_title_th}}
                             </label>
                         @endfor
+                        <br/><small class="alert-danger" id="ms_product_markets"></small>
                     </div>
                 </div>
                 {{-- row--}}
                 <div class="row" style="margin-top: 15px;">
-                    <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.productcategorys_id') }}
-                            :</strong>
-                        <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                            <option value="">{{ trans('messages.menu_product_category') }}</option>
+                    <div class="form-group col-xs-4 col-sm-6 col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.productcategorys_id') }} :
+                        </strong>
+                        <select id="productcategorys_id" name="productcategorys_id" class="form-control"
+                                data-error='{{trans('validation.attributes.message_validate_productcategorys_id')}}' required="required">
+                            <option value="">
+                                {{ trans('messages.menu_product_category') }}
+                            </option>
                             @foreach ($productCategoryitem as $key => $itemcategory)
                                 @if($item->productcategorys_id == $itemcategory->id)
-                                    <option selected
-                                            value="{{ $itemcategory->id }}">{{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}</option>
+                                    <option selected value="{{ $itemcategory->id }}">
+                                        {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
+                                    </option>
                                 @else
-                                    <option value="{{ $itemcategory->id }}">{{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}</option>
+                                    <option value="{{ $itemcategory->id }}">
+                                        {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
-
+                        <div class="help-block with-errors"></div>
                     </div>
-                    <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('products_id') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.products_id') }}
-                            :</strong>
-                        {!! Form::text('fake_products_name', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control typeahead')) !!}
+                    <div class="form-group col-xs-4 col-sm-6 col-md-4 {{ $errors->has('products_id') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.products_id') }} :
+                        </strong>
+                        {!! Form::text('fake_products_name', $product_name->product_name_th, array('placeholder' => trans('validation.attributes.products_id'),'class' => 'form-control typeahead','data-error'=>trans('validation.attributes.message_validate_products_id'),'required'=>'required')) !!}
                         <input type="hidden" id="products_id" name="products_id" value="{{ $item->products_id }}">
+                        <div class="help-block with-errors"></div>
                     </div>
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('product_title') ? 'has-error' : '' }}">
                         <strong>{{ trans('validation.attributes.product_title') }}
@@ -389,8 +446,8 @@
                 </div>
                 {{-- row--}}
                 @if(isset($standards))
-                    <div class="row" style="margin-top: 15px;">
-                        <div class="col-xs-12 col-sm-12 col-md-12 form-inline">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 form-inline">
                             <strong style="margin-right: 20px;">* {{ trans('validation.attributes.guarantee') }}</strong>
                             @for($i = 0 ; $i < count($standards) ; $i++)
                                 <label class="checkbox-inline">
@@ -400,13 +457,12 @@
                                 </label>
                             @endfor
                             <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
-                            {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control')) !!}
-
+                            {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control','id' => 'product_standard')) !!}
+                            <br/><small class="alert-danger" id="ms_product_standard"></small>
                         </div>
                     </div>
                 @endif
-
-                <div class="row" style="margin-top: 15px;">
+                <div class="row">
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.production_province') }} : </strong>
                         <select id="province" name="province" class="form-control">
@@ -452,15 +508,17 @@
             <div class="panel-body">
                 <div class="row">
                     <div id="div_packing_size"
-                         class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+                         class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
                         <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
-                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control')) !!}
+                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
                         <strong>
                             * {{ trans('validation.attributes.units_package') }} :
                         </strong>
-                        <select id="units" name="package_unit" class="form-control">
+                        <select id="units" name="package_unit" class="form-control"
+                                data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
                                 @if($item->package_unit == $unit->{ "units_".Lang::locale()})
@@ -474,9 +532,10 @@
                                 @endif
                             @endforeach
                         </select>
+                        <div class="help-block with-errors"></div>
                     </div>
 
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
                         <strong>เกรด :</strong>
                         <select id="grade" name="grade" class="form-control">
                             @foreach ($grades as $key => $value)
@@ -486,21 +545,25 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
-
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.volumn') }}
-                            :</strong>
-                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control')) !!}
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.volumn') }} :
+                        </strong>
+                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_volumn'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4">
-                        <strong>* {{ trans('validation.attributes.min_order') }}
-                            :</strong>
-                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control')) !!}
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4">
+                        <strong>
+                            * {{ trans('validation.attributes.min_order') }} :
+                        </strong>
+                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_min_order'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
                         <small class="alert-danger" id="ms_min_order"></small>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('unit') ? 'has-error' : '' }}">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('unit') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.units') }} :</strong>
-                        <select id="units" name="units" class="form-control">
+                        <select id="units" name="units" class="form-control"
+                                data-error={{trans('validation.attributes.message_validate_min_order_units')}} required='required'>
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
                                 @if($item->units == $unit->{ "units_".Lang::locale()})
@@ -511,18 +574,24 @@
                                 @endif
                             @endforeach
                         </select>
-
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="row " style="margin-top: 15px;">
-                    <div class="col-xs-6 col-sm-6 col-md-4 {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.price') }} :</strong>
-                        {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('price') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.price') }} :
+                        </strong>
+                        {!! Form::number('price', $item->price, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-4">
-                        <strong>*  {{ trans('validation.attributes.product_stock') }}:</strong>
-                        {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control')) !!}
+                        <strong>
+                            *  {{ trans('validation.attributes.product_stock') }} :
+                        </strong>
+                        {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_stock'),'required'=>'required')) !!}
                         <small class="alert-danger" id="ms_product_stock"></small>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="row " style="margin-top: 15px;">
@@ -530,7 +599,6 @@
                         <label class="control-label">
                             <strong>{{ trans('validation.attributes.selling_period') }} :</strong>
                         </label>
-
                         <input type="radio" name="selling_period"
                                value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
                         <input type="radio" name="selling_period" value="period" {{ $item->selling_period == 'peri'? 'checked="checked"' : '' }}>
@@ -599,7 +667,6 @@
                 </div>
             </div>
         </div>
-
         {{-- start form panel 3 --}}
         <div class="panel panel-default" style="margin-top: 20px;">
             <div class="panel-heading">

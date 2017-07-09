@@ -300,9 +300,13 @@ class ProductsSaleEditController extends Controller
 //        foreach ($itemssale as $div_item) {
 //            $this->SendEmailMatching($div_item);
 //        }
-
+        if($id == 0){
+            return redirect()->route('iwanttosale.index')
+                ->with('success', trans('messages.message_update_success'));
+        }
         return redirect()->route('productsaleedit.show', ['id' => $id])
             ->with('success', trans('messages.message_update_success'));
+
     }
 
     public function destroy($id)

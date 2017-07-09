@@ -46,7 +46,7 @@ class IwanttoSaleController extends Controller
 					  ->join('products', 'product_requests.products_id', '=', 'products.id')
 					  ->where('product_title','like','%'.$search.'%')
                       ->orWhere('price','like','%'.$search.'%')
-                      ->orWhere('guarantee','like','%'.$search.'%')
+                      //->orWhere('guarantee','like','%'.$search.'%')
                       ->orWhere('volumn','like','%'.$search.'%')
                       ->orWhere('productstatus','like','%'.$search.'%')
                       ->orWhere('units','like','%'.$search.'%')
