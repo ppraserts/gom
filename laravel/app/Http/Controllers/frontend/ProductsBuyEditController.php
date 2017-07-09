@@ -186,7 +186,9 @@ class ProductsBuyEditController extends Controller
             }
         }*/
 
-        return redirect()->route('productbuyedit.show', ['id' => $id])
+//        return redirect()->route('productbuyedit.show', ['id' => $id])
+//            ->with('success', trans('messages.message_update_success'));
+        return redirect('user/iwanttobuy')
             ->with('success', trans('messages.message_update_success'));
     }
 

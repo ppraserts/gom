@@ -276,6 +276,9 @@ return [
         'message_validate_min_order_units' => 'กรุณาเลือกหน่วยนับ',
         'message_validate_price' => 'กรุณากรอกราคาต่อหน่วย(บาท)',
         'message_validate_product_stock' => 'กรุณากรอกบริมาณคงเหลือ',
+        'message_validate_volumnrange_start' => 'กรุณากรอกปริมาณที่ต้องการซื้อ',
+        'message_validate_volumnrange_start' => 'ราคาต่อหน่วย เริ่มต้นที่ ( บาท)',
+        'message_validate_pricerange_end' => 'ราคาต่อหน่วย สิ้นสุดที่ (( บาท))',
 
     ],
 
