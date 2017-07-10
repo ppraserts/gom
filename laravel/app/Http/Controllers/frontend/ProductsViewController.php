@@ -32,8 +32,9 @@ class ProductsViewController extends Controller
     {
 
         $productRequest = ProductRequest::join('users', 'users.id', '=','product_requests.users_id')
+            ->join('products', 'product_requests.products_id', '=', 'products.id')
             ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id')
-            ->select(DB::raw('users.*, users.id AS user_id ,product_requests.*
+            ->select(DB::raw('users.*, users.id AS user_id ,product_requests.*, products.product_name_th
                 ,sum(comments.score)/count(comments.score) as avg_score'))
             ->where('product_requests.id', $id)
             ->first();
@@ -50,7 +51,7 @@ class ProductsViewController extends Controller
             ->select(DB::raw('comments.*, users.users_firstname_th, users.users_lastname_th'))
             ->where('product_id',$id)
             ->orderBy('created_at','desc')
-            ->paginate(25); //show list 15/page
+            ->paginate(25); //show list 25/page
         return view('frontend.productview', compact('productRequest', 'user','comments','status_comment','shop'));
     }
 

@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\frontend\MarketController;
 
 $url = "user/iwanttosale";
 ?>
@@ -155,7 +154,7 @@ $url = "user/iwanttosale";
             {
             foreach ($div_item as $col_md_4_item)
             {
-            $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+            $product_name = $col_md_4_item['product_name_th'];
 
             $imageName_temp = iconv('UTF-8', 'tis620', $col_md_4_item['product1_file']);
             if (!file_exists($imageName_temp)) {

@@ -145,7 +145,7 @@ class ProductsSaleEditController extends Controller
     public function updatesale(Request $request)
     {
         $id = $request->id;
-        $useritem = auth()->guard('user')->user();
+        $user = auth()->guard('user')->user();
 
 
         if ($id == 0)
@@ -182,7 +182,7 @@ class ProductsSaleEditController extends Controller
             $product->product_name_th = $request->fake_products_name;
             $product->product_name_en = $request->fake_products_name;
             $product->productcategory_id = $request->productcategorys_id;
-            $product->user_id = $useritem->id;
+            $product->user_id = $user->id;
             $product->sequence = 999;
             $product->save();
             $product_id = $product->id;
@@ -218,7 +218,7 @@ class ProductsSaleEditController extends Controller
             $productRequest->product3_file = "";
         }
 
-        $productRequest->iwantto = $useritem->iwanttosale;
+        $productRequest->iwantto = $user->iwanttosale;
         $productRequest->product_title = $request->product_title;
         $productRequest->product_description = $request->product_description;
         $productRequest->price = $request->price;
@@ -233,7 +233,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->province = $request->province;
         $productRequest->productcategorys_id = $request->productcategorys_id;
         $productRequest->products_id = $product_id;
-        $productRequest->users_id = $useritem->id;
+        $productRequest->users_id = $user->id;
         $productRequest->grade = $request->grade;
         $productRequest->sequence = $request->sequence;
 //        $productRequest->is_packing = $request->is_packing;
@@ -290,16 +290,18 @@ class ProductsSaleEditController extends Controller
             }
         }
 
-//        $itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
-//        $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
-//
-//        foreach ($itemsbuy as $div_item) {
-//            $this->SendEmailMatching($div_item);
-//        }
-//
-//        foreach ($itemssale as $div_item) {
-//            $this->SendEmailMatching($div_item);
-//        }
+        $itemsbuy = $productRequest->matchWithBuy($user->id, []);
+        $itemssale = $productRequest->matchingWithSale($user->id, []);
+
+        foreach ($itemsbuy as $item) {
+            if($item->products_id == $product_id)
+            $this->SendEmailMatching($item);
+        }
+
+        foreach ($itemssale as $item) {
+            if($item->products_id == $product_id)
+            $this->SendEmailMatching($item);
+        }
 
         return redirect('user/iwanttosale')
             ->with('success', trans('messages.message_update_success'));
@@ -329,22 +331,24 @@ class ProductsSaleEditController extends Controller
             ->with('success', trans('messages.message_delete_success'));
     }
 
-    private function SendEmailMatching($div_item)
+    private function SendEmailMatching($item)
     {
-        $sendemailTo = $div_item->email;
-        $sendemailFrom = env('MAIL_USERNAME');
+        if ($item->requset_email_system ==1){
+            $sendemailTo = $item->email;
+            $sendemailFrom = env('MAIL_USERNAME');
 
-        $data = array(
-            'fullname' => $div_item->users_firstname_th . " " . $div_item->users_lastname_th
-        );
-        sleep(0.1);
-        Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
-            $message->from($sendemailFrom
-                , "DGTFarm");
-            $message->to($sendemailTo)
-                ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
+            $data = array(
+                'fullname' => $item->users_firstname_th . " " . $item->users_lastname_th
+            );
+            sleep(0.1);
+            Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
+                $message->from($sendemailFrom
+                    , "DGTFarm");
+                $message->to($sendemailTo)
+                    ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
 
-        });
+            });
+        }
     }
 
     private function RemoveFolderImage($rawfile)

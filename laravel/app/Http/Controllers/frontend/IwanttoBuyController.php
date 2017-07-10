@@ -37,6 +37,7 @@ class IwanttoBuyController extends Controller
 
       $query = ProductRequest::where('users_id', $item->id)
                       ->where('iwantto', 'buy');
+      $query = $query->join('products', 'product_requests.products_id', '=', 'products.id');
       if($category != "")
         $query = $query->where('productcategorys_id', $category);
 
@@ -54,8 +55,7 @@ class IwanttoBuyController extends Controller
                                                     });
               }
               else {
-                     $query = $query->join('products', 'product_requests.products_id', '=', 'products.id')
-											  ->Where('product_title','like','%'.$search.'%')
+                     $query = $query->Where('product_title','like','%'.$search.'%')
                                               ->orWhere('units','like','%'.$search.'%')
                                               ->orWhere('city','like','%'.$search.'%')
                                               ->orWhere('province','like','%'.$search.'%')
@@ -67,8 +67,9 @@ class IwanttoBuyController extends Controller
 
 
       $items = $query->orderBy('product_requests.created_at','desc')
-                     ->paginate(config('app.paginate'));
+                     ->paginate(12);
                      //dd($items);
+
 
       return view('frontend.iwanttobuy',compact('items','productCategoryitem'))
           ->with('i', ($request->input('page', 1) - 1) * config('app.paginate'));

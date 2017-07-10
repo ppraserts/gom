@@ -64,13 +64,13 @@ $productRequest = new ProductRequest();
             {{ trans('messages.menu_matching') }}
             <span class="badge">
                            @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
-                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) + count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
+                    {{ count($productRequest->matchWithBuy($user->id, [])) + count($productRequest->matchingWithSale($user->id, ['price','quantity','province'])) }}
                 @endif
                 @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
-                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
+                    {{ count($productRequest->matchWithBuy($user->id, [])) }}
                 @endif
                 @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
-                    {{ count($productRequest->matchWithBuy($user->id, ['price','quantity','province'])) }}
+                    {{ count($productRequest->matchingWithSale($user->id, [])) }}
                 @endif
                            </span>
         </a>
@@ -81,17 +81,15 @@ $productRequest = new ProductRequest();
                 {{ trans('messages.menu_add_product') }}
             </a>
         </li>
-    @endif
-    @if($user->iwanttosale == "sale")
         <li role="presentation" {{ ($setActive == "promotion")? 'class=active' : ''  }}>
             <a href="{{ url('user/promotion') }}">
                 {{ trans('messages.menu_promotion') }}
             </a>
         </li>
+        <li role="presentation" {{ (Request::segment(2) == "reports")? 'class=active' : ''  }}>
+            <a href="{{ url('/user/reports/buy') }}">
+                รายงาน
+            </a>
+        </li>
     @endif
-    <li role="presentation" {{ (Request::segment(2) == "reports")? 'class=active' : ''  }}>
-        <a href="{{ url('/user/reports/buy') }}">
-            รายงาน
-        </a>
-    </li>
 </ul>
