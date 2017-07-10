@@ -34,8 +34,9 @@ class IwanttoBuyController extends Controller
         $search = \Request::get('search');
         $category = \Request::get('category');
 
-        $query = ProductRequest::where('users_id', $item->id)
-            ->where('iwantto', 'buy');
+        $query = ProductRequest::select('product_requests.*','products.product_name_th')
+                ->where('users_id', $item->id)
+                ->where('iwantto', 'buy');
         $query = $query->join('products', 'product_requests.products_id', '=', 'products.id');
         if ($category != "")
             $query = $query->where('productcategorys_id', $category);
@@ -51,7 +52,7 @@ class IwanttoBuyController extends Controller
                             ->where('volumnrange_end', '>=', $search);
                     });
             } else {
-                $query->where(function($query) use($search) {
+                $query->where(function ($query) use ($search) {
                     $query->Where('product_title', 'like', '%' . $search . '%')
                         ->orWhere('units', 'like', '%' . $search . '%')
                         ->orWhere('city', 'like', '%' . $search . '%')
