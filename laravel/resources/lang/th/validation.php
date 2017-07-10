@@ -278,7 +278,10 @@ return [
         'message_validate_product_stock' => 'กรุณากรอกบริมาณคงเหลือ',
         'message_validate_volumnrange_start' => 'กรุณากรอกปริมาณที่ต้องการซื้อ',
         'message_validate_volumnrange_start' => 'ราคาต่อหน่วย เริ่มต้นที่ ( บาท)',
-        'message_validate_pricerange_end' => 'ราคาต่อหน่วย สิ้นสุดที่ (( บาท))',
+        'message_validate_pricerange_end' => 'ราคาต่อหน่วย สิ้นสุดที่ ( บาท)',
+        'message_validate_image_payment' => 'กรุณาเลือกไฟล์แจ้งชำระเงิน',
+        'message_validate_type_payment' => 'กรุณาเลือกไฟล์รูปภาพ หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
+        'message_validate_delivery_image' => 'กรุณาเลือกไฟล์ข้อมูลจัดส่งสินค้า หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
 
     ],
 

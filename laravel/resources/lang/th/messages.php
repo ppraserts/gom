@@ -285,4 +285,6 @@ return [
     'text_loading_lease_wait'=> 'กำลังส่งออกข้อมูล. กรุณารอซักครู่...',
     'text_download' => 'ดาวน์โหลด',
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
+    'message_validate_order_channel' => 'กรุณาเลือกช่องทางการชำระเงิน',
+
 ];

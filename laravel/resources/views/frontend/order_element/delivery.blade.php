@@ -23,8 +23,9 @@
                 <span id="mss_order_date" class="alert-danger"></span>
             </div>
             <div class="input-group">
-                <strong> {{ trans('messages.text_image_delivery') }} :</strong>
-                <input type="file" name="delivery_image"><br/>
+                <strong> * {{ trans('messages.text_image_delivery') }} :</strong>
+                <input type="file" name="delivery_image" id="delivery_image">
+                <small class="alert-danger" id="ms_delivery_image"></small><br/>
             </div>
 
             <div class="form-group ">

@@ -233,6 +233,52 @@ $pagetitle = trans('message.menu_order_list');
         }
     });
 
+    $(document).ready(function(){
+        $("#form-image_payment").submit(function (e) {
+            var payment_file =  $('#payment_image').val();
+            if (payment_file == '') {
+                $('#payment_image').val('');
+                $('#ms_payment_image').css({
+                    'color': '#a94442',
+                    'background-color': 'rgba(255, 235, 59, 0.18)',
+                    'font-size': '15px'
+                });
+                $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
+                $('#payment_image').focus;
+                return false;
+            }
+        })
+    });
+
+    $("#payment_image").on("change", function () {
+        var ext = $('#payment_image').val().split('.').pop().toLowerCase();
+        $("#ms_payment_image").empty();
+        if($.inArray(ext, ['gif','png','jpg','jpeg','pdf','PDF','JPG']) == -1) {
+
+            $('#payment_image').val('');
+            $('#ms_payment_image').css({
+                'color': '#a94442',
+                'background-color': 'rgba(255, 235, 59, 0.18)',
+                'font-size': '15px'
+            });
+            $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
+            $('#payment_image').focus();
+            return false;
+        }
+    });
+
+    $("#delivery_image").on("change", function () {
+        var ext = $('#delivery_image').val().split('.').pop().toLowerCase();
+        $("#ms_delivery_image").empty();
+        if($.inArray(ext, ['gif','png','jpg','jpeg','pdf','PDF','JPG']) == -1) {
+
+            $('#delivery_image').val('');
+            $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
+            $('#delivery_image').focus();
+            return false;
+        }
+    });
+
     $('#pick_start_date').datepicker({
         format: 'yyyy-mm-dd',
         language: 'th-th',
@@ -271,15 +317,24 @@ $pagetitle = trans('message.menu_order_list');
         $("#delivery_form").submit(function (e) {
             var delivery_chanel = $("#delivery_chanel").val();
             var order_date = $("#order_date").val();
-
+            var delivery_image = $('#delivery_image').val();
+            $("#mss_delivery_chanel").empty();
             if (delivery_chanel == '') {
                 $("#delivery_chanel").focus();
                 $("#mss_delivery_chanel").html("<?php echo trans('messages.message_validate_delivery_chanel')?>");
                 return false;
             }
+            $("#mss_order_date").empty();
             if (order_date == '') {
                 $("#order_date").focus();
                 $("#mss_order_date").html("<?php echo trans('messages.message_validate_delivery_date')?>");
+                return false;
+            }
+            if (delivery_image == '') {
+                $('#delivery_image').val('');
+
+                $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
+                $('#delivery_image').focus;
                 return false;
             }
 
