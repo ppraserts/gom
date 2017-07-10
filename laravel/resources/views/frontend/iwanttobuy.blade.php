@@ -1,6 +1,4 @@
 <?php
-use App\Http\Controllers\frontend\MarketController;
-
 $url = "user/iwanttobuy";
 ?>
 @extends('layouts.main')
@@ -155,7 +153,7 @@ $url = "user/iwanttobuy";
             {
             foreach ($div_item as $col_md_4_item)
             {
-            $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+            $product_name = $col_md_4_item['product_name_th']
             ?>
             <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
                 <div class="col-item">

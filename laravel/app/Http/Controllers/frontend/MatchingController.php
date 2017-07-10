@@ -7,9 +7,7 @@ use DB;
 use Hash;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Model\frontend\User;
 use App\ProductRequest;
 
 class MatchingController extends Controller
@@ -35,15 +33,15 @@ class MatchingController extends Controller
 
         /** set filter condition */
         $conditions = array();
-        $filterprice = $request->input('filterprice') != null ? $request->input('filterprice') : true;
+        $filterprice = $request->input('filterprice') != null ? $request->input('filterprice') : false;
         if ($filterprice) {
             array_push($conditions, "price");
         }
-        $filterquantity = $request->input('filterquantity') != null ? $request->input('filterquantity') : true;
+        $filterquantity = $request->input('filterquantity') != null ? $request->input('filterquantity') : false;
         if ($filterquantity) {
             array_push($conditions, "quantity");
         }
-        $filterprovince = $request->input('filterprovince') != null ? $request->input('filterprovince') : true;
+        $filterprovince = $request->input('filterprovince') != null ? $request->input('filterprovince') : false;
         if ($filterprovince) {
             array_push($conditions, "province");
         }

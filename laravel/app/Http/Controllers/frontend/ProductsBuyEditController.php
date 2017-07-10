@@ -82,7 +82,7 @@ class ProductsBuyEditController extends Controller
 
     public function update(Request $request, $id)
     {
-        $useritem = auth()->guard('user')->user();
+        $user = auth()->guard('user')->user();
 
         $product_id = $request->products_id;
         $productExist = false;
@@ -109,7 +109,7 @@ class ProductsBuyEditController extends Controller
             $product->product_name_th = $request->fake_products_name;
             $product->product_name_en = $request->fake_products_name;
             $product->productcategory_id = $request->productcategorys_id;
-            $product->user_id = $useritem->id;
+            $product->user_id = $user->id;
             $product->sequence = 999;
             $product->save();
             $product_id = $product->id;
@@ -143,11 +143,11 @@ class ProductsBuyEditController extends Controller
         $productRequest->province = $request->province;
         //$productRequest->product_description = $request->product_description;
 
-        $productRequest->iwantto = $useritem->iwanttobuy;
+        $productRequest->iwantto = $user->iwanttobuy;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->productstatus = "open";
         $productRequest->products_id = $product_id;
-        $productRequest->users_id = $useritem->id;
+        $productRequest->users_id = $user->id;
         $productRequest->selling_type = $request->selling_type;
 
         //return $productRequest;
@@ -171,42 +171,40 @@ class ProductsBuyEditController extends Controller
             $productRequest->update();
         }
 
-        /*$itemsbuy = $productRequest->GetSaleMatchingWithBuy($useritem->id, '');
-        $itemssale = $productRequest->GetBuyMatchingWithSale($useritem->id, '');
+        $itemsbuy = $productRequest->matchWithBuy($user->id, []);
+        $itemssale = $productRequest->matchingWithSale($user->id, []);
 
-        foreach ($itemsbuy as $div_item) {
-            if ($div_item->requset_email_system == 1){
-                $this->SendEmailMatching($div_item);
-            }
+        foreach ($itemsbuy as $item) {
+            if($item->products_id == $product_id)
+                $this->SendEmailMatching($item);
         }
 
-        foreach ($itemssale as $div_item) {
-            if ($div_item->requset_email_system == 1) {
-                $this->SendEmailMatching($div_item);
-            }
-        }*/
+        foreach ($itemssale as $item) {
+            if($item->products_id == $product_id)
+                $this->SendEmailMatching($item);
+        }
 
-//        return redirect()->route('productbuyedit.show', ['id' => $id])
-//            ->with('success', trans('messages.message_update_success'));
         return redirect('user/iwanttobuy')
             ->with('success', trans('messages.message_update_success'));
     }
 
-    private function SendEmailMatching($div_item)
+    private function SendEmailMatching($item)
     {
-        $sendemailTo = $div_item->email;
-        $sendemailFrom = env('MAIL_USERNAME');
+        if ($item->requset_email_system ==1){
+            $sendemailTo = $item->email;
+            $sendemailFrom = env('MAIL_USERNAME');
 
-        $data = array(
-            'fullname' => $div_item->users_firstname_th . " " . $div_item->users_lastname_th
-        );
-        sleep(0.1);
-        Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
-            $message->from($sendemailFrom
-                , "DGTFarm");
-            $message->to($sendemailTo)
-                ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
+            $data = array(
+                'fullname' => $item->users_firstname_th . " " . $item->users_lastname_th
+            );
+            sleep(0.1);
+            Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
+                $message->from($sendemailFrom
+                    , "DGTFarm");
+                $message->to($sendemailTo)
+                    ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
 
-        });
+            });
+        }
     }
 }

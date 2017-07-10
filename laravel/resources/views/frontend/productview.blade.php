@@ -21,7 +21,8 @@ function renderHTML($text)
 
                 @else
                     @if($productRequest->users_imageprofile != "")
-                        <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}" class="img-circle">
+                        <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}"
+                             class="img-circle">
                         <br/><br/>
                     @endif
                     @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale")
@@ -30,190 +31,33 @@ function renderHTML($text)
                         </a>
                     @endif
                 @endif
-                <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
-                @include('frontend.product_element.seller')
-                    <div class="row">
-                        <div class="col-md-12">
-                <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px;"></div>
-                    <p><strong>{{ $productRequest->product_title }}</strong></p>
-                            <?php
-                            $avg_score=0;
-                            if(!empty($productRequest->avg_score)){
-                                $avg_score = round($productRequest->avg_score);
-                            }
-                            ?>
-
-                            <p class="score-star">
-                                @if($avg_score == 1)
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                @elseif($avg_score == 2)
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                @elseif($avg_score == 3)
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                @elseif($avg_score == 4)
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                @elseif($avg_score == 5)
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                @elseif($avg_score == 0)
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                @endif
-
-                            </p>
-                    <p>
-                        {{ trans('validation.attributes.price') }} :
-                        <strong>
-                            @if($productRequest->iwantto == "buy")
-                                {{ floatval($productRequest->pricerange_start) }}
-                                - {{ floatval($productRequest->pricerange_end) }}
-                            @endif
-                            @if($productRequest->iwantto == "sale")
-                                @if($productRequest->is_showprice)
-                                    {{ floatval($productRequest->price) }}
-                                @endif
-                                @if(!$productRequest->is_showprice)
-                                    {{ trans('messages.product_no_price') }}
-                                @endif
-                            @endif
-                        </strong>
-                    </p>
-
-                    <p>
-                        {{ trans('validation.attributes.volumn') }} :
-                        <strong>
-                            @if($productRequest->iwantto == "buy")
-                                {{ floatval($productRequest->volumnrange_start) }}
-                                - {{ floatval($productRequest->volumnrange_end) }}  {{ $productRequest->units }}
-                            @endif
-                            @if($productRequest->iwantto == "sale")
-                                {{ floatval($productRequest->volumn) }} {{ $productRequest->units }}
-                            @endif
-                        </strong>
-                    </p>
-                    <p>
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                        {{ $productRequest->city }} {{ $productRequest->province }}
-                    </p>
-                    @if($user->id == $productRequest->users_id)
-                        <p>
-                             <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-pencil"></span> {{trans('messages.edit')}}
-                             </a>
-                        </p>
-                    @else
-                        @if($productRequest['productstatus'] == 'open')
-                            @if($productRequest->iwantto == "sale")
-                                <p>
-                                    <button type="button" onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
-                                            class="btn btn-primary">
-                                        <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
-                                    </button>
-                                </p>
-                            @endif
-                        @endif
-                    @endif
-                        </div>
-                    </div>
-            </div>
-            <div class="col-md-8" style="background-color:#FFFFFF; padding:20px;">
+                <div class="clearfix"
+                     style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
                 @if($productRequest->iwantto == "sale")
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            @if($productRequest->product1_file != "")
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            @endif
-                            @if($productRequest->product2_file != "")
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            @endif
-                            @if($productRequest->product3_file != "")
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            @endif
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            @if($productRequest->product1_file != "")
-                                <div class="item crop-height-slide active">
-                                    <a href="{{ url($productRequest->product1_file) }}" data-lightbox="products"
-                                       data-title="{{ trans('validation.attributes.product1_file') }}">
-                                        <img class="scale setHeight" src="{{ url($productRequest->product1_file) }}">
-                                    </a>
-                                    <div class="carousel-caption"></div>
-                                </div>
-                            @endif
-                            @if($productRequest->product2_file != "")
-                                <div class="item crop-height-slide">
-                                    <a href="{{ url($productRequest->product2_file) }}" data-lightbox="products"
-                                       data-title="{{ trans('validation.attributes.product2_file') }}">
-                                        <img class="scale setHeight" src="{{ url($productRequest->product2_file) }}">
-                                    </a>
-                                    <div class="carousel-caption"></div>
-                                </div>
-                            @endif
-                            @if($productRequest->product3_file != "")
-                                <div class="item crop-height-slide">
-                                    <a href="{{ url($productRequest->product3_file) }}" data-lightbox="products"
-                                       data-title="{{ trans('validation.attributes.product3_file') }}">
-                                        <img class="scale setHeight" src="{{ url($productRequest->product3_file) }}">
-                                    </a>
-                                    <div class="carousel-caption"></div>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <br/>
+                    @include('frontend.product_element.seller')
+                @else
+                    @include('frontend.product_element.buyer')
                 @endif
-
             </div>
+            @if($productRequest->iwantto == "sale")
+                @include('frontend.product_element.product_detail')
+            @else
+                @include('frontend.product_element.want_buy_detail')
+            @endif
         </div>
     </div>
-    <div class="row" style="margin-top: 15px;">
-        <div class="col-lg-12">
-            <div class="detailBox">
-                <div class="commentBox row">
-                <h4>{{ trans('messages.text_detail_product') }} : {{ $productRequest->product_title }}</h4>
-                <p>{!! $productRequest->product_description !!}</p>
+
+    @if($productRequest->iwantto == "sale")
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-lg-12">
+                <div class="detailBox">
+                    <div class="commentBox row">
+                        <h4>{{ trans('messages.text_detail_product') }} : {{ $productRequest->product_title }}</h4>
+                        <p>{!! $productRequest->product_description !!}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @if($productRequest->iwantto == "sale")
         <div class="row" style="margin-top: 15px;">
             <div class="col-lg-12">
                 <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">

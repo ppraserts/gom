@@ -22,8 +22,8 @@ class IwanttoSaleController extends Controller
 
   public function index(Request $request)
   {
-      $item = auth()->guard('user')->user();
-      if($item->iwanttosale != 'sale' )
+      $user = auth()->guard('user')->user();
+      if($user->iwanttosale != 'sale' )
       {
         return redirect()->action('frontend\UserProfileController@index');
       }
@@ -34,16 +34,17 @@ class IwanttoSaleController extends Controller
       $search = \Request::get('search');
       $category = \Request::get('category');
 
-      $query = ProductRequest::where('users_id', $item->id)
+      $query = ProductRequest::where('users_id', $user->id)
                       ->where('iwantto', 'sale');
-
-      if($category != "")
-        $query = $query->where('productcategorys_id', $category);
+      $query = $query
+          ->join('products', 'product_requests.products_id', '=', 'products.id');
+      if($category != ""){
+          $query = $query->where('productcategorys_id', $category);
+      }
 
       if($search != "")
       {
         $query = $query
-					  ->join('products', 'product_requests.products_id', '=', 'products.id')
 					  ->where('product_title','like','%'.$search.'%')
                       ->orWhere('price','like','%'.$search.'%')
                       //->orWhere('guarantee','like','%'.$search.'%')
@@ -58,14 +59,11 @@ class IwanttoSaleController extends Controller
       $items = $query
           ->orderBy('product_requests.sequence','asc')
           ->orderBy('product_requests.updated_at','desc')
-          ->paginate(config('app.paginate'));
+          ->paginate(12);
 
       return view('frontend.iwanttosale',compact('items','productCategoryitem'))
           ->with('i', ($request->input('page', 1) - 1) * config('app.paginate'));
 
   }
 
-  public function productEdit(Request $request)
-  {
-  }
 }

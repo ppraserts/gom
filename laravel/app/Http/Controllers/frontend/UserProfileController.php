@@ -19,13 +19,13 @@ class UserProfileController extends Controller
     'users_firstname_th' => 'required|max:255',
     'users_lastname_th' => 'required|max:255',
     'users_dateofbirth' => 'required|date_format:Y-m-d',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
+    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
   ];
 
   private $rulescompany = [
     'users_company_th' => 'required|max:255',
     'users_company_en' => 'required|max:255',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
+    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
   ];
 
   public function __construct()
