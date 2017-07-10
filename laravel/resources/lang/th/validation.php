@@ -282,6 +282,7 @@ return [
         'message_validate_image_payment' => 'กรุณาเลือกไฟล์แจ้งชำระเงิน',
         'message_validate_type_payment' => 'กรุณาเลือกไฟล์รูปภาพ หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
         'message_validate_delivery_image' => 'กรุณาเลือกไฟล์ข้อมูลจัดส่งสินค้า หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
+        'message_validate_product1_file' => 'รูปภาพสินค้าจำเป็นต้องเลือกรูปภาพสินค้าอย่างน้อย 1 รูปภาพ',
 
     ],
 

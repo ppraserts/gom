@@ -679,9 +679,14 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px">
-                    <div class="col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product1_file') ? 'has-error' : '' }}">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product1_file') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.product1_file') }}:</strong>
-                        {!! Form::file('product1_file', null, array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control')) !!}
+                        @if(!empty($item->product1_file))
+                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control')) !!}
+                        @else
+                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product1_file'),'required'=>'required')) !!}
+                        @endif
+                        <div class="help-block with-errors"></div>
                     </div>
                     @if($item != null && $item->product1_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
@@ -694,9 +699,9 @@
                     @endif
                 </div>
                 <div class="row" style="margin-top: 15px">
-                    <div class="col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product2_file') ? 'has-error' : '' }}">
+                    <div class="@if(empty($item->product2_file)) form-group @endif  col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product2_file') ? 'has-error' : '' }}">
                         <strong>{{ trans('validation.attributes.product2_file') }}:</strong>
-                        {!! Form::file('product2_file', null, array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control')) !!}
+                        {!! Form::file('product2_file', array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control')) !!}
                     </div>
                     @if($item != null && $item->product2_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
@@ -707,9 +712,9 @@
                     @endif
                 </div>
                 <div class="row" style="margin-top: 15px">
-                    <div class="col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product3_file') ? 'has-error' : '' }}">
+                    <div class="@if(empty($item->product3_file)) form-group @endif  col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product3_file') ? 'has-error' : '' }}">
                         <strong>{{ trans('validation.attributes.product3_file') }}:</strong>
-                        {!! Form::file('product3_file', null, array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control')) !!}
+                        {!! Form::file('product3_file', array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control')) !!}
                     </div>
                     @if($item != null && $item->product3_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
