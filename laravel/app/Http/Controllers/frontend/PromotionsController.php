@@ -244,13 +244,8 @@ class PromotionsController extends Controller
     {
         sleep(1);
         if ($rawfile != "") {
-            $rawfileArr = explode("/", $rawfile);
-            $indexFile = count($rawfileArr) - 1;
-            $indexFolder = count($rawfileArr) - 2;
-
-            if (File::exists($rawfile) && $indexFolder >= 0) {
+            if (File::exists($rawfile)) {
                 File::delete($rawfile);
-                File::deleteDirectory(config('app.upload_promotion') . $rawfileArr[$indexFolder]);
             }
         }
     }

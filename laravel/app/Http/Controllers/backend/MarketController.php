@@ -79,11 +79,12 @@ class MarketController extends Controller
 
      private function RemoveFolderImage($rawfile)
     {
-        $rawfileArr = explode("/", $rawfile);
-        $indexFile = count($rawfileArr) - 1;
-        $indexFolder = count($rawfileArr) - 2;
-        File::delete($rawfile);
-        File::deleteDirectory(config('app.upload_marketimage').$rawfileArr[$indexFolder]);
+        sleep(1);
+        if ($rawfile != "") {
+            if (File::exists($rawfile)) {
+                File::delete($rawfile);
+            }
+        }
     }
 
     private function UploadImage(Request $request)

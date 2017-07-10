@@ -112,7 +112,7 @@ class ShopSettingController extends Controller
         $image_path = $request->file($filename)->getPathname();
         $orgFilePathName = $request->{$filename}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
-        $image_directory = config('app.shopimage');
+        $image_directory = config('app.upload_shopimage');
         $image_path_filename = $image_directory . time() .".".$ext;
 //        File::makeDirectory($image_directory, 0777, true, true);
 
@@ -127,13 +127,9 @@ class ShopSettingController extends Controller
     {
         sleep(1);
         if ($rawfile != "") {
-            $rawfileArr = explode("/", $rawfile);
-            $indexFile = count($rawfileArr) - 1;
-            $indexFolder = count($rawfileArr) - 2;
 
             if (File::exists($rawfile)) {
                 File::delete($rawfile);
-                File::deleteDirectory(config('app.upload_shopimage') . $rawfileArr[$indexFolder]);
             }
         }
     }
@@ -147,24 +143,39 @@ class ShopSettingController extends Controller
         return false;
     }
 
-    public function setTheme($theme_name)
+    public function setTheme(Request $request,$theme_name)
     {
-        $user = auth()->guard('user')->user();
-        $shop = Shop::where('user_id', $user->id)->first();
-        if ($shop != null && $theme_name != '') {
-            $shop->theme = $theme_name;
-            $shop->update();
+        if($request->ajax()) {
+            $user = auth()->guard('user')->user();
+            $shop = Shop::where('user_id', $user->id)->first();
+            if ($shop != null && $theme_name != '') {
+                $shop->theme = $theme_name;
+                $shop->update();
 
-            $shop_setting = session('shop');
-            if ($shop_setting == null)
-                $shop_setting = array();
+                $shop_setting = session('shop');
+                if ($shop_setting == null)
+                    $shop_setting = array();
 
-            $shop_setting["theme"] = $theme_name;
-            $shop_setting["shop_name"] = $shop->shop_name;
-            session(['shop' => $shop_setting]); // Save to session
+                $shop_setting["theme"] = $theme_name;
+                $shop_setting["shop_name"] = $shop->shop_name;
+                session(['shop' => $shop_setting]); // Save to session
 
+            }
+            return response()->json(array('status' => 'true'));
         }
-        return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
+//        return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
+    }
+
+    public function checkShopName(Request $request,$shop_name){
+        if($request->ajax()){
+
+            $validator = $this->getValidationFactory()->make($request->all(), $this->rules(null));
+            if ($validator->fails()) {
+                return response()->json(array('used' => false));
+            }
+            return response()->json(array('used' => true));
+        }
+
     }
 
 }
