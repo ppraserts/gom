@@ -35,25 +35,24 @@ class IwanttoSaleController extends Controller
       $category = \Request::get('category');
 
       $query = ProductRequest::where('users_id', $item->id)
-                      ->where('iwantto', 'sale');
+                ->where('iwantto', 'sale')
+                ->join('products', 'product_requests.products_id', '=', 'products.id');
 
       if($category != "")
         $query = $query->where('productcategorys_id', $category);
 
       if($search != "")
       {
-        $query = $query
-          ->join('products', 'product_requests.products_id', '=', 'products.id')
-            ->where('product_title','like','%'.$search.'%')
-          ->where(function($query) use($search) {
-              $query->orWhere('price','like','%'.$search.'%')
-              //->orWhere('guarantee','like','%'.$search.'%')
-              ->orWhere('volumn','like','%'.$search.'%')
-              ->orWhere('productstatus','like','%'.$search.'%')
-              ->orWhere('units','like','%'.$search.'%')
-              ->orWhere('city','like','%'.$search.'%')
-              ->orWhere('province','like','%'.$search.'%')
-              ->orWhere('product_name_th','like','%'.$search.'%');
+        $query = $query->where(function($query) use($search) {
+            $query->where('product_title','like','%'.$search.'%')
+                    ->orWhere('price','like','%'.$search.'%')
+                    //->orWhere('guarantee','like','%'.$search.'%')
+                    ->orWhere('volumn','like','%'.$search.'%')
+                    ->orWhere('productstatus','like','%'.$search.'%')
+                    ->orWhere('units','like','%'.$search.'%')
+                    ->orWhere('city','like','%'.$search.'%')
+                    ->orWhere('province','like','%'.$search.'%')
+                    ->orWhere('product_name_th','like','%'.$search.'%');
             });
       }
 
