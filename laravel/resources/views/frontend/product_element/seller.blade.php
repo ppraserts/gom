@@ -162,6 +162,7 @@
         @else
             @if($productRequest['productstatus'] == 'open')
                 @if($productRequest->iwantto == "sale")
+                    @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail")
                     <p>
                         <button type="button"
                                 onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
@@ -169,6 +170,7 @@
                             <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
                         </button>
                     </p>
+                    @endif
                 @endif
             @endif
         @endif
