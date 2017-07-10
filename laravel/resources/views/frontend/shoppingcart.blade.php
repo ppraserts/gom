@@ -120,12 +120,17 @@
                                                  style="width: 60px; height: 60px;">
                                         </a>
                                         <div class="media-body">
-                                            <h4 class="media-heading"><a href="#">{{$cart['product_request']['product_title']}}</a></h4>
+                                            <h4 class="media-heading">
+                                                <a href="#">
+                                                    {{$cart['product_request']['product_name_th']}}
+                                                </a>
+                                            </h4>
                                             <h5 class="media-heading"><a href="#"></a></h5>
                                             <span class="text-success">
-                                            <span class="glyphicon glyphicon-map-marker"></span>
+                                                {{--<span class="glyphicon glyphicon-map-marker"></span>--}}
                                                 <strong>
-                                               {{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}
+                                                    {{ trans('validation.attributes.product_title') }} : {{$cart['product_request']['product_title']}}
+                                               {{--{{ $cart['product_request']['city'] }} {{ $cart['product_request']['province'] }}--}}
                                                 </strong>
                                             </span>
                                         </div>
@@ -238,9 +243,16 @@
 
     @if(count($shopping_carts) > 0)
         <div class="row" style="background-color: white">
-            <div class="col-md-9"><span class="pull-right"><h3>{{ trans('messages.total_net') }}</h3></span></div>
-            <div class="col-md-3"><span class="pull-right"
-                                        style="margin-right: 20px"><h3>{{number_format($total_net)}} {{ trans('messages.baht') }}</h3></span></div>
+            <div class="col-md-9">
+                <span class="pull-right">
+                    <h3>{{ trans('messages.total_net') }}</h3>
+                </span>
+            </div>
+            <div class="col-md-3">
+                <span class="pull-right" style="margin-right: 20px">
+                    <h3>{{number_format($total_net)}} {{ trans('messages.baht') }}</h3>
+                </span>
+            </div>
         </div>
     @endif
 
@@ -260,14 +272,14 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-inline">
-                        <div class="form-group" style="margin-bottom: 5px;">
-                            <label style="width: 137px;">{{trans('messages.text_product_stock')}} : </label>
-                            <input type="number" class="form-control" id="show_product_stock" disabled>
+                        <div class="form-group" style="margin-bottom: 5px; display: block">
+                            <label style="width: 165px;">{{trans('messages.text_product_stock')}} : </label>
+                            <span id="show_product_stock"></span>
                             <span class="text_unit"></span>
                         </div>
-                        <div class="form-group" style="margin-bottom: 5px;">
-                            <label style="width: 137px; vertical-align: bottom;"> {{trans('messages.text_unit_sale')}} : </label>
-                            <input type="number" class="form-control" id="min_order" disabled>
+                        <div class="form-group" style="margin-bottom: 5px; display: block">
+                            <label style="width: 165px;"> {{trans('messages.text_unit_sale')}} : </label>
+                            <span id="min_order"></span>
                             <span class="text_unit"></span>
                         </div>
                         <div class="form-group">
@@ -280,8 +292,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{trans('messages.text_close')}}</button>
-                    <button type="button" id="update_qty_new" class="btn btn-primary">{{trans('messages.edit')}}</button>
+                    {{--<button type="button" class="btn btn-danger" data-dismiss="modal">{{trans('messages.text_close')}}</button>--}}
+                    <button type="button" id="update_qty_new" class="btn btn-primary">{{trans('messages.ok')}}</button>
                 </div>
             </div>
 
@@ -360,8 +372,8 @@
             var min_order = $(this).attr('data-minorder');
             $('#qtyModal').modal('show');
             $('#qty_new').val(qty);
-            $('#min_order').val(min_order);
-            $('#show_product_stock').val(product_stock);
+            $('#min_order').text(min_order);
+            $('#show_product_stock').text(product_stock);
             $('#qty_url').val(url_update_qty);
             $('#product_stock').val(product_stock);
             $('.text_unit').html(units);

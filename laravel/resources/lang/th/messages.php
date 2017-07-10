@@ -136,6 +136,7 @@ return [
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'product_list' => 'รายการสินค้า',
     'baht' => ' บาท',
+    'ok' => 'ตกลง',
     'order_status' => 'สถานะ',
     'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
     'order_type' => 'ประเภทการสั่งซื้อ',
@@ -284,4 +285,6 @@ return [
     'text_loading_lease_wait'=> 'กำลังส่งออกข้อมูล. กรุณารอซักครู่...',
     'text_download' => 'ดาวน์โหลด',
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
+    'message_validate_order_channel' => 'กรุณาเลือกช่องทางการชำระเงิน',
+
 ];
