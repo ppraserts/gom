@@ -43,16 +43,18 @@ class IwanttoSaleController extends Controller
       if($search != "")
       {
         $query = $query
-					  ->join('products', 'product_requests.products_id', '=', 'products.id')
-					  ->where('product_title','like','%'.$search.'%')
-                      ->orWhere('price','like','%'.$search.'%')
-                      //->orWhere('guarantee','like','%'.$search.'%')
-                      ->orWhere('volumn','like','%'.$search.'%')
-                      ->orWhere('productstatus','like','%'.$search.'%')
-                      ->orWhere('units','like','%'.$search.'%')
-                      ->orWhere('city','like','%'.$search.'%')
-                      ->orWhere('province','like','%'.$search.'%')
-					  ->orWhere('product_name_th','like','%'.$search.'%');
+          ->join('products', 'product_requests.products_id', '=', 'products.id')
+            ->where('product_title','like','%'.$search.'%')
+          ->where(function($query) use($search) {
+              $query->orWhere('price','like','%'.$search.'%')
+              //->orWhere('guarantee','like','%'.$search.'%')
+              ->orWhere('volumn','like','%'.$search.'%')
+              ->orWhere('productstatus','like','%'.$search.'%')
+              ->orWhere('units','like','%'.$search.'%')
+              ->orWhere('city','like','%'.$search.'%')
+              ->orWhere('province','like','%'.$search.'%')
+              ->orWhere('product_name_th','like','%'.$search.'%');
+            });
       }
 
       $items = $query
