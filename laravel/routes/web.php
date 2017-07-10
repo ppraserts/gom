@@ -254,4 +254,5 @@ Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 
 //Route::get('/migrate/usermarket/{key}', 'MigrateController@user_market');
 //Route::get('/migrate/productmarket/{key}', 'MigrateController@product_market');
+Route::get('/migrate/productprovince/', 'MigrateController@product_province');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');
