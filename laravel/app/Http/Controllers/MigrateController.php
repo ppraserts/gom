@@ -43,4 +43,16 @@ class MigrateController extends Controller
 
         }
     }
+
+    public function product_province()
+    {
+            $productRequests = ProductRequest::where('iwantto', 'sale')
+                ->whereNull('province_selling')
+                ->get();
+            foreach ($productRequests as $productRequest) {
+                $productRequest->province_selling = '0';
+                $productRequest->save();
+                echo 'product_request_id = ' . $productRequest->id . " update";
+            }
+    }
 }

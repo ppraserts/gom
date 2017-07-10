@@ -52,7 +52,7 @@ class ProductRequest extends Model
             if ($column == "price") {
                 $conditionStr .= " and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)";
             } else if ($column == "province") {
-                $conditionStr .= " and a.province like CONCAT('%', b.province , '%')";
+                $conditionStr .= " and (a.province_selling = b.province_selling OR a.province_selling = 0 OR b.province_selling = 0)";
             } else if ($column == "quantity") {
                 $conditionStr .= " and b.volumnrange_start >= a.min_order";
             }
@@ -218,7 +218,7 @@ class ProductRequest extends Model
             if ($column == "price") {
                 $conditionStr .= " and (sale.`price` between buy.`pricerange_start` and buy.`pricerange_end`)";
             } else if ($column == "province") {
-                $conditionStr .= " and sale.province like CONCAT('%', buy.province , '%')";
+                $conditionStr .= " and (sale.province_selling = buy.province_selling OR sale.province_selling = 0 OR buy.province_selling = 0)";
             } else if ($column == "quantity") {
                 $conditionStr .= " and buy.volumnrange_start >= sale.min_order";
             }
@@ -270,6 +270,7 @@ class ProductRequest extends Model
                                                             and buy.pricerange_end>=sale.price
                                                             and buy.volumnrange_start >= sale.min_order
                                                             and buy.users_id != $userid
+                                                            $conditionStr
                                                     JOIN `products` p on buy.products_id = p.id
                                           ) as matching
                                           join users u on matching.users_id = u.id
