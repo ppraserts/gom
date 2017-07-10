@@ -34,7 +34,8 @@ class IwanttoSaleController extends Controller
       $search = \Request::get('search');
       $category = \Request::get('category');
 
-      $query = ProductRequest::where('users_id', $item->id)
+      $query = ProductRequest::select('product_requests.*','products.product_name_th')
+                ->where('users_id', $item->id)
                 ->where('iwantto', 'sale')
                 ->join('products', 'product_requests.products_id', '=', 'products.id');
 
