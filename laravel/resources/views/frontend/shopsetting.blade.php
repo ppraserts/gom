@@ -47,21 +47,26 @@
                             <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
-                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
-                                                    id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a></div>
+                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}
+                                            /<span
+                                                    id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a>
+                                    </div>
                                 @else
-                                    <strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong>{{URL::to('/')}}/<span id="uri"
-                                                                                                                                   style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
+                                    <strong>* {{ trans('validation.attributes.shop_name') }} URL
+                                        : </strong>{{URL::to('/')}}/<span id="uri"
+                                                                          style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
                                 @endif
-                                    @if($shop->id > 0 && $shop->shop_name != "")
+                                @if($shop->id > 0 && $shop->shop_name != "")
                                     {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
-
                                 @else
                                     {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
-
+                                        <br>
+                                        <input class="btn btn-primary" type="button" id="check_url" value="ตรวจสอบ URL"/>
+                                        <span id="shop_name_message" style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}
+                                            *{{trans('messages.cant_change_url')}}</span>
                                 @endif
-                                <span style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}
-                                    *{{trans('messages.cant_change_url')}}</span>
+
+
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-7">
@@ -95,37 +100,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group" style="padding-left: 10px;">
-                                <strong> {{ trans('messages.select_text_color') }}: </strong><br>
-                                <div class="btn-group" data-toggle="buttons" style="padding-top: 5px">
-                                    <label class="btn btn-default {{ ($shop->text_color =="" || $shop->text_color =='#000000') =='#000000' ? 'active' : '' }}">
-                                        {{ Form::radio('text_color', '#000000', ($shop->text_color =="" || $shop->text_color =='#000000'),['autocomplete' => 'off']) }}
-                                        {{trans('messages.color_black')}}
-                                    </label>
-                                    <label class="btn btn-default {{ $shop->text_color =='#cccccc' ? 'active' : '' }}">
-                                        {{ Form::radio('text_color', '#cccccc', $shop->text_color =='#cccccc',['autocomplete' => 'off']) }}
-                                        {{trans('messages.color_gray')}}
-                                    </label>
-                                    <label class="btn btn-default {{ $shop->text_color =='#ffffff' ? 'active' : '' }}">
-                                        {{ Form::radio('text_color', '#ffffff', $shop->text_color =='#ffffff',['autocomplete' => 'off']) }}
-                                        {{trans('messages.color_white')}}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong> {{ trans('validation.attributes.shop_bank') }}: </strong>
-                                {!! Form::textarea('bank', isset($shop->bank)?$shop->bank:"", array('placeholder' => trans('validation.attributes.shop_bank'),'class' => 'form-control','style'=>'height:100px')) !!}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -135,12 +109,34 @@
                     <div class="panel-heading"><strong>{{ trans('messages.shop_theme')}}</strong></div>
                     <div class="panel-body">
                         <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group" style="padding-left: 10px;">
+                                    <strong> {{ trans('messages.select_text_color') }}: </strong><br>
+                                    <div class="btn-group" data-toggle="buttons" style="padding-top: 5px">
+                                        <label class="btn btn-default {{ ($shop->text_color =="" || $shop->text_color =='#000000') =='#000000' ? 'active' : '' }}">
+                                            {{ Form::radio('text_color', '#000000', ($shop->text_color =="" || $shop->text_color =='#000000'),['autocomplete' => 'off']) }}
+                                            {{trans('messages.color_black')}}
+                                        </label>
+                                        <label class="btn btn-default {{ $shop->text_color =='#cccccc' ? 'active' : '' }}">
+                                            {{ Form::radio('text_color', '#cccccc', $shop->text_color =='#cccccc',['autocomplete' => 'off']) }}
+                                            {{trans('messages.color_gray')}}
+                                        </label>
+                                        <label class="btn btn-default {{ $shop->text_color =='#ffffff' ? 'active' : '' }}">
+                                            {{ Form::radio('text_color', '#ffffff', $shop->text_color =='#ffffff',['autocomplete' => 'off']) }}
+                                            {{trans('messages.color_white')}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
-                                    @if($shop->theme=="theme3")
-                                        <i class="fa fa-2x fa-check-square-o"
-                                           style="color:#00cc66; margin-right: 8px;"></i>
-                                    @endif
+
+                                    <i id="check3"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme3" ? 'visible' : 'hidden'}}"
+                                       style="color:#00cc66; margin-right: 8px;"></i>
+
                                     <strong style="position: absolute; top: 5px;">{{ trans('messages.shop_theme') }}
                                         1</strong>
                                 </div>
@@ -150,17 +146,16 @@
                                         <h2>รูปแบบที่ 1</h2>
                                         <button class="info" data-toggle="modal" type="button"
                                                 data-target="#modal1">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme3' ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
+                                        <button type="button" value="theme3"
+                                                class="settheme info">{{ trans('messages.apply')}}</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
-                                    @if($shop->theme=="theme1")
-                                        <i class="fa fa-2x fa-check-square-o"
-                                           style="color:#00cc66; margin-right: 8px;"></i>
-                                    @endif
+                                    <i id="check1"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme1" ? 'visible' : 'hidden'}}"
+                                       style="color:#00cc66; margin-right: 8px;"></i>
                                     <strong style="position: absolute; top: 5px;">{{ trans('messages.shop_theme') }}
                                         2</strong>
                                 </div>
@@ -170,17 +165,16 @@
                                         <h2>รูปแบบที่ 2</h2>
                                         <button class="info" data-toggle="modal" type="button"
                                                 data-target="#modal2">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme1'  ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
+                                        <button type="button" value="theme1"
+                                                class="settheme info">{{ trans('messages.apply')}}</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
-                                    @if($shop->theme=="theme2")
-                                        <i class="fa fa-2x fa-check-square-o"
-                                           style="color:#00cc66; margin-right: 8px;"></i>
-                                    @endif
+                                    <i id="check2"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme2" ? 'visible' : 'hidden'}}"
+                                       style="color:#00cc66; margin-right: 8px;"></i>
                                     <strong style="position: absolute;top: 5px;">{{ trans('messages.shop_theme') }}
                                         3</strong>
                                 </div>
@@ -190,8 +184,8 @@
                                         <h2>รูปแบบที่ 3</h2>
                                         <button class="info" data-toggle="modal" type="button"
                                                 data-target="#modal3">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme2' ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
+                                        <button type="button" value="theme2"
+                                                class="settheme info">{{ trans('messages.apply')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +254,7 @@
                                                 </label>
                                             </div>
                                             <div id="image_file_1_form">
-                                            {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
+                                                {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +277,8 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group row">
-                                            <strong>{{ trans('validation.attributes.shop_theme_image') }} 3:</strong><br>
+                                            <strong>{{ trans('validation.attributes.shop_theme_image') }}
+                                                3:</strong><br>
                                             <div class="btn-group" data-toggle="buttons"
                                                  style="padding-top: 5px; padding-bottom: 10px;">
                                                 <label class="btn btn-default {{ $shop->image_file_2 ==""  ? 'active' : '' }}">
@@ -313,6 +308,20 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>ข้อมูลการชำระเงิน</strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong> {{ trans('validation.attributes.shop_bank') }}: </strong>
+                                {!! Form::textarea('bank', isset($shop->bank)?$shop->bank:"", array('placeholder' => trans('validation.attributes.shop_bank'),'class' => 'form-control','style'=>'height:100px')) !!}
                             </div>
                         </div>
                     </div>
@@ -495,92 +504,138 @@
                 </div>
             </div><!-- /.modal -->
         @endif
-        @stop
+    </div>
+@stop
+@push('scripts')
+<script>
 
-        @push('scripts')
-        <script>
-            $(document).ready(function () {
 
-                hideSuccessMessage();
+    $(function () {
 
-                setupFileStyle();
-
-                setupFillURI();
-
-                checkImageSource();
-
+        $('.settheme').on('click', function () {
+            var theme = $(this).val();
+            $.get("<?php echo url('user/settheme')?>" + "/" + theme, function (data, status) {
+                $("#check1").hide();
+                $("#check2").hide();
+                $("#check3").hide();
+                if (theme == 'theme1') {
+                    $("#check1").removeClass("hidden");
+                    $("#check1").show();
+                }
+                if (theme == 'theme2') {
+                    $("#check2").removeClass("hidden");
+                    $("#check2").show();
+                }
+                if (theme == 'theme3') {
+                    $("#check3").removeClass("hidden");
+                    $("#check3").show();
+                }
+                return false;
             });
+        });
+    });
 
-            function setupFileStyle() {
-                $(":file").filestyle({buttonText: " Choose", size: 'sm', icon: false});
+
+    $(function () {
+
+        $('#check_url').on('click', function () {
+            var uri = $('#shop_name').val();
+            $.get("<?php echo url('user/checkshopname')?>" + "/" + uri, function (res) {
+                if(res.used == true){
+                    $('#shop_name_message').html('สามารถใช้ชื่อนี้ได้');
+                    $('#shop_name_message').css('color', '#04ff8e');
+                }else{
+                    $('#shop_name_message').html('ไม่สามารถใช้ชื่อนี้ได้');
+                    $('#shop_name_message').css('color', '#FF');
+                }
+                return false;
+            });
+        });
+    });
+
+    $(document).ready(function () {
+
+        hideSuccessMessage();
+
+        setupFileStyle();
+
+        setupFillURI();
+
+        checkImageSource();
+
+    });
+
+    function setupFileStyle() {
+        $(":file").filestyle({buttonText: " Choose", size: 'sm', icon: false});
+    }
+
+    function hideSuccessMessage() {
+        setTimeout(function () {
+            $('.alert-success').hide();
+        }, 2000);
+
+    }
+
+    function setupFillURI() {
+        $("#shop_name").on("change paste keyup", function () {
+            $("#uri").html($(this).val());
+        });
+    }
+
+    function checkImageSource() {
+
+        $('input[type=radio][name=image_file_3_type]').change(function () {
+            if (this.value == '0') {
+                $("#image_file_3_form").hide();
+                $("#img_theme3").attr('src', '{{ asset('/assets/theme/images/header-3.jpg') }}');
             }
-
-            function hideSuccessMessage() {
-                setTimeout(function () {
-                    $('.alert-success').hide();
-                }, 2000);
-
-            }
-
-            function setupFillURI() {
-                $("#shop_name").on("change paste keyup", function () {
-                    $("#uri").html($(this).val());
-                });
-            }
-
-            function checkImageSource() {
-
-                $('input[type=radio][name=image_file_3_type]').change(function () {
-                    if (this.value == '0') {
-                        $("#image_file_3_form").hide();
-                        $("#img_theme3").attr('src', '{{ asset('/assets/theme/images/header-3.jpg') }}');
-                    }
-                    else if (this.value == '1') {
-                        $("#image_file_3_form").show();
-                        @if($shop->image_file_3 != '')
-                        $("#img_theme3").attr('src', '{{ asset($shop->image_file_3) }}');
-                        @endif
-                    }
-                });
-
-                $('input[type=radio][name=image_file_1_type]').change(function () {
-                    if (this.value == '0') {
-                        $("#image_file_1_form").hide();
-                        $("#img_theme1").attr('src', '{{ asset('/assets/theme/images/header-1.jpg') }}');
-                    }
-                    else if (this.value == '1') {
-                        $("#image_file_1_form").show();
-                        @if($shop->image_file_1 != '')
-                        $("#img_theme1").attr('src', '{{ asset($shop->image_file_1) }}');
-                        @endif
-                    }
-                });
-
-                $('input[type=radio][name=image_file_2_type]').change(function () {
-                    if (this.value == '0') {
-                        $("#image_file_2_form").hide();
-                        $("#img_theme2").attr('src', '{{ asset('/assets/theme/images/header-2.jpg') }}');
-                    }
-                    else if (this.value == '1') {
-                        $("#image_file_2_form").show();
-                        @if($shop->image_file_2 != '')
-                        $("#img_theme2").attr('src', '{{ asset($shop->image_file_2) }}');
-                        @endif
-                    }
-                });
-
-                @if($shop->image_file_1 == '')
-                        $("#image_file_1_form").hide();
-                @endif
-
-                @if($shop->image_file_2 == '')
-                        $("#image_file_2_form").hide();
-                @endif
-
-                @if($shop->image_file_3 == '')
-                        $("#image_file_3_form").hide();
+            else if (this.value == '1') {
+                $("#image_file_3_form").show();
+                @if($shop->image_file_3 != '')
+                $("#img_theme3").attr('src', '{{ asset($shop->image_file_3) }}');
                 @endif
             }
+        });
 
-        </script>
-    @endpush
+        $('input[type=radio][name=image_file_1_type]').change(function () {
+            if (this.value == '0') {
+                $("#image_file_1_form").hide();
+                $("#img_theme1").attr('src', '{{ asset('/assets/theme/images/header-1.jpg') }}');
+            }
+            else if (this.value == '1') {
+                $("#image_file_1_form").show();
+                @if($shop->image_file_1 != '')
+                $("#img_theme1").attr('src', '{{ asset($shop->image_file_1) }}');
+                @endif
+            }
+        });
+
+        $('input[type=radio][name=image_file_2_type]').change(function () {
+            if (this.value == '0') {
+                $("#image_file_2_form").hide();
+                $("#img_theme2").attr('src', '{{ asset('/assets/theme/images/header-2.jpg') }}');
+            }
+            else if (this.value == '1') {
+                $("#image_file_2_form").show();
+                @if($shop->image_file_2 != '')
+                $("#img_theme2").attr('src', '{{ asset($shop->image_file_2) }}');
+                @endif
+            }
+        });
+
+        @if($shop->image_file_1 == '')
+                $("#image_file_1_form").hide();
+        @endif
+
+        @if($shop->image_file_2 == '')
+                $("#image_file_2_form").hide();
+        @endif
+
+        @if($shop->image_file_3 == '')
+                $("#image_file_3_form").hide();
+        @endif
+    }
+
+</script>
+@endpush
+

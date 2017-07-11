@@ -136,6 +136,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('shopsetting','frontend\ShopSettingController');
     Route::resource('shoppingcart','frontend\ShoppingCartController');
     Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
+    Route::get('checkshopname/{name}', 'frontend\ShopSettingController@checkShopName');
     Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
     Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
     Route::get('shoppingcart/deleteCartItem/{user_id}/{product_request_id}', ['as' => 'shoppingcart.deleteCartItem', 'uses' => 'frontend\ShoppingCartController@deleteCartItem']);

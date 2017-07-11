@@ -104,13 +104,10 @@ class UserProfileController extends Controller
 
   private function RemoveFolderImage($rawfile)
   {
-      if($rawfile != "")
-      {
-        $rawfileArr = explode("/", $rawfile);
-        $indexFile = count($rawfileArr) - 1;
-        $indexFolder = count($rawfileArr) - 2;
-        File::delete($rawfile);
-        File::deleteDirectory(config('app.upload_imageprofile').$rawfileArr[$indexFolder]);
+      if ($rawfile != "") {
+          if (File::exists($rawfile)) {
+              File::delete($rawfile);
+          }
       }
   }
 

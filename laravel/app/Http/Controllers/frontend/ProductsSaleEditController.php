@@ -355,11 +355,9 @@ class ProductsSaleEditController extends Controller
     {
         sleep(1);
         if ($rawfile != "") {
-            $rawfileArr = explode("/", $rawfile);
-            $indexFile = count($rawfileArr) - 1;
-            $indexFolder = count($rawfileArr) - 2;
-            File::delete($rawfile);
-//            File::deleteDirectory(config('app.upload_product') . $rawfileArr[$indexFolder]);
+            if (File::exists($rawfile)) {
+                File::delete($rawfile);
+            }
         }
     }
 
