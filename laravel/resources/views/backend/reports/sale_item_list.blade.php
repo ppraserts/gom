@@ -37,7 +37,7 @@
                         {{ trans('messages.text_start_date') }}:
                     </strong>
                     <div class='input-group date' id='pick_start_date'>
-                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
+                        {!! Form::text('start_date', $defult_ymd_last_month, array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -50,7 +50,7 @@
                         * {{ trans('messages.text_end_date') }} :
                     </strong>
                     <div class='input-group date' id='pick_end_date'>
-                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
+                        {!! Form::text('end_date', $defult_ymd_today, array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -96,7 +96,7 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -105,7 +105,7 @@
 
         <div class="row" style="margin-top: 10px">
             @if(count($orderSaleItem) > 0 && count($errors) < 1)
-                <div id="container" style="min-width: 400px; height: 520px; margin: 0px auto; padding-top:2%;"></div>
+                <div id="container" style="min-width: 400px; height: auto; margin: 0px auto; padding-top:2%;"></div>
             @else
                 <div class="alert alert-warning text-center">
                     <strong>{{trans('messages.data_not_found')}}</strong>
@@ -190,7 +190,8 @@ demo.css
     $(function () {
         $('#container').highcharts({
             chart: {
-                type: 'column'
+//                type: 'column'
+                type: 'bar'
             },
             title: {
                 text: 'ยอดจำหน่ายสินค้า {{(isset($start_date) && isset($end_date)) ? ('วันที่ '. \App\Helpers\DateFuncs::mysqlToThaiDateString($start_date) . ' ถึง '.\App\Helpers\DateFuncs::mysqlToThaiDateString($end_date)) : ""}}'
@@ -215,11 +216,11 @@ demo.css
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
-                        rotation: -90,
+                        rotation: 30,
                         color: '#FFFFFF',
                         align: 'center',
                         format: '{point.y:.1f} บาท',
-                        y: 35,
+                        y: 0,
                         style: {
                             fontSize: '10px',
                             fontFamily: 'Verdana, sans-serif'

@@ -18,6 +18,12 @@ class BaseReportsController extends Controller {
         return ProductCategory::where('productcategorys.id', $id)->first();
     }
 
+    public  static function dateToDayAndLastMonth(){
+        $ymd_today  = date('Y-m-d');
+        $ymd_last_month = date('Y-m-d', strtotime('last month'));
+        return $date = array('ymd_today'=>$ymd_today,'ymd_last_month'=>$ymd_last_month);
+    }
+
 
 
 }

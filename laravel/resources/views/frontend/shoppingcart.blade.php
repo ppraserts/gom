@@ -383,7 +383,8 @@
         var qty_new = parseInt($('#qty_new').val());
         var qty_url = $('#qty_url').val();
         var product_stock = parseInt($('#product_stock').val());
-        var min_order = parseInt($('#min_order').val());
+        var min_order = parseInt($('#min_order').text());
+
 
         if(qty_new <= -1){
             $('#qty_new').focus();

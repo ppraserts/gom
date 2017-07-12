@@ -52,7 +52,7 @@ class ReportOrderHistoryController extends Controller
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
                     trans('messages.order_date'),
-                    trans('messages.order_total'),
+                    trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status'),
                 );
             }
@@ -63,12 +63,12 @@ class ReportOrderHistoryController extends Controller
                     trans('messages.order_type'),
                     trans('messages.i_buy'),
                     trans('messages.order_date'),
-                    trans('messages.order_total'),
+                    trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status'),
                 );
             }
             foreach ($results as $v) {
-                $total_amount = $v->total_amount.' '.trans('messages.text_star');
+                $total_amount = $v->total_amount;
                 if($v->order_type== 'retail') {
                     $order_type = trans('messages.retail');
                 }else {
@@ -80,7 +80,7 @@ class ReportOrderHistoryController extends Controller
                 if ($type_sale_buy == 'buy'){
                     $fname_lname = $v->buyer->users_firstname_th. " ". $v->buyer->users_lastname_th;
                 }
-                $order_date = DateFuncs::convertToThaiDate($v->order_date);
+                $order_date = DateFuncs::dateToThaiDate($v->order_date);
                 $arr[] = array(
                     $v->id,
                     $order_type,

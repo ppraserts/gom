@@ -28,7 +28,7 @@
                     </strong>
 
                     <div class='input-group date ' id='pick_start_date'>
-                        {!! Form::text('start_date', '', array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
+                        {!! Form::text('start_date', $defult_ymd_last_month, array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -43,7 +43,7 @@
                     </strong>
 
                     <div class='input-group date' id='pick_end_date'>
-                        {!! Form::text('end_date', '', array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
+                        {!! Form::text('end_date', $defult_ymd_today, array('placeholder' => trans('messages.text_end_date'),'class' => 'form-control', 'id'=>'end_date','data-error'=>trans('validation.attributes.message_validate_end_date'),'required'=>'required')) !!}
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -64,7 +64,7 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -83,14 +83,14 @@
                         <th>{{ trans('messages.i_sale') }}</th>
                         <th>{{ trans('messages.i_buy') }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                        <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                        <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                         <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                         <th width="130px" style="text-align:center;">
                             {{ trans('messages.view_order_detail') }}
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="font-weight: normal">
                         @foreach ($results as $result)
                             <tr>
                                 <td style="text-align:center;">{{ $result->id }}</td>
@@ -101,8 +101,8 @@
                                 <th style="font-weight: normal">
                                     {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
                                 </th>
-                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($result->order_date) }}</td>
-                                <td style="text-align:center;">{{ $result->total_amount . trans('messages.baht') }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($result->order_date) }}</td>
+                                <td style="text-align:center;">{{ $result->total_amount }}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-info"
