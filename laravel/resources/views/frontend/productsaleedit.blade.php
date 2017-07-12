@@ -306,6 +306,18 @@
         })
     });
 
+    $('#add_packing').on('click',function(){
+        if($('#add_packing').not(':checked').length){
+            //alert('Not checked');
+            $("#box-packing").html('');
+        }else{
+            var theHtml = $('#use-it-check-add_packing').html();
+            $("#box-packing").html(theHtml);
+            $("#form-productsaleedit").validator('update');
+            //alert('Checked')
+        }
+    });
+
 </script>
 @endpush
 
@@ -507,42 +519,51 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div id="div_packing_size"
-                         class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
-                        <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
-                        {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
-                        <div class="help-block with-errors"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+                        <input type="checkbox" name="add_packing" id="add_packing" value="1"  @if($item->add_packing == 1) checked @endif>
+                        {{ trans('validation.attributes.checkbox_product_package') }}
+                    <hr/>
                     </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
-                        <strong>
-                            * {{ trans('validation.attributes.units_package') }} :
-                        </strong>
-                        <select id="units" name="package_unit" class="form-control"
-                                data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
-                            <option value="">{{ trans('validation.attributes.units') }}</option>
-                            @foreach ($unitsItem as $key => $unit)
-                                @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                                    <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
-                                    </option>
-                                @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-                        <div class="help-block with-errors"></div>
-                    </div>
-
-                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
-                        <strong>เกรด :</strong>
-                        <select id="grade" name="grade" class="form-control">
-                            @foreach ($grades as $key => $value)
-                                <option>{{$value}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                </div>
+                <div class="row" id="box-packing">
+                    @if($item->add_packing == 1)
+                        <div id="div_packing_size"
+                             class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+                            <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+                            {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+                            <strong>
+                                * {{ trans('validation.attributes.units_package') }} :
+                            </strong>
+                            <select id="units" name="package_unit" class="form-control"
+                                    data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
+                                <option value="">{{ trans('validation.attributes.units') }}</option>
+                                @foreach ($unitsItem as $key => $unit)
+                                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                            <strong>เกรด :</strong>
+                            <select id="grade" name="grade" class="form-control">
+                                @foreach ($grades as $key => $value)
+                                    <option>{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12"><hr/></div>
+                    @endif
                 </div>
                 <div class="row" style="margin-top: 15px;">
                     <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('volumn') ? 'has-error' : '' }}">
@@ -727,6 +748,43 @@
             </div>
         </div>
         {{-- end panels --}}
-
     </form>
+    <div id="use-it-check-add_packing" style="display:none;">
+        <div id="div_packing_size"
+             class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+            <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+            {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+            <strong>
+                * {{ trans('validation.attributes.units_package') }} :
+            </strong>
+            <select id="units" name="package_unit" class="form-control"
+                    data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
+                <option value="">{{ trans('validation.attributes.units') }}</option>
+                @foreach ($unitsItem as $key => $unit)
+                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                            {{ $unit->{ "units_".Lang::locale()} }}
+                        </option>
+                    @else
+                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                            {{ $unit->{ "units_".Lang::locale()} }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
+            <strong>เกรด :</strong>
+            <select id="grade" name="grade" class="form-control">
+                @foreach ($grades as $key => $value)
+                    <option>{{$value}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-12"><hr/></div>
+    </div>
 @stop

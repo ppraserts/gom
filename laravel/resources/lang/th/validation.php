@@ -243,6 +243,7 @@ return [
         'promotion_end_date' => 'วันสิ้นสุดโปรโมรชั่น',
         'promotion_image' => 'รูปภาพโปรโมรชั่น',
         'product_package_size' => 'ขนาดบรรจุ',
+        'checkbox_product_package' => 'บรรจุ',
         'product_grade' => 'เกรด',
         'product_province_source' => 'แหล่งผลิด(จังหวัด)',
         'selling_period' => 'ช่วงเวลาจำหน่าย',

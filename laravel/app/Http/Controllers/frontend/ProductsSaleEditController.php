@@ -238,6 +238,9 @@ class ProductsSaleEditController extends Controller
         $productRequest->sequence = $request->sequence;
 //        $productRequest->is_packing = $request->is_packing;
         $productRequest->packing_size = $request->packing_size;
+        if(!empty($request->add_packing)){
+            $productRequest->add_packing = $request->add_packing;
+        }
         $productRequest->province_selling = $request->province_selling;
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
