@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
+use App\OrderStatus;
 use App\Product;
 use DB;
 class BaseReportsController extends Controller {
@@ -16,6 +17,10 @@ class BaseReportsController extends Controller {
     }
     public  static function productCategory($id){
         return ProductCategory::where('productcategorys.id', $id)->first();
+    }
+
+    public  static function orderStatus($id){
+        return OrderStatus::where('order_status.id', $id)->first();
     }
 
     public  static function dateToDayAndLastMonth(){
