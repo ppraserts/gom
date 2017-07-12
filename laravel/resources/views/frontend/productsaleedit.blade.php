@@ -308,7 +308,7 @@
     });
 
     $('#add_packing').on('click',function(){
-        if($('#add_packing').not(':checked').length){
+        /*if($('#add_packing').not(':checked').length){
             //alert('Not checked');
             $("#box-packing").html('');
         }else{
@@ -316,7 +316,18 @@
             $("#box-packing").html(theHtml);
             $("#form-productsaleedit").validator('update');
             //alert('Checked')
+        }*/
+        var add_packing =$('#add_packing').val();
+        if(add_packing == 1){
+            var theHtml = $('#use-it-check-add_packing').html();
+            $("#box-packing").html(theHtml);
+            $("#form-productsaleedit").validator('update');
         }
+
+    });
+    $('#un_add_packing').on('click',function(){
+        $("#box-packing").html('');
+        $("#form-productsaleedit").validator('update');
     });
 
 </script>
@@ -520,8 +531,10 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
-                        <input type="checkbox" name="add_packing" id="add_packing" value="1"  @if($item->add_packing == 1) checked @endif>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <input type="radio" name="add_packing" id="un_add_packing" value="-1"  @if($item->add_packing == -1) checked @elseif(Request::input('id') == 0) checked @endif>
+                        {{ trans('validation.attributes.uncheckbox_product_package') }}
+                        <input type="radio" name="add_packing" id="add_packing" value="1"  @if($item->add_packing == 1) checked @endif>
                         {{ trans('validation.attributes.checkbox_product_package') }}
                     <hr/>
                     </div>
@@ -589,10 +602,13 @@
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
                                 @if($item->units == $unit->{ "units_".Lang::locale()})
-                                    <option selected
-                                            value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}" selected="selected">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
                                 @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>

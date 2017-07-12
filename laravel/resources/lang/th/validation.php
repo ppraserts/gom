@@ -244,6 +244,7 @@ return [
         'promotion_image' => 'รูปภาพโปรโมรชั่น',
         'product_package_size' => 'ขนาดบรรจุ',
         'checkbox_product_package' => 'บรรจุ',
+        'uncheckbox_product_package' => 'ไม่บรรจุ',
         'product_grade' => 'เกรด',
         'product_province_source' => 'แหล่งผลิด(จังหวัด)',
         'selling_period' => 'ช่วงเวลาจำหน่าย',
