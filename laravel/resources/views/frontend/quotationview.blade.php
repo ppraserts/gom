@@ -30,7 +30,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{{  $quotation->updated_at }}</td>
+                                    <td>{{  \App\Helpers\DateFuncs::mysqlToThaiDate($quotation->updated_at) }}</td>
                                     <td>{{  $quotation->users_firstname_th . " " .$quotation->users_lastname_th }}</td>
                                     @if($quotation->user->users_mobilephone !='')
                                         <td>{{ $quotation->user->users_mobilephone }}</td>

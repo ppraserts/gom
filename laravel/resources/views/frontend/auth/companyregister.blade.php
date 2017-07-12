@@ -155,7 +155,7 @@
 
 
                                         <input id="users_taxcode" type="text" class="form-control" name="users_taxcode"
-                                               value="{{ old('users_taxcode') }}" autofocus>
+                                               value="{{ old('users_taxcode') }}" autofocus maxlength="13">
 
                                         @if ($errors->has('users_taxcode'))
                                             <span class="help-block">

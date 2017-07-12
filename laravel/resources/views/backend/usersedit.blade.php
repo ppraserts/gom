@@ -157,7 +157,7 @@ $controllerAction = "users.update";
                 <div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_dateofbirth') }}
                     :
-                    <strong>{{ DateFuncs::thai_date($item->users_dateofbirth) }}</strong>
+                    <strong>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->users_dateofbirth) }}</strong>
                 </div>
                 <div class="form-group {{ $errors->has('users_gender') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_gender') }}

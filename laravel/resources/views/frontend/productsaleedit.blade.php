@@ -417,7 +417,9 @@
                         <br/>
                         <small class="alert-danger" id="ms_selling_type"></small>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 form-inline">
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-inline" style="margin-top: 15px;">
                         <strong style="margin-right: 20px;">* {{ trans('validation.attributes.market') }}</strong>
                         @for($i = 0 ; $i < count($markets) ; $i++)
                             <label class="checkbox-inline">
@@ -490,7 +492,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.production_province') }} : </strong>
                         <select id="province" name="province" class="form-control">
-                            <option value="">{{ trans('messages.allprovince') }}</option>
+                            <option value="">{{ trans('messages.select_province') }}</option>
                             @foreach ($provinceItem as $key => $province)
                                 @if($item->province == $province->PROVINCE_NAME)
                                     <option selected
@@ -504,7 +506,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province_selling') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.product_province_selling') }} :</strong>
                         <select id="province_selling" name="province_selling" class="form-control">
-                            <option value="">{{ trans('messages.allprovince') }}</option>
+                            <option value="">{{ trans('messages.select_province') }}</option>
                             @foreach ($provinceItem as $key => $province)
                                 @if($item->province_selling == $province->PROVINCE_ID)
                                     <option selected
@@ -577,14 +579,14 @@
                         <strong>
                             * {{ trans('validation.attributes.volumn') }} :
                         </strong>
-                        {!! Form::text('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_volumn'),'required'=>'required')) !!}
+                        {!! Form::number('volumn', $item->volumn, array('placeholder' => trans('validation.attributes.volumn'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_volumn'),'required'=>'required','min'=>'1')) !!}
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-4">
                         <strong>
                             * {{ trans('validation.attributes.min_order') }} :
                         </strong>
-                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_min_order'),'required'=>'required')) !!}
+                        {!! Form::number('min_order', $item->min_order != '' ? $item->min_order : '1', array('placeholder' => trans('validation.attributes.min_order'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_min_order'),'min'=>'1','required'=>'required')) !!}
                         <div class="help-block with-errors"></div>
                         <small class="alert-danger" id="ms_min_order"></small>
                     </div>

@@ -177,19 +177,13 @@ $url = "user/iwanttobuy";
                                 <br/><br/>
                             </div>
                         </div>
-                        <div class="separator clear-left">
-                            <p style="text-align: left;">
-                                <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="hidden-sm">
-                                    {{ trans('messages.button_moredetail')}}
+                        <div class="clear-left">
+                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                                 </a>
-                            </p>
-                            <p style="text-align: left;">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="hidden-sm">
-                                    {{ trans('messages.edit')}}
+                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
                                 </a>
-                            </p>
                         </div>
                         <div class="clearfix">
                         </div>

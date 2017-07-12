@@ -177,7 +177,7 @@
 
 
                                     <input id="users_idcard" type="text" class="form-control" name="users_idcard"
-                                           value="{{ old('users_idcard') }}" autofocus>
+                                           value="{{ old('users_idcard') }}" maxlength="13" autofocus>
 
                                     @if ($errors->has('users_idcard'))
                                         <span class="help-block">
