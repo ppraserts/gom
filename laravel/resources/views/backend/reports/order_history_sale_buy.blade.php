@@ -82,6 +82,8 @@
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
                                 <th>{{ trans('messages.i_sale') }}</th>
@@ -102,6 +104,8 @@
                         @foreach ($results as $result)
                             <tr>
                                 <td style="text-align:center;">{{ $result->id }}</td>
+                                <td>{{ $result->product_name_th }}</td>
+                                <td>{{ $result->quantity.' '.$result->units }}</td>
                                 <td style="text-align:center;">
                                     {{ $result->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
                                 </td>
@@ -114,7 +118,8 @@
                                 @endif
 
                                 <td style="text-align:center;">{{ DateFuncs::dateToThaiDate($result->order_date) }}</td>
-                                <td style="text-align:center;">{{ $result->total_amount}}</td>
+                                {{--<td style="text-align:center;">{{ $result->total_amount}}</td>--}}
+                                <td style="text-align:center;">{{ $result->total}}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-info"
