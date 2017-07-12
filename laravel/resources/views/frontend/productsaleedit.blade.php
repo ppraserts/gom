@@ -568,14 +568,7 @@
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
-                            <strong>เกรด :</strong>
-                            <select id="grade" name="grade" class="form-control">
-                                @foreach ($grades as $key => $value)
-                                    <option @if($item->grade == $value) selected @endif>{{$value}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         <div class="col-md-12"><hr/></div>
                     @endif
                 </div>
@@ -630,6 +623,14 @@
                         {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_stock'),'required'=>'required')) !!}
                         <small class="alert-danger" id="ms_product_stock"></small>
                         <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                        <strong>เกรด :</strong>
+                        <select id="grade" name="grade" class="form-control">
+                            @foreach ($grades as $key => $value)
+                                <option @if($item->grade == $value) selected @endif>{{$value}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="row " style="margin-top: 15px;">
@@ -793,14 +794,6 @@
                 @endforeach
             </select>
             <div class="help-block with-errors"></div>
-        </div>
-        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('grade') ? 'has-error' : '' }}">
-            <strong>เกรด :</strong>
-            <select id="grade" name="grade" class="form-control">
-                @foreach ($grades as $key => $value)
-                    <option>{{$value}}</option>
-                @endforeach
-            </select>
         </div>
         <div class="col-md-12"><hr/></div>
     </div>
