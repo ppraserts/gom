@@ -249,6 +249,7 @@
             $.each($("input[name='selling_type[]']:checked"), function() {
                 selling_type.push($(this).val());
             });
+            $("#ms_selling_type").empty();
             if (selling_type.length === 0) {
                 $('#ms_selling_type').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
                 $("#ms_selling_type").html("<?php echo trans('messages.ms_selling_type')?>");
@@ -258,8 +259,8 @@
             $.each($("input[name='product_markets[]']:checked"), function() {
                 markets.push($(this).val());
             });
-
-            if (markets.length === 0) {
+            $("#ms_product_markets").empty();
+            if (markets.length <= 0) {
                 $('#ms_product_markets').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
                 $("#ms_product_markets").html("<?php echo trans('messages.ms_market')?>");
                 return false;
@@ -356,7 +357,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                        <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_sale') : trans('messages.edit_sale')}}</h2>
+                     <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_sale') : trans('messages.edit_sale')}}</h2>
                 </div>
                 <div class="pull-right">
                     @if($item->id != 0)
@@ -386,8 +387,8 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 ">
-                        <label class="control-label"><strong>รูปแบบการขาย :</strong></label>
+                    <div class="col-xs-12 col-sm-12 col-md-12 ">
+                        <label class="control-label">* <strong>รูปแบบการขาย :</strong></label>
 
                         @if($item->selling_type == 'retail')
                             <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
@@ -405,7 +406,7 @@
                         <br/>
                         <small class="alert-danger" id="ms_selling_type"></small>
                     </div>
-                    <div class="col-xs-8 col-sm-8 col-md-8 form-inline">
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-inline">
                         <strong style="margin-right: 20px;">* {{ trans('validation.attributes.market') }}</strong>
                         @for($i = 0 ; $i < count($markets) ; $i++)
                             <label class="checkbox-inline">
@@ -558,7 +559,7 @@
                             <strong>เกรด :</strong>
                             <select id="grade" name="grade" class="form-control">
                                 @foreach ($grades as $key => $value)
-                                    <option>{{$value}}</option>
+                                    <option @if($item->grade == $value) selected @endif>{{$value}}</option>
                                 @endforeach
                             </select>
                         </div>
