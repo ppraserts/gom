@@ -84,13 +84,17 @@ class RegisterController extends Controller
             'users_idcard' => 'required|min:13|max:20',
             'users_firstname_th' => 'required|max:255',
             'users_lastname_th' => 'required|max:255',
-            'users_dateofbirth' => 'required|date_format:Y-m-d',
+//            'users_dateofbirth' => 'required|date_format:Y-m-d',
             'users_province' => 'required',
-            'users_city' => 'required',
-            'users_district' => 'required',
+//            'users_city' => 'required',
+//            'users_district' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'CaptchaCode' => 'required|valid_captcha',
+        );
+
+        $rules2 = array(
+            'users_standard' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -101,8 +105,17 @@ class RegisterController extends Controller
         }
 
         $input = $request->all();
-        $user = User::registeruser($input);
 
+        if (in_array("sale", $input['iwantto'])){
+            $validator = Validator::make(Input::all(), $rules2);
+            if ($validator->fails()) {
+                return redirect('user/register')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
+
+        $user = User::registeruser($input);
 
         $sendemailTo = $request->email;
         $sendemailFrom = env('MAIL_USERNAME');
@@ -111,7 +124,6 @@ class RegisterController extends Controller
             'fullname' => $request->users_firstname_th . " " . $request->users_lastname_th
         );
 
-        /*
         Mail::send('emails.register', $data, function ($message) use($request, $sendemailTo, $sendemailFrom)
         {
             $message->from($sendemailFrom
@@ -120,7 +132,6 @@ class RegisterController extends Controller
                     ->subject("DGTFarm : ".trans('messages.email_subject_newregister'));
 
         });
-        */
 
         if ($user->id) {
             $arr_checked_user_standards = Input::get('users_standard');
@@ -146,10 +157,14 @@ class RegisterController extends Controller
             'iwantto' => 'required',
             'users_taxcode' => 'required|min:13|max:20',
             'users_company_th' => 'required|max:255',
-            'users_company_en' => 'required|max:255',
+//            'users_company_en' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'CaptchaCode' => 'required|valid_captcha',
+        );
+
+        $rules2 = array(
+            'users_standard' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -160,6 +175,16 @@ class RegisterController extends Controller
         }
 
         $input = $request->all();
+
+        if (in_array("sale", $input['iwantto'])){
+            $validator = Validator::make(Input::all(), $rules2);
+            if ($validator->fails()) {
+                return redirect('user/companyregister')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
+
         $user = User::companyregisteruser($input);
 
         $sendemailTo = $request->email;

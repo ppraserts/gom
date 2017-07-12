@@ -64,7 +64,7 @@ $productRequest = new ProductRequest();
             {{ trans('messages.menu_matching') }}
             <span class="badge">
                            @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
-                    {{ count($productRequest->matchWithBuy($user->id, [])) + count($productRequest->matchingWithSale($user->id, ['price','quantity','province'])) }}
+                    {{ count($productRequest->matchWithBuy($user->id, [])) + count($productRequest->matchingWithSale($user->id, [])) }}
                 @endif
                 @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
                     {{ count($productRequest->matchWithBuy($user->id, [])) }}

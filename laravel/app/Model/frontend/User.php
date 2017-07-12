@@ -91,7 +91,7 @@ class User extends Authenticatable
 
     public static function companyregisteruser($input = array()) {
             return User::create([
-                    'users_firstname_th' => '',
+                    'users_firstname_th' => $input['users_company_th'],
                     'users_lastname_th' => '',
                     'users_firstname_en' => '',
                     'users_lastname_en' => '',

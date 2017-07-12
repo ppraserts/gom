@@ -76,6 +76,51 @@
             }
         });
 
+        $("#form").submit(function (e) {
+
+            var wantto = new Array();
+            var sale = false;
+            $.each($("input[name='iwantto[]']:checked"), function () {
+                wantto.push($(this).val());
+                if ($(this).val() == 'sale') {
+                    sale = true;
+                }
+            });
+
+            var iwantto = $('#iwantto');
+            if (wantto.length === 0) {
+                iwantto.addClass("has-error");
+//                $('#ms_wantto').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
+                $("#ms_selling_type").html("<?php echo trans('messages.ms_selling_type')?>");
+                $('html, body').animate({
+                    scrollTop: $('#iwantto').offset().top -50
+                }, 500);
+                return false;
+            }else {
+                iwantto.removeClass("has-error")
+            }
+
+            if (sale) {
+                var users_standard = new Array();
+                $.each($("input[name='users_standard[]']:checked"), function () {
+                    users_standard.push($(this).val());
+                });
+                var other_standard = $('#other_standard').val();
+                if (users_standard.length === 0 && other_standard.length === 0) {
+                    var users_standard_section = $('#users_standard_section');
+                    users_standard_section.addClass("has-error");
+//                    $('#ms_users_standard').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
+                    $("#ms_standard").html("<?php echo trans('messages.required_standard')?>");
+                    $('html, body').animate({
+                        scrollTop: users_standard_section.offset().top -50
+                    }, 500);
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
     });
 </script>
 @endpush
@@ -105,10 +150,11 @@
                                 </ul>
                             </div>
                         @endif
-                        <form role="form" method="POST" action="{{ url('user/saveregister') }}">
+                        <form id="form" role="form" method="POST" action="{{ url('user/saveregister') }}">
+                            {{ csrf_field() }}
                             <div class="row">
-                                {{ csrf_field() }}
-                                <div class="col-md-offset-1 col-md-10 form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
+                                <div id="iwantto"
+                                     class="col-md-offset-1 col-md-10 form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
                                     <label for="iwantto"
                                            class="control-label">* {{ Lang::get('validation.attributes.iwantto') }}</label>
 
@@ -121,7 +167,7 @@
                                         <input type="checkbox" name="iwantto[]" id="iwanttobuy"
                                                value="buy"> {{ trans('messages.i_want_to_buy') }}
                                     </label>
-
+                                    <div id="ms_selling_type" class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -146,7 +192,7 @@
                                     <div id="users_standard_section"
                                          class="col-md-offset-1 col-md-10 form-group{{ $errors->has('users_standard') ? ' has-error' : '' }}">
                                         <label for="users_standard"
-                                               class="control-label">{{ Lang::get('validation.attributes.guarantee') }}</label>
+                                               class="control-label">* {{ Lang::get('validation.attributes.guarantee') }}</label>
 
                                         @for($i = 0 ; $i < count($standards) ; $i++)
                                             <label class="checkbox-inline">
@@ -157,13 +203,9 @@
                                         @endfor
                                         <div class="form-inline">
                                             <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
-                                            {!! Form::text('other_standard', null, array('class' => 'form-control')) !!}
+                                            {!! Form::text('other_standard', null, array('id' => 'other_standard','class' => 'form-control')) !!}
                                         </div>
-                                        @if ($errors->has('users_standard'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('users_standard') }}</strong>
-                                    </span>
-                                        @endif
+                                        <div id="ms_standard" class="help-block with-errors"></div>
 
                                     </div>
                                 </div>
@@ -370,7 +412,7 @@
                                            class="control-label">* {{ Lang::get('validation.attributes.users_province') }}</label>
 
                                     <select id="users_province" name="users_province" class="form-control">
-                                        <option value="">{{ trans('messages.allprovince') }}</option>
+                                        <option value="">{{ trans('messages.please_select') }}</option>
                                         @foreach ($provinceItem as $key => $province)
                                             @if(old('users_province') == $province->PROVINCE_NAME)
                                                 <option selected
@@ -386,34 +428,6 @@
                                     </span>
                                     @endif
                                 </div>
-                                {{--<div class="form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
-                                    <label for="users_city"
-                                           class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_city') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select id="users_city" name="users_city" class="form-control">
-                                        </select>
-                                        @if ($errors->has('users_city'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('users_city') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>--}}
-                                {{--<div class="form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
-                                    <label for="users_district"
-                                           class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_district') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select id="users_district" name="users_district" class="form-control">
-                                        </select>
-                                        @if ($errors->has('users_district'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('users_district') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>--}}
                                 <div class="col-md-5 form-group{{ $errors->has('users_postcode') ? ' has-error' : '' }}">
                                     <label for="users_postcode"
                                            class="control-label">{{ Lang::get('validation.attributes.users_postcode') }}</label>
@@ -430,6 +444,32 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
+                                    <label for="users_city"
+                                           class="control-label"> {{ Lang::get('validation.attributes.users_city') }}</label>
+
+                                    <select id="users_city" name="users_city" class="form-control">
+                                    </select>
+                                    @if ($errors->has('users_city'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('users_city') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-5 form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
+                                    <label for="users_district"
+                                           class="control-label"> {{ Lang::get('validation.attributes.users_district') }}</label>
+
+                                    <select id="users_district" name="users_district" class="form-control">
+                                    </select>
+                                    @if ($errors->has('users_district'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('users_district') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
