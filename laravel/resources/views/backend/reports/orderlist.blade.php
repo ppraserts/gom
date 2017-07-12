@@ -63,7 +63,32 @@ $pagetitle = trans('messages.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                     style="padding-left: 0;">
+                    <strong>
+                        {{trans('messages.userstatus')}} :
+                    </strong>
+                    <select name="order_status" id="order_status" class="form-control">
+                        <option value="">แสดงทุกสถานะ</option>
+                        <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
+                            สั่งซื้อ</option>
+                        <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
+                            ยืนยันการสั่งซื้อรอชำระเงิน
+                        </option>
+                        <option value="3" @if(!empty($order_status_id) && $order_status_id == 3) selected @endif>
+                            แจ้งชำระเงิน
+                        </option>
+                        <option value="4" @if(!empty($order_status_id) && $order_status_id == 4) selected @endif>
+                            จัดส่งแล้ว
+                        </option>
+                        <option value="5" @if(!empty($order_status_id) && $order_status_id == 5) selected @endif>
+                            ยกเลิกรายการสั่งซื้อ
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
@@ -72,18 +97,15 @@ $pagetitle = trans('messages.menu_order_list');
                         <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
-                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
+                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)
                                     selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
-
                             </option>
                         @endforeach
                     </select>
-
                 </div>
 
-
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0;">
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
@@ -120,6 +142,8 @@ $pagetitle = trans('messages.menu_order_list');
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
@@ -134,6 +158,8 @@ $pagetitle = trans('messages.menu_order_list');
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
+                                <td>{{ $item->product_name_th }}</td>
+                                <td>{{ $item->quantity.' '.$item->units }}</td>
                                 <td>
                                     @if($item->order_type== 'retail')
                                         {{trans('messages.retail')}}
@@ -143,7 +169,8 @@ $pagetitle = trans('messages.menu_order_list');
                                 </td>
                                 <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
                                 <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($item->order_date) }}</td>
-                                <td style="text-align:center;">{{ $item->total_amount}}</td>
+                                {{--<td style="text-align:center;">{{ $item->total_amount}}</td>--}}
+                                <td style="text-align:center;">{{ $item->total}}</td>
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-primary"
@@ -245,7 +272,8 @@ $pagetitle = trans('messages.menu_order_list');
     $("#export").click(function () {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
-        var filter = $("#filter").val();
+        var productcategorys_id = $("#productcategorys_id").val();
+        var order_status = $("#order_status").val();
         var product_type_name = [];
         $('#product_type_name option:selected').each(function (i, selected) {
             product_type_name[i] = $(selected).val();
@@ -260,7 +288,12 @@ $pagetitle = trans('messages.menu_order_list');
             url: "<?php $page = ''; if (!empty(Request::input('page'))) {
                 $page = '?page=' . Request::input('page');
             } echo url('admin/reports/buy/export' . $page)?>",
-            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
+            data: {start_date: start_date,
+                end_date: end_date,
+                order_status:order_status,
+                product_type_name: product_type_name,
+                productcategorys_id:productcategorys_id
+            },
             success: function (response) {
 
                 $('.modal-content').empty();
