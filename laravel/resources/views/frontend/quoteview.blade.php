@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <div class="row">
                     <h3>{{ trans('messages.Description') }}</h3>
-                    <p><b>{{ trans('messages.quotation_date') }} : </b>{{  $quotation->updated_at }}</p>
+                    <p><b>{{ trans('messages.quotation_date') }} : </b>{{  \App\Helpers\DateFuncs::mysqlToThaiDate($quotation->updated_at) }}</p>
                     <p><b>{{ trans('messages.i_buy') }} : </b>{{  $quotation->users_firstname_th . " " .$quotation->users_lastname_th }}</p>
                     @if(isset($quotation->user->users_mobilephone))<p>
                         <b>{{ trans('validation.attributes.users_mobilephone') }}

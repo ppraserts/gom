@@ -48,9 +48,7 @@ use App\Http\Controllers\frontend\MarketController;
                           <p class="btn-add">
                               <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? floatval($col_md_4_item['price']) : trans('messages.product_no_price') }}</span>
                           </p>
-                          <p class="btn-details">
-                              <i class="fa fa-list"></i>
-                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}</a>
                       </div>
                       <div class="clearfix">
                       </div>
@@ -101,9 +99,8 @@ use App\Http\Controllers\frontend\MarketController;
                           <p class="btn-add">
                               <span class="hidden-sm">THB  {{ floatval($col_md_4_item['pricerange_start']) }} - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
                           </p>
-                          <p class="btn-details">
-                              <i class="fa fa-list"></i>
-                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+
+                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}</a>
                       </div>
                       <div class="clearfix">
                       </div>

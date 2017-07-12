@@ -1,4 +1,19 @@
-<h4>ข้อมูลร้านค้า</h4>
+<div class="row">
+    <div class="col-md-6">
+        <h4>ข้อมูลร้านค้า</h4>
+    </div>
+    <div class="col-md-6">
+        @if(count($shop) > 0)
+
+            <a class="btn btn-info btn-sm pull-right" href="{{url($shop->shop_name)}}">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                {{trans('messages.text_go_to_shop')}}
+            </a>
+
+        @endif
+    </div>
+
+</div>
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
     <strong>{{ trans('messages.text_firstname_lastname') }} : </strong> {{$productRequest->users_firstname_th.' '.$productRequest->users_lastname_th}}
 </div>
@@ -57,14 +72,6 @@
         {!! $address !!}
     @else
         -
-    @endif
-    @if(count($shop) > 0)
-    <p style="padding-top: 10px;">
-        <a href="{{url($shop->shop_name)}}">
-            <i class="fa fa-home" aria-hidden="true"></i>
-            {{trans('messages.text_go_to_shop')}}
-        </a>
-    </p>
     @endif
 </div>
 <div class="row">

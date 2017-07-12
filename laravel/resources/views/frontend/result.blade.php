@@ -119,10 +119,9 @@ use App\Http\Controllers\frontend\MarketController;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <p>
-                                    <i class="fa fa-list"></i>
+
                                     <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                       class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                       class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
                             </div>
                         </div>
                     </div>
@@ -182,13 +181,10 @@ use App\Http\Controllers\frontend\MarketController;
                             </div>
 
                         </div>
-                        <div class="separator clear-left">
-                            <p style="text-align: left;">
-                               <i class="fa fa-list"></i>
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">
-                                    {{ trans('messages.button_moredetail')}}
+                        <div class="clear-left">
+                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                                 </a>
-                            </p>
                         </div>
                         <div class="clearfix">
                         </div>

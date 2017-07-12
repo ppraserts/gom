@@ -86,8 +86,8 @@ $pagetitle = trans('message.menu_promotion');
                                 <td style="text-align:center;">{{ ++$i }}</td>
                                 <td>{{ $item->promotion_title }}</td>
                                 <td>{{ $item->promotion_description }}</td>
-                                <td>{{ DateFuncs::thai_date($item->start_date) }}</td>
-                                <td>{{ DateFuncs::thai_date($item->end_date) }}</td>
+                                <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->start_date) }}</td>
+                                <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date) }}</td>
                                 <td style="text-align:center;">
                                     <a target="_bank" class="btn btn-info"
                                        href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">

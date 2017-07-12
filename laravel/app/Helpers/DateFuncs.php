@@ -85,7 +85,7 @@ class DateFuncs
 
     }
 
-    public static function mysqlToThaiDate($strDate, $skipTime = false)
+    public static function mysqlToThaiDate($strDate, $skipTime = true)
     {
         if (empty($strDate)){
             return '';

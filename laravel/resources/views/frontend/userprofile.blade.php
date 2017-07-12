@@ -256,19 +256,7 @@
                             </div>
 
                         </div>
-                        <div class="row">
-                            <div class="form-group col-md-6 {{ $errors->has('users_district') ? 'has-error' : '' }}">
-                                <strong>{{ trans('validation.attributes.users_district') }}
-                                    :</strong>
-                                <select id="users_district" name="users_district" class="form-control">
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6 {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
-                                <strong>{{ trans('validation.attributes.users_postcode') }}
-                                    :</strong>
-                                {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => trans('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
-                            </div>
-                        </div>
+
                         {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
                             <strong>{{ trans('validation.attributes.users_phone') }}
                                 :</strong>
@@ -281,15 +269,30 @@
                                 {!! Form::text('users_fax', $item->users_fax, array('placeholder' => trans('validation.attributes.users_fax'),'class' => 'form-control')) !!}
                             </div>
                         @endif--}}
+
                         <div class="row">
-                            <div class="text-center">
-                                {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                                    {{ trans('messages.button_save')}}</button>
+                            <div class="form-group col-md-6">
+                                <strong>{{ trans('validation.attributes.users_latitude') }} :</strong>
+                                {!! Form::text('users_latitude', $item->users_latitude, array('placeholder' => trans('validation.attributes.users_latitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
+
+                            </div>
+                            <div class="col-md-6">
+                                <strong>{{ trans('validation.attributes.users_longitude') }} :</strong>
+                                {!! Form::text('users_longitude', $item->users_longitude, array('placeholder' => trans('validation.attributes.users_longitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
 
                             </div>
                         </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="text-center">
+                        {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                            {{ trans('messages.button_save')}}</button>
+
                     </div>
                 </div>
             </div>

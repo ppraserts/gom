@@ -129,6 +129,7 @@ if (is_array($carts)) {
                                 </a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            @if($user->iwanttobuy == "buy")
                             <li class="dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -148,6 +149,8 @@ if (is_array($carts)) {
                                 </ul>
                             </li>
                             <li role="separator" class="divider"></li>
+                            @endif
+                            @if($user->iwanttobuy == "sale")
                             <li class="dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -182,6 +185,7 @@ if (is_array($carts)) {
                                 </ul>
                             </li>
                             <li role="separator" class="divider"></li>
+                            @endif
                             <li><a href="{{ url('/user/userprofiles') }}">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                     {{ trans('messages.userprofile') }}

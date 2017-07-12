@@ -35,7 +35,7 @@
             <div class="form-group ">
                 <button class="btn btn-default" type="submit">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
-                    จัดส่ง{{ trans('messages.text_transport') }}
+                    {{ trans('messages.text_transport') }}
                 </button>
             </div>
         </form>

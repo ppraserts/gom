@@ -113,9 +113,8 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p>
-                                            <i class="fa fa-list"></i>
                                             <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                               class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                               class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -181,9 +180,8 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                         - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
                                     </p>
                                     <p class="btn-details">
-                                        <i class="fa fa-list"></i>
                                         <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                           class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                           class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a></p>
                                 </div>
                                 <div class="clearfix">
                                 </div>
