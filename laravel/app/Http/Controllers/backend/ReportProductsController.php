@@ -137,7 +137,7 @@ class ReportProductsController extends BaseReports
                     });
 
                     $sheet->cells('A6', function($cells) {
-                        $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::convertToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
+                        $cells->setValue(trans('messages.datetime_export').': '.DateFuncs::dateToThaiDate(date('Y-m-d')).' '.date('H:i:s'));
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));

@@ -11,10 +11,11 @@ use App\Helpers\DateFuncs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ReportOrderStatusHistoryController extends Controller
-{
-//    use ValidatesRequests;
+//Boots
+use App\Http\Controllers\backend\BaseReportsController as BaseReports;
 
+class ReportOrderStatusHistoryController extends BaseReports
+{
     public function __construct()
     {
         $this->middleware('admin');
@@ -29,7 +30,6 @@ class ReportOrderStatusHistoryController extends Controller
     {
 
         if (!empty($request->input('is_search'))) {
-
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);
             $request['end_date'] = DateFuncs::convertYear($request['end_date']);
 
@@ -59,12 +59,18 @@ class ReportOrderStatusHistoryController extends Controller
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
             return view('backend.reports.order_status_history', compact('results'));
         } else {
+            $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
+            $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
+            $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
+
             $results = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
                 ->join('users', 'users.id', '=', 'orders.user_id')
                 ->select('orders.*', 'order_status.status_name', 'users.users_firstname_th', 'users.users_lastname_th')
+                ->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month'])
+                ->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today'])
                 ->orderBy('orders.id', 'DESC')
                 ->paginate(config('app.paginate'));
-            return view('backend.reports.order_status_history', compact('results'));
+            return view('backend.reports.order_status_history', compact('results','defult_ymd_last_month','defult_ymd_today'));
         }
     }
 
@@ -93,12 +99,12 @@ class ReportOrderStatusHistoryController extends Controller
                 trans('messages.i_sale'),
                 trans('messages.i_buy'),
                 trans('messages.order_date'),
-                trans('messages.order_total'),
+                trans('messages.order_total').'('.trans('messages.baht').')',
                 trans('messages.order_status'),
             );
 
             foreach ($results as $v) {
-                $total_amount = $v->total_amount . ' ' . trans('messages.text_star');
+                $total_amount = $v->total_amount;
                 if ($v->order_type == 'retail') {
                     $order_type = trans('messages.retail');
                 } else {
@@ -107,7 +113,7 @@ class ReportOrderStatusHistoryController extends Controller
 
                 $fname_lname_sale = $v->users_firstname_th . " " . $v->users_lastname_th;
                 $fname_lname_buy = $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th;
-                $order_date = DateFuncs::mysqlToThaiDate($v->order_date);
+                $order_date = DateFuncs::dateToThaiDate($v->order_date);
                 $arr[] = array(
                     $v->id,
                     $order_type,

@@ -62,7 +62,7 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>

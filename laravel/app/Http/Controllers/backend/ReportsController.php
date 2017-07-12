@@ -18,8 +18,10 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Helpers\DateFuncs;
 
+//Boots
+use App\Http\Controllers\backend\BaseReportsController as BaseReports;
 
-class ReportsController extends Controller
+class ReportsController extends BaseReports
 {
 
     public function __construct()
@@ -45,7 +47,10 @@ class ReportsController extends Controller
                 $this->throwValidationException($request, $validator);
             }
         }
-        $orderLists = '';
+        $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
+        //$defultDateMonthYear['ymd_last_month'];
+        //$defultDateMonthYear['ymd_today'];
+
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -64,22 +69,25 @@ class ReportsController extends Controller
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
+        $defult_ymd_last_month = '';
+        $defult_ymd_today = '';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
             $orderList->where('orders.order_date', '>=', $request->input('start_date'));
             $orderList->where('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
+        }else{
+            $orderList->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $orderList->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
+            $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $orderList->groupBy('orders.id');
         $orderList->orderBy('orders.id', 'DESC');
         $orderLists = $orderList->paginate(config('app.paginate'));
         $productCategoryitem = ProductCategory::all();
 
-
-//        else{
-//            $products = Product::where('productcategory_id',0)->get();
-//        }
-        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productcategorys_id','productTypeNameArr','productCategoryitem'));
+        return view('backend.reports.orderlist', compact('orderLists', 'products', 'productcategorys_id','productTypeNameArr','productCategoryitem','defult_ymd_last_month','defult_ymd_today'));
 
     }
 
@@ -110,7 +118,7 @@ class ReportsController extends Controller
                 trans('messages.order_type'),
                 trans('messages.i_sale'),
                 trans('messages.order_date'),
-                trans('messages.order_total'),
+                trans('messages.order_total').'('.trans('messages.baht').')',
                 trans('messages.order_status')
             );
             foreach ($orderLists as $v) {
@@ -123,8 +131,8 @@ class ReportsController extends Controller
                     $v->id,
                     $order_type,
                     $v->users_firstname_th . " " . $v->users_lastname_th,
-                    $v->order_date,
-                    $v->total_amount . trans('messages.baht'),
+                    DateFuncs::dateToThaiDate($v->order_date),
+                    $v->total_amount,
                     $v->status_name
                 );
             }
@@ -203,7 +211,7 @@ class ReportsController extends Controller
             }
         }
 
-        $orderSaleItem = '';
+        $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
 
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
@@ -223,11 +231,18 @@ class ReportsController extends Controller
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
+        $defult_ymd_last_month='';
+        $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
             $orderList->where('orders.order_date', '>=', $request->input('start_date'));
             $orderList->where('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
+        }else{
+            $orderList->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $orderList->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
+            $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $orderList->where('orders.order_status', '!=', 5);
         $orderList->groupBy('products.id');
@@ -241,8 +256,8 @@ class ReportsController extends Controller
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total_amounts;
         }
-//            return $orderSaleItem;
-        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'sumAll'));
+        // return $orderSaleItem;
+        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'sumAll','defult_ymd_last_month','defult_ymd_today'));
 
     }
 
@@ -261,7 +276,7 @@ class ReportsController extends Controller
                 $this->throwValidationException($request, $validator);
             }
         }
-
+        $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
         $shop_select_arr = $request->input('shop_select_id');
         $shop = User::join('orders', 'orders.user_id', '=', 'users.id');
         $shop->join('shops', 'shops.user_id', '=', 'users.id');
@@ -269,11 +284,18 @@ class ReportsController extends Controller
         if (!empty($shop_select_arr)) {
             $shop->whereIn('shops.id', $shop_select_arr);
         }
+        $defult_ymd_last_month='';
+        $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
             $shop->where('orders.order_date', '>=', $request->input('start_date'));
             $shop->where('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
+        }else{
+            $shop->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $shop->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
+            $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $shop->groupBy('shops.id');
         $shop->orderBy('total', 'DESC');
@@ -290,7 +312,8 @@ class ReportsController extends Controller
             ->groupBy('shops.id')
             ->get();
 //            return $shopsList;
-        return view('backend.reports.sale_item_by_shop', compact('shops', 'allShops', 'start_date', 'end_date', 'sumAll'));
+        return view('backend.reports.sale_item_by_shop',
+            compact('shops', 'allShops', 'start_date', 'end_date', 'sumAll','defult_ymd_last_month','defult_ymd_today'));
 
     }
 

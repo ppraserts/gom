@@ -68,7 +68,7 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -90,7 +90,7 @@
                                 <th>{{ trans('messages.i_buy') }}</th>
                             @endif
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">
                                 {{ trans('messages.view_order_detail') }}
@@ -113,8 +113,8 @@
                                     </th>
                                 @endif
 
-                                <td style="text-align:center;">{{ DateFuncs::convertToThaiDate($result->order_date) }}</td>
-                                <td style="text-align:center;">{{ $result->total_amount . trans('messages.baht') }}</td>
+                                <td style="text-align:center;">{{ DateFuncs::dateToThaiDate($result->order_date) }}</td>
+                                <td style="text-align:center;">{{ $result->total_amount}}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-info"
