@@ -81,231 +81,236 @@
 @section('content')
     @include('shared.usermenu', array('setActive'=>'userprofiles'))
     <br/>
-    <form enctype="multipart/form-data" class="form-horizontal" role="form" method="POST"
+    <form enctype="multipart/form-data" role="form" method="POST"
           action="{{ url('user/updateprofiles') }}">
         {{ csrf_field() }}
-        <div class="col-sm-12">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
-                    <br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            <div class="row">
-                <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
+        <div class="row">
+            <div class="col-sm-12">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>{{ trans('messages.message_whoops_error')}}</strong> {{ trans('messages.message_result_error')}}
+                        <br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <div class="pull-right">
-                        {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
-                        <button type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                            {{ trans('messages.button_save')}}</button>
+                @endif
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
                     </div>
-                </div>
+                @endif
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" style="padding-right:30px;">
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12" style="padding-right:30px;">
-                    @if($item->users_imageprofile != "")
-                        <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt=""
-                             class="img-circle">
-                    @endif
-                    <div class="form-group {{ $errors->has('users_imageprofile') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_imageprofile') }}:</strong>
-                        <p style="color: #ff2222">{{trans('messages.image_file_size_limit')}} 500 KB</p>
-                        {!! Form::file('users_imageprofile', null, array('placeholder' => trans('validation.attributes.users_imageprofile'),'class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
-                        {{ trans('validation.attributes.iwantto') }}
-                        :
-                        <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
-                    </div>
-                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                        {{ trans('validation.attributes.email') }} :
-                        <strong>{{ $item->email }}</strong>
-                    </div>
-                    @if($item->users_membertype == "personal")
-                        <div class="form-group {{ $errors->has('users_idcard') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.users_idcard') }} :
-                            <strong>{{ $item->users_idcard }}</strong>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="requset_email_system" value="1"
-                                   @if(!empty($item->requset_email_system)) checked @endif>
-                            {{ trans('messages.lable_requset_email_system') }}
-                        </div>
-                        <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_qrcode') }} :</strong>
-                            {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
-                        </div>
-                        @if(isset($standards))
-                            <div class="form-group">
-                                <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
-                                @for($i = 0 ; $i < count($standards) ; $i++)
-                                    <label class="checkbox-inline">
-                                        <input name="users_standard[]" type="checkbox" disabled
-                                               value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
-                                        {{$standards[$i]->name}}
-                                    </label>
-                                @endfor
+                <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}"
+                     style="background-color: #FFFFFF; padding: 15px;">
+                    {{ trans('validation.attributes.iwantto') }}
+                    :
+                    <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
+                </div>
+                @if($item->users_imageprofile != "")
+                    <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt=""
+                         class="img-circle">
+                @endif
+                <div class="form-group {{ $errors->has('users_imageprofile') ? 'has-error' : '' }}">
+                    <strong>{{ trans('validation.attributes.users_imageprofile') }}:</strong>
+                    <p style="color: #ff2222">{{trans('messages.image_file_size_limit')}} 500 KB</p>
+                    {!! Form::file('users_imageprofile', null, array('placeholder' => trans('validation.attributes.users_imageprofile'),'class' => 'form-control')) !!}
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">แก้ไขโปรไฟล์</div>
+                    <div class="panel-body">
+                        @if($item->users_membertype == "personal")
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <strong>{{ trans('validation.attributes.users_idcard') }}</strong><br>
+                                    <input class="form-control" type="text" value="{{ $item->users_idcard }}" readonly/>
+                                </div>
+                                @if($item->iwanttosale == 'sale')
+                                    <div class="form-group col-md-6 {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
+                                        <strong>{{ trans('validation.attributes.users_qrcode') }} :</strong>
+                                        {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
+                                <strong>* {{ trans('validation.attributes.users_firstname_th') }} -
+                                    {{ trans('validation.attributes.users_lastname_th') }}
+                                    :</strong>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {!! Form::text('users_firstname_th', $item->users_firstname_th, array('placeholder' => trans('validation.attributes.users_firstname_th'),'class' => 'form-control')) !!}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {!! Form::text('users_lastname_th', $item->users_lastname_th, array('placeholder' => trans('validation.attributes.users_lastname_th'),'class' => 'form-control')) !!}
+                                    </div>
+                                </div>
                             </div>
                         @endif
-                        <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
-                            <strong>* {{ trans('validation.attributes.users_firstname_th') }} -
-                                {{ trans('validation.attributes.users_lastname_th') }}
-                                :</strong>
+                        @if($item->users_membertype == "company")
                             <div class="row">
-                                <div class="col-md-6">
-                                    {!! Form::text('users_firstname_th', $item->users_firstname_th, array('placeholder' => trans('validation.attributes.users_firstname_th'),'class' => 'form-control')) !!}
+                                <div class="form-group col-md-6">
+                                    {{ trans('validation.attributes.users_taxcode') }}
+                                    :
+                                    <strong>{{ $item->users_taxcode }}</strong>
                                 </div>
-                                <div class="col-md-6">
-                                    {!! Form::text('users_lastname_th', $item->users_lastname_th, array('placeholder' => trans('validation.attributes.users_lastname_th'),'class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group {{ $errors->has('users_firstname_en') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_firstname_en') }} -
-                                {{ trans('validation.attributes.users_lastname_en') }}
-                                :</strong>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {!! Form::text('users_firstname_en', $item->users_firstname_en, array('placeholder' => trans('validation.attributes.users_firstname_en'),'class' => 'form-control')) !!}
-                                </div>
-                                <div class="col-md-6">
-                                    {!! Form::text('users_lastname_en', $item->users_lastname_en, array('placeholder' => trans('validation.attributes.users_lastname_en'),'class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">
-                            <strong>* {{ trans('validation.attributes.users_dateofbirth') }}
-                                :</strong>
-                            <div class='input-group date' id='datetimepicker1'>
-                                {!! Form::text('users_dateofbirth', DateFuncs::thai_date($item->users_dateofbirth), array('placeholder' => trans('validation.attributes.users_dateofbirth'),'class' => 'form-control')) !!}
-                                <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
-                            </div>
-                        </div>
-                        <div class="form-group {{ $errors->has('users_gender') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_gender') }}
-                                :</strong>
-                            <input type="radio" name="users_gender" id="users_gender1"
-                                   value="male" {{ $item->users_gender == 'male'? 'checked="checked"' : '' }}> {{ trans('messages.gender_male')}}
-                            <input type="radio" name="users_gender" id="users_gender2"
-                                   value="female" {{ $item->users_gender == 'female'? 'checked="checked"' : '' }}> {{ trans('messages.gender_female')}}
-                        </div>
-                    @endif
-                    @if($item->users_membertype == "company")
-                        <div class="form-group {{ $errors->has('users_taxcode') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.users_taxcode') }}
-                            :
-                            <strong>{{ $item->users_taxcode }}</strong>
-                        </div>
-                        <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_qrcode') }}
-                                :</strong>
-                            {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
-                        </div>
-                        <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_company_th') }}
-                                :</strong>
-                            {!! Form::text('users_company_th', $item->users_company_th, array('placeholder' => trans('validation.attributes.users_company_th'),'class' => 'form-control')) !!}
-                        </div>
-                        <div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_company_en') }}
-                                :</strong>
-                            {!! Form::text('users_company_en', $item->users_company_en, array('placeholder' => trans('validation.attributes.users_company_en'),'class' => 'form-control')) !!}
-                        </div>
-                    @endif
-                    <div class="form-group {{ $errors->has('users_addressname') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_addressname') }}
-                            :</strong>
-                        {!! Form::text('users_addressname', $item->users_addressname, array('placeholder' => trans('validation.attributes.users_addressname'),'class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_street') }}
-                            :</strong>
-                        {!! Form::text('users_street', $item->users_street, array('placeholder' => trans('validation.attributes.users_street'),'class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_province') }}
-                            :</strong>
-                        <select id="users_province" name="users_province" class="form-control">
-                            <option value="">{{ trans('messages.allprovince') }}</option>
-                            @foreach ($provinceItem as $key => $province)
-                                @if($item->users_province == $province->PROVINCE_NAME)
-                                    <option selected
-                                            value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
-                                @else
-                                    <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                @if($item->iwanttosale == 'sale')
+                                    <div class="form-group col-md-6 {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
+                                        <strong>{{ trans('validation.attributes.users_qrcode') }}
+                                            :</strong>
+                                        {!! Form::text('users_qrcode', $item->users_qrcode, array('placeholder' => trans('validation.attributes.users_qrcode'),'class' => 'form-control')) !!}
+                                    </div>
                                 @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group {{ $errors->has('users_city') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_city') }}
-                            :</strong>
-                        <select id="users_city" name="users_city" class="form-control">
-                        </select>
-                    </div>
-                    <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_district') }}
-                            :</strong>
-                        <select id="users_district" name="users_district" class="form-control">
-                        </select>
-                    </div>
-                    <div class="form-group {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_postcode') }}
-                            :</strong>
-                        {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => trans('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_mobilephone') }}
-                            :</strong>
-                        {!! Form::text('users_mobilephone', $item->users_mobilephone, array('placeholder' => trans('validation.attributes.users_mobilephone'),'class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_phone') }}
-                            :</strong>
-                        {!! Form::text('users_phone', $item->users_phone, array('placeholder' => trans('validation.attributes.users_phone'),'class' => 'form-control')) !!}
-                    </div>
-                    @if($item->users_membertype == "company")
-                        <div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">
-                            <strong>{{ trans('validation.attributes.users_fax') }}
-                                :</strong>
-                            {!! Form::text('users_fax', $item->users_fax, array('placeholder' => trans('validation.attributes.users_fax'),'class' => 'form-control')) !!}
-                        </div>
-                    @endif
-
-                    <div class="form-group {{ $errors->has('users_longitude') ? 'has-error' : '' }}">
-                        <strong>{{ trans('validation.attributes.users_latitude'). " - " .trans('validation.attributes.users_longitude') }}
-                            :</strong>
+                            </div>
+                            <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_company_th') }}
+                                    :</strong>
+                                {!! Form::text('users_company_th', $item->users_company_th, array('placeholder' => trans('validation.attributes.users_company_th'),'class' => 'form-control')) !!}
+                            </div>
+                            {{--<div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_company_en') }}
+                                    :</strong>
+                                {!! Form::text('users_company_en', $item->users_company_en, array('placeholder' => trans('validation.attributes.users_company_en'),'class' => 'form-control')) !!}
+                            </div>--}}
+                        @endif
                         <div class="row">
-                            <div class="col-md-6">
-                                {!! Form::text('users_latitude', $item->users_latitude, array('placeholder' => trans('validation.attributes.users_latitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
-
+                            <div class="form-group col-md-12">
+                                <input type="checkbox" name="requset_email_system" value="1"
+                                       @if(!empty($item->requset_email_system)) checked @endif>
+                                {{ trans('messages.lable_requset_email_system') }}
                             </div>
-                            <div class="col-md-6">
-                                {!! Form::text('users_longitude', $item->users_longitude, array('placeholder' => trans('validation.attributes.users_longitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
+                        </div>
+                        @if(isset($standards) && $item->iwanttosale == 'sale')
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
+                                    @for($i = 0 ; $i < count($standards) ; $i++)
+                                        <label class="checkbox-inline">
+                                            <input name="users_standard[]" type="checkbox" disabled
+                                                   value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                            {{$standards[$i]->name}}
+                                        </label>
+                                    @endfor
+                                </div>
+                            </div>
+                        @endif
+
+
+                        <div class="row">
+                            <div class="form-group col-md-6 {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <strong>* {{ trans('validation.attributes.email') }} :</strong>
+                                <input id="email" type="email" class="form-control" name="email"
+                                       value="{{ $item->email }}">
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
+                                <strong>* {{ trans('validation.attributes.users_mobilephone') }}
+                                    :</strong>
+                                {!! Form::text('users_mobilephone', $item->users_mobilephone, array('placeholder' => trans('validation.attributes.users_mobilephone'),'class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12 {{ $errors->has('users_addressname') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_addressname') }}
+                                    :</strong>
+                                {!! Form::text('users_addressname', $item->users_addressname, array('placeholder' => trans('validation.attributes.users_addressname'),'class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        {{--<div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">
+                            <strong>{{ trans('validation.attributes.users_street') }}
+                                :</strong>
+                            {!! Form::text('users_street', $item->users_street, array('placeholder' => trans('validation.attributes.users_street'),'class' => 'form-control')) !!}
+                        </div>--}}
+
+
+                        <div class="row">
+                            <div class="form-group col-md-6 {{ $errors->has('users_province') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_province') }}
+                                    :</strong>
+                                <select id="users_province" name="users_province" class="form-control">
+                                    <option value="">{{ trans('messages.allprovince') }}</option>
+                                    @foreach ($provinceItem as $key => $province)
+                                        @if($item->users_province == $province->PROVINCE_NAME)
+                                            <option selected
+                                                    value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                        @else
+                                            <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_city') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_city') }}
+                                    :</strong>
+                                <select id="users_city" name="users_city" class="form-control">
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 {{ $errors->has('users_district') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_district') }}
+                                    :</strong>
+                                <select id="users_district" name="users_district" class="form-control">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_postcode') }}
+                                    :</strong>
+                                {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => trans('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
+                            <strong>{{ trans('validation.attributes.users_phone') }}
+                                :</strong>
+                            {!! Form::text('users_phone', $item->users_phone, array('placeholder' => trans('validation.attributes.users_phone'),'class' => 'form-control')) !!}
+                        </div>--}}
+                        {{--@if($item->users_membertype == "company")
+                            <div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_fax') }}
+                                    :</strong>
+                                {!! Form::text('users_fax', $item->users_fax, array('placeholder' => trans('validation.attributes.users_fax'),'class' => 'form-control')) !!}
+                            </div>
+                        @endif--}}
+                        <div class="row">
+                            <div class="text-center">
+                                {{ Form::hidden('users_imageprofile_temp', $item->users_imageprofile) }}
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                    {{ trans('messages.button_save')}}</button>
 
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
-                        <div id="map" style="width: 100%; height: 300px;"></div>
                     </div>
                 </div>
             </div>
+            {{--<div class="form-group {{ $errors->has('users_longitude') ? 'has-error' : '' }}">
+                <strong>{{ trans('validation.attributes.users_latitude'). " - " .trans('validation.attributes.users_longitude') }}
+                    :</strong>
+                <div class="row">
+                    <div class="col-md-6">
+                        {!! Form::text('users_latitude', $item->users_latitude, array('placeholder' => trans('validation.attributes.users_latitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
+
+                    </div>
+                    <div class="col-md-6">
+                        {!! Form::text('users_longitude', $item->users_longitude, array('placeholder' => trans('validation.attributes.users_longitude'),'style' => 'text-align:center;','class' => 'form-control')) !!}
+
+                    </div>
+                </div>
+            </div>--}}
+            {{--<div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
+                <div id="map" style="width: 100%; height: 300px;"></div>
+            </div>--}}
+
         </div>
     </form>
 @stop
