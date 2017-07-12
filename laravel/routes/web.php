@@ -147,7 +147,12 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
+        /*$productStandards = \App\ProductStandard::where('product_request_id',$stateid)->get();
+        foreach($productStandards as $productStandard){
+            $productStandard->delete();
+        }*/
         $Iwantto = ProductRequest::find($stateid);
+        $Iwantto->standards()->detach();
         $Iwantto->delete();
         return [];
 

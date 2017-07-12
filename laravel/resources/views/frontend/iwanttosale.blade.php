@@ -186,17 +186,13 @@ $url = "user/iwanttosale";
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                    <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                       class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                    <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}"
-                                       class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}</a>
-                            </div>
+                        <div class="clear-left">
+                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
+                            </a>
+                            <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
+                            </a>
                         </div>
                     </div>
                 </div>

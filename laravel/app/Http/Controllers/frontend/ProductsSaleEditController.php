@@ -34,7 +34,7 @@ class ProductsSaleEditController extends Controller
         'volumn' => 'required|numeric',
         'units' => 'required',
         'min_order' => 'min:1',
-        'package_unit' => 'required',
+//        'package_unit' => 'required',
         'product_stock' => 'required',
         'product_markets' => 'required',
         'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',

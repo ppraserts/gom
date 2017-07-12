@@ -780,8 +780,8 @@
             <strong>
                 * {{ trans('validation.attributes.units_package') }} :
             </strong>
-            <select id="units" name="package_unit" class="form-control"
-                    data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
+            <select id="package_unit" name="package_unit" class="form-control"
+                    data-error='{{trans('validation.attributes.message_validate_units')}}'>
                 <option value="">{{ trans('validation.attributes.units') }}</option>
                 @foreach ($unitsItem as $key => $unit)
                     @if($item->package_unit == $unit->{ "units_".Lang::locale()})

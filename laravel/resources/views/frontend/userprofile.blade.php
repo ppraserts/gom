@@ -109,9 +109,8 @@
 
                 <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}"
                      style="background-color: #FFFFFF; padding: 15px;">
-                    {{ trans('validation.attributes.iwantto') }}
-                    :
-                    <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
+
+                    <strong>ต้องการ {{ $item->iwanttosale == 'sale' ? 'ขาย' : '' }} {{ $item->iwanttobuy == 'buy' ? 'ซื้อ' : ''}}</strong>
                 </div>
                 @if($item->users_imageprofile != "")
                     <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt=""
