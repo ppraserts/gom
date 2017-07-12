@@ -15,111 +15,109 @@ use App\Standard;
 
 class UserProfileController extends Controller
 {
-  private $rules = [
-    'users_firstname_th' => 'required|max:255',
-    'users_lastname_th' => 'required|max:255',
-    'users_dateofbirth' => 'required|date_format:Y-m-d',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
-  ];
+    private $rules = [
+        'users_firstname_th' => 'required|max:255',
+        'users_lastname_th' => 'required|max:255',
+//    'users_dateofbirth' => 'required|date_format:Y-m-d',
+        'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
+    ];
 
-  private $rulescompany = [
-    'users_company_th' => 'required|max:255',
-    'users_company_en' => 'required|max:255',
-    'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
-  ];
+    private $rulescompany = [
+        'users_company_th' => 'required|max:255',
+//    'users_company_en' => 'required|max:255',
+        'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
+    ];
 
-  public function __construct()
-  {
-      $this->middleware('user');
-  }
-
-  public function index(Request $request)
-  {
-      $item = auth()->guard('user')->user();
-      $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
-                  ->get();
-      $standards = Standard::all();
-      $user_standard = UserStandard::where('user_id', $item->id)->get();
-      for($i = 0;$i < $standards->count();$i++){
-          $standards[$i]->checked = false;
-          foreach ($user_standard as $standard){
-              if ($standards[$i]->id == $standard->standard_id){
-                  $standards[$i]->checked = true;
-              }
-          }
-      }
-      return view('frontend.userprofile',compact('item','provinceItem','standards'));
-  }
-
-  public function updateProfile(Request $request)
-  {
-    $user = auth()->guard('user')->user();
-    if($user->users_membertype == "personal")
+    public function __construct()
     {
-      $this->validate($request, $this->rules);
-      $user->users_firstname_th = $request->input('users_firstname_th');
-      $user->users_lastname_th = $request->input('users_lastname_th');
-      $user->users_firstname_en = $request->input('users_firstname_en');
-      $user->users_lastname_en = $request->input('users_lastname_en');
-      $user->users_dateofbirth = DateFuncs::convertYear($request->input('users_dateofbirth'));
-      $user->users_gender = $request->input('users_gender');
-      $user->users_qrcode = $request->input('users_qrcode');
+        $this->middleware('user');
     }
 
-    if($user->users_membertype == "company")
+    public function index(Request $request)
     {
-      $this->validate($request, $this->rulescompany);
-      $user->users_company_th = $request->input('users_company_th');
-      $user->users_company_th = $request->input('users_company_th');
-      $user->users_fax = $request->input('users_fax');
-      $user->users_qrcode = $request->input('users_qrcode');
+        $item = auth()->guard('user')->user();
+        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
+            ->get();
+        $standards = Standard::all();
+        $user_standard = UserStandard::where('user_id', $item->id)->get();
+        for ($i = 0; $i < $standards->count(); $i++) {
+            $standards[$i]->checked = false;
+            foreach ($user_standard as $standard) {
+                if ($standards[$i]->id == $standard->standard_id) {
+                    $standards[$i]->checked = true;
+                }
+            }
+        }
+        return view('frontend.userprofile', compact('item', 'provinceItem', 'standards'));
     }
 
-    if($request->users_imageprofile != "")
+    public function updateProfile(Request $request)
     {
-      $uploadImage = $this->UploadImage($request);
-      $this->RemoveFolderImage($request->users_imageprofile_temp);
-      $user->users_imageprofile = $uploadImage["imageName"];
+        $user = auth()->guard('user')->user();
+        if ($user->users_membertype == "personal") {
+            $this->validate($request, $this->rules);
+            $user->users_firstname_th = $request->input('users_firstname_th');
+            $user->users_lastname_th = $request->input('users_lastname_th');
+            $user->users_firstname_en = $request->input('users_firstname_en');
+            $user->users_lastname_en = $request->input('users_lastname_en');
+            $user->users_dateofbirth = DateFuncs::convertYear($request->input('users_dateofbirth'));
+            $user->users_gender = $request->input('users_gender');
+            $user->users_qrcode = $request->input('users_qrcode');
+        }
+
+        if ($user->users_membertype == "company") {
+            $this->validate($request, $this->rulescompany);
+            $user->users_firstname_th = $request->input('users_company_th');
+            $user->users_company_th = $request->input('users_company_th');
+            $user->users_company_th = $request->input('users_company_th');
+            $user->users_fax = $request->input('users_fax');
+            $user->users_qrcode = $request->input('users_qrcode');
+        }
+
+        if ($request->users_imageprofile != "") {
+            $uploadImage = $this->UploadImage($request);
+            $this->RemoveFolderImage($request->users_imageprofile_temp);
+            $user->users_imageprofile = $uploadImage["imageName"];
+        }
+
+        $user->requset_email_system = 0;
+        if (!empty($request->input('requset_email_system'))) {
+            $user->requset_email_system = $request->input('requset_email_system');
+        }
+        $user->users_addressname = $request->input('users_addressname');
+        $user->users_street = $request->input('users_street');
+        $user->users_district = $request->input('users_district');
+        $user->users_city = $request->input('users_city');
+        $user->users_province = $request->input('users_province');
+        $user->users_postcode = $request->input('users_postcode');
+        $user->users_mobilephone = $request->input('users_mobilephone');
+        $user->users_phone = $request->input('users_phone');
+        $user->users_latitude = $request->input('users_latitude');
+        $user->users_longitude = $request->input('users_longitude');
+        $user->save();
+
+        return redirect()->route('userprofiles.index')
+            ->with('success', trans('messages.message_update_success'));
     }
 
-    $user->requset_email_system = 0;
-    if(!empty($request->input('requset_email_system'))){
-        $user->requset_email_system = $request->input('requset_email_system');
+    private function RemoveFolderImage($rawfile)
+    {
+        if ($rawfile != "") {
+            if (File::exists($rawfile)) {
+                File::delete($rawfile);
+            }
+        }
     }
-    $user->users_addressname = $request->input('users_addressname');
-    $user->users_street = $request->input('users_street');
-    $user->users_district = $request->input('users_district');
-    $user->users_city = $request->input('users_city');
-    $user->users_province = $request->input('users_province');
-    $user->users_postcode = $request->input('users_postcode');
-    $user->users_mobilephone = $request->input('users_mobilephone');
-    $user->users_phone = $request->input('users_phone');
-    $user->users_latitude = $request->input('users_latitude');
-    $user->users_longitude = $request->input('users_longitude');
-    $user->save();
 
-    return redirect()->route('userprofiles.index')
-      ->with('success', trans('messages.message_update_success'));
-  }
+    private function UploadImage(Request $request)
+    {
+        $fileTimeStamp = time();
+        $imageTempName = $request->file('users_imageprofile')->getPathname();
 
-  private function RemoveFolderImage($rawfile)
-  {
-      if ($rawfile != "") {
-          if (File::exists($rawfile)) {
-              File::delete($rawfile);
-          }
-      }
-  }
+        $imageName = $request->users_imageprofile->getClientOriginalName();
+        $request->users_imageprofile->move(config('app.upload_imageprofile') . $fileTimeStamp . "/", $imageName);
+        $imageName = config('app.upload_imageprofile') . $fileTimeStamp . "/" . $imageName;
 
-  private function UploadImage(Request $request)
-  {
-      $fileTimeStamp = time();
-      $imageTempName = $request->file('users_imageprofile')->getPathname();
-
-      $imageName = $request->users_imageprofile->getClientOriginalName();
-      $request->users_imageprofile->move(config('app.upload_imageprofile').$fileTimeStamp."/", $imageName);
-      $imageName = config('app.upload_imageprofile').$fileTimeStamp."/".$imageName;
-
-      return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);
-  }
+        return array('imageTempName' => $imageTempName, 'imageName' => $imageName);
+    }
 }
