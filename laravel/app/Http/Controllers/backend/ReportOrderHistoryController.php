@@ -49,6 +49,8 @@ class ReportOrderHistoryController extends Controller
                 $i_sale_buy = trans('messages.i_sale');
                 $arr[] = array(
                     trans('messages.order_id'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
                     trans('messages.order_date'),
@@ -60,6 +62,8 @@ class ReportOrderHistoryController extends Controller
                 $i_sale_buy = trans('messages.i_buy');
                 $arr[] = array(
                     trans('messages.order_id'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
                     trans('messages.order_type'),
                     trans('messages.i_buy'),
                     trans('messages.order_date'),
@@ -68,7 +72,8 @@ class ReportOrderHistoryController extends Controller
                 );
             }
             foreach ($results as $v) {
-                $total_amount = $v->total_amount;
+                //$total_amount = $v->total_amount;
+                $total_amount = $v->total;
                 if($v->order_type== 'retail') {
                     $order_type = trans('messages.retail');
                 }else {
@@ -83,6 +88,8 @@ class ReportOrderHistoryController extends Controller
                 $order_date = DateFuncs::dateToThaiDate($v->order_date);
                 $arr[] = array(
                     $v->id,
+                    $v->product_name_th,
+                    $v->quantity.' '.$v->units,
                     $order_type,
                     $fname_lname,
                     $order_date,
@@ -139,7 +146,17 @@ class ReportOrderHistoryController extends Controller
 
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $result->join('users', 'users.id', '=', 'orders.user_id');
-        $result->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th');
+        $result->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $result->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $result->join('products', 'products.id', '=', 'product_requests.products_id');
+        $result->select('orders.*', 'order_status.status_name'
+            ,'users.users_firstname_th'
+            ,'users.users_lastname_th'
+            ,'products.product_name_th'
+            ,'order_items.quantity'
+            ,'product_requests.units'
+            ,'order_items.total'
+        );
 
         if ($type_sale_buy == 'sale') { //user_id sale
             $result->where('orders.user_id', $userId);
@@ -157,7 +174,17 @@ class ReportOrderHistoryController extends Controller
 
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $result->join('users', 'users.id', '=', 'orders.user_id');
-        $result->select('orders.*', 'order_status.status_name','users.users_firstname_th','users.users_lastname_th');
+        $result->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $result->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $result->join('products', 'products.id', '=', 'product_requests.products_id');
+        $result->select('orders.*', 'order_status.status_name'
+            ,'users.users_firstname_th'
+            ,'users.users_lastname_th'
+            ,'products.product_name_th'
+            ,'order_items.quantity'
+            ,'product_requests.units'
+            ,'order_items.total'
+        );
 
         if ($type_sale_buy == 'sale') { //user_id sale
             $result->where('orders.user_id', $userId);
@@ -170,7 +197,6 @@ class ReportOrderHistoryController extends Controller
         $result->orderBy('orders.id', 'DESC');
         return $results = $result->paginate(config('app.paginate'));
     }
-
 
     private function users(){
         return $users = User::select(DB::raw('users.id
