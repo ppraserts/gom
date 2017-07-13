@@ -1,6 +1,8 @@
 @extends('layouts.main')
 @section('content')
-
+    @if($user != null)
+        @include('shared.usermenu', array('setActive'=>'quotation'))
+    @endif
     <div style="background-color: #fff; padding: 20px;">
     @if(!empty($promotion->image_file))
     <img src="{{ url($promotion->image_file) }}" style="margin: auto;

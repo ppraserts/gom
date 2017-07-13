@@ -79,7 +79,12 @@
                                     <td>{{  $quotation->product_name_th }}</td>
                                     <td>{{  $quotation->product_title }}</td>
                                     <td style="width: 115px;">
-                                        <input type="number" class="form-control"  id="qty" value="{{$quotation->min_order}}">
+                                        @if($user->user_id != $quotation->buyer_id)
+                                            <input type="number" class="form-control" id="qty"
+                                                   value="{{$quotation->min_order}}">
+                                        @else
+                                            {{$quotation->min_order}}
+                                        @endif
                                     </td>
                                     <td>
                                         <strong>
@@ -87,7 +92,8 @@
                                         </strong>
                                     </td>
                                     {{--<td>{{  $quotation->discount }}</td>--}}
-                                    <td><span id="show_price_total">{{$quotation->min_order * $quotation->price}}</span></td>
+                                    <td><span id="show_price_total">{{$quotation->min_order * $quotation->price}}</span>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -120,7 +126,8 @@
                             <strong>รูปภาพสินค้า</strong>
                             <br>
                             <br>
-                            <img style="width: 100%; overflow: hidden; min-height: 200px;" src="{{url($quotation->product1_file)}}">
+                            <img style="width: 100%; overflow: hidden; min-height: 200px;"
+                                 src="{{url($quotation->product1_file)}}">
                         </div>
                     </div>
                     @if($user->user_id != $quotation->buyer_id)
@@ -150,7 +157,8 @@
                 <div class="modal-body">
                     <p style="color: red;">{{ trans('messages.ms_qty_min_order') }}</p>
                     <p style="color: orange;">
-                        *** {{ trans('messages.text_min_order') }} : <span id="qty_min_order"></span> {{$quotation->units}}
+                        *** {{ trans('messages.text_min_order') }} : <span
+                                id="qty_min_order"></span> {{$quotation->units}}
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -174,10 +182,10 @@
         var address_delivery = $('textarea #address_delivery').val();
         var hd_address_delivery = $('#hd_address_delivery').val();
 
-        if(delivery_chanel == 'รับเอง'){
+        if (delivery_chanel == 'รับเอง') {
             $('#address_hidden').empty();
-        }else{
-            var html_address = '<strong> * ระบุสถานที่จัดส่ง :</strong><textarea name="address_delivery" id="address_delivery" class="form-control" style="margin-bottom: 5px;">'+hd_address_delivery+'</textarea><span id="mss_address_delivery" class="alert-danger"></span>';
+        } else {
+            var html_address = '<strong> * ระบุสถานที่จัดส่ง :</strong><textarea name="address_delivery" id="address_delivery" class="form-control" style="margin-bottom: 5px;">' + hd_address_delivery + '</textarea><span id="mss_address_delivery" class="alert-danger"></span>';
             $('#address_hidden').html(html_address);
         }
         return false;
@@ -187,14 +195,14 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = '{{url('/user/quotation/checkout')}}';
-        var priceTotal =  $('#price-total').val();
-        var qty =  $('#qty').val();
+        var priceTotal = $('#price-total').val();
+        var qty = $('#qty').val();
         //alert(CSRF_TOKEN); return false;
         var delivery_chanel = $('#delivery_chanel option:selected').val();
         var address_delivery = $('textarea#address_delivery').val();
-        var address_delivery_new ='';
-         if(delivery_chanel == 'จัดส่งตามที่อยู่'){
-            if(!address_delivery){
+        var address_delivery_new = '';
+        if (delivery_chanel == 'จัดส่งตามที่อยู่') {
+            if (!address_delivery) {
                 $('#address_delivery').focus();
                 $('#mss_address_delivery').html('<?php echo trans('messages.ms_validate_address_delivery')?>');
                 return false;
@@ -203,7 +211,7 @@
         }
 
         $.ajax({
-            headers: { 'X-CSRF-TOKEN': CSRF_TOKEN},
+            headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
             type: 'POST',
             url: targetUrl,
             data: {
@@ -240,12 +248,12 @@
         }
     }
 
-    $('#qty').on('input',function(e){
+    $('#qty').on('input', function (e) {
         var qty = parseInt($(this).val());
         var min_order = parseInt($('#min_order').val());
         var price_by_product = parseInt($('#price-by-product').val());
         var price_total = parseInt($('#price-total').val());
-        if(qty < min_order){
+        if (qty < min_order) {
             $('#qty_min_order').html(min_order);
             $('#alertModal').modal('show');
             $('#qty').val(min_order).change();

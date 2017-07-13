@@ -169,7 +169,7 @@ if ($mode == "create") {
                         <strong>* {{ trans('validation.attributes.promotion_start_date') }}:</strong>
                     </label>
                     <div class='input-group date col-sm-2' id='pick_start_date'>
-                        {!! Form::text('start_date', \App\Helpers\DateFuncs::mysqlToThaiDate($item->start_date), array('placeholder' => trans('validation.attributes.promotion_start_date'),'class' => 'form-control')) !!}
+                        {!! Form::text('start_date', DateFuncs::thai_date($item->start_date), array('placeholder' => trans('validation.attributes.promotion_start_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -183,7 +183,7 @@ if ($mode == "create") {
                         <strong>* {{ trans('validation.attributes.promotion_end_date') }}:</strong>
                     </label>
                     <div class='input-group date col-sm-2' id='pick_end_date'>
-                        {!! Form::text('end_date', \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date), array('placeholder' => trans('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
+                        {!! Form::text('end_date', DateFuncs::thai_date($item->end_date), array('placeholder' => trans('validation.attributes.promotion_end_date'),'class' => 'form-control')) !!}
                         <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>

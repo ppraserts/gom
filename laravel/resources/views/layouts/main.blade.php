@@ -150,7 +150,7 @@ if (is_array($carts)) {
                             </li>
                             <li role="separator" class="divider"></li>
                             @endif
-                            @if($user->iwanttobuy == "sale")
+                            @if($user->iwanttosale == "sale")
                             <li class="dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>

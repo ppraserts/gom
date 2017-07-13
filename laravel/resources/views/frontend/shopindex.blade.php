@@ -12,29 +12,25 @@
     @if(count($promotions) > 0 )
         <section class="promotions">
 
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    @foreach($promotions as $promotion)
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
-                                <div class="promotion-item">
-                                    <a href="{{url($shop->shop_name."/promotion/".$promotion->id)}}"
-                                       title="{{$promotion->promotion_title}}">
-                                        @if(isset($promotion->image_file))
-                                            <img class="img-promotion img-responsive"
-                                                 src="{{url( $promotion->image_file)}}">
-                                            <h4>{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h4>
-                                        @else
-                                            <div class="promotion-text-box">
-                                                <h3 class="promotion-text">{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h3>
-                                            </div>
-                                        @endif
-                                    </a>
+
+            <div class="text-center">
+                @foreach($promotions as $promotion)
+                    <div class="promotion-item" style="width: 745px; display: inline-block;">
+                        <a href="{{url($shop->shop_name."/promotion/".$promotion->id)}}"
+                           title="{{$promotion->promotion_title}}">
+                            @if(isset($promotion->image_file))
+                                <img class="img-promotion img-responsive"
+                                     src="{{url( $promotion->image_file)}}">
+                                <h4 style="color: #000000;">{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h4>
+                            @else
+                                <div class="promotion-text-box">
+                                    <h3 class="promotion-text">{{ mb_strimwidth(strip_tags($promotion->promotion_title), 0, 48, "UTF-8")}}</h3>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                            @endif
+                        </a>
+                    </div>
+                    <br>
+                @endforeach
             </div>
 
         </section>
@@ -55,9 +51,8 @@
                                 </div>
                                 <div class="product-detail">
                                     <div class="product-title">
-                                        <a href="{{url('/user/productview/' . $product->id)}}">
-                                            <h4>{{$product->product_title}}</h4>
-                                        </a>
+                                        <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{$product->product_name_th}}</h4>
+                                        <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{$product->product_title}}</h4>
                                     </div>
                                     <div class="{{ $theme == 'theme2' ? 'product-price-t2' : 'product-price'}}">
                                         {{ trans('messages.unit_price'). " ".floatval($product->price). trans('messages.baht')." / ". $product->units }}

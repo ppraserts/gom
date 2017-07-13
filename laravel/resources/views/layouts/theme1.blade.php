@@ -37,7 +37,7 @@ if ($shop != null && $shop->image_file_1 != '') {
 
 
 <div class="container">
-    <header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}) no-repeat center center scroll !important; background-size: cover; max-height: 560px; height: 560px;">
+    <header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}); background-size: cover; max-height: 560px; height: 560px;">
         @yield('header')
     </header>
     @yield('promotion')
