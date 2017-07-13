@@ -101,7 +101,7 @@ class ReportsController extends BaseReports
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
 //        $orderList->groupBy('orders.id');
-        $orderList->orderBy('orders.id', 'DESC');
+        $orderList->orderBy('orders.order_date', 'DESC');
         $orderLists = $orderList->paginate(config('app.paginate'));
         $productCategoryitem = ProductCategory::all();
 
@@ -479,7 +479,7 @@ class ReportsController extends BaseReports
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $shop->groupBy('shops.id');
-        $shop->orderBy('total', 'DESC');
+        $shop->orderBy('shop_name', 'ASC');
         $shops = $shop->get();;
 
         $sumAll = 0;
