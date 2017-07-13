@@ -49,11 +49,11 @@ class ReportOrderHistoryController extends Controller
                 $i_sale_buy = trans('messages.i_sale');
                 $arr[] = array(
                     trans('messages.order_id'),
-                    trans('messages.product_name'),
-                    trans('messages.orderbyunit'),
+                    trans('messages.order_date'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
-                    trans('messages.order_date'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
                     trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status'),
                 );
@@ -62,11 +62,11 @@ class ReportOrderHistoryController extends Controller
                 $i_sale_buy = trans('messages.i_buy');
                 $arr[] = array(
                     trans('messages.order_id'),
-                    trans('messages.product_name'),
-                    trans('messages.orderbyunit'),
+                    trans('messages.order_date'),
                     trans('messages.order_type'),
                     trans('messages.i_buy'),
-                    trans('messages.order_date'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
                     trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status'),
                 );
@@ -88,11 +88,11 @@ class ReportOrderHistoryController extends Controller
                 $order_date = DateFuncs::dateToThaiDate($v->order_date);
                 $arr[] = array(
                     $v->id,
-                    $v->product_name_th,
-                    $v->quantity.' '.$v->units,
+                    $order_date,
                     $order_type,
                     $fname_lname,
-                    $order_date,
+                    $v->product_name_th,
+                    $v->quantity.' '.$v->units,
                     $total_amount,
                     $v->status_name
                 );
