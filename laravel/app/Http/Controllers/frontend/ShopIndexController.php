@@ -45,9 +45,10 @@ class ShopIndexController extends Controller
             $status_comment = 1;
         }
 
-        $products = ProductRequest::where('users_id', $shop->user_id)
+        $products = ProductRequest::join('products','product_requests.products_id','=','products.id')
+            ->where('users_id', $shop->user_id)
             ->where('iwantto', 'sale')
-            ->select('*')
+            ->select('product_requests.*', 'products.product_name_th')
             ->orderBy('sequence','ASC')
             ->orderBy('updated_at','DESC')
             ->limit(8)
@@ -78,6 +79,7 @@ class ShopIndexController extends Controller
                 }
             }
         }
+
 
         return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment'))
             ->with('comments', $comments)
