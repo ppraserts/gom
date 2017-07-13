@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @push('scripts')
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         $('#users_qrcode_section').hide();
@@ -129,7 +130,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form id="form" role="form" method="POST" action="{{ url('user/savecompanyregister') }}">
+                        <form id="form" role="form" method="POST" action="{{ url('user/savecompanyregister') }}" data-toggle="validator">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div id="iwantto" class="col-md-offset-1 col-md-10 form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
@@ -145,7 +146,7 @@
                                         <input type="checkbox" name="iwantto[]" id="iwanttobuy"
                                                value="buy"> {{ trans('messages.i_want_to_buy') }}
                                     </label>
-                                    <div id="ms_selling_type" class="help-block with-errors"></div>
+                                    <div id="ms_selling_type" class="alert-danger help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -155,7 +156,7 @@
 
 
                                         <input id="users_taxcode" type="text" class="form-control" name="users_taxcode"
-                                               value="{{ old('users_taxcode') }}" autofocus maxlength="13">
+                                               value="{{ old('users_taxcode') }}" autofocus maxlength="13" data-minlength="13" required>
 
                                         @if ($errors->has('users_taxcode'))
                                             <span class="help-block">
@@ -182,7 +183,7 @@
                                             <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
                                             {!! Form::text('other_standard', null, array('id'=>'other_standard','class' => 'form-control')) !!}
                                         </div>
-                                        <div id="ms_standard" class="help-block with-errors"></div>
+                                        <div id="ms_standard" class="alert-danger help-block with-errors"></div>
 
                                     </div>
                                 </div>
@@ -213,7 +214,7 @@
 
 
                                     <input id="users_company_th" type="text" class="form-control"
-                                           name="users_company_th" value="{{ old('users_company_th') }}" autofocus>
+                                           name="users_company_th" value="{{ old('users_company_th') }}" autofocus required>
 
                                     @if ($errors->has('users_company_th'))
                                         <span class="help-block">
@@ -245,7 +246,7 @@
                                            class="control-label">* {{ Lang::get('validation.attributes.email') }}</label>
 
                                     <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}">
+                                           value="{{ old('email') }}" required>
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -259,7 +260,7 @@
 
                                     <input id="users_mobilephone" type="text" class="form-control"
                                            name="users_mobilephone" value="{{ old('users_mobilephone') }}"
-                                           autofocus>
+                                           required autofocus>
 
                                     @if ($errors->has('users_mobilephone'))
                                         <span class="help-block">
@@ -288,7 +289,7 @@
                                     <label for="users_province"
                                            class="control-label">* {{ Lang::get('validation.attributes.users_province') }}</label>
 
-                                    <select id="users_province" name="users_province" class="form-control">
+                                    <select id="users_province" name="users_province" class="form-control" required>
                                         <option value="">{{ trans('messages.please_select') }}</option>
                                         @foreach ($provinceItem as $key => $province)
                                             @if(old('users_province') == $province->PROVINCE_NAME)
@@ -303,6 +304,34 @@
                                         <span class="help-block">
                                         <strong>{{ $errors->first('users_province') }}</strong>
                                     </span>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-5 form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
+                                    <label for="users_city"
+                                           class="control-label"> {{ Lang::get('validation.attributes.users_city') }}</label>
+
+                                    <select id="users_city" name="users_city" class="form-control">
+                                    </select>
+                                    @if ($errors->has('users_city'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('users_city') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
+                                    <label for="users_district"
+                                           class="control-label"> {{ Lang::get('validation.attributes.users_district') }}</label>
+
+                                    <select id="users_district" name="users_district" class="form-control">
+                                    </select>
+                                    @if ($errors->has('users_district'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('users_district') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-md-5 form-group{{ $errors->has('users_postcode') ? ' has-error' : '' }}">
@@ -321,40 +350,12 @@
                                 </div>
                             </div>
 
-
-                            <div class="row">
-                                <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
-                                    <label for="users_city"
-                                           class="control-label"> {{ Lang::get('validation.attributes.users_city') }}</label>
-
-                                    <select id="users_city" name="users_city" class="form-control">
-                                    </select>
-                                    @if ($errors->has('users_city'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_city') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-5 form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
-                                    <label for="users_district"
-                                           class="control-label"> {{ Lang::get('validation.attributes.users_district') }}</label>
-
-                                    <select id="users_district" name="users_district" class="form-control">
-                                    </select>
-                                    @if ($errors->has('users_district'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('users_district') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label for="password"
                                            class="control-label">* {{ Lang::get('validation.attributes.password') }}</label>
 
-                                    <input id="password" type="password" class="form-control" name="password">
+                                    <input id="password" type="password" class="form-control" name="password" data-minlength="6" required>
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
@@ -368,7 +369,7 @@
                                            class="control-label">* {{ Lang::get('validation.attributes.password_confirmation') }}</label>
 
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation">
+                                           name="password_confirmation" required>
 
                                     @if ($errors->has('password_confirmation'))
                                         <span class="help-block">
@@ -388,7 +389,7 @@
 
                                     {!! captcha_image_html('ContactCaptcha') !!}
                                     <input class="form-control" type="text" id="CaptchaCode" name="CaptchaCode"
-                                           style="margin-top:5px;">
+                                           style="margin-top:5px;" required>
 
                                     @if ($errors->has('CaptchaCode'))
                                         <span class="help-block">

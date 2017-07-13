@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
-use App\Amphur;
 use App\Province;
-use App\District;
 use App\Standard;
 
 class RegisterController extends Controller
@@ -93,10 +90,6 @@ class RegisterController extends Controller
             'CaptchaCode' => 'required|valid_captcha',
         );
 
-        $rules2 = array(
-            'users_standard' => 'required',
-        );
-
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             return redirect('user/register')
@@ -105,15 +98,6 @@ class RegisterController extends Controller
         }
 
         $input = $request->all();
-
-        if (in_array("sale", $input['iwantto'])){
-            $validator = Validator::make(Input::all(), $rules2);
-            if ($validator->fails()) {
-                return redirect('user/register')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        }
 
         $user = User::registeruser($input);
 
@@ -163,9 +147,7 @@ class RegisterController extends Controller
             'CaptchaCode' => 'required|valid_captcha',
         );
 
-        $rules2 = array(
-            'users_standard' => 'required',
-        );
+
 
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
@@ -176,14 +158,6 @@ class RegisterController extends Controller
 
         $input = $request->all();
 
-        if (in_array("sale", $input['iwantto'])){
-            $validator = Validator::make(Input::all(), $rules2);
-            if ($validator->fails()) {
-                return redirect('user/companyregister')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        }
 
         $user = User::companyregisteruser($input);
 
