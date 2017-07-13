@@ -17,7 +17,7 @@ $pagetitle = trans('message.menu_order_list');
     <div class="col-sm-12">
         <div class="row">
             @if(!empty(Session::get('orderType')) and Session::get('orderType') == 'sale')
-                <h2>{{ trans('messages.order_detail_sale') }}</h2>
+                <h2>{{ trans('messages.order_detail') }}</h2>
             @elseif(!empty(Session::get('orderType')) and Session::get('orderType') == 'buy')
                 <h2>{{ trans('messages.order_detail') }}</h2>
             @endif
