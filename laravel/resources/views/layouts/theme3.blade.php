@@ -26,7 +26,7 @@
 
 </head>
 <?php
-if ($shop != null && $shop->image_file_3!="") {
+if ($shop != null && $shop->image_file_3 != "") {
     $image_header = $shop->image_file_3;
 } else {
     $image_header = 'assets/theme/images/header-3.jpg';
@@ -43,7 +43,7 @@ if ($shop != null && $shop->image_file_3!="") {
     </div>
 </header>
 <div class="container promotions_bg">
-@yield('promotion')
+    @yield('promotion')
 </div>
 <section class="products">
     <div class="container">
@@ -68,36 +68,35 @@ if ($shop != null && $shop->image_file_3!="") {
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="contact-items">
-                    <div class="contact-map">
-                        <iframe width="100%" height="430px" frameborder="0" scrolling="no" marginheight="0"
-                                marginwidth="0"
-                                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"
-                        "></iframe>
-                        <br/>
-                        <small>
-                            <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
-                        </small>
-                    </div>
-                    <div class="contact-detail">
-                        <h3>{{ trans('messages.menu_contactusinfo') }}</h3>
-                        <p><strong>{{ $shop->user->users_firstname_th. " ". $shop->user->users_lastname_th}}</strong>
-                        </p>
-                        <p>{{$shop->user->users_addressname . " " . $shop->user->users_street}}</p>
-                        <p>{{$shop->user->users_district . " " . $shop->user->users_city}}</p>
-                        <p>{{$shop->user->users_province. " ".$shop->user->users_postcode}} </p>
-                        @if(isset($shop->user->users_mobilephone))<p><a
-                                    href="tel:{{$shop->user->users_mobilephone}}">{{$shop->user->users_mobilephone}}</a>
-                        </p>@endif
-                        @if(isset($shop->user->users_phone))<p><a
-                                    href="tel:{{$shop->user->users_phone}}">{{$shop->user->users_phone}}</a></p>@endif
-                        @if(isset($shop->user->email))<p><a
-                                    href="mailto:{{$shop->user->email}}">{{$shop->user->email}}</a></p>@endif
-                    </div>
-                </div>
+
+            <div class="col-md-3 contact-detail" style="height: 400px;">
+                <h3>{{ trans('messages.menu_contactusinfo') }}</h3>
+                <p><strong>{{ $shop->user->users_firstname_th. " ". $shop->user->users_lastname_th}}</strong>
+                </p>
+                <p>{{$shop->user->users_addressname . " " . $shop->user->users_street}}</p>
+                <p>{{$shop->user->users_district . " " . $shop->user->users_city}}</p>
+                <p>{{$shop->user->users_province. " ".$shop->user->users_postcode}} </p>
+                @if(isset($shop->user->users_mobilephone))<p><a
+                            href="tel:{{$shop->user->users_mobilephone}}">{{$shop->user->users_mobilephone}}</a>
+                </p>@endif
+                @if(isset($shop->user->users_phone))<p><a
+                            href="tel:{{$shop->user->users_phone}}">{{$shop->user->users_phone}}</a></p>@endif
+                @if(isset($shop->user->email))<p><a
+                            href="mailto:{{$shop->user->email}}">{{$shop->user->email}}</a></p>@endif
+            </div>
+
+            <div class="col-md-9 contact-map">
+                <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0"
+                        marginwidth="0"
+                        src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"
+                "></iframe>
+                <br/>
+                <small>
+                    <a href="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{ $shop->user->users_latitude }},{{$shop->user->users_longitude}}&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed""></a>
+                </small>
             </div>
         </div>
+    </div>
     </div>
 </section>
 

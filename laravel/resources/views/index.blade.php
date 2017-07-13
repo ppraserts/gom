@@ -33,7 +33,7 @@
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <a href="{{url('user/chooseregister')}}" target="_self">
                                 <div class="thumbnail register-section">
-                                    <img src="images/icon-register.png" alt="">
+                                    <img src="images/icon-register.png" style="height: 91px;" alt="">
                                     <div class="caption">
                                         <h4>สมัครสมาชิก</h4>
                                     </div>
@@ -43,7 +43,7 @@
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <a href="{{url('/choosemarket?market=sale')}}" target="_self">
                                 <div class="thumbnail shop-section">
-                                    <img src="images/icon-shop.png" alt="">
+                                    <img src="images/icon-shop.png" style="height: 91px;" alt="">
                                     <div class="caption">
                                         <h4>ชมตลาด</h4>
                                     </div>
@@ -53,7 +53,7 @@
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <a href="{{url('home')}}" target="_self">
                                 <div class="thumbnail view-section">
-                                    <img src="images/icon-view.png" alt="">
+                                    <img src="images/icon-view.png" style="height: 91px;" alt="">
                                     <div class="caption">
                                         <h4>จับคู่ซื้อขาย</h4>
                                     </div>

@@ -56,15 +56,10 @@ if ($shop != null &&$shop->image_file_2 != "") {
 @yield('promotion')
 <div class="container">
     <section class="products">
-        <div class="row text-center">
-            <div class="col-lg-12">
+        <div class="row text-center" style="padding-left: 15px; padding-right: 15px;">
+            <div class="col-md-12">
                 <h2>{{ trans('messages.shop_product') }}</h2>
-                <div class="row">
-
-                    <div class="row">
                         @yield('product')
-                    </div>
-                </div>
             </div>
         </div>
     </section>
