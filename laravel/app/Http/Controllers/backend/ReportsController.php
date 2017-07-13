@@ -113,7 +113,6 @@ class ReportsController extends BaseReports
     public function actionExportExcel(Request $request)
     {
         if ($request->ajax()) {
-
             $productTypeNameArr = $request->input('product_type_name');
             $start_date = $request->input('start_date');
             $end_date = $request->input('end_date');
@@ -151,11 +150,11 @@ class ReportsController extends BaseReports
 
             $arr[] = array(
                 trans('messages.order_id'),
-                trans('messages.product_name'),
-                trans('messages.orderbyunit'),
+                trans('messages.order_date'),
                 trans('messages.order_type'),
                 trans('messages.i_sale'),
-                trans('messages.order_date'),
+                trans('messages.product_name'),
+                trans('messages.orderbyunit'),
                 trans('messages.order_total').'('.trans('messages.baht').')',
                 trans('messages.order_status')
             );
@@ -167,11 +166,11 @@ class ReportsController extends BaseReports
                 }
                 $arr[] = array(
                     $v->id,
-                    $v->product_name_th,
-                    $v->quantity.' '.$v->units,
+                    DateFuncs::dateToThaiDate($v->order_date),
                     $order_type,
                     $v->users_firstname_th . " " . $v->users_lastname_th,
-                    DateFuncs::dateToThaiDate($v->order_date),
+                    $v->product_name_th,
+                    $v->quantity.' '.$v->units,
                     $v->total,
                     $v->status_name
                 );
