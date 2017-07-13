@@ -79,6 +79,13 @@ body {
 .header-content a:hover {
   text-decoration: none; }
 
+.login-home {
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 .version-two .header-content .thumbnail {
   background-color: #fff3;
   border-width: 1px;

@@ -232,6 +232,7 @@ return [
     'text_start_date' => 'วันที่เริ่มต้น',
     'text_end_date' => 'วันที่สิ้นสุด',
     'text_product_type_name' => 'ชนิดสินค้า',
+    'id_product_type' => 'รหัสชนิดสินค้า',
     'text_filter' => 'หัวข้อ ',
     'text_count_email' => 'จำนวนอีเมลที่ส่ง ',
     'quote_price'=> 'ราคาที่เสนอ',
@@ -270,6 +271,7 @@ return [
     'text_product_th' => 'ชื่อสินค้าภาษาไทย',
     'text_product_en' => 'ชื่อสินค้าภาษาอังกฤษ',
     'product_name' => 'ชื่อสินค้า',
+    'sum_prict_order' => 'ยอดขาย(บาท)',
     'text_product_score' => 'คะแนนเฉลี่ยนของสินค้า',
 
     'text_star' => 'ดาว',

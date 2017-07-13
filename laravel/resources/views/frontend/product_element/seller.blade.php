@@ -169,7 +169,7 @@
         @else
             @if($productRequest['productstatus'] == 'open')
                 @if($productRequest->iwantto == "sale")
-                    @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail")
+                    @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail") && $productRequest['productstatus'] == "open" && $productRequest['product_stock'] >0)
                     <p>
                         <button type="button"
                                 onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
