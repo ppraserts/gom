@@ -135,6 +135,14 @@
             $('#products_id').val(suggestion.id);
         });
         hideSuccessMessage();
+
+        $('input[type=radio][name=is_packing]').change(function () {
+            if (this.value == '0') {
+                $('#div_packing_size').show();
+            } else if (this.value == '1') {
+                $('#div_packing_size').hide();
+            }
+        });
     });
     function hideSuccessMessage() {
         setTimeout(function () {
@@ -143,15 +151,15 @@
 
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#form-productsaleedit").submit(function (e) {
             var product_standard_arr = new Array();
-            $.each($("input[name='product_standard[]']:checked"), function() {
+            $.each($("input[name='product_standard[]']:checked"), function () {
                 product_standard_arr.push($(this).val());
             });
             if (product_standard_arr.length === 0) {
                 var orther_product_standard = $("#product_standard").val();
-                if(orther_product_standard.length <= 0) {
+                if (orther_product_standard.length <= 0) {
                     $('#ms_product_standard').css({
                         'color': '#a94442',
                         'background-color': 'white',
@@ -163,13 +171,40 @@
             }
         })
     });
+
+    $('#add_packing').on('click', function () {
+        /*if($('#add_packing').not(':checked').length){
+         //alert('Not checked');
+         $("#box-packing").html('');
+         }else{
+         var theHtml = $('#use-it-check-add_packing').html();
+         $("#box-packing").html(theHtml);
+         $("#form-productsaleedit").validator('update');
+         //alert('Checked')
+         }*/
+        var add_packing = $('#add_packing').val();
+        if (add_packing == 1) {
+            var theHtml = $('#use-it-check-add_packing').html();
+            $("#box-packing").html(theHtml);
+            $("#form-productsaleedit").validator('update');
+            $('#package_unit_form').attr('required', 'required');
+        } else {
+            $('#package_unit_form').removeAttr('required');
+        }
+
+    });
+    $('#un_add_packing').on('click', function () {
+        $("#box-packing").html('');
+        $("#form-productsaleedit").validator('update');
+    });
 </script>
 @endpush
 @section('content')
     @include('shared.usermenu', array('setActive'=>'iwanttobuy'))
     <br/>
-    <form action="{{ url('user/productbuyedit/'.$item->id) }}" method="post" class="form-inline" id="form-productsaleedit"
-              data-toggle="validator" role="form" enctype="multipart/form-data">
+    <form action="{{ url('user/productbuyedit/'.$item->id) }}" method="post" class="form-inline"
+          id="form-productsaleedit"
+          data-toggle="validator" role="form" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ Form::hidden('product1_file_temp', $item->product1_file) }}
         {{ Form::hidden('product2_file_temp', $item->product2_file) }}
@@ -225,7 +260,9 @@
                             * {{ trans('validation.attributes.productcategorys_id') }} :
                         </strong>
                         <select id="productcategorys_id" name="productcategorys_id"
-                                class="form-control min-width-100pc"  data-error='{{trans('validation.attributes.message_validate_productcategorys_id')}}' required="required">
+                                class="form-control min-width-100pc"
+                                data-error='{{trans('validation.attributes.message_validate_productcategorys_id')}}'
+                                required="required">
                             <option value="">{{ trans('messages.menu_product_category') }}</option>
                             @foreach ($productCategoryitem as $key => $itemcategory)
                                 @if($item->productcategorys_id == $itemcategory->id)
@@ -265,82 +302,163 @@
                             @endfor
                             <span> {{ trans('messages.text_specify') }} :</span>
                             {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control','id' => 'product_standard')) !!}
-                            <br/><small class="alert-danger" id="ms_product_standard"></small>
+                            <br/>
+                            <small class="alert-danger" id="ms_product_standard"></small>
                         </div>
                     @endif
                 </div>
-                    <div class="row" style="margin-top: 15px;">
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <input type="radio" name="add_packing" id="un_add_packing" value="-1"
+                               @if($item->add_packing == -1) checked @elseif(Request::input('id') == 0) checked @endif>
+                        {{ trans('validation.attributes.uncheckbox_product_package') }}
+                        <input type="radio" name="add_packing" id="add_packing" value="1"
+                               @if($item->add_packing == 1) checked @endif>
+                        {{ trans('validation.attributes.checkbox_product_package') }}
+                        <hr/>
+                    </div>
+                </div>
+                <div class="row" id="box-packing">
+                    @if($item->add_packing == 1)
+                        <div id="div_packing_size"
+                             class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+                            <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+                            {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
                             <strong>
-                                * {{trans('validation.attributes.volumnrange_product_need_buy')}} :
+                                * {{ trans('validation.attributes.units_package') }} :
                             </strong>
-                            {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => trans('validation.attributes.volumnrange_product_need_buy'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_volumnrange_start'),'required'=>'required')) !!}
+                            <select id="package_unit_form" name="package_unit" class="form-control"
+                                    data-error='{{trans('validation.attributes.message_validate_units')}}'
+                                    required="required">
+                                <option value="">{{ trans('validation.attributes.units') }}</option>
+                                @foreach ($unitsItem as $key => $unit)
+                                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
                             <div class="help-block with-errors"></div>
                         </div>
 
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('units') ? 'has-error' : '' }}">
-                            <strong>
-                                * {{ trans('validation.attributes.units') }} :
-                            </strong>
-                            <select id="units" name="units" class="form-control min-width-100pc"
-                                    data-error='{{trans('validation.attributes.message_validate_min_order_units')}}' required="required">
-                                <option value="">{{ trans('validation.attributes.units') }}</option>
-                                @foreach ($unitsItem as $key => $unit)
-                                    @if($item->units == $unit->{ "units_".Lang::locale()})
-                                        <option selected
-                                                value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
-                                    @else
-                                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            <div class="help-block with-errors"></div>
+                        <div class="col-md-12">
+                            <hr/>
                         </div>
+                    @endif
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="form-group pd-top-10 col-md-6 {{ $errors->has('volumnrange_start')||$errors->has('volumnrange_end') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{trans('validation.attributes.volumnrange_product_need_buy')}} :
+                        </strong>
+                        {!! Form::text('volumnrange_start', $item->volumnrange_start, array('placeholder' => trans('validation.attributes.volumnrange_product_need_buy'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_volumnrange_start'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
                     </div>
-                    <div class="row" style="margin-top: 15px;">
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('pricerange_start_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>
-                                * {{ trans('validation.attributes.pricerange_start_unit') }} ({{trans('messages.baht')}}) :
-                            </strong>
-                            {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => trans('validation.attributes.pricerange_start_unit'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_volumnrange_start'),'required'=>'required')) !!}
-                            <div class="help-block with-errors"></div>
-                        </div>
-                        <div class="form-group pd-top-10  col-md-6 {{ $errors->has('pricerange_end_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
-                            <strong>
-                                * {{ trans('validation.attributes.pricerange_end_unit') }} (({{trans('messages.baht')}})) :
-                            </strong>
-                            {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => trans('validation.attributes.pricerange_end_unit'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_pricerange_end'),'required'=>'required')) !!}
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 15px;">
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('province') ? 'has-error' : '' }}">
-                            <strong>
-                                {{ trans('messages.text_product_province') }} :
-                            </strong>
-                            <select id="province" name="province" class="form-control min-width-100pc">
-                                <option value="">{{ trans('messages.allprovince') }}</option>
-                                @foreach ($provinceItem as $key => $province)
-                                    @if($item->province == $province->PROVINCE_NAME)
-                                        <option selected
-                                                value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
-                                    @else
-                                        <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group pd-top-10 col-md-6 {{ $errors->has('grade') ? 'has-error' : '' }}">
-                            <strong> {{ trans('messages.text_grade') }} :</strong>
-                            <select id="grade" name="grade" class="form-control min-width-100pc">
-                                @foreach ($grades as $key => $value)
-                                    <option>{{$value}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <br/>
+
+                    <div class="form-group pd-top-10 col-md-6 {{ $errors->has('units') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.units') }} :
+                        </strong>
+                        <select id="units" name="units" class="form-control min-width-100pc"
+                                data-error='{{trans('validation.attributes.message_validate_min_order_units')}}'
+                                required="required">
+                            <option value="">{{ trans('validation.attributes.units') }}</option>
+                            @foreach ($unitsItem as $key => $unit)
+                                @if($item->units == $unit->{ "units_".Lang::locale()})
+                                    <option selected
+                                            value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                @else
+                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="form-group pd-top-10 col-md-6 {{ $errors->has('pricerange_start_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.pricerange_start_unit') }} ({{trans('messages.baht')}}) :
+                        </strong>
+                        {!! Form::text('pricerange_start', $item->pricerange_start, array('placeholder' => trans('validation.attributes.pricerange_start_unit'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_volumnrange_start'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group pd-top-10  col-md-6 {{ $errors->has('pricerange_end_unit')||$errors->has('pricerange_end') ? 'has-error' : '' }}">
+                        <strong>
+                            * {{ trans('validation.attributes.pricerange_end_unit') }} (({{trans('messages.baht')}})) :
+                        </strong>
+                        {!! Form::text('pricerange_end', $item->pricerange_end, array('placeholder' => trans('validation.attributes.pricerange_end_unit'),'class' => 'form-control min-width-100pc','data-error'=>trans('validation.attributes.message_validate_pricerange_end'),'required'=>'required')) !!}
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="form-group pd-top-10 col-md-6 {{ $errors->has('province') ? 'has-error' : '' }}">
+                        <strong>
+                            {{ trans('messages.text_product_province') }} :
+                        </strong>
+                        <select id="province" name="province" class="form-control min-width-100pc">
+                            <option value="">{{ trans('messages.allprovince') }}</option>
+                            @foreach ($provinceItem as $key => $province)
+                                @if($item->province == $province->PROVINCE_NAME)
+                                    <option selected
+                                            value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                @else
+                                    <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group pd-top-10 col-md-6 {{ $errors->has('grade') ? 'has-error' : '' }}">
+                        <strong> {{ trans('messages.text_grade') }} :</strong>
+                        <select id="grade" name="grade" class="form-control min-width-100pc">
+                            @foreach ($grades as $key => $value)
+                                <option>{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="use-it-check-add_packing" style="display:none;">
+            <div id="div_packing_size"
+                 class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+                <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+                {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+                <strong>
+                    * {{ trans('validation.attributes.units_package') }} :
+                </strong>
+                <select id="package_unitpackage_unit" name="package_unit" class="form-control"
+                        data-error='{{trans('validation.attributes.message_validate_units')}}'>
+                    <option value="">{{ trans('validation.attributes.units') }}</option>
+                    @foreach ($unitsItem as $key => $unit)
+                        @if($item->package_unit == $unit->{ "units_".Lang::locale()})
+                            <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                {{ $unit->{ "units_".Lang::locale()} }}
+                            </option>
+                        @else
+                            <option value="{{ $unit->{ "units_".Lang::locale()} }}">
+                                {{ $unit->{ "units_".Lang::locale()} }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="col-md-12">
+                <hr/>
             </div>
         </div>
         <style>
@@ -352,5 +470,5 @@
                 width: 100% !important;
             }
         </style>
-      </form>
+    </form>
 @stop

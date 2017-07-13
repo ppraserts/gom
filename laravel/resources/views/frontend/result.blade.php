@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\frontend\MarketController;
 ?>
 @extends('layouts.main')
 @section('content')
@@ -16,7 +15,7 @@ use App\Http\Controllers\frontend\MarketController;
             {
             $col_md_4_item = (array)$col_md_4_items;
 
-            $product_name = MarketController::get_product_name($col_md_4_item['products_id']);
+            $product_name = $col_md_4_item['product_name_th'];
 
             $imageName_temp = iconv('UTF-8', 'tis620', $col_md_4_item['product1_file']);
             if (!file_exists($imageName_temp)) {
@@ -30,9 +29,12 @@ use App\Http\Controllers\frontend\MarketController;
                     </div>
                     <div class="info">
                         <div class="row">
-                            <div class="price col-md-8">
+                            <div class="price col-md-9">
+                                @if($col_md_4_item['product_stock'] < 1)
+                                    <strong class="alert-danger">สินค้าหมด</strong>
+                                @endif
                                 <h4 title="{{ $product_name }}">
-                                    <?php echo mb_strimwidth($product_name, 0, 15, '...', 'UTF-8'); ?>
+                                    {{ mb_strimwidth($product_name, 0, 30, '...', 'UTF-8') }}
                                 </h4>
                                 <?php
                                 $avg_score = 0;
@@ -99,13 +101,13 @@ use App\Http\Controllers\frontend\MarketController;
                                 <br/><br/>
                             </div>
                             @if($col_md_4_item['productstatus'] == 'open')
-                                <div class="rating hidden-sm col-md-4">
-                                    @if($col_md_4_item['selling_type'] == 'retail' or $col_md_4_item['selling_type'] == 'all')
-                                    <a href="#"
-                                       onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}' , '{{$col_md_4_item['min_order']}}')"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
+                                <div class="rating hidden-sm col-md-3">
+                                    @if(($col_md_4_item['selling_type'] == 'retail' or $col_md_4_item['selling_type'] == 'all') && $col_md_4_item['product_stock'] > 0)
+                                        <a href="#"
+                                           onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}' , '{{$col_md_4_item['min_order']}}')"
+                                           class="btn btn-primary">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
                                     @endif
                                 </div>
                             @endif
@@ -120,8 +122,8 @@ use App\Http\Controllers\frontend\MarketController;
                         <div class="row">
                             <div class="col-md-12">
 
-                                    <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                       class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
+                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                   class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
                             </div>
                         </div>
                     </div>
@@ -157,16 +159,18 @@ use App\Http\Controllers\frontend\MarketController;
                         <div class="row">
                             <div class="price col-md-12">
                                 <h4>
-                                    @if(!empty($col_md_4_item['product_title']))
-                                    {{mb_strimwidth($col_md_4_item['product_title'], 0, 25, '...', 'UTF-8')}}
+                                    @if(!empty($col_md_4_item['product_name_th']))
+                                        {{mb_strimwidth($col_md_4_item['product_name_th'], 0, 25, '...', 'UTF-8')}}
                                     @else
                                         -
                                     @endif
                                 </h4>
-                                จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
+                                จำนวน
+                                : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
                                 <br/>
                                 <span class="hidden-sm">
-                                    {{trans('messages.orderbyprice')}} : {{ floatval($col_md_4_item['pricerange_start']) }}
+                                    {{trans('messages.orderbyprice')}}
+                                    : {{ floatval($col_md_4_item['pricerange_start']) }}
                                     - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
                                 </span>
                                 <br/>
@@ -182,9 +186,9 @@ use App\Http\Controllers\frontend\MarketController;
 
                         </div>
                         <div class="clear-left">
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
-                                    <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
-                                </a>
+                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
+                            </a>
                         </div>
                         <div class="clearfix">
                         </div>

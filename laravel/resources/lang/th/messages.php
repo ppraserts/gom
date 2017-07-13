@@ -289,5 +289,6 @@ return [
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
     'message_validate_order_channel' => 'กรุณาเลือกช่องทางการชำระเงิน',
     'required_standard' => 'กรุณาเลือกมาตรฐานสินค้า',
+    'required_image' => 'กรุณาเลือกรูปภาพ',
 
 ];
