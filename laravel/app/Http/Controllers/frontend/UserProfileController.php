@@ -9,6 +9,7 @@ use App\UserStandard;
 use DB;
 use File;
 use Hash;
+use Image;
 use Illuminate\Http\Request;
 use Validator;
 use App\Standard;
@@ -76,8 +77,7 @@ class UserProfileController extends Controller
 
         if ($request->users_imageprofile != "") {
             $uploadImage = $this->UploadImage($request);
-            $this->RemoveFolderImage($request->users_imageprofile_temp);
-            $user->users_imageprofile = $uploadImage["imageName"];
+            $user->users_imageprofile = $uploadImage["image_path_filename"];
         }
 
         $user->requset_email_system = 0;
@@ -109,15 +109,21 @@ class UserProfileController extends Controller
         }
     }
 
-    private function UploadImage(Request $request)
+    public function UploadImage($request)
     {
-        $fileTimeStamp = time();
-        $imageTempName = $request->file('users_imageprofile')->getPathname();
+        sleep(1);
+        $filename = 'users_imageprofile';
+        $image_path = $request->file($filename)->getPathname();
+        $orgFilePathName = $request->{$filename}->getClientOriginalName();
+        $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
+        $image_directory = config('app.upload_imageprofile');
+        $image_path_filename = $image_directory . microtime() . "." . $ext;
+//        File::makeDirectory($image_directory, 0777, true, true);
 
-        $imageName = $request->users_imageprofile->getClientOriginalName();
-        $request->users_imageprofile->move(config('app.upload_imageprofile') . $fileTimeStamp . "/", $imageName);
-        $imageName = config('app.upload_imageprofile') . $fileTimeStamp . "/" . $imageName;
+        $img = Image::make($image_path);
+        $img->save($image_path_filename);
+        $img->destroy();
 
-        return array('imageTempName' => $imageTempName, 'imageName' => $imageName);
+        return array('image_path_filename' => $image_path_filename);
     }
 }
