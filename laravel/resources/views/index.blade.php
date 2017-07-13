@@ -20,7 +20,14 @@
 
 <body class="home home-intro version-two three">
 <header class="header header-intro" style="background: url(images/bg-themev302.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+    <div class="login-home" style="padding: 25px; background-color: transparent">
+        <a href="{{url('user/login')}}" style="display: inline-block;">
+            <img src="{{url('images/person.png')}}"> <span style="color: #FFF; font-size: 1.7em; display: inline-block; vertical-align: middle; margin-left: 5px;">เข้าสู่ระบบ</span>
+        </a>
+    </div>
+
     <div class="text-vertical-center">
+
         <div class="header-title">
             <h1><span>DGT</span>Farm</h1>
             <h3><span>“</span>มิติใหม่สินค้าเกษตรไทยบนโลกออนไลน์<span>”</span></h3>
