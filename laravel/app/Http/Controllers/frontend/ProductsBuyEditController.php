@@ -136,6 +136,9 @@ class ProductsBuyEditController extends Controller
         }
         $productRequest->packing_size = $request->packing_size;
         $productRequest->units = $request->units;
+        if ($request->grade == 'ไม่มี'){
+            $request->grade = '-';
+        }
         $productRequest->grade = $request->grade;
         $productRequest->pricerange_start = $request->pricerange_start;
         $productRequest->pricerange_end = $request->pricerange_end;
@@ -149,7 +152,10 @@ class ProductsBuyEditController extends Controller
         $productRequest->products_id = $product_id;
         $productRequest->users_id = $user->id;
         $productRequest->selling_type = $request->selling_type;
-
+        $productRequest->packing_size = $request->packing_size;
+        if(!empty($request->add_packing)){
+            $productRequest->add_packing = $request->add_packing;
+        }
         //return $productRequest;
 
         if ($id == 0) {

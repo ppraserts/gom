@@ -205,7 +205,7 @@ class ProductsSaleEditController extends Controller
             $uploadImage2 = $this->UploadImage($request, 'product2_file');
             $this->RemoveFolderImage($productRequest->product2_file);
             $productRequest->product2_file = $uploadImage2["imageName"];
-        } else if ($request->product2_file == "" && $productRequest->product2_file != "") {
+        } else if ($request->product2_file_delete == "1" && $productRequest->product2_file != "") {
             $this->RemoveFolderImage($productRequest->product2_file);
             $productRequest->product2_file = "";
         }
@@ -213,7 +213,7 @@ class ProductsSaleEditController extends Controller
             $uploadImage3 = $this->UploadImage($request, 'product3_file');
             $this->RemoveFolderImage($productRequest->product3_file);
             $productRequest->product3_file = $uploadImage3["imageName"];
-        } else if ($request->product3_file == "" && $productRequest->product3_file != "") {
+        } else if ($request->product3_file_delete == "1" && $productRequest->product3_file != "") {
             $this->RemoveFolderImage($productRequest->product3_file);
             $productRequest->product3_file = "";
         }
@@ -234,6 +234,9 @@ class ProductsSaleEditController extends Controller
         $productRequest->productcategorys_id = $request->productcategorys_id;
         $productRequest->products_id = $product_id;
         $productRequest->users_id = $user->id;
+        if ($request->grade == 'ไม่มี'){
+            $request->grade = '-';
+        }
         $productRequest->grade = $request->grade;
         $productRequest->sequence = $request->sequence;
 //        $productRequest->is_packing = $request->is_packing;
@@ -371,7 +374,7 @@ class ProductsSaleEditController extends Controller
         $orgFilePathName = $request->{$imagecolumnname}->getClientOriginalName();
         $ext = pathinfo($orgFilePathName, PATHINFO_EXTENSION);
         $image_directory = config('app.upload_product');
-        $imageName = $image_directory . time() . "." . $ext;
+        $imageName = $image_directory . microtime() . "." . $ext;
         $img = Image::make($imageTempName);
         $img->save($imageName);
         $img->destroy();

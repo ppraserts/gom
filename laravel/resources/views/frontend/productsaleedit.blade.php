@@ -44,12 +44,12 @@
     var products_array = [];
 
     //function validate() {
-        /*if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) {
-            alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
-            $('input[name=fake_products_name]').focus();
-            return false;
-        }*/
-       // return true;
+    /*if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) {
+     alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
+     $('input[name=fake_products_name]').focus();
+     return false;
+     }*/
+    // return true;
     //}
 
     $(function () {
@@ -193,16 +193,19 @@
 
     function deleteImage(imageNo) {
         /*if(imageNo == 1){
-            $("input[type=file], product1_file").val('');
-            $('#img1').removeAttr('src')
-            $('#img1').show();
-        }else */
-        if(imageNo == 2){
+         $("input[type=file], product1_file").val('');
+         $('#img1').removeAttr('src')
+         $('#img1').show();
+         }else */
+        if (imageNo == 2) {
             $("input[type=file], product2_file").val('');
+            $("#product2_file_delete").val("1");
             $('#img2').removeAttr('src')
             $('#img2').show();
-        }else if(imageNo == 3){
+        } else if (imageNo == 3) {
             $("input[type=file], product3_file").val('');
+            $("#product3_file_delete").val("1");
+
             $('#img3').removeAttr('src')
             $('#img3').show();
         }
@@ -214,7 +217,7 @@
         var selling_period = '<?php echo $item->selling_period?>';
         if (selling_period == 'year') {
             $('.div_selling_period_date').hide();
-        }else if (selling_period == 'peri') {
+        } else if (selling_period == 'peri') {
             $('.div_selling_period_date').show();
         } else {
             $('.div_selling_period_date').hide();
@@ -233,47 +236,61 @@
         $("input[name=id]").val('0');
         $("#btn-clone").hide();
         $("#clone-alert").alert();
-        $("#clone-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#clone-alert").fadeTo(2000, 500).slideUp(500, function () {
             $("#clone-alert").slideUp(500);
         });
         $("#head-title").text('{{ trans('messages.add_sale') }}');
+        $('#file1').val('')
+        $('#file1').attr('required', 'required');
+        $('#file1').attr('data-error', '{{ trans('validation.attributes.message_validate_product1_file') }}'); // ข้อความที่จะแสดง
+
+        $('#file2').val('')
+        $('#file3').val('')
+        $('#img1').removeAttr('src')
+        $('#img1').hide();
+        $('#img2').removeAttr('src')
+        $('#img2').hide();
+        $('#img3').removeAttr('src')
+        $('#img3').hide();
+        $('.delete-img').hide();
+
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#form-productsaleedit").submit(function (e) {
             var volumn = parseInt($("input[name=volumn]").val());
             var min_order = parseInt($("input[name=min_order]").val());
             var product_stock = parseInt($("input[name=product_stock]").val());
 
             var selling_type = new Array();
-            $.each($("input[name='selling_type[]']:checked"), function() {
+            $.each($("input[name='selling_type[]']:checked"), function () {
                 selling_type.push($(this).val());
             });
             $("#ms_selling_type").empty();
             if (selling_type.length === 0) {
-                $('#ms_selling_type').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $('#ms_selling_type').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
                 $("#ms_selling_type").html("<?php echo trans('messages.ms_selling_type')?>");
                 return false;
             }
             var markets = new Array();
-            $.each($("input[name='product_markets[]']:checked"), function() {
+            $.each($("input[name='product_markets[]']:checked"), function () {
                 markets.push($(this).val());
             });
             $("#ms_product_markets").empty();
             if (markets.length <= 0) {
-                $('#ms_product_markets').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $('#ms_product_markets').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
                 $("#ms_product_markets").html("<?php echo trans('messages.ms_market')?>");
                 return false;
             }
 
             var product_standard_arr = new Array();
-            $.each($("input[name='product_standard[]']:checked"), function() {
+            $.each($("input[name='product_standard[]']:checked"), function () {
                 product_standard_arr.push($(this).val());
             });
 
             if (product_standard_arr.length === 0) {
                 var orther_product_standard = $("#product_standard").val();
-                if(orther_product_standard.length <= 0) {
+                if (orther_product_standard.length <= 0) {
                     $('#ms_product_standard').css({
                         'color': '#a94442',
                         'background-color': 'white',
@@ -284,48 +301,60 @@
                 return false;
             }
 
-            if(min_order <= 0){
+            if (min_order <= 0) {
                 $("input[name=min_order]").focus();
-                $('#ms_min_order').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $('#ms_min_order').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
                 $("#ms_min_order").html("<?php echo trans('messages.ms_min_order')?>");
                 return false;
             }
-            if(product_stock <= -1){
+            if (product_stock <= -1) {
                 $("input[name=product_stock]").focus();
-                $('#ms_product_stock').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                $('#ms_product_stock').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
                 $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
                 return false;
             }
-            if(volumn != '' && product_stock != ''){
-                if(product_stock > volumn){
+            if (volumn != '' && product_stock != '') {
+                if (product_stock > volumn) {
                     $("input[name=product_stock]").focus();
-                    $('#ms_product_stock').css({'color':'#a94442','background-color': 'white','font-size': '15px'});
+                    $('#ms_product_stock').css({'color': '#a94442', 'background-color': 'white', 'font-size': '15px'});
                     $("#ms_product_stock").html("<?php echo trans('messages.ms_product_stock')?>");
                     return false;
                 }
             }
+
+            var file1 = $("#file1");
+            if (file1 == null) {
+                file1.addClass('has-error');
+                $('html, body').animate({
+                    scrollTop: file1.offset().top - 50
+                }, 500);
+                return false;
+            }
         })
     });
 
-    $('#add_packing').on('click',function(){
+    $('#add_packing').on('click', function () {
         /*if($('#add_packing').not(':checked').length){
-            //alert('Not checked');
-            $("#box-packing").html('');
-        }else{
+         //alert('Not checked');
+         $("#box-packing").html('');
+         }else{
+         var theHtml = $('#use-it-check-add_packing').html();
+         $("#box-packing").html(theHtml);
+         $("#form-productsaleedit").validator('update');
+         //alert('Checked')
+         }*/
+        var add_packing = $('#add_packing').val();
+        if (add_packing == 1) {
             var theHtml = $('#use-it-check-add_packing').html();
             $("#box-packing").html(theHtml);
             $("#form-productsaleedit").validator('update');
-            //alert('Checked')
-        }*/
-        var add_packing =$('#add_packing').val();
-        if(add_packing == 1){
-            var theHtml = $('#use-it-check-add_packing').html();
-            $("#box-packing").html(theHtml);
-            $("#form-productsaleedit").validator('update');
+            $('#package_unit_form').attr('required', 'required');
+        }else {
+            $('#package_unit_form').removeAttr('required');
         }
 
     });
-    $('#un_add_packing').on('click',function(){
+    $('#un_add_packing').on('click', function () {
         $("#box-packing").html('');
         $("#form-productsaleedit").validator('update');
     });
@@ -337,11 +366,13 @@
     @include('shared.usermenu', array('setActive'=>'iwanttosale'))
     <br/>
     <form action="{{ url('user/productsaleupdate') }}" id="form-productsaleedit" method="post"
-           data-toggle="validator" role="form" enctype="multipart/form-data">
+          data-toggle="validator" role="form" enctype="multipart/form-data">
         {{ csrf_field() }}
-        {{ Form::hidden('product1_file_temp', $item->product1_file) }}
-        {{ Form::hidden('product2_file_temp', $item->product2_file) }}
-        {{ Form::hidden('product3_file_temp', $item->product3_file) }}
+        {{--{{ Form::hidden('product1_file_temp', $item->product1_file) }}--}}
+        {{--{{ Form::hidden('product2_file_temp', $item->product2_file) }}--}}
+        {{--{{ Form::hidden('product3_file_temp', $item->product3_file) }}--}}
+        {{ Form::hidden('product2_file_delete', '0', array('id'=>'product2_file_delete')) }}
+        {{ Form::hidden('product3_file_delete', '0', array('id'=>'product3_file_delete')) }} {{--เปลี่ยนตรงนี้เป็น 1 ถ้ากดลบ / ถ้ามันเป็น 0 submit ได้ปกติ แต่ถ้า jquery เปลี่ยนมันเป็น 1 จะ error--}}
         {{ Form::hidden('users_id', $useritem->id) }}
         {{ Form::hidden('iwantto', $useritem->iwantto) }}
         {{ Form::hidden('id', $item->id) }}
@@ -368,13 +399,13 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                     <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_sale') : trans('messages.edit_sale')}}</h2>
+                    <h2 id="head-title"> {{ $item->id ==0 ? trans('messages.add_sale') : trans('messages.edit_sale')}}</h2>
                 </div>
                 <div class="pull-right">
                     @if($item->id != 0)
-                    <button id="btn-clone" type="button" class="btn btn-info" onclick="clone();">
-                        <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
-                        {{ trans('messages.clone_product')}}</button>
+                        <button id="btn-clone" type="button" class="btn btn-info" onclick="clone();">
+                            <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+                            {{ trans('messages.clone_product')}}</button>
                     @endif
                     {{--<button type="submit" class="btn btn-primary" onclick="return validate();">--}}
                     <button type="submit" class="btn btn-primary">
@@ -428,7 +459,8 @@
                                 {{$markets[$i]->market_title_th}}
                             </label>
                         @endfor
-                        <br/><small class="alert-danger" id="ms_product_markets"></small>
+                        <br/>
+                        <small class="alert-danger" id="ms_product_markets"></small>
                     </div>
                 </div>
                 {{-- row--}}
@@ -438,7 +470,8 @@
                             * {{ trans('validation.attributes.productcategorys_id') }} :
                         </strong>
                         <select id="productcategorys_id" name="productcategorys_id" class="form-control"
-                                data-error='{{trans('validation.attributes.message_validate_productcategorys_id')}}' required="required">
+                                data-error='{{trans('validation.attributes.message_validate_productcategorys_id')}}'
+                                required="required">
                             <option value="">
                                 {{ trans('messages.menu_product_category') }}
                             </option>
@@ -484,7 +517,8 @@
                             @endfor
                             <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
                             {!! Form::text('product_other_standard', $item->product_other_standard, array('class' => 'form-control','id' => 'product_standard')) !!}
-                            <br/><small class="alert-danger" id="ms_product_standard"></small>
+                            <br/>
+                            <small class="alert-danger" id="ms_product_standard"></small>
                         </div>
                     </div>
                 @endif
@@ -534,11 +568,13 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
-                        <input type="radio" name="add_packing" id="un_add_packing" value="-1"  @if($item->add_packing == -1) checked @elseif(Request::input('id') == 0) checked @endif>
+                        <input type="radio" name="add_packing" id="un_add_packing" value="-1"
+                               @if($item->add_packing == -1) checked @elseif(Request::input('id') == 0) checked @endif>
                         {{ trans('validation.attributes.uncheckbox_product_package') }}
-                        <input type="radio" name="add_packing" id="add_packing" value="1"  @if($item->add_packing == 1) checked @endif>
+                        <input type="radio" name="add_packing" id="add_packing" value="1"
+                               @if($item->add_packing == 1) checked @endif>
                         {{ trans('validation.attributes.checkbox_product_package') }}
-                    <hr/>
+                        <hr/>
                     </div>
                 </div>
                 <div class="row" id="box-packing">
@@ -553,8 +589,9 @@
                             <strong>
                                 * {{ trans('validation.attributes.units_package') }} :
                             </strong>
-                            <select id="units" name="package_unit" class="form-control"
-                                    data-error='{{trans('validation.attributes.message_validate_units')}}' required="required">
+                            <select id="package_unit_form" name="package_unit" class="form-control"
+                                    data-error='{{trans('validation.attributes.message_validate_units')}}'
+                                    required="required">
                                 <option value="">{{ trans('validation.attributes.units') }}</option>
                                 @foreach ($unitsItem as $key => $unit)
                                     @if($item->package_unit == $unit->{ "units_".Lang::locale()})
@@ -571,7 +608,9 @@
                             <div class="help-block with-errors"></div>
                         </div>
 
-                        <div class="col-md-12"><hr/></div>
+                        <div class="col-md-12">
+                            <hr/>
+                        </div>
                     @endif
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -620,7 +659,7 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-4">
                         <strong>
-                            *  {{ trans('validation.attributes.product_stock') }} :
+                            * {{ trans('validation.attributes.product_stock') }} :
                         </strong>
                         {!! Form::number('product_stock', $item->product_stock != '' ? $item->product_stock : '0', array('placeholder' => trans('validation.attributes.product_stock'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_stock'),'required'=>'required')) !!}
                         <small class="alert-danger" id="ms_product_stock"></small>
@@ -642,7 +681,8 @@
                         </label>
                         <input type="radio" name="selling_period"
                                value="year" {{ $item->selling_period == 'year'? 'checked="checked"' : '' }}> ตลอดปี
-                        <input type="radio" name="selling_period" value="period" {{ $item->selling_period == 'peri'? 'checked="checked"' : '' }}>
+                        <input type="radio" name="selling_period"
+                               value="period" {{ $item->selling_period == 'peri'? 'checked="checked"' : '' }}>
                         ช่วงเวลา
 
                     </div>
@@ -723,15 +763,16 @@
                     <div class="form-group col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product1_file') ? 'has-error' : '' }}">
                         <strong>* {{ trans('validation.attributes.product1_file') }}:</strong>
                         @if(!empty($item->product1_file))
-                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control')) !!}
+                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control', 'id'=>'file1')) !!}
                         @else
-                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product1_file'),'required'=>'required')) !!}
+                            {!! Form::file('product1_file', array('placeholder' => trans('validation.attributes.product1_file'),'class' => 'form-control', 'id'=>'file1','data-error'=>trans('validation.attributes.message_validate_product1_file'),'required'=>'required')) !!}
                         @endif
                         <div class="help-block with-errors"></div>
                     </div>
                     @if($item != null && $item->product1_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <img id="img1" style="height:260px; width:350px;" src="{{ url($item->product1_file) }}" alt=""
+                            <img id="img1" style="height:260px; width:350px;" src="{{ url($item->product1_file) }}"
+                                 alt=""
                                  class="img-thumbnail">
                         </div>
                         {{--<div class="col-xs-3 col-sm-3 col-md-3">
@@ -742,26 +783,30 @@
                 <div class="row" style="margin-top: 15px">
                     <div class="@if(empty($item->product2_file)) form-group @endif  col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product2_file') ? 'has-error' : '' }}">
                         <strong>{{ trans('validation.attributes.product2_file') }}:</strong>
-                        {!! Form::file('product2_file', array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control')) !!}
+                        {!! Form::file('product2_file', array('placeholder' => trans('validation.attributes.product2_file'),'class' => 'form-control', 'id'=>'file2')) !!}
                     </div>
                     @if($item != null && $item->product2_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <img id="img2" style="height:260px; width:350px;" src="{{ url($item->product2_file) }}" alt=""
+                            <img id="img2" style="height:260px; width:350px;" src="{{ url($item->product2_file) }}"
+                                 alt=""
                                  class="img-thumbnail">
-                            <button type="button" class="btn btn-danger" onclick="deleteImage(2)">ลบรูป</button>
+                            <button type="button" class="delete-img btn btn-danger" onclick="deleteImage(2)">ลบรูป
+                            </button>
                         </div>
                     @endif
                 </div>
                 <div class="row" style="margin-top: 15px">
                     <div class="@if(empty($item->product3_file)) form-group @endif  col-xs-6 col-sm-6 col-md-3 {{ $errors->has('product3_file') ? 'has-error' : '' }}">
                         <strong>{{ trans('validation.attributes.product3_file') }}:</strong>
-                        {!! Form::file('product3_file', array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control')) !!}
+                        {!! Form::file('product3_file', array('placeholder' => trans('validation.attributes.product3_file'),'class' => 'form-control', 'id'=>'file3')) !!}
                     </div>
                     @if($item != null && $item->product3_file != "")
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <img id="img3" style="height:260px; width:350px;" src="{{ url($item->product3_file) }}" alt=""
+                            <img id="img3" style="height:260px; width:350px;" src="{{ url($item->product3_file) }}"
+                                 alt=""
                                  class="img-thumbnail">
-                            <button type="button" class="btn btn-danger" onclick="deleteImage(3)">ลบรูป</button>
+                            <button type="button" class="delete-img btn btn-danger" onclick="deleteImage(3)">ลบรูป
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -780,7 +825,7 @@
             <strong>
                 * {{ trans('validation.attributes.units_package') }} :
             </strong>
-            <select id="package_unit" name="package_unit" class="form-control"
+            <select id="package_unitpackage_unit" name="package_unit" class="form-control"
                     data-error='{{trans('validation.attributes.message_validate_units')}}'>
                 <option value="">{{ trans('validation.attributes.units') }}</option>
                 @foreach ($unitsItem as $key => $unit)
@@ -797,6 +842,8 @@
             </select>
             <div class="help-block with-errors"></div>
         </div>
-        <div class="col-md-12"><hr/></div>
+        <div class="col-md-12">
+            <hr/>
+        </div>
     </div>
 @stop

@@ -66,6 +66,9 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                             <div class="info">
                                 <div class="row">
                                     <div class="price col-md-12">
+                                        @if($col_md_4_item['product_stock'] < 1)
+                                            <strong class="alert-danger">สินค้าหมด</strong>
+                                        @endif
                                         <h4 title="{{ $col_md_4_item['product_name_th'] }}"><?php echo mb_strimwidth($col_md_4_item['product_name_th'], 0, 15, '...', 'UTF-8'); ?></h4>
                                         <span class="glyphicon glyphicon-tag"></span>
                                         <i title="{{ $col_md_4_item['product_name_th'] }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>

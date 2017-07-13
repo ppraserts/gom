@@ -86,9 +86,6 @@ class MatchingController extends Controller
         $itemsbuy = $productRequest->matchWithBuy($userItem->id, $conditions, $orderby, $order);
         $itemssale = $productRequest->matchingWithSale($userItem->id, $conditions, $orderby, $order);
 
-        /*echo json_encode($itemsbuy);
-        exit();*/
-
         return view('frontend.matching', compact('itemsbuy', 'itemssale', 'userItem', 'price_order', 'quantity_order', 'province_order', 'orderby', 'conditions', 'filterprice', 'filterprovince', 'filterquantity'));
     }
 }

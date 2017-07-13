@@ -445,6 +445,7 @@ class ProductRequest extends Model
         if ($notwhere_product_name == true) {
             $results = DB::select(
                 DB::raw("SELECT a.*
+                            ,b.product_name_th
                             ,u.users_firstname_th
                             ,u.users_lastname_th
                             ,u.users_firstname_en
@@ -491,6 +492,7 @@ class ProductRequest extends Model
         } else {
             $results = DB::select(
                 DB::raw("SELECT a.*
+                            ,b.product_name_th
                             ,u.users_firstname_th
                             ,u.users_lastname_th
                             ,u.users_firstname_en
