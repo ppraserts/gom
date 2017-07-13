@@ -116,11 +116,13 @@ $pagetitle = trans('message.menu_order_list');
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.order_total') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">
                                 {{ trans('messages.view_order_detail') }}
@@ -131,6 +133,7 @@ $pagetitle = trans('message.menu_order_list');
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($item->order_date) }}</td>
                                 <td>
                                     @if($item->order_type== 'retail')
                                         {{trans('messages.retail')}}
@@ -138,16 +141,19 @@ $pagetitle = trans('message.menu_order_list');
                                         {{trans('messages.wholesale')}}
                                     @endif
                                 </td>
-                                <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                                <th style="font-weight: normal">
+                                <td>
+                                    {{ $item->users_firstname_th. " ". $item->users_lastname_th }}
+                                </td>
+                                <th style="font-weight: 300;">
                                     {{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}
                                 </th>
-                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->order_date) }}</td>
-                                <td style="text-align:center;">{{ $item->total_amount . trans('messages.baht') }}</td>
+                                <td>{{ $item->product_name_th }}</td>
+                                <td>{{ $item->quantity.' '.$item->units }}</td>
+                                <td style="text-align:center;">{{ $item->total}}</td>
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-primary"
-                                       href="{{ url ('user/orderdetail/'.$item->id) }}">
+                                       href="{{ url ('user/reports/orderdetail/'.$item->id) }}">
                                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                     </a>
                                 </td>

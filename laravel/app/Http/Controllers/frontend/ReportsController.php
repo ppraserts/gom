@@ -40,15 +40,23 @@ class ReportsController extends Controller
             }
         }
 
-        $orderLists = '';
-
-
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+        $orderList->select(DB::raw('orders.*, order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,products.product_name_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total'
+        ));
+
+
+
+
         $orderList->where('orders.buyer_id', $user->id);
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
@@ -66,8 +74,8 @@ class ReportsController extends Controller
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
-        $orderList->groupBy('orders.id');
-        $orderList->orderBy('orders.id', 'DESC');
+        //$orderList->groupBy('orders.id');
+        $orderList->orderBy('orders.order_date', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderLists = $orderList->paginate(config('app.paginate'));
         $productCategoryitem = ProductCategory::all();
@@ -115,11 +123,13 @@ class ReportsController extends Controller
                 $title_report = trans('messages.menu_order_list');
                 $arr[] = array(
                     trans('messages.order_id'),
+                    trans('messages.order_date'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
                     trans('messages.i_buy'),
-                    trans('messages.order_date'),
-                    trans('messages.order_total'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
+                    trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status')
                 );
             }
@@ -127,11 +137,13 @@ class ReportsController extends Controller
                 $title_report = trans('messages.menu_shop_order_list');
                 $arr[] = array(
                     trans('messages.order_id'),
+                    trans('messages.order_date'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
                     trans('messages.i_buy'),
-                    trans('messages.order_sale_date'),
-                    trans('messages.order_total'),
+                    trans('messages.product_name'),
+                    trans('messages.orderbyunit'),
+                    trans('messages.order_total').'('.trans('messages.baht').')',
                     trans('messages.order_status')
                 );
             }
@@ -144,21 +156,23 @@ class ReportsController extends Controller
                 }
                 $arr[] = array(
                     $v->id,
+                    DateFuncs::dateToThaiDate($v->order_date),
                     $order_type,
                     $v->users_firstname_th . " " . $v->users_lastname_th,
                     $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th,
-                    $v->order_date,
-                    $v->total_amount . trans('messages.baht'),
+                    $v->product_name_th,
+                    $v->quantity.' '.$v->units,
+                    $v->total,
                     $v->status_name
                 );
             }
             $data = $arr;
             $info = Excel::create('dgtfarm-orders-buy-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date,$title_report,$productcategoryString) {
                 $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date,$title_report,$productcategoryString) {
-                    $sheet->mergeCells('A1:G1');
-                    $sheet->mergeCells('A2:G3');
-                    $sheet->mergeCells('A4:G5');
-                    $sheet->mergeCells('A6:G7');
+                    $sheet->mergeCells('A1:I1');
+                    $sheet->mergeCells('A2:I3');
+                    $sheet->mergeCells('A4:I5');
+                    $sheet->mergeCells('A6:I7');
                     $sheet->setSize(array(
                         'A1' => array(
                             'height' => 50
@@ -229,7 +243,15 @@ class ReportsController extends Controller
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+        $orderList->select(DB::raw('orders.*, order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,products.product_name_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total'
+        ));
+
         $orderList->where('orders.user_id', $user->id);
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
@@ -247,8 +269,8 @@ class ReportsController extends Controller
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
-        $orderList->groupBy('orders.id');
-        $orderList->orderBy('orders.id', 'DESC');
+
+        $orderList->orderBy('orders.order_date', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderLists = $orderList->paginate(config('app.paginate'));
         $productCategoryitem = ProductCategory::all();
@@ -273,15 +295,23 @@ class ReportsController extends Controller
             }
         }
 
-        $orderSaleItem = '';
-
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
-        , products.product_name_en'));
+//        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
+//        , products.product_name_en'));
+        $orderList->select(DB::raw('orders.*, order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,products.product_name_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total'
+        ));
+
+
         $orderList->where('orders.user_id', $user->id);
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
@@ -300,10 +330,11 @@ class ReportsController extends Controller
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
         $orderList->where('orders.order_status', '!=', 5);
-        $orderList->groupBy('products.id');
-        $orderList->orderBy('orders.id', 'DESC');
+        //$orderList->groupBy('products.id');
+        //$orderList->orderBy('orders.id', 'DESC');
+        $orderList->orderBy('products.product_name_th', 'ASC');
         $orderList->paginate(config('app.paginate'));
-//            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+        //$orderSaleItem = $orderList->paginate(config('app.paginate'));
         $orderSaleItem = $orderList->get();
 
         $sumAll = 0;
@@ -323,7 +354,15 @@ class ReportsController extends Controller
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*, order_status.status_name,users.users_firstname_th,users.users_lastname_th'));
+        $orderList->select(DB::raw('orders.*, order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,products.product_name_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total'
+        ));
+
         if($type == 'sale'){
             $orderList->where('orders.user_id', $buyer_id);
         }
@@ -342,8 +381,8 @@ class ReportsController extends Controller
         if (!empty($productTypeNameArr)) {
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
-        $orderList->groupBy('orders.id');
-        $orderList->orderBy('orders.id', 'DESC');
+        //$orderList->groupBy('orders.id');
+        $orderList->orderBy('orders.order_date', 'DESC');
         return $orderLists = $orderList->get();
     }
 
