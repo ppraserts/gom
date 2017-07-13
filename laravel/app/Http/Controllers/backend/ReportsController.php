@@ -75,7 +75,12 @@ class ReportsController extends BaseReports
         $order_status_id = '';
         if (!empty($request->input('order_status'))){
             $order_status_id = $request->input('order_status');
-            $orderList->where('order_status.id',$order_status_id);
+            if($order_status_id == 7){
+                $orderList->whereIn('order_status.id',array(2,7));
+            }else{
+                $orderList->where('order_status.id',$order_status_id);
+            }
+
         }
 
         if (!empty($request->input('pid'))) {

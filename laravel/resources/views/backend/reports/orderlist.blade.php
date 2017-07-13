@@ -73,7 +73,7 @@ $pagetitle = trans('messages.menu_order_list');
                         <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
                             สั่งซื้อ</option>
                         <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
-                            ยืนยันการสั่งซื้อรอชำระเงิน
+                            ยืนยันการสั่งซื้อ
                         </option>
                         <option value="3" @if(!empty($order_status_id) && $order_status_id == 3) selected @endif>
                             แจ้งชำระเงิน
