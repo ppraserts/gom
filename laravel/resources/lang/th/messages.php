@@ -69,6 +69,7 @@ return [
     'menu_market3' => 'ตลาดแปลงใหญ่',
     'menu_market' => 'ตลาด',
     'menu_report' => 'รายงาน',
+    'show_all_market' => 'แสดงทุกตลาด',
     'membertype_individual' => 'บุคคลธรรมดา',
     'membertype_company' => 'นิติบุคคล',
     'i_want_to_buy' => 'ต้องการซื้อ',
@@ -139,7 +140,7 @@ return [
     'baht' => ' บาท',
     'ok' => 'ตกลง',
     'order_status' => 'สถานะ',
-    'order_status_history' => 'สถานะการสั่งซื้อ',
+    'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
     'order_type' => 'ประเภทการสั่งซื้อ',
     'total_net' => 'ยอดรวมทั้งหมด',
     'process_order' => 'สั่งซื้อสินค้า',
@@ -289,6 +290,6 @@ return [
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
     'message_validate_order_channel' => 'กรุณาเลือกช่องทางการชำระเงิน',
     'required_standard' => 'กรุณาเลือกมาตรฐานสินค้า',
-    'required_image' => 'กรุณาเลือกรูปภาพ',
+    'report_title_sale' => 'รายงานยอดจำหน่ายสินค้า',
 
 ];

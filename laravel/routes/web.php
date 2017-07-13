@@ -219,6 +219,7 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::post('reports/buy/export','backend\ReportsController@actionExportExcel');
     Route::get('reports/buy/download','backend\ReportsController@actionDownload');
     Route::get('reports/sale','backend\ReportsController@SaleItemIndex');
+    Route::post('reports/sale/export','backend\ReportsController@saleExportExcel');
     Route::get('reports/salebyshop','backend\ReportsController@SaleItemByShop');
 //    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
 //    Route::post('reports/salebyshop','backend\ReportsController@SaleItemByShopFilter');
