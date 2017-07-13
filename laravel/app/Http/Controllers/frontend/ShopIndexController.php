@@ -69,6 +69,16 @@ class ShopIndexController extends Controller
             ->orderBy('created_at','desc')
             ->paginate(25); //show list 15/page
 
+        $config = Config::find(1);
+        $badwords = BadWord::all();
+        if (!empty($config) && !empty($badwords)) {
+            foreach ($comments as $comment) {
+                foreach ($badwords as $word) {
+                    $comment->comment = str_ireplace($word->bad_word, $config->censor_word, $comment->comment);
+                }
+            }
+        }
+
         return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment'))
             ->with('comments', $comments)
             ->with('shop', $shop);
@@ -141,6 +151,7 @@ class ShopIndexController extends Controller
     }
 
     public function promotion(Request $request,$shop,$id){
+        $user = auth()->guard('user')->user();
         if(!empty($request->input('rid')) and !empty($request->input('key'))){
             $pr_id = $request->input('rid');
             $key = $request->input('key');
@@ -161,7 +172,7 @@ class ShopIndexController extends Controller
         $promotion = Promotions::find($id);
         if ($promotion!=null & $shop->count()>0)
         {
-            return view('frontend.promotiondetail')->with('promotion',$promotion);
+            return view('frontend.promotiondetail', compact('user'))->with('promotion',$promotion);
         }else{
             return abort(404);
         }
@@ -184,16 +195,8 @@ class ShopIndexController extends Controller
         }
 
         if(!empty($shop_id) and md5($shop_id) == $shop_key){
-
-            $config = Config::find(1);
-            $badwords = BadWord::all();
             $user = auth()->guard('user')->user();
             $string = $request->input('comment');
-            if(!empty($config) && !empty($badwords)){
-                foreach ($badwords as $word){
-                    $string=str_ireplace($word->bad_word,$config->censor_word,$request->input('comment'));
-                }
-            }
 
             $comment['score'] = $request->input('star');
             $comment['comment'] = $string;

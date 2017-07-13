@@ -5,8 +5,8 @@
     width: 100%; /* or whatever is required */
     text-align: center; /* ensures the image is always in the h-middle */
     overflow: hidden;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 0px;
 }
 
 .img-promotion {
@@ -21,10 +21,11 @@
 
 .promotion-text {
     color: #FFFFFF;
-    margin: 0;
+    padding-top: 35px;
+    /*margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)*/
 }

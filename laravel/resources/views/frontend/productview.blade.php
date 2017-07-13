@@ -25,11 +25,6 @@ function renderHTML($text)
                              class="img-circle">
                         <br/><br/>
                     @endif
-                    @if($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale")
-                        <a href="{{ url('user/quotationRequest/'.$productRequest['id']) }}" class="btn btn-primary">
-                            {{trans('messages.quotation_request')}}
-                        </a>
-                    @endif
                 @endif
                 <div class="clearfix"
                      style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
