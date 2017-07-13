@@ -4,50 +4,17 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                    <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                    <th style="text-align:center;">{{ trans('messages.order_sale_date') }}</th>
-                    <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
-                    <th style="text-align:center;">{{ trans('messages.menu_market') }}</th>
-                    <th style="text-align:center;">{{ trans('messages.menu_add_product') }}</th>
-                    <th>{{ trans('messages.orderbyunit') }}</th>
-                    <th>{{ trans('messages.i_sale') }}</th>
-                    <th>{{ trans('messages.i_buy') }}</th>
-                    <th style="text-align:center; min-width: 70px;">{{ trans('messages.order_total')}} <br/> {{'('.trans('messages.baht').')' }}</th>
-                    <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
-                    <th width="130px" style="text-align:center;">
-                        {{ trans('messages.view_order_detail') }}
-                    </th>
+                    <th width="120px" style="text-align:center;">{{trans('messages.id_product_type')}}</th>
+                    <th style="text-align:center;">{{trans('messages.product_name')}}</th>
+                    <th style="text-align:center;">{{trans('messages.sum_prict_order')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($orderSaleItem as $item)
                     <tr>
-                        <td style="text-align:center;">{{ $item->id }}</td>
-                        <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->order_date) }}</td>
-                        <td>
-                            @if($item->order_type== 'retail')
-                                {{trans('messages.retail')}}
-                            @else
-                                {{trans('messages.wholesale')}}
-                            @endif
-                        </td>
-                        <td>{{ $item->market_title_th }}</td>
+                        <td>{{ $item->products_id }}</td>
                         <td>{{ $item->product_name_th }}</td>
-                        <td>{{ $item->quantity.' '.$item->units }}</td>
-
-                        <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                        <th style="font-weight: normal">
-                            {{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}
-                        </th>
-                        {{--$item->total_amount--}}
-                        <td style="text-align:center;">{{ $item->total }}</td>
-                        <td style="text-align:center;">{{ $item->status_name }}</td>
-                        <td style="text-align:center;">
-                            <a class="btn btn-primary"
-                               href="{{ url ('user/orderdetail/'.$item->id) }}">
-                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                            </a>
-                        </td>
+                        <td>{{ $item->total_amounts }}</td>
                     </tr>
                 @endforeach
                 </tbody>
