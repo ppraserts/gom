@@ -33,8 +33,10 @@
                                 @if($col_md_4_item['product_stock'] < 1)
                                     <strong class="alert-danger">สินค้าหมด</strong>
                                 @endif
-                                <h4 title="{{ $product_name }}">
-                                    {{ mb_strimwidth($product_name, 0, 30, '...', 'UTF-8') }}
+                                <h4 title="{{ $product_name }}"
+                                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+
+                                    {{ $product_name }}
                                 </h4>
                                 <?php
                                 $avg_score = 0;
@@ -83,22 +85,21 @@
                                     @endif
 
                                 </p>
+                                    <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                 <span class="glyphicon glyphicon-tag"></span>
                                 <i title="{{ $product_name }}">
-                                    <?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?>
+                                    {{$col_md_4_item['product_title']}}
                                 </i><br/>
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                                {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
-                                <?php
-                                $city_province = $col_md_4_item['city'] . ' ' . $col_md_4_item['province'];
-                                if (mb_strlen($city_province, "UTF-8") > 23) {
-                                    echo mb_strimwidth($city_province, 0, 22, '...', 'UTF-8');
-                                } else {
+                                    </div>
+                                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                    {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
+                                    <?php
+                                    $city_province = $col_md_4_item['city'] . ' ' . $col_md_4_item['province'];
                                     echo $city_province;
-                                }
-                                ?>
-
-                                <br/><br/>
+                                    ?>
+                                </div>
+                                <br>
                             </div>
                             @if($col_md_4_item['productstatus'] == 'open')
                                 <div class="rating hidden-sm col-md-3">
