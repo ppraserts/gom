@@ -6,6 +6,7 @@ use App\OrderItem;
 use App\OrderStatusHistory;
 use App\ProductCategory;
 use App\User;
+use App\Market;
 use App\Http\Controllers\Controller;
 
 use DB, Validator, Response;
@@ -228,6 +229,132 @@ class ReportsController extends BaseReports
         }
     }
 
+    public function saleExportExcel(Request $request)
+    {
+        if ($request->ajax()) {
+            $start_date = $request->input('start_date');
+            $end_date = $request->input('end_date');
+            $market_id = $request->input('market_id');
+            $productcategorys_id = $request->input('productcategorys_id');
+            $product_id_arr = $request->input('product_type_name');
+
+            $market_name =  trans('messages.menu_market').' : '.trans('messages.show_all');
+            $productcategorys_name = trans('validation.attributes.productcategorys_id').' : '.trans('messages.show_all');
+            $product_name = trans('messages.menu_add_product').' : '.trans('messages.show_all');
+
+            if(!empty($market_id)){
+                $market = BaseReports::market($market_id);
+                $market_name = trans('messages.menu_market').' : '.$market->market_title_th;
+            }
+
+            if(!empty($productcategorys_id)){
+                $product_category = BaseReports::productCategory($productcategorys_id);
+                $productcategorys_name = trans('messages.menu_add_product').' : '.$product_category->productcategory_title_th;
+            }
+
+            if(count($product_id_arr) > 0 and !empty($product_id_arr)){
+                $products = BaseReports::products($product_id_arr);
+                foreach ($products as $product){
+                    $arrProduct[] = $product->product_name_th;
+                }
+                $product_name = trans('messages.menu_add_product').' : '. implode(",",$arrProduct);
+            }
+
+           $orderLists =  $this->saleFilterExport($start_date,$end_date,$market_id,$productcategorys_id,$product_id_arr);
+
+            $product_name_arr = $product_name;
+            $str_start_and_end_date = trans('messages.text_start_date') . ' : - ' . trans('messages.text_end_date') . ' : -';
+            if (!empty($start_date) and !empty($end_date)) {
+                $str_start_and_end_date = trans('messages.text_start_date') . ' : ' . $start_date . ' ' . trans('messages.text_end_date') . ' : ' . $end_date;
+            }
+
+            $arr[] = array(
+                trans('messages.order_id'),
+                trans('messages.order_date'),
+                trans('messages.order_type'),
+                trans('messages.menu_market'),
+                trans('messages.menu_add_product'),
+                trans('messages.orderbyunit'),
+                trans('messages.i_sale'),
+                trans('messages.i_buy'),
+                trans('messages.order_total').'('.trans('messages.baht').')',
+                trans('messages.order_status')
+            );
+
+            foreach ($orderLists as $v) {
+                if ($v->order_type == 'retail') {
+                    $order_type = trans('messages.retail');
+                } else {
+                    $order_type = trans('messages.wholesale');
+                }
+                $arr[] = array(
+                    $v->id,
+                    DateFuncs::dateToThaiDate($v->order_date),
+                    $order_type,
+                    $v->market_title_th,
+                    $v->product_name_th,
+                    $v->quantity.' '.$v->units,
+                    $v->users_firstname_th . " " . $v->users_lastname_th,
+                    $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th,
+                    $v->total,
+                    $v->status_name
+                );
+            }
+            $data = $arr;
+            $info = Excel::create('dgtfarm-orders-sale-excel', function ($excel) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
+
+                    $sheet->mergeCells('A1:J1');
+                    $sheet->mergeCells('A2:J3');
+                    $sheet->mergeCells('A4:J5');
+                    $sheet->mergeCells('A6:J7');
+                    $sheet->setSize(array(
+                        'A1' => array(
+                            'height' => 50
+                        )
+                    ));
+                    $sheet->setAutoSize(array('A'));
+                    $sheet->cells('A1', function ($cells) {
+                        $cells->setValue(trans('messages.report_title_sale'));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('center');
+                        $cells->setFont(array(
+                            'size' => '16',
+                            'bold' => true
+                        ));
+                    });
+
+                    $sheet->cells('A2', function ($cells) use ($str_start_and_end_date) {
+                        $cells->setValue($str_start_and_end_date);
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
+                    $sheet->cells('A4', function ($cells) use ($market_name,$productcategorys_name,$product_name_arr) {
+                        $cells->setValue($market_name.' '.$productcategorys_name.' '.$product_name_arr);
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
+                    $sheet->cells('A6', function ($cells) {
+                        $cells->setValue(trans('messages.datetime_export') . ': ' . DateFuncs::convertToThaiDate(date('Y-m-d')) . ' ' . date('H:i:s'));
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
+                    $sheet->rows($data);
+                });
+            })->store('xls', false, true);
+            return response()->json(array('file' => $info['file']));
+        }
+    }
+
     public function actionDownload(Request $request)
     {
         $path = storage_path() . '/exports/' . $request->input('file');
@@ -254,11 +381,33 @@ class ReportsController extends BaseReports
 
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('user_market', 'user_market.user_id', '=', 'users.id');
+        $orderList->join('markets', 'markets.id', '=', 'user_market.market_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
-        , products.product_name_en'));
+        if (empty($request->input('format_report')) or $request->input('format_report') == 1) {
+            $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+            ,products.product_name_th
+            ,products.product_name_en
+            ,markets.market_title_th
+            ,order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            '));
+        }elseif(!empty($request->input('format_report')) or $request->input('format_report') == 2) {
+            $orderList->select(DB::raw('orders.*
+            ,products.product_name_th
+            ,products.product_name_en
+            ,markets.market_title_th
+            ,order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total
+            '));
+        }
 //            $orderList->where('orders.user_id', $user->id);
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
@@ -270,6 +419,12 @@ class ReportsController extends BaseReports
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
+        $market_id = '';
+        if (!empty($request->input('market_id'))) {
+            $market_id = $request->input('market_id');
+            $orderList->where('markets.id', $market_id);
+        }
+
         $defult_ymd_last_month='';
         $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -284,19 +439,35 @@ class ReportsController extends BaseReports
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $orderList->where('orders.order_status', '!=', 5);
-        $orderList->groupBy('products.id');
+        if (empty($request->input('format_report')) or $request->input('format_report') == 1) {
+            $orderList->groupBy('products.id');
+        }
         $orderList->orderBy('orders.id', 'DESC');
-        $orderList->paginate(config('app.paginate'));
-        $orderSaleItem = $orderList->paginate(config('app.paginate'));
+        if (!empty($request->input('format_report')) and $request->input('format_report') == 2) {
+            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+        }else{
+            $orderSaleItem = $orderList->get();
+        }
 
         $productCategoryitem = ProductCategory::all();
+        $markets = Market::all();
         //
         $sumAll = 0;
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total_amounts;
         }
-        // return $orderSaleItem;
-        return view('backend.reports.sale_item_list', compact('orderSaleItem','productCategoryitem','productcategorys_id', 'products', 'productTypeNameArr', 'sumAll','defult_ymd_last_month','defult_ymd_today'));
+        //return $orderSaleItem;
+        return view('backend.reports.sale_item_list', compact('orderSaleItem'
+            ,'productCategoryitem'
+            ,'productcategorys_id'
+            ,'products'
+            ,'productTypeNameArr'
+            ,'sumAll'
+            ,'defult_ymd_last_month'
+            ,'defult_ymd_today'
+            ,'markets'
+            ,'market_id'
+        ));
 
     }
 
@@ -417,6 +588,7 @@ class ReportsController extends BaseReports
         return Product::select(DB::raw('products.product_name_th'))
             ->whereIn('products.id', $productTypeNameArr)->get();
     }
+
     public function getProductByCate($productCateId)
     {
         $products = Product::select(DB::raw('products.id,products.product_name_th'))
@@ -425,6 +597,48 @@ class ReportsController extends BaseReports
         $dataView = View::make('backend.reports.ele_products')->with('products', $products);
         $dataHtml = $dataView->render();
         return Response::json(array('R'=>'Y','res'=>$dataHtml));
+    }
+
+    private function saleFilterExport($date_start,$date_end,$market_id='',$productcategorys_id='',$product_id_arr = array()){
+        $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
+        $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('user_market', 'user_market.user_id', '=', 'users.id');
+        $orderList->join('markets', 'markets.id', '=', 'user_market.market_id');
+        $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
+        $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
+        $orderList->select(DB::raw('orders.*
+            ,products.product_name_th
+            ,products.product_name_en
+            ,markets.market_title_th
+            ,order_status.status_name
+            ,users.users_firstname_th
+            ,users.users_lastname_th
+            ,order_items.quantity
+            ,product_requests.units
+            ,order_items.total
+            '));
+        if (!empty($date_start) and !empty($date_end)) {
+            $date_start = DateFuncs::convertYear($date_start);
+            $date_end = DateFuncs::convertYear($date_end);
+            $orderList->where('orders.order_date', '>=', $date_start);
+            $orderList->where('orders.order_date', '<=', $date_end);
+        }
+
+        if (!empty($productcategorys_id)){
+            $orderList->where('products.productcategory_id', $productcategorys_id);
+        }
+        if (!empty($market_id)){
+            $orderList->where('markets.id',$market_id);
+        }
+
+        if (count($product_id_arr) > 0) {
+            $orderList->whereIn('products.id', $product_id_arr);
+        }
+
+        $orderList->orderBy('orders.id', 'DESC');
+        return $orderLists = $orderList->get();
+
     }
 
 }

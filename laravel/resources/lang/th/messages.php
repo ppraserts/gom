@@ -69,6 +69,7 @@ return [
     'menu_market3' => 'ตลาดแปลงใหญ่',
     'menu_market' => 'ตลาด',
     'menu_report' => 'รายงาน',
+    'show_all_market' => 'แสดงทุกตลาด',
     'membertype_individual' => 'บุคคลธรรมดา',
     'membertype_company' => 'นิติบุคคล',
     'i_want_to_buy' => 'ต้องการซื้อ',
@@ -289,5 +290,6 @@ return [
     'select_product_type_name' => 'กรุณาเลือกชนิดสินค้า',
     'message_validate_order_channel' => 'กรุณาเลือกช่องทางการชำระเงิน',
     'required_standard' => 'กรุณาเลือกมาตรฐานสินค้า',
+    'report_title_sale' => 'รายงานยอดจำหน่ายสินค้า',
 
 ];

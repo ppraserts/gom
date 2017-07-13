@@ -20,7 +20,7 @@
             </div>
         @endif
         <div class="row text-center">
-            <h2>รายงานยอดจำหน่ายสินค้า</h2>
+            <h2>{{ trans('messages.report_title_sale') }}</h2>
         </div>
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             {{--{{csrf_field()}}--}}
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="form-group col-md-6" style="padding-left: 0px;">
                     <strong style="padding-right: 0; padding-left: 0;">*
-                        {{ trans('messages.text_start_date') }}:
+                        {{ trans('messages.text_start_date') }} :
                     </strong>
                     <div class='input-group date' id='pick_start_date'>
                         {!! Form::text('start_date', $defult_ymd_last_month, array('placeholder' => trans('messages.text_start_date'),'class' => 'form-control', 'id'=>'start_date','data-error'=>trans('validation.attributes.message_validate_start_date'),'required'=>'required')) !!}
@@ -59,7 +59,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                <div class="col-md-4"  style="padding-left: 0;">
+                    <strong>
+                        {{ trans('messages.menu_market') }} :
+                    </strong>
+                    <select id="market_id" name="market_id" class="form-control">
+                        <option value="">{{ trans('messages.show_all_market') }}</option>
+                        @foreach ($markets as $market)
+                            <option value="{{ $market->id }}" @if(!empty($market_id) && $market->id == $market_id)) selected @endif>
+                                {{ $market->market_title_th }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
@@ -73,11 +87,9 @@
                             </option>
                         @endforeach
                     </select>
-
                 </div>
 
-
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="col-md-4" style="padding-left: 0px; padding-right: 0;">
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
@@ -95,24 +107,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0; margin-top: 15px;">
+                    <strong>รูปแบบรายงาน</strong>
+                    <input type="radio" name="format_report" value="1" checked> กราฟ
+                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> ตาราง
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0; margin-top: 25px; margin-bottom: 25px;">
                     <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
             </div>
         </form>
-
-        <div class="row" style="margin-top: 10px">
-            @if(count($orderSaleItem) > 0 && count($errors) < 1)
-                <div id="container" style="min-width: 400px; height: auto; margin: 0px auto; padding-top:2%;"></div>
-            @else
-                <div class="alert alert-warning text-center">
-                    <strong>{{trans('messages.data_not_found')}}</strong>
-                </div>
-            @endif
-
-        </div>
+        @if(Request::input('format_report') == 1 or empty(Request::input('format_report')))
+            @include('backend.reports.ele_sale_item_report_charts')
+        @elseif(Request::input('format_report') == 2)
+            @include('backend.reports.ele_sale_item_report_table')
+        @endif
+        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 @push('scripts')
@@ -179,6 +194,7 @@
 
 </script>
 <?php if(count($orderSaleItem) > 0){ ?>
+<?php if(Request::input('format_report') == 1 or empty(Request::input('format_report'))){ ?>
 <script src="{{ url('charts/js/highcharts.js')}}"></script>
 <script src="{{ url('charts/js/modules/exporting.js')}}"></script>
 <style type="text/css">
@@ -187,6 +203,7 @@ demo.css
 }
 </style>
 <script type="text/javascript">
+
     $(function () {
         $('#container').highcharts({
             chart: {
@@ -248,5 +265,53 @@ demo.css
         });
     });
 </script>
-<?php }?>
+<?php } }?>
+<script type="text/javascript">
+    //***********************************************
+    $("#export").click(function () {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var market_id = $("#market_id").val();
+        var productcategorys_id = $("#productcategorys_id").val();
+        var product_type_name = [];
+        $('#product_type_name option:selected').each(function (i, selected) {
+            product_type_name[i] = $(selected).val();
+        });
+
+        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
+            progressType: 'success'
+        });
+        var productcategorys_id =$('#productcategorys_id option:selected').val();
+        var key_token = $('input[name=_token]').val();
+        var type = 'sale';
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': key_token},
+            type: "POST",
+            url: "<?php echo url('admin/reports/sale/export')?>",
+            data: {start_date: start_date
+                ,end_date: end_date
+                ,market_id:market_id
+                ,productcategorys_id:productcategorys_id
+                ,product_type_name:product_type_name
+            },
+            success: function (response) {
+                $('.modal-content').empty();
+                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
+                $(".a-download").click(function () {
+                    waitingDialog.hide();
+                    window.open(
+                        "<?php echo url('admin/reports/buy/download/?file=')?>" + response.file,
+                        '_blank'
+                    );
+                });
+                return false;
+            },
+            error: function (response) {
+                alert('error..');
+                return false;
+            }
+        })
+    });
+</script>
+
 @endpush
