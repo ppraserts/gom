@@ -73,7 +73,7 @@ $pagetitle = trans('messages.menu_order_list');
                         <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
                             สั่งซื้อ</option>
                         <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
-                            ยืนยันการสั่งซื้อรอชำระเงิน
+                            ยืนยันการสั่งซื้อ
                         </option>
                         <option value="3" @if(!empty($order_status_id) && $order_status_id == 3) selected @endif>
                             แจ้งชำระเงิน
@@ -142,11 +142,11 @@ $pagetitle = trans('messages.menu_order_list');
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">
@@ -158,8 +158,7 @@ $pagetitle = trans('messages.menu_order_list');
                         @foreach ($orderLists as $key => $item)
                             <tr>
                                 <td style="text-align:center;">{{ $item->id }}</td>
-                                <td>{{ $item->product_name_th }}</td>
-                                <td>{{ $item->quantity.' '.$item->units }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($item->order_date) }}</td>
                                 <td>
                                     @if($item->order_type== 'retail')
                                         {{trans('messages.retail')}}
@@ -168,7 +167,8 @@ $pagetitle = trans('messages.menu_order_list');
                                     @endif
                                 </td>
                                 <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
-                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($item->order_date) }}</td>
+                                <td>{{ $item->product_name_th }}</td>
+                                <td>{{ $item->quantity.' '.$item->units }}</td>
                                 {{--<td style="text-align:center;">{{ $item->total_amount}}</td>--}}
                                 <td style="text-align:center;">{{ $item->total}}</td>
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
