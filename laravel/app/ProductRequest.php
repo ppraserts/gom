@@ -100,6 +100,7 @@ class ProductRequest extends Model
                                                           and a.products_id = b.products_id
                                                           and a.productstatus = 'open'
                                                           and a.users_id != $userid
+                                                          AND ((a.add_packing != -1 && b.add_packing != -1) OR (a.add_packing = -1 && b.add_packing = -1 && a.package_unit = b.package_unit))
                                                           $conditionStr
                                                       JOIN `products` p on a.products_id = p.id
                                                       LEFT JOIN quotation q ON a.id = q.product_request_id
@@ -270,6 +271,7 @@ class ProductRequest extends Model
                                                             and buy.pricerange_end>=sale.price
                                                             and buy.volumnrange_start >= sale.min_order
                                                             and buy.users_id != $userid
+                                                            AND ((buy.add_packing != -1 && sale.add_packing != -1) OR (buy.add_packing = -1 && sale.add_packing = -1 && buy.package_unit = sale.package_unit))
                                                             $conditionStr
                                                     JOIN `products` p on buy.products_id = p.id
                                           ) as matching
