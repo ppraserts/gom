@@ -147,12 +147,12 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_firstname_th }}  {{ $item->users_lastname_th }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_firstname_en') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_firstname_en') }} -
-                    {{ trans('validation.attributes.users_lastname_en') }}
-                    :
-                    <strong>{{ $item->users_firstname_en }}  {{ $item->users_lastname_en }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_firstname_en') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_firstname_en') }} ---}}
+                    {{--{{ trans('validation.attributes.users_lastname_en') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_firstname_en }}  {{ $item->users_lastname_en }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.email') }}
                     :
