@@ -90,13 +90,13 @@ class ReportsController extends BaseReports
         $defult_ymd_last_month = '';
         $defult_ymd_today = '';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $orderList->where('orders.order_date', '>=', $request->input('start_date'));
-            $orderList->where('orders.order_date', '<=', $request->input('end_date'));
+            $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }else{
-            $orderList->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
-            $orderList->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $orderList->whereDate('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $orderList->whereDate('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
@@ -401,17 +401,20 @@ class ReportsController extends BaseReports
         $defult_ymd_last_month='';
         $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $orderList->where('orders.order_date', '>=', $request->input('start_date'));
-            $orderList->where('orders.order_date', '<=', $request->input('end_date'));
+            $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }else{
-            $orderList->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
-            $orderList->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $orderList->whereDate('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $orderList->whereDate('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+
+    
+
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
-        $orderList->where('orders.order_status', '!=', 5);
+        $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
         //$orderList->orderBy('orders.id', 'DESC');
         $orderList->orderBy('products.product_name_th', 'ASC');
@@ -468,13 +471,13 @@ class ReportsController extends BaseReports
         $defult_ymd_last_month='';
         $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $shop->where('orders.order_date', '>=', $request->input('start_date'));
-            $shop->where('orders.order_date', '<=', $request->input('end_date'));
+            $shop->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $shop->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }else{
-            $shop->where('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
-            $shop->where('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
+            $shop->whereDate('orders.order_date', '>=', $defultDateMonthYear['ymd_last_month']);
+            $shop->whereDate('orders.order_date', '<=', $defultDateMonthYear['ymd_today']);
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
@@ -591,8 +594,8 @@ class ReportsController extends BaseReports
         if (!empty($date_start) and !empty($date_end)) {
             $date_start = DateFuncs::convertYear($date_start);
             $date_end = DateFuncs::convertYear($date_end);
-            $orderList->where('orders.order_date', '>=', $date_start);
-            $orderList->where('orders.order_date', '<=', $date_end);
+            $orderList->whereDate('orders.order_date', '>=', $date_start);
+            $orderList->whereDate('orders.order_date', '<=', $date_end);
         }
 
         if (!empty($productcategorys_id)){
