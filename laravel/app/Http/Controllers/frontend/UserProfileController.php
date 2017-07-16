@@ -4,7 +4,9 @@ namespace App\Http\Controllers\frontend;
 
 use App\Helpers\DateFuncs;
 use App\Http\Controllers\Controller;
+use App\Market;
 use App\Province;
+use App\UserMarket;
 use App\UserStandard;
 use DB;
 use File;
@@ -49,7 +51,19 @@ class UserProfileController extends Controller
                 }
             }
         }
-        return view('frontend.userprofile', compact('item', 'provinceItem', 'standards'));
+        $markets = Market::all();
+        $userMarkets = UserMarket::where('user_id', $item->id)->get();
+
+        for ($i = 0; $i < $markets->count(); $i++) {
+            $markets[$i]->checked = false;
+            foreach ($userMarkets as $userMarket) {
+                if ($markets[$i]->id == $userMarket->market_id) {
+                    $markets[$i]->checked = true;
+                }
+            }
+        }
+
+        return view('frontend.userprofile', compact('item', 'provinceItem', 'standards','markets'));
     }
 
     public function updateProfile(Request $request)

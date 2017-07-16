@@ -188,19 +188,35 @@
                                 {{ trans('messages.lable_requset_email_system') }}
                             </div>
                         </div>
-                        @if(isset($standards) && $item->iwanttosale == 'sale')
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
-                                    @for($i = 0 ; $i < count($standards) ; $i++)
-                                        <label class="checkbox-inline">
-                                            <input name="users_standard[]" type="checkbox" disabled
-                                                   value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
-                                            {{$standards[$i]->name}}
-                                        </label>
-                                    @endfor
+                        @if($item->iwanttosale == 'sale')
+                            @if(isset($standards))
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
+                                        @for($i = 0 ; $i < count($standards) ; $i++)
+                                            <label class="checkbox-inline">
+                                                <input name="users_standard[]" type="checkbox" disabled
+                                                       value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                                {{$standards[$i]->name}}
+                                            </label>
+                                        @endfor
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+                            @if(isset($markets))
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <strong>{{ trans('validation.attributes.market') }} :</strong>
+                                        @for($i = 0 ; $i < count($markets) ; $i++)
+                                            <label class="checkbox-inline">
+                                                <input name="users_standard[]" type="checkbox" disabled
+                                                       value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}>
+                                                {{$markets[$i]->market_title_th}}
+                                            </label>
+                                        @endfor
+                                    </div>
+                                </div>
+                            @endif
                         @endif
 
 
