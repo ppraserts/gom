@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Market;
 use App\UserMarket;
 use File;
+use Illuminate\Support\Facades\Input;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

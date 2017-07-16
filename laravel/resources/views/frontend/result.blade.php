@@ -1,4 +1,5 @@
 <?php
+    $user = auth()->guard('user')->user();
 ?>
 @extends('layouts.main')
 @section('content')
@@ -119,7 +120,7 @@
                                    class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
                             </div>
 
-                            @if($col_md_4_item['productstatus'] == 'open')
+                            @if($col_md_4_item['productstatus'] == 'open' && ($user==null || ($user!=null && $user->id != $col_md_4_item['product_user_id'])) && ($user==null || ($user!=null && $user->iwanttobuy == 'buy')))
                                 @if(($col_md_4_item['selling_type'] == 'retail' or $col_md_4_item['selling_type'] == 'all') && $col_md_4_item['product_stock'] > 0)
                                     <div class="col-md-3">
                                         <a href="#"
