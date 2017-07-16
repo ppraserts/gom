@@ -594,3 +594,10 @@ ul.panel-controls > li > .dropdown-menu:before {
     padding-bottom: 5px;
     padding-top: 5px;
 }
+
+.box_header_username a{
+    color: #a2b940;
+}
+.box_header_username a:hover{
+    opacity: 0.8;
+}
