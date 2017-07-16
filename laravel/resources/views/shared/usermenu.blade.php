@@ -89,7 +89,11 @@ $productRequest = new ProductRequest();
     @endif
     @if($user->iwanttosale == "sale" or $user->iwanttobuy == "buy")
         <li role="presentation" {{ (Request::segment(2) == "reports")? 'class=active' : ''  }}>
-            <a href="{{ url('/user/reports/buy') }}">
+            @if($user->iwanttobuy == "buy")
+                    <a href="{{ url('/user/reports/buy') }}">
+            @elseif($user->iwanttosale == "sale")
+                    <a href="{{ url('/user/reports/list-sale') }}">
+            @endif
                 รายงาน
             </a>
         </li>

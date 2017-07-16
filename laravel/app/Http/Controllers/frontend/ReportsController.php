@@ -69,8 +69,8 @@ class ReportsController extends Controller
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $orderList->where('orders.order_date', '>=', $request->input('start_date'));
-            $orderList->where('orders.order_date', '<=', $request->input('end_date'));
+            $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
@@ -300,16 +300,25 @@ class ReportsController extends Controller
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-//        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts, products.product_name_th
-//        , products.product_name_en'));
-        $orderList->select(DB::raw('orders.*, order_status.status_name
+        $orderList->select(DB::raw('SUM(orders.total_amount) as total_amounts
+            ,products.product_name_th
+            ,products.product_name_en
+            ,order_status.status_name
             ,users.users_firstname_th
             ,users.users_lastname_th
             ,products.product_name_th
             ,order_items.quantity
             ,product_requests.units
-            ,order_items.total'
-        ));
+            ,order_items.total
+        '));
+//        $orderList->select(DB::raw('orders.*, order_status.status_name
+//            ,users.users_firstname_th
+//            ,users.users_lastname_th
+//            ,products.product_name_th
+//            ,order_items.quantity
+//            ,product_requests.units
+//            ,order_items.total'
+//        ));
 
 
         $orderList->where('orders.user_id', $user->id);
@@ -324,13 +333,13 @@ class ReportsController extends Controller
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $orderList->where('orders.order_date', '>=', $request->input('start_date'));
-            $orderList->where('orders.order_date', '<=', $request->input('end_date'));
+            $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }
-        $orderList->where('orders.order_status', '!=', 5);
-        //$orderList->groupBy('products.id');
+        $orderList->where('orders.order_status', '=', 4);
+        $orderList->groupBy('products.id');
         //$orderList->orderBy('orders.id', 'DESC');
         $orderList->orderBy('products.product_name_th', 'ASC');
         $orderList->paginate(config('app.paginate'));

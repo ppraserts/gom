@@ -208,7 +208,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('email') ? 'has-error' : '' }}">
                                 <strong>* {{ trans('validation.attributes.email') }} :</strong>
                                 <input id="email" type="email" class="form-control" name="email"
-                                       value="{{ $item->email }}">
+                                       value="{{ $item->email }}" @if(!empty($item->email)) disabled @endif>
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
@@ -229,7 +229,6 @@
                                 :</strong>
                             {!! Form::text('users_street', $item->users_street, array('placeholder' => trans('validation.attributes.users_street'),'class' => 'form-control')) !!}
                         </div>--}}
-
 
                         <div class="row">
                             <div class="form-group col-md-6 {{ $errors->has('users_province') ? 'has-error' : '' }}">
@@ -252,6 +251,17 @@
                                     :</strong>
                                 <select id="users_city" name="users_city" class="form-control">
                                 </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_district') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_district') }}
+                                    :</strong>
+                                <select id="users_district" name="users_district" class="form-control">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_postcode') }}
+                                    :</strong>
+                                {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => trans('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
                             </div>
 
                         </div>
