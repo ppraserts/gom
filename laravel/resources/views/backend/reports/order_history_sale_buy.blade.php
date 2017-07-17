@@ -19,7 +19,7 @@
             <h2>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h2>
         </div>
         <form action="{{url('admin/reports/order-history-sale-buy')}}"  id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true">
             <div class="row">
                 <div class="form-group col-sm-6">

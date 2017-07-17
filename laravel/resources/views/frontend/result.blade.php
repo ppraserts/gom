@@ -116,7 +116,7 @@
                         <div class="row">
                             <div class="col-md-9">
 
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                <a href="{{ url('productview/'.$col_md_4_item['id']) }}"
                                    class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
                             </div>
 
@@ -192,7 +192,7 @@
 
                         </div>
                         <div class="clear-left">
-                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                            <a href="{{ url('productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                             </a>
                         </div>

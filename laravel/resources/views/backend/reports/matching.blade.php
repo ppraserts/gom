@@ -21,7 +21,7 @@
             <h4>{{ trans('messages.matching_report') }}</h4>
         </div>
         <form action="{{url('admin/reports/matching')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {

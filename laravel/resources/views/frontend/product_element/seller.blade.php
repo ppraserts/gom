@@ -159,7 +159,7 @@
             <span class="glyphicon glyphicon-map-marker"></span>
             {{ $productRequest->city }} {{ $productRequest->province }}
         </p>
-        @if($user->id == $productRequest->users_id)
+        @if($user!=null && $user->id == $productRequest->users_id)
             <p>
                 <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}"
                    class="btn btn-primary">

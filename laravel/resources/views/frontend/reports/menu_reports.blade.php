@@ -12,7 +12,7 @@ $user = auth()->guard('user')->user();
         <a href="{{url('user/reports/list-sale')}}">{{ trans('messages.menu_shop_order_list') }}</a>
     </li>
     <li  @if(Request::segment(3) == 'sale') class="active" @endif>
-        <a href="{{url('user/reports/sale')}}">รายงานยอดจำหน่ายสินค้า</a>
+        <a href="{{url('user/reports/sale')}}">{{trans('messages.report_title_sale')}}</a>
     </li>
     @endif
 </ul>
