@@ -57,11 +57,11 @@
             <p>
 
                 <button @if($comment->status == 1)disabled @endif type="button" id="show_{{$comment->id}}" class="btn btn-info statusEventShow" data-id="{{$comment->id}}">
-                    แสดง
+                    {{trans('messages.show')}}
                 </button>
 
                 <button @if($comment->status == 0)disabled @endif type="button" id="hidden_{{$comment->id}}" class="btn btn-warning statusEventHidden" data-id="{{$comment->id}}">
-                    ซ่อน
+                    {{trans('messages.hide')}}
                 </button>
             </p>
         @endif

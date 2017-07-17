@@ -3,7 +3,7 @@
         <a href="{{url('admin/reports/buy')}}">รายงานการสั่งซื้อ</a>
     </li>
     <li  @if(Request::segment(3) == 'sale') class="active" @endif>
-        <a href="{{url('admin/reports/sale')}}">รายงานยอดจำหน่ายสินค้า</a>
+        <a href="{{url('admin/reports/sale')}}">{{trans('messages.report_title_sale')}}</a>
     </li>
     <li  @if(Request::segment(3) == 'salebyshop') class="active" @endif>
         <a href="{{url('admin/reports/salebyshop')}}">รายงานยอดจำหน่ายร้านค้า</a>

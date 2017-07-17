@@ -8,12 +8,12 @@
             {{csrf_field()}}
 
             <div class="form-group ">
-                <strong> * ช่องทางการจัดส่ง :</strong>
+                <strong> * {{trans('messages.shipping_type')}} :</strong>
                 <input type="text" id="delivery_chanel" name="delivery_chanel" class="form-control" style="margin-bottom: 5px;">
                 <span id="mss_delivery_chanel" class="alert-danger"></span>
             </div>
             <div class="form-group ">
-                <strong> * วันที่จัดส่ง :</strong>
+                <strong> * {{trans('messages.shipping_date')}} :</strong>
                 <div class='input-group date' id='pick_start_date' style="margin-bottom: 5px;">
                     <input  class="form-control" id="order_date" name="order_date" type="text" value="">
                     <span class="input-group-addon">

@@ -175,7 +175,7 @@
                                 : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
                                 <br/>
                                 <span class="hidden-sm">
-                                    {{trans('messages.orderbyprice')}}
+                                    {{trans('messages.price')}}
                                     : {{ floatval($col_md_4_item['pricerange_start']) }}
                                     - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
                                 </span>

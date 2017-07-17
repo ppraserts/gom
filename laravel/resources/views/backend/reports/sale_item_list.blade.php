@@ -2,7 +2,7 @@
 //$pagetitle = trans('messages.menu_order_list');
 ?>
 @extends('layouts.dashboard')
-@section('page_heading','รายงานยอดจำหน่ายสินค้า')
+@section('page_heading','{{trans('messages.report_title_sale')}}')
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">

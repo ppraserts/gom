@@ -1,7 +1,7 @@
 {{--ผู้ขาย ยืนยันการสั่งซื้อ--}}
 <div class="col-md-12" style="background: rgba(255, 235, 59, 0.18); margin-bottom: 10px;">
     <div class="row" style="padding: 17px 15px;">
-        <h3 style="margin-top: 5px;">ยืนยันการสั่งซื้อ</h3>
+        <h3 style="margin-top: 5px;">{{trans('messages.confirm_order')}}</h3>
         <form action="{{url('user/orderdetail/store-status-history')}}" id="form_payment_channel" method="POST">
             <input type="hidden" name="order_id" value="{{$orderId}}">
             <input type="hidden" name="status_current" value="2">
@@ -9,9 +9,9 @@
             <div class="form-group">
                 <strong>{{ trans('messages.text_payment_channel') }}:</strong>
                 <select name="payment_channel" id="payment_channel">
-                    <option value="">* กรุณาเลือกช่องทางการชำระเงิน</option>
-                    <option value="บัญชีธนาคาร">บัญชีธนาคาร</option>
-                    <option value="เงินสด">เงินสด</option>
+                    <option value="">* {{trans('messages.payment_gateway')}}</option>
+                    <option value="บัญชีธนาคาร">{{trans('messages.book_bank')}}</option>
+                    <option value="เงินสด">{{trans('messages.cash')}}</option>
                 </select>
                 <small class="alert-danger" id="ms_payment_channel"></small>
             </div>

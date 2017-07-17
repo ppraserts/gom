@@ -128,8 +128,8 @@ $pagetitle = trans('message.menu_order_list');
                             <tr>
                                 <th style="text-align:center;">{{ trans('validation.attributes.created_at') }}</th>
                                 <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
-                                <th style="text-align:center;">บันทึกเพิ่มเติม</th>
-                                <th style="text-align:center;">ไฟล์</th>
+                                <th style="text-align:center;">{{trans('messages.save_add')}}</th>
+                                <th style="text-align:center;">{{trans('messages.file')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -140,8 +140,8 @@ $pagetitle = trans('message.menu_order_list');
                                     <td style="text-align:center;">{{ $item->status_text}}</td>
                                     <td style="text-align:left; max-width: 400px;">
                                         @if($item->status_id == 4)
-                                            ช่องทางการจัดส่ง : {{$item->delivery_chanel}}<br/>
-                                            วันที่จัดส่ง :{{$item->order_date}} <br/>
+                                            {{trans('messages.shipping_type')}} : {{$item->delivery_chanel}}<br/>
+                                            {{trans('messages.shipping_date')}} :{{$item->order_date}} <br/>
                                             {!! $item->note !!}
                                         @endif
                                         <?php
@@ -169,7 +169,7 @@ $pagetitle = trans('message.menu_order_list');
                                     <td style="text-align:left;">
                                         @if(!empty($item->image_payment_url))
                                             <a href="{{url('upload/payments/'.$item->image_payment_url)}}" target="_blank">
-                                                ดาวน์โหลด
+                                                {{trans('messages.download')}}
                                             </a>
                                         @else
                                             -

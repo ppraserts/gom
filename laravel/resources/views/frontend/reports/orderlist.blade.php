@@ -121,7 +121,7 @@ $pagetitle = trans('message.menu_order_list');
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.quantity') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">
