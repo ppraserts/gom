@@ -117,6 +117,7 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_taxcode }}</strong>
             </div>
+            @if($item->iwanttosale == 'sale')
             <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_qrcode') }}
                 :
@@ -133,6 +134,7 @@ $controllerAction = "companys.update";
                     @endif
                 </strong>
             </div>
+            @endif
             <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_company_th') }}
                 :
@@ -153,11 +155,11 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_addressname }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_street') }}
-                :
-                <strong>{{ $item->users_street }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_street') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_street }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_district') }}
                 :
@@ -185,16 +187,16 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_mobilephone }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_phone') }}
-                :
-                <strong>{{ $item->users_phone }}</strong>
-            </div>
-            <div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_fax') }}
-                :
-                <strong>{{ $item->users_fax }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_phone') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_phone }}</strong>--}}
+            {{--</div>--}}
+            {{--<div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_fax') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_fax }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
                   <div id="map" style="width: 100%; height: 300px;"></div>
             </div>

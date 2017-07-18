@@ -205,11 +205,11 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_mobilephone }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_phone') }}
-                    :
-                    <strong>{{ $item->users_phone }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_phone') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_phone }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
                     <div id="map" style="width: 100%; height: 300px;"></div>
                 </div>
