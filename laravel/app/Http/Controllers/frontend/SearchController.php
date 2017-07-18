@@ -41,22 +41,25 @@ class SearchController extends Controller
         $selected_markets = Input::get('markets');
         $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
                     ->get();
-
-        if (is_array($selected_markets)){
-            for ($i = 0; $i < $markets->count(); $i++) {
-                $markets[$i]->checked = false;
-                foreach ($selected_markets as $selected_market) {
-                    if ($markets[$i]->id == $selected_market) {
-                        $markets[$i]->checked = true;
+        $itemssale = null;
+        $itemsbuy = null;
+        if (!empty($selected_markets)){
+            if (is_array($selected_markets)){
+                for ($i = 0; $i < $markets->count(); $i++) {
+                    $markets[$i]->checked = false;
+                    foreach ($selected_markets as $selected_market) {
+                        if ($markets[$i]->id == $selected_market) {
+                            $markets[$i]->checked = true;
+                        }
                     }
                 }
             }
-        }
 
-        $productRequest = new ProductRequest();
-        $itemssale = $productRequest->GetSearchProductRequests('sale',$category, $search, '', $province, $price, $volumn,$selected_markets);
-        $itemsbuy = $productRequest->GetSearchProductRequests('buy',$category, $search, '', $province, $price, $volumn);
+            $productRequest = new ProductRequest();
+            $itemssale = $productRequest->GetSearchProductRequests('sale',$category, $search, '', $province, $price, $volumn,$selected_markets);
+            $itemsbuy = $productRequest->GetSearchProductRequests('buy',$category, $search, '', $province, $price, $volumn);
 //        return $itemssale;
+        }
 
         return view('frontend.result',compact('productCategoryitem','itemssale', 'itemsbuy','markets','selected_markets'));
     }

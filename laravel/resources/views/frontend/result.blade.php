@@ -6,7 +6,7 @@
     @include('shared.resultsearch')
     <br/>
     <h3>{{ trans('messages.i_want_to_sale') }}</h3>
-    @if(count((array)$itemssale)>0)
+    @if($itemssale!=null && count((array)$itemssale)>0)
         <div class="row">
             <?php
             $arr = (array)$itemssale;
@@ -151,7 +151,7 @@
     @endif
     <br/>
     <h3>{{ trans('messages.i_want_to_buy') }}</h3>
-    @if(count((array)$itemsbuy)>0)
+    @if($itemsbuy!=null && count((array)$itemsbuy)>0)
         <div class="row">
             <?php
             $arr = (array)$itemsbuy;
