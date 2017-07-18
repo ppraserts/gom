@@ -20,7 +20,6 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
-
 </head>
 
 <body class="theme theme-section theme-section-one">
@@ -37,7 +36,8 @@ if ($shop != null && $shop->image_file_1 != '') {
 
 
 <div class="container">
-    <header class="header header-image header-theme-one" style="background: url({{asset($image_header)}}); background-size: cover; max-height: 560px; height: 560px;">
+    <header class="header header-image header-theme-one"
+            style="background: url({{asset($image_header)}}); background-size: cover; max-height: 560px; height: 560px;">
         @yield('header')
     </header>
     @yield('promotion')
@@ -105,16 +105,18 @@ if ($shop != null && $shop->image_file_1 != '') {
 
     </section>
 
-    <section class="comments">
-        <div class="row">
-            <div class="col-lg-12">
-                <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
-                <link rel="stylesheet" href="{{url('css/star.css')}}">
-                <link rel="stylesheet" href="{{url('css/comment.css')}}">
-                @include('frontend.shop_element.comment')
+    @if($user!=null)
+        <section class="comments">
+            <div class="row">
+                <div class="col-lg-12">
+                    <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
+                    <link rel="stylesheet" href="{{url('css/star.css')}}">
+                    <link rel="stylesheet" href="{{url('css/comment.css')}}">
+                    @include('frontend.shop_element.comment')
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 </div>
 <link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
 <script src="{{url('jquery-loading/waitMe.js')}}"></script>

@@ -99,7 +99,7 @@ if ($shop != null && $shop->image_file_3 != "") {
     </div>
     </div>
 </section>
-
+@if($user!=null)
 <section class="comments">
     <div class="container">
         <div class="row">
@@ -112,6 +112,7 @@ if ($shop != null && $shop->image_file_3 != "") {
         </div>
     </div>
 </section>
+@endif
 <link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
 <script src="{{url('jquery-loading/waitMe.js')}}"></script>
 @stack('scripts')
