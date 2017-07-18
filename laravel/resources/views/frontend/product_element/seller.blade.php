@@ -167,7 +167,7 @@
                 </a>
             </p>
         @else
-            @if($productRequest['productstatus'] == 'open')
+            @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
                 @if($productRequest->iwantto == "sale")
                     @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail") && $productRequest['productstatus'] == "open" && $productRequest['product_stock'] >0)
                     <p>
