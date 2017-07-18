@@ -140,11 +140,11 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_company_th }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_company_en') }}
-                :
-                <strong>{{ $item->users_company_en }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_company_en') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_company_en }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.email') }}
                 :
