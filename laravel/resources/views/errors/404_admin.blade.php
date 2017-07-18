@@ -4,8 +4,8 @@
         <div class="row" style="background-color: white; padding-top: 10px; padding-bottom: 25px; ">
             {{--<div class="col-md-4" style="font-size: 102px; text-align: center "> 404 </div>--}}
             <div class="col-md-12" style="font-size: 16px; text-align: center;">
-                <h1>ขอโทษค่ะ!</h1>
-                <p>หน้าเว็บที่คุณขอไม่พบบนเซิร์ฟเวอร์ของเราหรือเซิร์ฟเวอร์ประมวลผลผิดพลาดกรุณา</p>
+                <h1>ขออภัยค่ะ</h1>
+                <p>หน้าเว็บที่ร้องขอไม่พบบนเซิร์ฟเวอร์ของเราหรือเซิร์ฟเวอร์ประมวลผลผิดพลาดกรุณา</p>
                 <p class="box_header_username">
                     กลับไปที่
                     <a href="javascript:history.go(-1)">หน้าก่อนหน้านี้</a>
