@@ -102,11 +102,11 @@ function renderHTML($text)
                 if (response.status == 'success') {
                     showProductAdded(response.product_request);
                 } else {
-                    window.location = 'user/login';
+                    window.location = BASE_URL+'/user/login';
                 }
             },
             error: function (request, status, error) {
-                window.location = 'user/login';
+                window.location = BASE_URL+'/user/login';
                 console.log(request.responseText);
                 //alert(request.responseText);
             }
