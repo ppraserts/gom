@@ -433,17 +433,17 @@
                         <label class="control-label">* <strong>รูปแบบการขาย :</strong></label>
 
                         @if($item->selling_type == 'retail')
-                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
-                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> {{trans('messages.retail')}}
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> {{trans('messages.wholesale')}}
                         @elseif($item->selling_type == 'wholesale')
-                            <input type="checkbox" name="selling_type[]" value="retail"> ขายปลีก
-                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                            <input type="checkbox" name="selling_type[]" value="retail"> {{trans('messages.retail')}}
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> {{trans('messages.wholesale')}}
                         @elseif($item->selling_type == 'all')
-                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
-                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> ชายส่ง
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> {{trans('messages.retail')}}
+                            <input type="checkbox" name="selling_type[]" value="wholesale" checked> {{trans('messages.wholesale')}}
                         @else
-                            <input type="checkbox" name="selling_type[]" value="retail" checked> ขายปลีก
-                            <input type="checkbox" name="selling_type[]" value="wholesale"> ชายส่ง
+                            <input type="checkbox" name="selling_type[]" value="retail" checked> {{trans('messages.retail')}}
+                            <input type="checkbox" name="selling_type[]" value="wholesale"> {{trans('messages.wholesale')}}
                         @endif
                         <br/>
                         <small class="alert-danger" id="ms_selling_type"></small>
