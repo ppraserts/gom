@@ -81,7 +81,7 @@ class ShopIndexController extends Controller
         }
 
 
-        return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment'))
+        return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment','user'))
             ->with('comments', $comments)
             ->with('shop', $shop);
     }
