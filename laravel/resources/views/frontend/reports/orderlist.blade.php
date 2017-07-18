@@ -26,7 +26,7 @@ $pagetitle = trans('message.menu_order_list');
 
         </div>
         <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -121,7 +121,7 @@ $pagetitle = trans('message.menu_order_list');
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
-                            <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.quantity') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_status') }}</th>
                             <th width="130px" style="text-align:center;">

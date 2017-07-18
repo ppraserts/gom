@@ -17,6 +17,12 @@
 
         $('#users_qrcode_section').hide();
         $('#users_standard_section').hide();
+        @if(!empty(old('iwantto')))
+            @if(in_array('sale', old('iwantto')))
+                $('#users_qrcode_section').show();
+                $('#users_standard_section').show();
+            @endif
+        @endif
 
         //$('#datetimepicker1').datepicker("update", new Date('1950-01-01'));
         $('#datetimepicker1').datepicker().on('show', function (e) {
@@ -163,11 +169,13 @@
 
                                     <label class="radio-inline">
                                         <input type="checkbox" name="iwantto[]" id="iwanttosale"
-                                               value="sale"> {{ trans('messages.i_want_to_sale') }}
+                                               value="sale"
+                                               @if(!empty(old('iwantto'))) @if(in_array('sale', old('iwantto'))) checked @endif @endif> {{ trans('messages.i_want_to_sale') }}
                                     </label>
                                     <label class="radio-inline">
                                         <input type="checkbox" name="iwantto[]" id="iwanttobuy"
-                                               value="buy"> {{ trans('messages.i_want_to_buy') }}
+                                               value="buy"
+                                               @if(!empty(old('iwantto'))) @if(in_array('buy', old('iwantto'))) checked @endif @endif> {{ trans('messages.i_want_to_buy') }}
                                     </label>
                                     <div id="ms_selling_type" class="alert-danger help-block with-errors"></div>
                                 </div>
@@ -179,7 +187,8 @@
 
 
                                     <input id="users_idcard" type="text" class="form-control" name="users_idcard"
-                                           value="{{ old('users_idcard') }}" maxlength="13" data-minlength="13" autofocus required>
+                                           value="{{ old('users_idcard') }}" maxlength="13" data-minlength="13"
+                                           autofocus required>
 
                                     @if ($errors->has('users_idcard'))
                                         <span class="help-block">
@@ -199,7 +208,7 @@
                                         @for($i = 0 ; $i < count($standards) ; $i++)
                                             <label class="checkbox-inline">
                                                 <input name="users_standard[]" type="checkbox"
-                                                       value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                                       value="{{ $standards[$i]->id}}" {{ ($standards[$i]->checked || (!empty(old('users_standard')) && in_array($standards[$i]->id, old('users_standard')))) ? "checked" : ""}}>
                                                 {{$standards[$i]->name}}
                                             </label>
                                         @endfor
@@ -479,7 +488,8 @@
                                     <label for="password"
                                            class="control-label">* {{ Lang::get('validation.attributes.password') }}</label>
 
-                                    <input id="password" type="password" class="form-control" name="password" data-minlength="6" required>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                           data-minlength="6" required>
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">

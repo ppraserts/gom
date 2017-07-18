@@ -22,7 +22,7 @@ class ProductsViewController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('user');
+//        $this->middleware('user');
     }
 
     private $rules = [

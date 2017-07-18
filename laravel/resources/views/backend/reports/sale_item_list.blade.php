@@ -2,7 +2,7 @@
 //$pagetitle = trans('messages.menu_order_list');
 ?>
 @extends('layouts.dashboard')
-@section('page_heading','รายงานยอดจำหน่ายสินค้า')
+@section('page_heading','{{trans('messages.report_title_sale')}}')
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">
@@ -23,7 +23,7 @@
             <h2>{{ trans('messages.report_title_sale') }}</h2>
         </div>
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {

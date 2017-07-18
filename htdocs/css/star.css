@@ -1,12 +1,14 @@
 div.stars {
+    /*width: 270px;*/
     display: inline-block;
-    width: 100%;
+    width: auto;
 }
 
 input.star { display: none; }
 
 label.star {
-    padding: 10px;
+    float: right;
+    padding: 10px 5px;
     font-size: 36px;
     color: #444;
     transition: all .2s;

@@ -5,7 +5,13 @@
     $(function () {
         $('#users_qrcode_section').hide();
         $('#users_standard_section').hide();
-        $('#iwanttosale').bind('change', function () {
+        @if(!empty(old('iwantto')))
+            @if(in_array('sale', old('iwantto')))
+                $('#users_qrcode_section').show();
+                $('#users_standard_section').show();
+            @endif
+        @endif
+    $('#iwanttosale').bind('change', function () {
             if (this.checked) {
                 $('#users_qrcode_section').show();
                 $('#users_standard_section').show();
@@ -133,18 +139,21 @@
                         <form id="form" role="form" method="POST" action="{{ url('user/savecompanyregister') }}" data-toggle="validator">
                             {{ csrf_field() }}
                             <div class="row">
-                                <div id="iwantto" class="col-md-offset-1 col-md-10 form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
+                                <div id="iwantto"
+                                     class="col-md-offset-1 col-md-10 form-group{{ $errors->has('iwantto') ? ' has-error' : '' }}">
                                     <label for="iwantto"
                                            class="control-label">* {{ Lang::get('validation.attributes.iwantto') }}</label>
 
 
                                     <label class="radio-inline">
                                         <input type="checkbox" name="iwantto[]" id="iwanttosale"
-                                               value="sale"> {{ trans('messages.i_want_to_sale') }}
+                                               value="sale"
+                                               @if(!empty(old('iwantto'))) @if(in_array('sale', old('iwantto'))) checked @endif @endif> {{ trans('messages.i_want_to_sale') }}
                                     </label>
                                     <label class="radio-inline">
                                         <input type="checkbox" name="iwantto[]" id="iwanttobuy"
-                                               value="buy"> {{ trans('messages.i_want_to_buy') }}
+                                               value="buy"
+                                               @if(!empty(old('iwantto'))) @if(in_array('buy', old('iwantto'))) checked @endif @endif> {{ trans('messages.i_want_to_buy') }}
                                     </label>
                                     <div id="ms_selling_type" class="alert-danger help-block with-errors"></div>
                                 </div>
@@ -175,13 +184,13 @@
                                         @for($i = 0 ; $i < count($standards) ; $i++)
                                             <label class="checkbox-inline">
                                                 <input name="users_standard[]" type="checkbox"
-                                                       value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                                       value="{{ $standards[$i]->id}}" {{ ($standards[$i]->checked || (!empty(old('users_standard')) && in_array($standards[$i]->id, old('users_standard')))) ? "checked" : ""}}>
                                                 {{$standards[$i]->name}}
                                             </label>
                                         @endfor
                                         <div class="form-inline">
                                             <span style="margin-left: 10px">{{trans('messages.other_text')}}</span>
-                                            {!! Form::text('other_standard', null, array('id'=>'other_standard','class' => 'form-control')) !!}
+                                            {!! Form::text('other_standard', null, array('id' => 'other_standard','class' => 'form-control')) !!}
                                         </div>
                                         <div id="ms_standard" class="alert-danger help-block with-errors"></div>
 

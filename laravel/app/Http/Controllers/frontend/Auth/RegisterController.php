@@ -185,7 +185,7 @@ class RegisterController extends Controller
                     ]);
                 }
             }
-            return redirect('user/login')->with('status', 'User register successfully');
+            return redirect('user/login')->with('status',  trans('messages.registercomplete'));
         } else {
             return redirect('user/register')->with('status', 'User not register. Please try again');
         }

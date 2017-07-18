@@ -159,7 +159,7 @@
             <span class="glyphicon glyphicon-map-marker"></span>
             {{ $productRequest->city }} {{ $productRequest->province }}
         </p>
-        @if($user->id == $productRequest->users_id)
+        @if($user!=null && $user->id == $productRequest->users_id)
             <p>
                 <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}"
                    class="btn btn-primary">
@@ -167,7 +167,7 @@
                 </a>
             </p>
         @else
-            @if($productRequest['productstatus'] == 'open')
+            @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
                 @if($productRequest->iwantto == "sale")
                     @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail") && $productRequest['productstatus'] == "open" && $productRequest['product_stock'] >0)
                     <p>

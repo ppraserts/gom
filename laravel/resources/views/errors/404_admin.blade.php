@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.error_admin')
 @section('content')
     @if(Lang::locale() == "th")
         <div class="row" style="background-color: white; padding-top: 10px; padding-bottom: 25px; ">

@@ -74,9 +74,12 @@ if (is_array($carts)) {
             @if(!empty(ucfirst(Session::get('firstname'))))
                 <ul class="nav navbar-nav navbar-left user_loget">
                     <li>
-                        <span style="color: #a4a4a4;"> ผู้ใช้งาน :</span>
-                        <span style="color: #a2b940;">
-                            {{ Session::get('firstname').' '.Session::get('lastname') }}
+                        <span style="color: #a4a4a4;"> {{ trans('messages.menu_user') }} :</span>
+                        <span class="box_header_username">
+                            <a href="{{url('user/userprofiles')}}">
+                                {{ Session::get('firstname').' '.Session::get('lastname') }}
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
                         </span>
                     </li>
                 </ul>

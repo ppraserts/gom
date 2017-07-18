@@ -33,7 +33,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/sitemap', 'frontend\SitemapController@index');
     Route::get('/result', 'frontend\SearchController@index');
     Route::get('/market', 'frontend\MarketController@index');
-
+    Route::resource('productview','frontend\ProductsViewController');
     Route::get('/unsubscribe', 'frontend\SearchController@unsubscribe');
 
     Route::get('/clear-cache', function() {

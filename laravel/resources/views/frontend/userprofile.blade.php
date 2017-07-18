@@ -188,19 +188,35 @@
                                 {{ trans('messages.lable_requset_email_system') }}
                             </div>
                         </div>
-                        @if(isset($standards) && $item->iwanttosale == 'sale')
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
-                                    @for($i = 0 ; $i < count($standards) ; $i++)
-                                        <label class="checkbox-inline">
-                                            <input name="users_standard[]" type="checkbox" disabled
-                                                   value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
-                                            {{$standards[$i]->name}}
-                                        </label>
-                                    @endfor
+                        @if($item->iwanttosale == 'sale')
+                            @if(isset($standards))
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
+                                        @for($i = 0 ; $i < count($standards) ; $i++)
+                                            <label class="checkbox-inline">
+                                                <input name="users_standard[]" type="checkbox" disabled
+                                                       value="{{ $standards[$i]->id}}" {{ $standards[$i]->checked ? "checked" : ""}}>
+                                                {{$standards[$i]->name}}
+                                            </label>
+                                        @endfor
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+                            @if(isset($markets))
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <strong>{{ trans('validation.attributes.market') }} :</strong>
+                                        @for($i = 0 ; $i < count($markets) ; $i++)
+                                            <label class="checkbox-inline">
+                                                <input name="users_standard[]" type="checkbox" disabled
+                                                       value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}>
+                                                {{$markets[$i]->market_title_th}}
+                                            </label>
+                                        @endfor
+                                    </div>
+                                </div>
+                            @endif
                         @endif
 
 
@@ -208,7 +224,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('email') ? 'has-error' : '' }}">
                                 <strong>* {{ trans('validation.attributes.email') }} :</strong>
                                 <input id="email" type="email" class="form-control" name="email"
-                                       value="{{ $item->email }}">
+                                       value="{{ $item->email }}" @if(!empty($item->email)) disabled @endif>
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
@@ -229,7 +245,6 @@
                                 :</strong>
                             {!! Form::text('users_street', $item->users_street, array('placeholder' => trans('validation.attributes.users_street'),'class' => 'form-control')) !!}
                         </div>--}}
-
 
                         <div class="row">
                             <div class="form-group col-md-6 {{ $errors->has('users_province') ? 'has-error' : '' }}">
@@ -252,6 +267,17 @@
                                     :</strong>
                                 <select id="users_city" name="users_city" class="form-control">
                                 </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_district') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_district') }}
+                                    :</strong>
+                                <select id="users_district" name="users_district" class="form-control">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('users_postcode') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_postcode') }}
+                                    :</strong>
+                                {!! Form::text('users_postcode', $item->users_postcode, array('placeholder' => trans('validation.attributes.users_postcode'),'class' => 'form-control')) !!}
                             </div>
 
                         </div>

@@ -1,4 +1,5 @@
 <?php
+    $user = auth()->guard('user')->user();
 ?>
 @extends('layouts.main')
 @section('content')
@@ -22,17 +23,17 @@
                 $col_md_4_item['product1_file'] = '/images/default.jpg';
             }
             ?>
-            <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
+            <div class="col-md-3">
                 <div class="col-item">
                     <div class="photo crop-height">
                         <img src="{{ url($col_md_4_item['product1_file']) }}" class="scale" alt="a">
                     </div>
                     <div class="info">
                         <div class="row">
-                            <div class="price col-md-9">
-                                @if($col_md_4_item['product_stock'] < 1)
-                                    <strong class="alert-danger">สินค้าหมด</strong>
-                                @endif
+                            <div class="price col-md-12">
+                                {{--@if($col_md_4_item['product_stock'] < 1)--}}
+                                    {{--<strong class="label label-danger {{$col_md_4_item['product_stock'] > 0 ? 'invisible' : ''}}">สินค้าหมด</strong>--}}
+                                {{--@endif--}}
                                 <h4 title="{{ $product_name }}"
                                     style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
 
@@ -45,53 +46,59 @@
                                 }
                                 ?>
 
-                                <p class="score-star">
-                                    @if($avg_score == 1)
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    @elseif($avg_score == 2)
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    @elseif($avg_score == 3)
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    @elseif($avg_score == 4)
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    @elseif($avg_score == 5)
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                    @elseif($avg_score == 0)
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    @endif
+                                <div class="row">
+                                    <div class="score-star col-md-8">
+                                        @if($avg_score == 1)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        @elseif($avg_score == 2)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        @elseif($avg_score == 3)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        @elseif($avg_score == 4)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        @elseif($avg_score == 5)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        @elseif($avg_score == 0)
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        @endif
 
-                                </p>
-                                    <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                <span class="glyphicon glyphicon-tag"></span>
-                                <i title="{{ $product_name }}">
-                                    {{$col_md_4_item['product_title']}}
-                                </i><br/>
                                     </div>
-                                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <div class="col-md-4">
+                                    <strong class="label label-danger {{$col_md_4_item['product_stock'] > 0 ? 'invisible' : ''}}">สินค้าหมด</strong>
+                                    </div>
+                                </div>
+
+                                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; padding-top: 5px; padding-bottom: 5px;">
+                                    <span class="glyphicon glyphicon-tag"></span>
+                                    <i title="{{ $product_name }}">
+                                        {{$col_md_4_item['product_title']}}
+                                    </i><br/>
+                                </div>
+                                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; padding-bottom: 5px;">
                                     <span class="glyphicon glyphicon-map-marker"></span>
                                     {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
                                     <?php
@@ -99,33 +106,31 @@
                                     echo $city_province;
                                     ?>
                                 </div>
-                                <br>
                             </div>
-                            @if($col_md_4_item['productstatus'] == 'open')
-                                <div class="rating hidden-sm col-md-3">
-                                    @if(($col_md_4_item['selling_type'] == 'retail' or $col_md_4_item['selling_type'] == 'all') && $col_md_4_item['product_stock'] > 0)
-                                        <a href="#"
-                                           onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}' , '{{$col_md_4_item['min_order']}}')"
-                                           class="btn btn-primary">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <p>
+                            <div class="col-md-12" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; padding-bottom: 5px;">
                                     <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? trans('messages.unit_price'). " ".floatval($col_md_4_item['price']). trans('messages.baht')." / ". $col_md_4_item['units'] : trans('messages.product_no_price') }}</span>
-                                </p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-9">
 
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
+                                <a href="{{ url('productview/'.$col_md_4_item['id']) }}"
                                    class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
                             </div>
+
+                            @if($col_md_4_item['productstatus'] == 'open' && ($user==null || ($user!=null && $user->id != $col_md_4_item['product_user_id'])) && ($user==null || ($user!=null && $user->iwanttobuy == 'buy')))
+                                @if(($col_md_4_item['selling_type'] == 'retail' or $col_md_4_item['selling_type'] == 'all') && $col_md_4_item['product_stock'] > 0)
+                                    <div class="col-md-3">
+                                        <a href="#"
+                                           onclick="addToCart('{{$col_md_4_item['id']}}' , '{{$col_md_4_item['users_id']}}' , '{{$col_md_4_item['price']}}' , '{{$col_md_4_item['min_order']}}')"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     </div>
 
@@ -170,7 +175,7 @@
                                 : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
                                 <br/>
                                 <span class="hidden-sm">
-                                    {{trans('messages.orderbyprice')}}
+                                    {{trans('messages.price')}}
                                     : {{ floatval($col_md_4_item['pricerange_start']) }}
                                     - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
                                 </span>
@@ -187,7 +192,7 @@
 
                         </div>
                         <div class="clear-left">
-                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                            <a href="{{ url('productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                             </a>
                         </div>

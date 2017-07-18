@@ -22,10 +22,10 @@ $pagetitle = trans('message.menu_order_list');
             </div>
         @endif
         <div class="row">
-            <h2>รายงานยอดจำหน่ายสินค้า</h2>
+            <h2>{{trans('messages.report_title_sale')}}</h2>
         </div>
         <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -193,17 +193,17 @@ demo.css
                 type: 'bar'
             },
             title: {
-                text: 'ยอดจำหน่ายสินค้ารวมทั้งหมด'
+                text: '{{trans('messages.all_sale_total')}}'
             },
             subtitle: {
-                text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">ยอดรวม : {{ number_format($sumAll)}} บาท </span>'
+                text: '<span style="color:#353535; font-weight:bold; font-size:14px; ">{{trans('messages.total_order')}} : {{ number_format($sumAll)}} {{trans('messages.baht')}} </span>'
             },
             xAxis: {
                 type: 'category'
             },
             yAxis: {
                 title: {
-                    text: 'ยอดจำหน่ายสินค้า'
+                    text: '{{trans('messages.sale_total')}}'
                 }
 
             },
@@ -218,7 +218,7 @@ demo.css
                         rotation: 30,
                         color: '#FFFFFF',
                         align: 'center',
-                        format: '{point.y:.1f} บาท',
+                        format: '{point.y:.1f} {{trans('messages.baht')}}',
                         y: 0,
                         style: {
                             fontSize: '10px',
@@ -230,7 +230,7 @@ demo.css
 
             tooltip: {
                 headerFormat: '<span style="font-size:11px"><b></b></span>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span> : <b>{point.y:.2f} บาท</b><br/>'
+                pointFormat: '<span style="color:{point.color}">{point.name}</span> : <b>{point.y:.2f} {{trans('messages.baht')}}</b><br/>'
             },
 
             series: [{

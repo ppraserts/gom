@@ -8,7 +8,9 @@ function renderHTML($text)
 ?>
 @extends('layouts.main')
 @section('content')
-    @include('shared.usermenu', array('setActive'=>''))
+    @if($user!=null)
+        @include('shared.usermenu', array('setActive'=>''))
+    @endif
     <br/>
     <div class="row">
         <div class="col-lg-12">
@@ -17,9 +19,7 @@ function renderHTML($text)
                 <a href="#" class="btn btn-default" onclick="history.back();">
                     {{trans('messages.backtoresult')}}
                 </a>
-                @if($user->id == $productRequest->users_id)
-
-                @else
+                @if($user!=null && $user->id != $productRequest->users_id)
                     @if($productRequest->users_imageprofile != "")
                         <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}"
                              class="img-circle">
@@ -58,7 +58,9 @@ function renderHTML($text)
                 <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
                 <link rel="stylesheet" href="{{url('css/star.css')}}">
                 <link rel="stylesheet" href="{{url('css/comment.css')}}">
-                @include('frontend.product_element.comment')
+                @if($user!=null)
+                    @include('frontend.product_element.comment')
+                @endif
             </div>
         </div>
     @endif
@@ -100,11 +102,11 @@ function renderHTML($text)
                 if (response.status == 'success') {
                     showProductAdded(response.product_request);
                 } else {
-                    window.location = 'user/login';
+                    window.location = BASE_URL+'/user/login';
                 }
             },
             error: function (request, status, error) {
-                window.location = 'user/login';
+                window.location = BASE_URL+'/user/login';
                 console.log(request.responseText);
                 //alert(request.responseText);
             }

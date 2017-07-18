@@ -121,11 +121,14 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_idcard }}</strong>
                 </div>
+                    @if($item->iwanttosale == 'sale')
                 <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_qrcode') }}
                     :
                     <strong>{{ $item->users_qrcode }}</strong>
                 </div>
+                    @endif
+                    @if($item->iwanttosale == 'sale')
                 <div class="form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.guarantee') }}
                     :
@@ -137,18 +140,19 @@ $controllerAction = "users.update";
                         @endif
                     </strong>
                 </div>
+                    @endif
                 <div class="form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_firstname_th') }} -
                     {{ trans('validation.attributes.users_lastname_th') }}
                     :
                     <strong>{{ $item->users_firstname_th }}  {{ $item->users_lastname_th }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_firstname_en') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_firstname_en') }} -
-                    {{ trans('validation.attributes.users_lastname_en') }}
-                    :
-                    <strong>{{ $item->users_firstname_en }}  {{ $item->users_lastname_en }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_firstname_en') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_firstname_en') }} ---}}
+                    {{--{{ trans('validation.attributes.users_lastname_en') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_firstname_en }}  {{ $item->users_lastname_en }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.email') }}
                     :
@@ -169,11 +173,11 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_addressname }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_street') }}
-                    :
-                    <strong>{{ $item->users_street }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_street') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_street }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_district') }}
                     :
@@ -201,11 +205,11 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_mobilephone }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_phone') }}
-                    :
-                    <strong>{{ $item->users_phone }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_phone') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_phone }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
                     <div id="map" style="width: 100%; height: 300px;"></div>
                 </div>

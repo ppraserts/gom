@@ -46,7 +46,7 @@ $url = "user/iwanttobuy";
                 displayKey: 'value',
                 source: products.ttAdapter(),
                 templates: {
-                    header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+                    header: '<div style="text-align: center;">{{trans('messages.product_name')}}</div><hr style="margin:3px; padding:0;" />'
                 }
             });
 
@@ -90,7 +90,7 @@ $url = "user/iwanttobuy";
                     displayKey: 'value',
                     source: products.ttAdapter(),
                     templates: {
-                        header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+                        header: '<div style="text-align: center;">{{trans('messages.product_name')}}</div><hr style="margin:3px; padding:0;" />'
                     }
                 });
             });

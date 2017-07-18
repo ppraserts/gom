@@ -24,7 +24,7 @@ $pagetitle = trans('message.menu_order_list');
             <h2>รายงานยอดจำหน่ายร้านค้า</h2>
         </div>
         <form action="{{url('admin/reports/salebyshop')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
