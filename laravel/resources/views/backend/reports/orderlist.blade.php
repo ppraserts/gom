@@ -25,8 +25,7 @@ $pagetitle = trans('messages.menu_order_list');
 
         </div>
         <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-
-            {{csrf_field()}}
+            {{--{{csrf_field()}}--}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -138,7 +137,7 @@ $pagetitle = trans('messages.menu_order_list');
             <div class="table-responsive">
 
                 @if(count($orderLists) > 0 && count($errors) < 1)
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
@@ -170,7 +169,7 @@ $pagetitle = trans('messages.menu_order_list');
                                 <td>{{ $item->product_name_th }}</td>
                                 <td>{{ $item->quantity.' '.$item->units }}</td>
                                 {{--<td style="text-align:center;">{{ $item->total_amount}}</td>--}}
-                                <td style="text-align:center;">{{ $item->total}}</td>
+                                <td style="text-align:center;">{{ number_format($item->total)}}</td>
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-primary"
@@ -224,7 +223,7 @@ $pagetitle = trans('messages.menu_order_list');
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");

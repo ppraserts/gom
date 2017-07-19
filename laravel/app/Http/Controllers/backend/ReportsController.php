@@ -178,7 +178,7 @@ class ReportsController extends BaseReports
                     $v->users_firstname_th . " " . $v->users_lastname_th,
                     $v->product_name_th,
                     $v->quantity.' '.$v->units,
-                    number_format($v->total->total_amounts,2),
+                    $v->total,
                     $v->status_name
                 );
             }
@@ -194,6 +194,9 @@ class ReportsController extends BaseReports
                         'A1' => array(
                             'height' => 50
                         )
+                    ));
+                    $sheet->setColumnFormat(array(
+                        'G' => '#,##0'
                     ));
                     $sheet->setAutoSize(array('A'));
                     $sheet->cells('A1', function ($cells) {
@@ -284,7 +287,7 @@ class ReportsController extends BaseReports
                 $arr[] = array(
                     $v->products_id,
                     $v->product_name_th,
-                    number_format($v->total_amounts,2)
+                    $v->total_amounts
                 );
             }
             $data = $arr;
@@ -299,6 +302,9 @@ class ReportsController extends BaseReports
                         'A1' => array(
                             'height' => 50
                         )
+                    ));
+                    $sheet->setColumnFormat(array(
+                        'C' => '#,##0'
                     ));
                     $sheet->setAutoSize(array('A'));
                     $sheet->cells('A1', function ($cells) {

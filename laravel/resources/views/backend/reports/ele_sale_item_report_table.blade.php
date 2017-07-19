@@ -14,7 +14,7 @@
                     <tr>
                         <td>{{ $item->products_id }}</td>
                         <td>{{ $item->product_name_th }}</td>
-                        <td>{{ number_format($item->total_amounts,2) }}</td>
+                        <td>{{ number_format($item->total_amounts) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
