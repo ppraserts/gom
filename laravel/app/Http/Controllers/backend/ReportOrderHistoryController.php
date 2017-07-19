@@ -145,7 +145,12 @@ class ReportOrderHistoryController extends Controller
     private function sqlFilter($type_sale_buy = '',$userId=''){
 
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
-        $result->join('users', 'users.id', '=', 'orders.user_id');
+        if ($type_sale_buy == 'sale') { //user_id sale
+            $result->join('users', 'users.id', '=', 'orders.user_id');
+        }
+        if ($type_sale_buy == 'buy') { //user_id buy
+            $result->join('users', 'users.id', '=', 'orders.buyer_id');
+        }
         $result->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $result->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $result->join('products', 'products.id', '=', 'product_requests.products_id');
@@ -173,7 +178,12 @@ class ReportOrderHistoryController extends Controller
     private function sqlFilterShowPaginate($type_sale_buy = '',$userId=''){
 
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
-        $result->join('users', 'users.id', '=', 'orders.user_id');
+        if ($type_sale_buy == 'sale') { //user_id sale
+            $result->join('users', 'users.id', '=', 'orders.user_id');
+        }
+        if ($type_sale_buy == 'buy') { //user_id buy
+            $result->join('users', 'users.id', '=', 'orders.buyer_id');
+        }
         $result->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $result->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $result->join('products', 'products.id', '=', 'product_requests.products_id');
