@@ -101,16 +101,18 @@ class ReportOrderHistoryController extends Controller
             $data = $arr;
             $info = Excel::create('order-history-sale-buy-excell', function($excel) use($data,$i_sale_buy,$fname_lname) {
                 $excel->sheet('Sheetname', function($sheet) use($data,$i_sale_buy,$fname_lname) {
-                    $sheet->mergeCells('A1:F1');
-                    $sheet->mergeCells('A2:C3');
-                    $sheet->mergeCells('D2:F3');
+                    $sheet->mergeCells('A1:H1');
+                    $sheet->mergeCells('A2:D3');
+                    $sheet->mergeCells('E2:H3');
                     $sheet->setSize(array(
                         'A1' => array(
                             'height'    => 50
                         )
                     ));
                     $sheet->setAutoSize(array('A'));
-
+                    $sheet->setColumnFormat(array(
+                        'G' => '#,##0'
+                    ));
                     $sheet->cells('A1', function($cells) {
                         $cells->setValue(trans('messages.text_report_menu_order_history_sale_buy'));
                         $cells->setValignment('center');
@@ -121,14 +123,14 @@ class ReportOrderHistoryController extends Controller
                         ));
                     });
                     $sheet->cells('A2', function($cells) use($fname_lname) {
-                        $cells->setValue($fname_lname);
+                        $cells->setValue(trans('messages.member').' : '.$fname_lname);
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));
                         $cells->setValignment('center');
                     });
-                    $sheet->cells('D2', function($cells) use($i_sale_buy) {
-                        $cells->setValue($i_sale_buy);
+                    $sheet->cells('E2', function($cells) use($i_sale_buy) {
+                        $cells->setValue(trans('messages.type_sale_buy').' : '.$i_sale_buy);
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));

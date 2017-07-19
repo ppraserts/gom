@@ -18,8 +18,9 @@
         <div class="row text-center">
             <h2>{{ trans('messages.text_report_menu_order_status_history') }}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/orders')}}" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
+
             <input type="hidden" name="is_search" value="true"/>
             <div class="row">
                 <div class="form-group form-group-sm col-md-4" style="padding-left: 0px;">
@@ -75,7 +76,7 @@
         <div class="row" style="margin-top: 10px">
             @if(count($results) > 0 && count($errors) < 1)
             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
+                <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                     <thead>
                     <tr>
                         <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
@@ -102,7 +103,7 @@
                                     {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
                                 </th>
                                 <td style="text-align:center;">{{ \App\Helpers\DateFuncs::dateToThaiDate($result->order_date) }}</td>
-                                <td style="text-align:center;">{{ $result->total_amount }}</td>
+                                <td style="text-align:center;">{{ number_format($result->total_amount) }}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-info"
@@ -157,7 +158,7 @@
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");

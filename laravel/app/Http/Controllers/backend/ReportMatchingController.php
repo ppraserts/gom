@@ -24,7 +24,7 @@ class ReportMatchingController extends BaseReports
 
     private $rules = [
         'start_date' => 'required',
-        'end_date' => 'required|after:start_date'
+        'end_date' => 'required'
     ];
 
     public function index(Request $request)

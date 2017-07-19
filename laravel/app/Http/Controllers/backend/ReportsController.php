@@ -489,6 +489,7 @@ class ReportsController extends BaseReports
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
+        $shop->where('orders.order_status', '=', 4);
         $shop->groupBy('shops.id');
         $shop->orderBy('shop_name', 'ASC');
         $shops = $shop->get();;

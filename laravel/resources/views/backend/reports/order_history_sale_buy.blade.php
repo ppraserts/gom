@@ -18,8 +18,9 @@
         <div class="row text-center">
             <h2>{{ trans('messages.text_report_menu_order_history_sale_buy') }}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/order-history-sale-buy')}}"  id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
+
             <input type="hidden" name="is_search" value="true">
             <div class="row">
                 <div class="form-group col-sm-6">
@@ -78,7 +79,7 @@
         <div class="row" style="margin-top: 10px">
             @if(!empty($results) && count($results) > 0 && count($errors) < 1)
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
@@ -119,7 +120,7 @@
                                 <td>{{ $result->product_name_th }}</td>
                                 <td>{{ $result->quantity.' '.$result->units }}</td>
                                 {{--<td style="text-align:center;">{{ $result->total_amount}}</td>--}}
-                                <td style="text-align:center;">{{ $result->total}}</td>
+                                <td style="text-align:center;">{{ number_format($result->total)}}</td>
                                 <td style="text-align:center;">{{ $result->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-info"

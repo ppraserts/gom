@@ -23,7 +23,7 @@ class ReportOrderStatusHistoryController extends BaseReports
 
     private $rules = [
         'start_date' => 'required',
-        'end_date' => 'required|after:start_date'
+        'end_date' => 'required'
     ];
 
     public function orderList(Request $request)
@@ -39,6 +39,8 @@ class ReportOrderStatusHistoryController extends BaseReports
                 $request['end_date'] = DateFuncs::thai_date($request['end_date']);
                 $this->throwValidationException($request, $validator);
             }
+            $defult_ymd_last_month = $request['start_date'];
+            $defult_ymd_today = $request['end_date'];
 
             $filter = $request->input('filter');
             $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
@@ -57,7 +59,7 @@ class ReportOrderStatusHistoryController extends BaseReports
             $results = $result->paginate(config('app.paginate'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
-            return view('backend.reports.order_status_history', compact('results'));
+            return view('backend.reports.order_status_history', compact('results','defult_ymd_last_month','defult_ymd_today'));
         } else {
             $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
@@ -137,6 +139,9 @@ class ReportOrderStatusHistoryController extends BaseReports
                         )
                     ));
                     $sheet->setAutoSize(array('A'));
+                    $sheet->setColumnFormat(array(
+                        'F' => '#,##0'
+                    ));
 
                     $sheet->cells('A1', function ($cells) {
                         $cells->setValue(trans('messages.text_report_menu_order_status_history'));

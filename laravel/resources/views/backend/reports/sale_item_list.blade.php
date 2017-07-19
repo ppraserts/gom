@@ -21,8 +21,8 @@
         <div class="row text-center">
             <h2>{{ trans('messages.report_title_sale') }}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -255,7 +255,7 @@ demo.css
                 colorByPoint: true,
                 data: [<?php $n = 1; foreach ($orderSaleItem as $val){ ?>{
                     name: '<?php echo $val->product_name_th?>',
-                    y: <?php echo number_format($val->total_amounts)?>,
+                    y: <?php echo $val->total_amounts?>,
                     drilldown: '<?php echo $val->product_name_th?>'
                 }<?php if(count($orderSaleItem) == $n){
                 }else{?>,<?php }}?>]

@@ -55,7 +55,7 @@
         <div class="row" style="margin-top: 10px">
             @if(count($results) > 0 && count($errors) < 1)
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
                             <th width="120px" style="text-align:center;">{{ trans('messages.text_shop_id') }}</th>

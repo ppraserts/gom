@@ -20,8 +20,9 @@
         <div class="row">
             <h4>{{ trans('messages.matching_report') }}</h4>
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/matching')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
+
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -126,7 +127,7 @@
         <div class="row" style="margin-top: 10px">
             @if(count($matchings) > 0 && count($errors) < 1)
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
                             <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
@@ -155,6 +156,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                </div>
                     <div class="row">
                         <div class="col-md-6">{!! $matchings->appends(Request::all()) !!}</div>
                         <div class="col-md-6">
@@ -172,9 +174,7 @@
                     <strong>{{trans('messages.data_not_found')}}</strong>
                 </div>
             @endif
-
-
-        </div>
+        <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
 
@@ -195,7 +195,7 @@
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");

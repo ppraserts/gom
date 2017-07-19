@@ -24,8 +24,9 @@ $pagetitle = trans('messages.menu_order_list');
             <h2>{{ trans('messages.menu_order_list') }}</h2>
 
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/buy')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{--{{csrf_field()}}--}}
+
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
