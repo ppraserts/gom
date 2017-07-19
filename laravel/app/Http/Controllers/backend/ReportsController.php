@@ -372,7 +372,8 @@ class ReportsController extends BaseReports
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+//        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
         ,products.product_name_th
         ,products.product_name_en
         ,markets.market_title_th
@@ -582,7 +583,7 @@ class ReportsController extends BaseReports
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
         ,products.product_name_th
         ,products.product_name_en
         ,markets.market_title_th
