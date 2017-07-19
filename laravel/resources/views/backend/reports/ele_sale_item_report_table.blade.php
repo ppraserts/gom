@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 10px">
     @if(count($orderSaleItem) > 0 && count($errors) <1)
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                 <thead>
                 <tr>
                     <th width="120px" style="text-align:center;">{{trans('messages.id_product_type')}}</th>
@@ -14,7 +14,7 @@
                     <tr>
                         <td>{{ $item->products_id }}</td>
                         <td>{{ $item->product_name_th }}</td>
-                        <td>{{ $item->total_amounts }}</td>
+                        <td>{{ number_format($item->total_amounts,2) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

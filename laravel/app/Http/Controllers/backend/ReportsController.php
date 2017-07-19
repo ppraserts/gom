@@ -32,7 +32,8 @@ class ReportsController extends BaseReports
 
     private $rules = [
         'start_date' => 'required',
-        'end_date' => 'required|after:start_date'
+        'end_date' => 'required'
+        //'end_date' => 'required|after:start_date'
     ];
 
     public function index(Request $request)
@@ -177,7 +178,7 @@ class ReportsController extends BaseReports
                     $v->users_firstname_th . " " . $v->users_lastname_th,
                     $v->product_name_th,
                     $v->quantity.' '.$v->units,
-                    $v->total,
+                    number_format($v->total->total_amounts,2),
                     $v->status_name
                 );
             }
@@ -283,7 +284,7 @@ class ReportsController extends BaseReports
                 $arr[] = array(
                     $v->products_id,
                     $v->product_name_th,
-                    $v->total_amounts
+                    number_format($v->total_amounts,2)
                 );
             }
             $data = $arr;
@@ -609,6 +610,7 @@ class ReportsController extends BaseReports
         if (count($product_id_arr) > 0) {
             $orderList->whereIn('products.id', $product_id_arr);
         }
+        $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
         $orderList->orderBy('products.product_name_th', 'ASC');
         return $orderLists = $orderList->get();
