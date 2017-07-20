@@ -107,9 +107,9 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0; margin-top: 15px;">
-                    <strong>รูปแบบรายงาน</strong>
-                    <input type="radio" name="format_report" value="1" checked> กราฟ
-                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> ตาราง
+                    <strong>{{trans('messages.type_report')}}</strong>
+                    <input type="radio" name="format_report" value="1" checked> {{trans('messages.type_report_chart')}}
+                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> {{trans('messages.type_report_table')}}
 
                 </div>
             </div>

@@ -115,6 +115,7 @@ return [
     'menu_adminteam' => 'ผู้ดูแลระบบ',
     'shop_setting' => 'ตั้งค่าร้านค้า',
     'shop' => 'ร้านค้า',
+    'shop_id' => 'รหัสร้านค้า',
     'shop_image' => 'เปลี่ยนรูปภาพส่วนบนร้านค้า (Header)',
     'title' => 'หัวเรื่อง',
     'sub_title' => 'หัวเรื่องย่อย',
@@ -314,4 +315,8 @@ return [
     'save_add' => 'บันทึกเพิ่มเติม',
     'file' => 'ไฟล์',
     'price' => 'ราคา',
+    'type_report' => 'รูปแบบรายงาน',
+    'type_report_chart' => 'กราฟ',
+    'type_report_table' => 'ตาราง',
+    'report_sale_shop' => 'รายงานยอดจำหน่ายร้านค้า'
 ];
