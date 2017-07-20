@@ -91,7 +91,7 @@ class ProductRequest extends Model
                                           ,u.requset_email_system
                                           FROM
                                           (
-                                                    SELECT a.*, p.product_name_th, q.id as quotation_id, q.is_reply
+                                                    SELECT a.*,b.volumnrange_start as quantity, p.product_name_th, q.id as quotation_id, q.is_reply
                                                       FROM `product_requests` a
                                                       join `product_requests` b on b.users_id=$userid
                                                           and b.iwantto = 'buy'
