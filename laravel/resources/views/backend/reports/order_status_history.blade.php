@@ -52,16 +52,77 @@
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group form-group-sm col-md-4" style="padding-left: 0px; padding-right: 0;">
-                    <strong text-left" style="padding-right: 0;padding-left: 0;">
+                    <strong style="padding-right: 0;padding-left: 0;">
                     {{ trans('messages.order_id').'/'.trans('messages.order_status') }} :
-                    </label>
+                    </strong>
                     <div style="padding-right: 0px;">
                         <input type="text" id="filter" name="filter" class="form-control" value=""
                                placeholder="{{ trans('messages.order_id').'/'.trans('messages.order_status') }}">
                     </div>
-
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                     style="padding-left: 0;">
+                    <strong>
+                        {{trans('messages.userstatus')}} :
+                    </strong>
+                    <select name="order_status" id="order_status" class="form-control">
+                        <option value="">{{trans('messages.show_all_order_status')}}</option>
+                        <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
+                            สั่งซื้อ</option>
+                        <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
+                            ยืนยันการสั่งซื้อ
+                        </option>
+                        <option value="3" @if(!empty($order_status_id) && $order_status_id == 3) selected @endif>
+                            แจ้งชำระเงิน
+                        </option>
+                        <option value="4" @if(!empty($order_status_id) && $order_status_id == 4) selected @endif>
+                            จัดส่งแล้ว
+                        </option>
+                        <option value="5" @if(!empty($order_status_id) && $order_status_id == 5) selected @endif>
+                            ยกเลิกรายการสั่งซื้อ
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 0px;">
+                    <strong style="padding-right: 0; padding-left: 0;">
+                        {{ trans('messages.i_sale') }} :
+                    </strong>
+                    <select class="selectpicker form-control" name="i_sale" id="i_sale"
+                            data-live-search="true">
+                        <option value="">
+                            {{ trans('messages.please_select_i_sale') }}
+                        </option>
+                        @if(count($iwanttosale) > 0)
+                            @foreach($iwanttosale as $user_sale)
+                                <option value="{{$user_sale->id}}"
+                                @if(!empty($i_sale) and $user_sale->id == $i_sale) selected @endif>
+                                {{$user_sale->users_firstname_th.' '.$user_sale->users_lastname_th}}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0;">
+                    <strong style="padding-right: 0; padding-left: 0;">
+                        {{ trans('messages.i_buy') }} :
+                    </strong>
+                    <select class="selectpicker form-control" name="i_buy" id="i_buy"
+                            data-live-search="true">
+                        <option value="">
+                            {{ trans('messages.please_select_i_buy') }}
+                        </option>
+                        @if(count($iwanttobuy) > 0)
+                            @foreach($iwanttobuy as $user_buy)
+                                <option value="{{$user_buy->id}}"
+                                        @if(!empty($i_buy) and $user_buy->id == $i_buy) selected @endif>
+                                    {{$user_buy->users_firstname_th.' '.$user_buy->users_lastname_th}}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
@@ -195,8 +256,10 @@
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         var filter = $("#filter").val();
+        var order_status = $('#order_status option:selected').val()
+        var i_sale = $('#i_sale option:selected').val()
+        var i_buy = $('#i_buy option:selected').val()
         var key_token = $('input[name=_token]').val();
-
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
             progressType: 'success'
         });
@@ -204,10 +267,15 @@
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
-                $page = '?page=' . Request::input('page');
-            } echo url('admin/reports/orders/export' . $page)?>",
-            data: {start_date: start_date, end_date: end_date, filter: filter},
+            url: "<?php echo url('admin/reports/orders/export')?>",
+            data: {
+                start_date: start_date,
+                end_date: end_date,
+                filter: filter,
+                order_status:order_status,
+                i_sale:i_sale,
+                i_buy:i_buy
+            },
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');
