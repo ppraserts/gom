@@ -314,5 +314,13 @@ return [
     'save_add' => 'บันทึกเพิ่มเติม',
     'file' => 'ไฟล์',
     'price' => 'ราคา',
+    'type_report' => 'รูปแบบรายงาน',
+    'type_report_chart' => 'กราฟ',
+    'type_report_table' => 'ตาราง',
+    'report_sale_shop' => 'รายงานยอดจำหน่ายร้านค้า',
+    'please_select_i_buy' => 'กรุณาเลือผู้ซื้อ',
+    'please_select_i_sale' => 'กรุณาเลือกผู้ขาย',
+    'show_all_order_status' => 'แสดงทุกสถานะ'
     'close' => 'ปิด',
+    'shop_id' => 'รหัสร้านค้า',
 ];

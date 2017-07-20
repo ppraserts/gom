@@ -2,7 +2,6 @@
 //$pagetitle = trans('messages.menu_order_list');
 ?>
 @extends('layouts.dashboard')
-@section('page_heading','{{trans('messages.report_title_sale')}}')
 @section('section')
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">
@@ -22,8 +21,8 @@
         <div class="row text-center">
             <h2>{{ trans('messages.report_title_sale') }}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('admin/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -108,9 +107,9 @@
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0; margin-top: 15px;">
-                    <strong>รูปแบบรายงาน</strong>
-                    <input type="radio" name="format_report" value="1" checked> กราฟ
-                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> ตาราง
+                    <strong>{{trans('messages.type_report')}}</strong>
+                    <input type="radio" name="format_report" value="1" checked> {{trans('messages.type_report_chart')}}
+                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> {{trans('messages.type_report_table')}}
 
                 </div>
             </div>
@@ -148,7 +147,7 @@
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");

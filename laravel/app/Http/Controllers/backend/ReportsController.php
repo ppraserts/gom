@@ -7,6 +7,7 @@ use App\OrderStatusHistory;
 use App\ProductCategory;
 use App\User;
 use App\Market;
+use App\Province;
 use App\Http\Controllers\Controller;
 
 use DB, Validator, Response;
@@ -32,7 +33,8 @@ class ReportsController extends BaseReports
 
     private $rules = [
         'start_date' => 'required',
-        'end_date' => 'required|after:start_date'
+        'end_date' => 'required'
+        //'end_date' => 'required|after:start_date'
     ];
 
     public function index(Request $request)
@@ -194,6 +196,9 @@ class ReportsController extends BaseReports
                             'height' => 50
                         )
                     ));
+                    $sheet->setColumnFormat(array(
+                        'G' => '#,##0'
+                    ));
                     $sheet->setAutoSize(array('A'));
                     $sheet->cells('A1', function ($cells) {
                         $cells->setValue(trans('messages.menu_order_list'));
@@ -299,6 +304,9 @@ class ReportsController extends BaseReports
                             'height' => 50
                         )
                     ));
+                    $sheet->setColumnFormat(array(
+                        'C' => '#,##0'
+                    ));
                     $sheet->setAutoSize(array('A'));
                     $sheet->cells('A1', function ($cells) {
                         $cells->setValue(trans('messages.report_title_sale'));
@@ -372,7 +380,8 @@ class ReportsController extends BaseReports
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+//        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
         ,products.product_name_th
         ,products.product_name_en
         ,markets.market_title_th
@@ -448,11 +457,11 @@ class ReportsController extends BaseReports
 
     public function SaleItemByShop(Request $request)
     {
+        $users_province ='';
         if (!empty($request->input('is_search'))) {
-
+            $users_province = $request['users_province'];
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);
             $request['end_date'] = DateFuncs::convertYear($request['end_date']);
-
             $validator = $this->getValidationFactory()->make($request->all(), $this->rules, [], []);
             if ($validator->fails()) {
                 $request['start_date'] = DateFuncs::thai_date($request['start_date']);
@@ -460,13 +469,17 @@ class ReportsController extends BaseReports
                 $this->throwValidationException($request, $validator);
             }
         }
+
         $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
         $shop_select_arr = $request->input('shop_select_id');
         $shop = User::join('orders', 'orders.user_id', '=', 'users.id');
         $shop->join('shops', 'shops.user_id', '=', 'users.id');
-        $shop->select(DB::raw('SUM(orders.total_amount) as total,shops.shop_name,shops.id'));;
+        $shop->select(DB::raw('SUM(orders.total_amount) as total,shops.shop_name,shops.id,users.users_province'));;
         if (!empty($shop_select_arr)) {
             $shop->whereIn('shops.id', $shop_select_arr);
+        }
+        if (!empty($users_province)) {
+            $shop->where('users.users_province', $users_province);
         }
         $defult_ymd_last_month='';
         $defult_ymd_today='';
@@ -481,15 +494,20 @@ class ReportsController extends BaseReports
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
+        $shop->where('orders.order_status', '=', 4);
         $shop->groupBy('shops.id');
         $shop->orderBy('shop_name', 'ASC');
-        $shops = $shop->get();;
-
         $sumAll = 0;
-        foreach ($shops as $value) {
-            $sumAll = $sumAll + $value->total;
+        if (!empty($request->input('format_report')) and $request->input('format_report') == 2) {
+            $shops = $shop->paginate(config('app.paginate'));
+        }else{
+            $shops = $shop->get();
+            $sumAll = 0;
+            foreach ($shops as $value) {
+                $sumAll = $sumAll + $value->total;
+            }
         }
-
+        $provinces = Province::all();
         $allShops = User::join('orders', 'orders.user_id', '=', 'users.id')
             ->join('shops', 'shops.user_id', '=', 'users.id')
             ->select('shops.*')
@@ -497,7 +515,137 @@ class ReportsController extends BaseReports
             ->get();
 //            return $shopsList;
         return view('backend.reports.sale_item_by_shop',
-            compact('shops', 'allShops', 'start_date', 'end_date', 'sumAll','defult_ymd_last_month','defult_ymd_today'));
+            compact('shops', 'allShops', 'start_date', 'end_date', 'sumAll','defult_ymd_last_month','defult_ymd_today','provinces','users_province'));
+
+    }
+
+    public function SaleItemByShopExportExcel(Request $request){
+
+        $users_province = $request['users_province'];
+        $request['start_date'] = DateFuncs::convertYear($request['start_date']);
+        $request['end_date'] = DateFuncs::convertYear($request['end_date']);
+        $shop_select_arr = $request->input('shop_select_id');
+        //start-query-------------------------
+        $shop = User::join('orders', 'orders.user_id', '=', 'users.id');
+        $shop->join('shops', 'shops.user_id', '=', 'users.id');
+        $shop->select(DB::raw('SUM(orders.total_amount) as total,shops.shop_name,shops.id,users.users_province'));;
+        if (!empty($shop_select_arr)) {
+            $shop->whereIn('shops.id', $shop_select_arr);
+        }
+        if (!empty($users_province)) {
+            $shop->where('users.users_province', $users_province);
+        }
+        if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
+            $shop->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $shop->whereDate('orders.order_date', '<=', $request->input('end_date'));
+        }
+        $shop->where('orders.order_status', '=', 4);
+        $shop->groupBy('shops.id');
+        $shop->orderBy('shop_name', 'ASC');
+        $shops = $shop->get();
+        //end-query-----------------------------
+        $string_start_date = trans('messages.text_start_date').' : -';
+        $string_end_date =  trans('messages.text_end_date').' : -';
+        if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
+            $string_start_date = trans('messages.text_start_date').' : '.DateFuncs::dateToThaiDate($request->input('start_date'));
+            $string_end_date = trans('messages.text_end_date').' : '.DateFuncs::dateToThaiDate($request->input('end_date'));
+        }
+        if($request->input('format_report') == 1 or empty($request->input('format_report'))){
+            $type_report = trans('messages.type_report').' : '.trans('messages.type_report_chart');
+        }else{
+            $type_report = trans('messages.type_report').' : '.trans('messages.type_report_table');
+        }
+        $province = trans('messages.province').' : '.trans('messages.allprovince');
+        if (!empty($users_province)) {
+            $province = trans('messages.province').' : '.$users_province;
+        }
+        $shop_name = trans('messages.shop_name').' : '.trans('messages.show_all');
+        if (!empty($shop_select_arr)) {
+            $shops = BaseReports::shops($shop_select_arr);
+            foreach ($shops as $re) {
+                $shopStrs[] = $re->shop_name;
+            }
+            $shop_name = trans('messages.shop_name').' : '.implode(",", $shopStrs);
+        }
+
+
+
+        $arr[] = array(
+            trans('messages.province'),
+            trans('messages.shop'),
+            trans('messages.sum_prict_order')
+        );
+
+        foreach ($shops as $v) {
+            $arr[] = array(
+                $v->users_province,
+                $v->shop_name,
+                $v->total
+            );
+        }
+
+        $data = $arr;
+        $info = Excel::create('dgtfarm-sale-shop-excel', function ($excel) use ($data,$string_start_date,$string_end_date,$type_report,$province,$shop_name) {
+            $excel->sheet('Sheetname', function ($sheet) use ($data,$string_start_date,$string_end_date,$type_report,$province,$shop_name) {
+
+                $sheet->mergeCells('A1:C1');
+                $sheet->mergeCells('A2:C3');
+                $sheet->mergeCells('A4:C5');
+                $sheet->mergeCells('A6:C7');
+                $sheet->mergeCells('A8:C9');
+                $sheet->setSize(array(
+                    'A1' => array(
+                        'height' => 50
+                    )
+                ));
+
+                $sheet->setColumnFormat(array(
+                    'C' => '#,##0'
+                ));
+                $sheet->setAutoSize(array('A'));
+                $sheet->cells('A1', function ($cells) {
+                    $cells->setValue(trans('messages.report_sale_shop'));
+                    $cells->setValignment('center');
+                    $cells->setAlignment('center');
+                    $cells->setFont(array(
+                        'size' => '16',
+                        'bold' => true
+                    ));
+                });
+
+                $sheet->cells('A2', function ($cells) use ($string_start_date,$string_end_date) {
+                    $cells->setValue($string_start_date.' '.$string_end_date);
+                    $cells->setFont(array(
+                        'bold' => true
+                    ));
+                    $cells->setValignment('center');
+                });
+                $sheet->cells('A4', function ($cells) use ($province) {
+                    $cells->setValue($province);
+                    $cells->setFont(array(
+                        'bold' => true
+                    ));
+                    $cells->setValignment('center');
+                });
+                $sheet->cells('A6', function ($cells) use ($shop_name) {
+                    $cells->setValue($shop_name);
+                    $cells->setFont(array(
+                        'bold' => true
+                    ));
+                    $cells->setValignment('center');
+                });
+                $sheet->cells('A8', function ($cells) {
+                    $cells->setValue(trans('messages.datetime_export') . ': ' . DateFuncs::convertToThaiDate(date('Y-m-d')) . ' ' . date('H:i:s'));
+                    $cells->setFont(array(
+                        'bold' => true
+                    ));
+                    $cells->setValignment('center');
+                });
+
+                $sheet->rows($data);
+            });
+        })->store('xls', false, true);
+        return response()->json(array('file' => $info['file']));
 
     }
 
@@ -582,7 +730,7 @@ class ReportsController extends BaseReports
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
         ,products.product_name_th
         ,products.product_name_en
         ,markets.market_title_th
@@ -608,6 +756,7 @@ class ReportsController extends BaseReports
         if (count($product_id_arr) > 0) {
             $orderList->whereIn('products.id', $product_id_arr);
         }
+        $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
         $orderList->orderBy('products.product_name_th', 'ASC');
         return $orderLists = $orderList->get();

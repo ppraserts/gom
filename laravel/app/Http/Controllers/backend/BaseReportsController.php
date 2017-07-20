@@ -5,6 +5,8 @@ use App\ProductCategory;
 use App\OrderStatus;
 use App\Product;
 use App\Market;
+use App\Shop;
+use App\User;
 use DB;
 class BaseReportsController extends Controller {
 
@@ -34,6 +36,14 @@ class BaseReportsController extends Controller {
 
     public  static function market($id){
         return Market::where('id', $id)->first();
+    }
+
+    public  static function shops($id_arr){
+        return Shop::whereIn('id', $id_arr)->get();
+    }
+
+    public  static function user($id){
+        return User::where('id', $id)->first();
     }
 
     public  static function dateToDayAndLastMonth(){
