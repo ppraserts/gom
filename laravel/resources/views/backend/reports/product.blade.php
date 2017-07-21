@@ -41,24 +41,42 @@
                     </select>
                     <div class="help-block with-errors"></div>
                 </div>
-                <div class="col-md-6  form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
-                     style="padding-left: 0;padding-right: 0;">
+                <div class="col-md-6  form-group" style="padding-left: 0;padding-right: 0;">
                     <strong>
-                        {{ trans('messages.menu_add_product') }} :
+                        {{ trans('messages.menu_market') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="product_id[]" id="product"
-                            data-live-search="true"
-                            multiple>
-                        @if(!empty($products) && count($products))
-                            @foreach($products as $product)
-                                <option value="{{$product->id}}"
-                                        @if(!empty($product_id_arr)) @if(in_array($product->id, $product_id_arr)) selected @endif @endif>
-                                    {{$product->product_name_th}}
+                    <select class="form-control" name="market_id" id="market_id">
+                        <option value="">
+                            {{ trans('messages.show_all_market') }}
+                        </option>
+                        @if(!empty($markets) && count($markets) > 0)
+                            @foreach($markets as $market)
+                                <option value="{{$market->id}}"
+                                        @if(!empty($market_id) and $market->id == $market_id) selected  @endif>
+                                    {{$market->market_title_th}}
                                 </option>
                             @endforeach
                         @endif
                     </select>
                 </div>
+                {{--<div class="col-md-6  form-group {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"--}}
+                     {{--style="padding-left: 0;padding-right: 0;">--}}
+                    {{--<strong>--}}
+                        {{--{{ trans('messages.menu_add_product') }} :--}}
+                    {{--</strong>--}}
+                    {{--<select class="selectpicker form-control" name="product_id[]" id="product"--}}
+                            {{--data-live-search="true"--}}
+                            {{--multiple>--}}
+                        {{--@if(!empty($products) && count($products))--}}
+                            {{--@foreach($products as $product)--}}
+                                {{--<option value="{{$product->id}}"--}}
+                                        {{--@if(!empty($product_id_arr)) @if(in_array($product->id, $product_id_arr)) selected @endif @endif>--}}
+                                    {{--{{$product->product_name_th}}--}}
+                                {{--</option>--}}
+                            {{--@endforeach--}}
+                        {{--@endif--}}
+                    {{--</select>--}}
+                {{--</div>--}}
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
@@ -77,7 +95,7 @@
                         <tr>
                             <th width="120px" style="text-align:center;">{{trans('messages.text_product_id')}}</th>
                             <th>{{trans('messages.text_product_th')}}</th>
-                            <th style="text-align:center;">{{trans('messages.text_product_en')}}</th>
+                            <th style="text-align:center;">{{trans('messages.menu_market')}}</th>
                             <th style="text-align:center;">{{trans('messages.text_product_score')}}</th>
                         </tr>
                         </thead>
@@ -86,7 +104,7 @@
                             <tr>
                                 <td style="text-align:center;">{{ $result->id }}</td>
                                 <td>{{$result->product_name_th}}</a>  </td>
-                                <td>{{ $result->product_name_en }}</td>
+                                <td>{{ $result->market_title_th }}</td>
                                 <td>
                                     @if(!empty($result->product_score)){{ number_format($result->product_score,2) }} @else
                                         0 @endif
@@ -128,23 +146,25 @@
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
-    $('#productcategorys_id').on('change', function () {
+    /*$('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+        $.get("echo url('admin/reports/getproductbycate')" + '/' + cateId, function (data) {
             if (data.R == 'Y') {
                 $("#product").html(data.res);
                 $('#product').selectpicker('refresh');
             }
         });
-    });
+    });*/
 
     //***********************************************
     $("#export").click(function () {
         var productcategorys_id = $('#productcategorys_id option:selected').val();
-        var product_id = [];
-        $('#product option:selected').each(function (i, selected) {
-            product_id[i] = $(selected).val();
-        });
+        var market_id = $('#market_id option:selected').val();
+//        var product_id = [];
+//        $('#product option:selected').each(function (i, selected) {
+//            product_id[i] = $(selected).val();
+//        });
+
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
             progressType: 'success'
@@ -153,7 +173,9 @@
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
             url: "<?php echo url('admin/reports/product/export')?>",
-            data: {product_id_arr: product_id, productcategorys_id: productcategorys_id},
+            data: { market_id: market_id
+                , productcategorys_id: productcategorys_id
+            },
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.text_download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.text_close')?></button></div>');
