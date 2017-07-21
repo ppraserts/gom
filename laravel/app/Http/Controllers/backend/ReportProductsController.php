@@ -3,6 +3,7 @@ namespace App\Http\Controllers\backend;
 
 use DB;
 use App\Product;
+use App\Market;
 use App\ProductCategory;
 use Excel;
 use Hash;
@@ -31,55 +32,67 @@ class ReportProductsController extends BaseReports
                 $this->throwValidationException($request, $validator);
             }
         }
+        $markets = Market::all();
         $productCategoryitem = BaseReports::productCategorys();
-        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
+        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id')
+            ->join('product_requests', 'product_requests.products_id', '=', 'products.id')
+            ->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id')
+            ->join('markets', 'markets.id', '=', 'product_request_market.market_id');
         $result->select(DB::raw('products.id
               ,products.product_name_th
               ,products.product_name_en
-              ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
+              ,markets.market_title_th
+              ,SUM(comments.score)/COUNT(comments.score) as product_score'));
         $productcategory_id= '';
         if(!empty($request->input('productcategorys_id'))){
             $productcategory_id = $request->input('productcategorys_id');
             $result->where('products.productcategory_id', $productcategory_id);
-            $products = BaseReports::productsByCategory($productcategory_id);
-            $product_id_arr = array();
-            if(!empty($request->input('product_id'))){
-                $product_id_arr = $request->input('product_id');
-                $result->whereIn('products.id', $product_id_arr);
-            }
+            //$products = BaseReports::productsByCategory($productcategory_id);
+//            $product_id_arr = array();
+//            if(!empty($request->input('product_id'))){
+//                $product_id_arr = $request->input('product_id');
+//                $result->whereIn('products.id', $product_id_arr);
+//            }
+        }
+        $market_id='';
+        if(!empty($request->input('market_id'))){
+            $market_id = $request->input('market_id');
+            $result->where('product_request_market.market_id', $market_id);
         }
         $result->orderBy('product_score', 'desc');
         $result->groupBy('products.id');
         $results = $result->paginate(config('app.paginate'));
-        return view('backend.reports.product', compact('productCategoryitem','results','productcategory_id','products','product_id_arr'));
+        return view('backend.reports.product', compact('productCategoryitem'
+            ,'results'
+            ,'markets'
+            ,'productcategory_id'
+            //,'products'
+            ,'market_id'
+            ,'product_id_arr'));
     }
-
 
     public function exportExcel(Request $request)
     {
         if ($request->ajax()) {
             $productcategorys_id = $request->input('productcategorys_id');
-            $product_id_arr= $request->input('product_id_arr');
-            $results = $this->sqlFilter($productcategorys_id,$product_id_arr);
+            $market_id= $request->input('market_id');
+            $results = $this->sqlFilter($productcategorys_id,$market_id);
 
             $product_category_name = trans('messages.show_all');
             if(!empty($productcategorys_id)){
                $productCategory = BaseReports::productCategory($productcategorys_id);
                 $product_category_name = $productCategory->productcategory_title_th;
             }
-            $string_arr_product = trans('messages.show_all');
-            if(count($product_id_arr) > 0){
-                $products = BaseReports::productsByCategory($productcategorys_id);
-                foreach ($products as $product){
-                    $arrProduct[] = $product->product_name_th;
-                }
-                $string_arr_product = implode(",",$arrProduct);
+            $market_name = trans('messages.menu_market').' : '.trans('messages.show_all_market');
+            if(!empty($market_id)){
+                $market = BaseReports::market($market_id);
+                $market_name = trans('messages.menu_market').' : '.$market->market_title_th;
             }
 
             $arr[] = array(
                 trans('messages.text_product_id'),
                 trans('messages.text_product_th'),
-                trans('messages.text_product_en'),
+                trans('messages.menu_market'),
                 trans('messages.text_product_score'),
             );
             foreach ($results as $v) {
@@ -91,14 +104,14 @@ class ReportProductsController extends BaseReports
                 $arr[] = array(
                     $v->id,
                     $v->product_name_th,
-                    $v->product_name_en,
+                    $v->market_title_th,
                     $product_score
                 );
             }
 
             $data = $arr;
-            $info = Excel::create('dgtfarm-products-excel', function($excel) use($data,$product_category_name,$string_arr_product) {
-                $excel->sheet('Sheetname', function($sheet) use($data,$product_category_name,$string_arr_product) {
+            $info = Excel::create('dgtfarm-products-excel', function($excel) use($data,$product_category_name,$market_name) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$product_category_name,$market_name) {
                     $sheet->mergeCells('A1:D1');
                     $sheet->mergeCells('A2:D3');
                     $sheet->mergeCells('A4:D5');
@@ -128,8 +141,8 @@ class ReportProductsController extends BaseReports
                         $cells->setValignment('center');
                     });
 
-                    $sheet->cells('A4', function($cells) use($string_arr_product) {
-                        $cells->setValue(trans('messages.menu_add_product').': '.$string_arr_product);
+                    $sheet->cells('A4', function($cells) use($market_name) {
+                        $cells->setValue($market_name);
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));
@@ -151,23 +164,26 @@ class ReportProductsController extends BaseReports
         }
     }
 
+    private function sqlFilter($productcategory_id ='',$market_id=''){
 
-    private function sqlFilter($productcategory_id ='',$product_id_arr){
-
-        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id');
+        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id')
+            ->join('product_requests', 'product_requests.products_id', '=', 'products.id')
+            ->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id')
+            ->join('markets', 'markets.id', '=', 'product_request_market.market_id');
         $result->select(DB::raw('products.id
               ,products.product_name_th
               ,products.product_name_en
-              ,SUM(comments.score)/COUNT(comments.score) as product_score'))->groupBy('products.id');
+              ,markets.market_title_th
+              ,SUM(comments.score)/COUNT(comments.score) as product_score'));
+
         if(!empty($productcategory_id)){
             $result->where('products.productcategory_id', $productcategory_id);
         }
-        if(!empty($product_id_arr)){
-            $result->whereIn('products.id', $product_id_arr);
+        if(!empty($market_id)){
+            $result->where('product_request_market.market_id', $market_id);
         }
-        $result->orderBy('product_score', 'desc');
         $result->groupBy('products.id');
-        return  $results = $result->groupBy('products.id')->get();
+        return $results = $result->orderBy('product_score', 'desc')->get();
 
     }
 
