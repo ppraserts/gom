@@ -51,13 +51,15 @@ class QuotationController extends Controller
 
     }*/
 
-    public function store($id)
+    public function store($id,$quantity)
     {
         $user = auth()->guard('user')->user();
         $quotation = new Quotation();
         $quotation->user_id = $user->id;
         $quotation->product_request_id = $id;
         $quotation->is_reply = 0;
+        $quotation->quantity = $quantity;
+//        return $quotation;
         $quotation->save();
 
         return redirect()->route('quotation.index')

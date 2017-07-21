@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
@@ -93,11 +93,10 @@
                             </option>
                         @endforeach
                     </select>
-
                 </div>
 
 
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group col-md-4" style="padding-left: 0px;">
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
@@ -114,7 +113,47 @@
                         @endif
                     </select>
                 </div>
+
+
+                <div class="col-md-4 {{ $errors->has('product_market') ? 'has-error' : '' }}"
+                     style="padding-left: 0px; padding-right: 0;">
+                    <strong>
+                        {{ trans('validation.attributes.market') }}:
+                    </strong>
+                    <select id="product_market" name="product_market" class="form-control">
+                        <option value="">{{ trans('messages.all') }}</option>
+                        @foreach ($markets as $market)
+                            <option value="{{ $market->id }}"
+                                    @if(!empty($product_market) && $market->id == $product_market)) selected @endif>
+                                {{ $market->market_title_th }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+            {{--<div class="row">
+                <div class="col-md-12 form-inline" style="margin-bottom: 15px; padding-left: 0;">
+                    <strong style="margin-right: 15px;">{{ trans('validation.attributes.market') }}</strong>
+                    @for($i = 0 ; $i < count($markets) ; $i++)
+                        <label class="checkbox-inline">
+                            <input name="product_market[]" type="checkbox"
+                                   value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}
+                                   @if(!empty($productMarketsArr)) @if(in_array($markets[$i]->id, $productMarketsArr)) checked @endif @endif>
+                            {{$markets[$i]->market_title_th}}
+                        </label>
+                    @endfor
+
+                        @foreach ($productCategoryitem as $key => $itemcategory)
+                            <option value="{{ $itemcategory->id }}"
+                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
+                                    selected @endif>
+                                {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
+
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>--}}
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
                     <button style="width: 200px;" class="btn btn-primary" type="submit">
@@ -134,7 +173,9 @@
                             <th style="text-align:center;">{{ trans('validation.attributes.product_title') }}</th>
                             <th style="text-align:center;">{{ trans('messages.text_product_type_name') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
+                            <th>{{ trans('messages.date_want_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
+                            <th>{{ trans('messages.date_want_buy') }}</th>
                             <th style="text-align:center;">{{ trans('validation.attributes.price') }}</th>
                             {{--<th style="text-align:center;">{{ trans('messages.product_price_need_buy') }}</th>--}}
                             <th style="text-align:center;">{{ trans('validation.attributes.volumnrange_product_need_buy') }}</th>
@@ -147,10 +188,12 @@
                                 <td style="text-align:center;">{{ $item->product_title }}</td>
                                 <td style="text-align:center;">{{ $item->product_name_th }}</td>
                                 <td>{{ $item->seller_firstname. " ". $item->seller_lastname }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->sale_date) }}</td>
                                 <td>{{ $item->buyer_firstname. " ". $item->buyer_lastname }}</td>
+                                <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->buy_date) }}</td>
                                 <td style="text-align:center;">{{ $item->price. " " . trans('messages.baht')." / ".$item->units }}</td>
                                 {{--<td style="text-align:center;">{{ $item->pricerange_start . " - ". $item->pricerange_end . trans('messages.baht') }}</td>--}}
-                                <td style="text-align:center;">{{ $item->volumnrange_start . " - ". $item->volumnrange_end ." ". $item->units }}</td>
+                                <td style="text-align:center;">{{ $item->volumnrange_start ." ". $item->units }}</td>
 
                             </tr>
                         @endforeach
@@ -249,6 +292,7 @@
         $('#product_type_name option:selected').each(function (i, selected) {
             product_type_name[i] = $(selected).val();
         });
+        var market = $("#product_market").val();
         //console.log(product_type_name); return false;
         var key_token = $('input[name=_token]').val();
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
@@ -260,7 +304,7 @@
             url: "<?php $page = ''; if (!empty(Request::input('page'))) {
                 $page = '?page=' . Request::input('page');
             } echo url('admin/reports/matching/export' . $page)?>",
-            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name},
+            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name, product_market:market},
             success: function (response) {
                 //console.log(response);
                 $('.modal-content').empty();

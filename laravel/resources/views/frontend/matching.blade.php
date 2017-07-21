@@ -83,7 +83,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                             <div class="col-md-12" style="margin-top: 10px;">
                                                 <p class="btn-wholesale">
                                                     <i class="fa fa-file-text-o"></i>
-                                                    <a href="{{ url('user/quotationRequest/'.$col_md_4_item['id']) }}"
+                                                    <a href="{{ url('user/quotationRequest/'.$col_md_4_item['id'].'/'.$col_md_4_item['quantity']) }}"
                                                        class="hidden-sm">{{ trans('messages.quotation_request')}}</a>
                                                 </p>
                                             </div>

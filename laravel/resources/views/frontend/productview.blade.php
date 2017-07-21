@@ -25,6 +25,14 @@ function renderHTML($text)
                              class="img-circle">
                         <br/><br/>
                     @endif
+                    @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
+                        @if($productRequest->iwantto == "sale")
+                            @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale") && $productRequest['productstatus'] == "open")
+                                <button class="btn btn-primary" onclick="showAddQuotation()">
+                                    {{trans('messages.quotation_request')}}</button>
+                            @endif
+                        @endif
+                    @endif
                 @endif
                 <div class="clearfix"
                      style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
@@ -67,6 +75,13 @@ function renderHTML($text)
     <!-- modal product added to cart -->
     @include('frontend.product_element.modal_add_to_cart')
     <!-- /.modal -->
+    @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
+        @if($productRequest->iwantto == "sale")
+            @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale") && $productRequest['productstatus'] == "open")
+                @include('frontend.product_element.modal_add_quotation')
+            @endif
+        @endif
+    @endif
 @stop
 @push('scripts')
 <link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
@@ -102,15 +117,24 @@ function renderHTML($text)
                 if (response.status == 'success') {
                     showProductAdded(response.product_request);
                 } else {
-                    window.location = BASE_URL+'/user/login';
+                    window.location = BASE_URL + '/user/login';
                 }
             },
             error: function (request, status, error) {
-                window.location = BASE_URL+'/user/login';
+                window.location = BASE_URL + '/user/login';
                 console.log(request.responseText);
                 //alert(request.responseText);
             }
         });
+    }
+
+    function showAddQuotation() {
+        $('#modal_add_quotaiton').modal('show');
+    }
+
+    function addQuotation(productRequestId) {
+        var quantity = $('input[name=quantity]').val();
+        window.location = BASE_URL + '/user/quotationRequest/' + productRequestId + '/' + quantity;
     }
 
 

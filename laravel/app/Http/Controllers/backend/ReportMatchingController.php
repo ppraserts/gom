@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Market;
 use App\Product;
 use App\ProductCategory;
 use App\Province;
@@ -49,12 +50,16 @@ class ReportMatchingController extends BaseReports
                 ->where('product_requests.iwantto', '=', 'sale')
                 ->where('b.iwantto', '=', 'buy')
                 ->where('product_requests.productstatus', '=', 'open')
+                ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit))')
                 ->whereRaw('product_requests.price >= b.pricerange_start')
                 ->whereRaw('product_requests.price <= b.pricerange_end');
         });
         $matching->join('products', 'product_requests.products_id', '=', 'products.id');
         $matching->join('users as seller', 'product_requests.users_id', '=', 'seller.id');
         $matching->join('users as buyer', 'b.users_id', '=', 'buyer.id');
+        if (!empty($request->input('product_market'))) {
+            $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+        }
         $matching->select(
             'seller.users_firstname_th as seller_firstname',
             'seller.users_lastname_th as seller_lastname',
@@ -64,12 +69,14 @@ class ReportMatchingController extends BaseReports
             'b.volumnrange_end',
             'b.pricerange_start',
             'b.pricerange_end',
+            'b.created_at as buy_date',
             'product_requests.volumn',
             'product_requests.price',
             'product_requests.units',
             'product_requests.province',
             'product_requests.product_title',
             'products.product_name_th',
+            'products.created_at as sale_date',
             'product_requests.products_id as products_id'
         );
         $defult_ymd_last_month='';
@@ -102,15 +109,23 @@ class ReportMatchingController extends BaseReports
             $provinceTypeNameArr = $request->input('province_type_name');
             $matching->whereIn('product_requests.province_selling', $provinceTypeNameArr);
         }
+
+        if (!empty($request->input('product_market'))) {
+            $product_market = $request->input('product_market');
+            $matching->where('product_request_market.market_id', $product_market);
+        }
+
+        $matching->groupBy('product_requests.id');
         $matchings = $matching->paginate(config('app.paginate'));
 //            return $matchings;
 
         $provinces = Province::all();
         $productCategoryitem = ProductCategory::all();
+        $markets = Market::all();
         return view('backend.reports.matching',
             compact('matchings', 'products', 'provinces', 'productcategorys_id',
                 'productTypeNameArr', 'provinceTypeNameArr','productCategoryitem',
-                'defult_ymd_last_month','defult_ymd_today'));
+                'defult_ymd_last_month','defult_ymd_today','markets','product_market'));
 
     }
 
@@ -128,12 +143,16 @@ class ReportMatchingController extends BaseReports
                     ->where('product_requests.iwantto', '=', 'sale')
                     ->where('b.iwantto', '=', 'buy')
                     ->where('product_requests.productstatus', '=', 'open')
+                    ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit))')
                     ->whereRaw('product_requests.price >= b.pricerange_start')
                     ->whereRaw('product_requests.price <= b.pricerange_end');
             });
             $matching->join('products', 'product_requests.products_id', '=', 'products.id');
             $matching->join('users as seller', 'product_requests.users_id', '=', 'seller.id');
             $matching->join('users as buyer', 'b.users_id', '=', 'buyer.id');
+            if (!empty($request->input('product_market'))) {
+                $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+            }
             $matching->select(
                 'seller.users_firstname_th as seller_firstname',
                 'seller.users_lastname_th as seller_lastname',
@@ -143,12 +162,14 @@ class ReportMatchingController extends BaseReports
                 'b.volumnrange_end',
                 'b.pricerange_start',
                 'b.pricerange_end',
+                'b.created_at as buy_date',
                 'product_requests.volumn',
                 'product_requests.price',
                 'product_requests.units',
                 'product_requests.province',
                 'product_requests.product_title',
                 'products.product_name_th',
+                'products.created_at as sale_date',
                 'product_requests.products_id as products_id'
             );
             $str_start_and_end_date = trans('messages.text_start_date') . ' : - ' . trans('messages.text_end_date') . ' : -';
@@ -168,6 +189,12 @@ class ReportMatchingController extends BaseReports
                 $provinceTypeNameArr = $request->input('province_type_name');
                 $matching->whereIn('product_requests.province_selling', $provinceTypeNameArr);
             }
+
+            if (!empty($request->input('product_market'))) {
+                $product_market = $request->input('product_market');
+                $matching->where('product_request_market.market_id', $product_market);
+            }
+            $matching->groupBy('product_requests.id');
             $matchings = $matching->get();
 
             $productStr = trans('messages.show_all');
@@ -179,12 +206,20 @@ class ReportMatchingController extends BaseReports
                 $productStr = implode(",", $productStrs);
             }
 
+            $marketStr = trans('messages.all');
+            if (!empty($request->input('product_market'))) {
+                $market = Market::find($request->input('product_market'));
+                $marketStr = $market->market_title_th;
+            }
+
             $arr[] = array(
                 trans('messages.no'),
                 trans('validation.attributes.product_title'),
                 trans('messages.text_product_type_name'),
                 trans('messages.i_sale'),
+                trans('messages.date_want_sale'),
                 trans('messages.i_buy'),
+                trans('messages.date_want_buy'),
                 trans('validation.attributes.price'),
                 trans('validation.attributes.volumnrange_product_need_buy')
             );
@@ -195,15 +230,17 @@ class ReportMatchingController extends BaseReports
                     $v->product_title,
                     $v->product_name_th,
                     $v->seller_firstname . " " . $v->seller_lastname,
+                    DateFuncs::mysqlToThaiDate($v->sale_date),
                     $v->buyer_firstname . " " . $v->buyer_lastname,
+                    DateFuncs::mysqlToThaiDate($v->buy_date),
                     $v->price . " " . $bahtStr . " / " . $v->units,
-                    $v->volumnrange_start . " - " . $v->volumnrange_end . " " . $v->units
+                    $v->volumnrange_start . " " . $v->units
                 );
             }
             $data = $arr;
 
-            $info = Excel::create('dgtfarm-matching-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date) {
+            $info = Excel::create('dgtfarm-matching-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date,$marketStr) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date,$marketStr) {
 
                     $sheet->mergeCells('A1:F1');
                     $sheet->mergeCells('A2:F3');
@@ -225,8 +262,8 @@ class ReportMatchingController extends BaseReports
                         ));
                     });
 
-                    $sheet->cells('A2', function ($cells) use ($productStr) {
-                        $cells->setValue(trans('messages.menu_add_product') . ': ' . $productStr);
+                    $sheet->cells('A2', function ($cells) use ($productStr,$marketStr) {
+                        $cells->setValue(trans('messages.menu_add_product') . ': ' . $productStr. " , ".trans('messages.menu_market'). ": ".$marketStr);
                         $cells->setFont(array(
                             'bold' => true
                         ));

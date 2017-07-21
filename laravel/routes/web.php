@@ -166,7 +166,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
     Route::get('quotation/index','frontend\QuotationController@index');
-    Route::get('quotationRequest/{product_request_id}','frontend\QuotationController@store');
+    Route::get('quotationRequest/{product_request_id}/{quantity}','frontend\QuotationController@store');
     Route::get('quote/index','frontend\QuoteController@index');
 //    Route::get('quotation/reply/{product_request_id}','frontend\QuotationController@reply');
     Route::resource('quotation','frontend\QuotationController');
@@ -264,4 +264,5 @@ Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 //Route::get('/migrate/productmarket/{key}', 'MigrateController@product_market');
 Route::get('/migrate/productprovince/', 'MigrateController@product_province');
 Route::get('/migrate/badword/', 'MigrateController@badword');
+Route::get('/fix/product/', 'FixController@removeDubProduct');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

@@ -29,8 +29,8 @@
                 </div>
                 <div class="modal-footer">
                     <a href="{{url('user/shoppingcart') }}" type="button"
-                       class="btn btn-success"><i class="fa fa-shopping-cart"></i> ตะกร้าสินค้า</a>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                       class="btn btn-success"><i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{trans('messages.close')}}</button>
                 </div>
             </div>
         </div>
