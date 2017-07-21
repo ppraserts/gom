@@ -24,8 +24,8 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row">
             <h2>{{ trans('messages.menu_shop_order_list') }}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('user/reports/list-sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -198,7 +198,7 @@ $pagetitle = trans('message.menu_order_list');
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");

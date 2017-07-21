@@ -24,8 +24,8 @@ $pagetitle = trans('message.menu_order_list');
         <div class="row">
             <h2>{{trans('messages.report_title_sale')}}</h2>
         </div>
+        {{csrf_field()}}
         <form action="{{url('user/reports/sale')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
-            {{csrf_field()}}
             <input type="hidden" name="is_search" value="true"/>
             <style>
                 .form-horizontal .form-group {
@@ -123,6 +123,7 @@ $pagetitle = trans('message.menu_order_list');
 @push('scripts')
 <link href="{{url('bootstrap-select/css/bootstrap-select.min.css')}}" type="text/css" rel="stylesheet">
 <script src="{{url('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         $('#pick_start_date').datepicker({
@@ -156,27 +157,14 @@ $pagetitle = trans('message.menu_order_list');
                 $('#product_type_name').selectpicker('refresh');
             }
         });
-    })
+    });
 
-
-</script>
-<?php if(count($orderSaleItem) > 0){ ?>
-<script src="{{ url('charts/js/highcharts.js')}}"></script>
-<script src="{{ url('charts/js/modules/exporting.js')}}"></script>
-<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
-
-<style type="text/css">
-    ${
-demo.css
-}
-</style>
-<script type="text/javascript">
     $(function () {
         $('#myForm').submit(function () {
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             if (start_date != '') {
-                if (start_date >= end_date) {
+                if (start_date > end_date) {
                     $("#start_date").focus();
                     $('#with_errors_start_date').css('color', '#a94442');
                     $('#with_errors_start_date').html("<?php echo Lang::get('validation.attributes.message_validate_start_date_1')?>");
@@ -187,6 +175,17 @@ demo.css
         });
     });
 
+
+</script>
+<?php if(count($orderSaleItem) > 0){ ?>
+<script src="{{ url('charts/js/highcharts.js')}}"></script>
+<script src="{{ url('charts/js/modules/exporting.js')}}"></script>
+<style type="text/css">
+    ${
+demo.css
+}
+</style>
+<script type="text/javascript">
     $(function () {
         $('#container').highcharts({
             chart: {
