@@ -323,4 +323,7 @@ return [
     'show_all_order_status' => 'แสดงทุกสถานะ',
     'close' => 'ปิด',
     'shop_id' => 'รหัสร้านค้า',
+    'all' => 'ทั้งหมด',
+    'date_want_buy' => 'วันที่ต้องการซื้อ',
+    'date_want_sale' => 'วันที่ต้องการขาย',
 ];
