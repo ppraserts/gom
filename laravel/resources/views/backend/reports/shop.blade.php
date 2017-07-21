@@ -22,13 +22,12 @@
         <form action="{{url('admin/reports/shop')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
             <input type="hidden" name="is_search" value="true">
             <div class="row">
-                <div class="form-group form-group-sm col-md-12" style="padding-left: 0px; padding-right: 0;">
-                    <strong class="col-sm-1" style="padding-right: 0; padding-left: 0;">
-                        * {{ trans('messages.shop') }} :
+                <div class="form-group col-md-4" style="padding-left: 0px;">
+                    <strong style="padding-right: 0; padding-left: 0;">
+                        {{ trans('messages.shop') }} :
                     </strong>
                     <select class="selectpicker form-control" name="shop[]" id="shop"
                             data-error={{trans('validation.attributes.message_validate_shop')}}
-                            required='required'
                             data-live-search="true"
                             multiple>
                         @if(count($shops))
@@ -41,6 +40,42 @@
                         @endif
                     </select>
                     <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0px;">
+                    <strong style="padding-right: 0; padding-left: 0;">{{ trans('validation.attributes.province') }}
+                        :</strong>
+                    <div style="padding-right: 0;">
+                        <select class="selectpicker form-control" name="province_type_name" id="province_type_name"
+                                data-live-search="true">
+                            <option value="">{{trans('messages.allprovince')}}</option>
+                            @if(count($provinces))
+                                @foreach($provinces as $province)
+                                    <option value="{{$province->PROVINCE_NAME}}"
+                                            @if(!empty($provinceTypeName)) @if($province->PROVINCE_NAME == $provinceTypeName)) selected @endif @endif>
+                                        {{$province->PROVINCE_NAME}}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <small class="alert-danger" id="ms_product_type_name"></small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 {{ $errors->has('user_market') ? 'has-error' : '' }}"
+                     style="padding-right: 0;">
+                    <strong>
+                        {{ trans('validation.attributes.market') }}:
+                    </strong>
+                    <select id="user_market" name="user_market" class="form-control">
+                        <option value="">{{ trans('messages.all') }}</option>
+                        @foreach ($markets as $market)
+                            <option value="{{ $market->id }}"
+                                    @if(!empty($user_market) && $market->id == $user_market)) selected @endif>
+                                {{ $market->market_title_th }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="row">
@@ -58,9 +93,11 @@
                     <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
-                            <th width="120px" style="text-align:center;">{{ trans('messages.text_shop_id') }}</th>
+                            <th width="60px" style="text-align:center;">{{ trans('messages.text_shop_id') }}</th>
                             <th>{{ trans('messages.text_shop_url') }}</th>
                             <th style="text-align:center;">{{ trans('messages.text_shop_title') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.menu_market') }}</th>
+                            <th style="text-align:center;">{{ trans('messages.province') }}</th>
                             <th style="text-align:center;">{{ trans('messages.text_shop_score') }}</th>
                         </tr>
                         </thead>
@@ -72,8 +109,10 @@
                                        target="_blank">{{ url($result->shop_name) }}</a>
                                 </td>
                                 <td>{{ $result->shop_title }}</td>
+                                <td>{{ $result->market_name }}</td>
+                                <td>{{ $result->users_province }}</td>
                                 <td>
-                                    @if(!empty($result->shop_score)){{ $result->shop_score }} @else 0 @endif
+                                    @if(!empty($result->shop_score)){{ (float)$result->shop_score }} @else 0 @endif
                                     {{ trans('messages.text_star') }}
                                 </td>
 

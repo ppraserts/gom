@@ -131,29 +131,6 @@
                     </select>
                 </div>
             </div>
-            {{--<div class="row">
-                <div class="col-md-12 form-inline" style="margin-bottom: 15px; padding-left: 0;">
-                    <strong style="margin-right: 15px;">{{ trans('validation.attributes.market') }}</strong>
-                    @for($i = 0 ; $i < count($markets) ; $i++)
-                        <label class="checkbox-inline">
-                            <input name="product_market[]" type="checkbox"
-                                   value="{{ $markets[$i]->id}}" {{ $markets[$i]->checked ? "checked" : ""}}
-                                   @if(!empty($productMarketsArr)) @if(in_array($markets[$i]->id, $productMarketsArr)) checked @endif @endif>
-                            {{$markets[$i]->market_title_th}}
-                        </label>
-                    @endfor
-
-                        @foreach ($productCategoryitem as $key => $itemcategory)
-                            <option value="{{ $itemcategory->id }}"
-                                    @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
-                                    selected @endif>
-                                {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
-
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>--}}
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
                     <button style="width: 200px;" class="btn btn-primary" type="submit">
