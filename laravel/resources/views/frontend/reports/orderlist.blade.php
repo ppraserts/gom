@@ -86,7 +86,7 @@ $pagetitle = trans('message.menu_order_list');
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
-                            data-live-search="true"
+                            data-live-search="true" title=" "
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -217,7 +217,7 @@ $pagetitle = trans('message.menu_order_list');
 
     $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+        $.get("<?php echo url('user/reports/getproductbycate')?>" + '/' + cateId, function (data) {
             if (data.R == 'Y') {
                 console.log(data.res);
                 $("#product_type_name").html(data.res);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 
 use App\ProductCategory;
-use DB, Validator, Response;
+use DB, Validator, Response,View;
 use App\Order;
 use Excel;
 use Storage;
@@ -446,6 +446,15 @@ class ReportsController extends BaseReports
 
     private function productCategory($id){
         return ProductCategory::where('productcategorys.id', $id)->first();
+    }
+    public function getProductByCate($productCateId)
+    {
+        $products = Product::select(DB::raw('products.id,products.product_name_th'))
+            ->where('products.productcategory_id', $productCateId)->get();
+
+        $dataView = View::make('frontend.reports.ele_products')->with('products', $products);
+        $dataHtml = $dataView->render();
+        return Response::json(array('R'=>'Y','res'=>$dataHtml));
     }
 
 
