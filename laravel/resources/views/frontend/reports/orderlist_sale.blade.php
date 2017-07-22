@@ -152,7 +152,7 @@ $pagetitle = trans('message.menu_order_list');
                                 <td style="text-align:center;">{{ $item->status_name }}</td>
                                 <td style="text-align:center;">
                                     <a class="btn btn-primary"
-                                       href="{{ url ('user/reports/orderdetail/'.$item->id) }}">
+                                       href="{{ url ('user/orderdetail/'.$item->id) }}">
                                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                     </a>
                                 </td>
