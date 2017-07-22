@@ -44,14 +44,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //return parent::render($request, $exception);
-        if ($request->is('admin/*')) {
+        return parent::render($request, $exception);
+        /*if ($request->is('admin/*')) {
             $errors = 'errors.404_admin'; // _admin
         } else {
             $errors = 'errors.404'; // frontend
         }
         //$errors = 'errors.404';
-        return response()->view($errors);
+        return response()->view($errors);*/
     }
 
     /**

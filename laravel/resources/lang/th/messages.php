@@ -265,7 +265,7 @@ return [
     'text_shop_id' => 'ไอดีร้านค้า',
     'text_shop_url' => 'ที่อยู่ร้านค้า',
     'text_shop_title' => 'หัวข้อร้านค้า',
-    'text_shop_score' => 'คะแนนเฉลี่ยนของร้านค้า',
+    'text_shop_score' => 'คะแนนเฉลี่ยของร้านค้า',
 
     'text_report_menu_product' => 'รายงานสินค้ายอดนิยม',
     'text_report_menu_order_status_history' => 'รายงานติดตามสถานะสั่งซื้อสินค้า',

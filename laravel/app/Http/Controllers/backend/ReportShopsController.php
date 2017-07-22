@@ -3,6 +3,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Market;
 use App\Province;
+use App\UserMarket;
 use DB;
 use App\Shop;
 use Excel;
@@ -29,14 +30,12 @@ class ReportShopsController extends Controller
         $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
         $result->join('users', 'users.id', '=', 'shops.user_id');
         $result->join('user_market', 'user_market.user_id', '=', 'shops.user_id');
-        $result->join('markets', 'user_market.market_id', '=', 'markets.id');
         $result->select(DB::raw('shops.id
                   ,shops.user_id
                   ,shops.shop_title
                   ,shops.shop_subtitle
                   ,shops.shop_name
                   ,users.users_province
-                  ,GROUP_CONCAT(markets.market_title_th) AS market_name
                   ,SUM(comments.score)/COUNT(comments.shop_id) as shop_score'));
         $shopArr = array();
         if (!empty($request->input('shop'))) {
@@ -65,8 +64,18 @@ class ReportShopsController extends Controller
         $result->groupBy('shops.id');
         $results = $result->paginate(config('app.paginate'));
 
+        foreach ($results as $result) {
+            $userMarkets = UserMarket::join('markets', 'user_market.market_id', '=', 'markets.id')
+                ->select('market_title_th as market_name')
+                ->where('user_market.user_id',$result->user_id)
+                ->get();
+            $result->markets = $userMarkets;
+        }
+
         $markets = Market::all();
         $provinces = Province::all();
+
+
 
         return view('backend.reports.shop', compact('shops', 'results', 'shopArr', 'markets', 'provinces', 'provinceTypeName', 'user_market'));
     }
@@ -77,14 +86,12 @@ class ReportShopsController extends Controller
             $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
             $result->join('users', 'users.id', '=', 'shops.user_id');
             $result->join('user_market', 'user_market.user_id', '=', 'shops.user_id');
-            $result->join('markets', 'user_market.market_id', '=', 'markets.id');
             $result->select(DB::raw('shops.id
                   ,shops.user_id
                   ,shops.shop_title
                   ,shops.shop_subtitle
                   ,shops.shop_name
                   ,users.users_province
-                  ,GROUP_CONCAT(markets.market_title_th) AS market_name
                   ,SUM(comments.score)/COUNT(comments.shop_id) as shop_score'));
             $shopArr = array();
             if (!empty($request->input('shop'))) {
@@ -113,6 +120,19 @@ class ReportShopsController extends Controller
             $result->groupBy('shops.id');
             $results = $result->paginate(config('app.paginate'));
 
+            foreach ($results as $result) {
+                $userMarkets = UserMarket::join('markets', 'user_market.market_id', '=', 'markets.id')
+                    ->select('market_title_th as market_name')
+                    ->where('user_market.user_id',$result->user_id)
+                    ->get();
+                $marketArrStr = array();
+                foreach ($userMarkets as $userMarket){
+                    array_push($marketArrStr,'- '.$userMarket->market_name);
+                }
+                $result->markets = implode(", ",$marketArrStr);
+
+            }
+
             $markets = Market::all();
             $provinces = Province::all();
 
@@ -125,10 +145,11 @@ class ReportShopsController extends Controller
                 $str_shops = implode(",", $arrNameShop);
             }
 
+            // filter market
             $str_market = trans('messages.show_all_market');
             if (!empty($user_market)) {
-                foreach ($markets as $market){
-                    if ($market->id = $user_market){
+                foreach ($markets as $market) {
+                    if ($market->id = $user_market) {
                         $str_market = $market->market_title_th;
                     }
                 }
@@ -139,9 +160,9 @@ class ReportShopsController extends Controller
                 $str_province = $provinceTypeName;
             }
             $arr[] = array(
-                trans('messages.text_shop_id'),
                 trans('messages.text_shop_url'),
                 trans('messages.text_shop_title'),
+                trans('messages.menu_market'),
                 trans('messages.text_shop_score'),
             );
             foreach ($results as $v) {
@@ -151,15 +172,15 @@ class ReportShopsController extends Controller
                     $shop_score = '0 ' . trans('messages.text_star');
                 }
                 $arr[] = array(
-                    $v->id,
                     url($v->shop_name),
                     $v->shop_title,
+                    $v->markets,
                     $shop_score
                 );
             }
             $data = $arr;
-            $info = Excel::create('dgtfarm-shops-excel', function ($excel) use ($data, $str_shops,$str_market,$str_province) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $str_shops,$str_market,$str_province) {
+            $info = Excel::create('dgtfarm-shops-excel', function ($excel) use ($data, $str_shops, $str_market, $str_province) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $str_shops, $str_market, $str_province) {
                     $sheet->mergeCells('A1:D1');
                     $sheet->mergeCells('A2:D3');
                     $sheet->mergeCells('A4:D5');
@@ -180,8 +201,8 @@ class ReportShopsController extends Controller
                         ));
                     });
 
-                    $sheet->cells('A2', function ($cells) use ($str_shops,$str_market,$str_province) {
-                        $cells->setValue(trans('messages.shop') . ': ' . $str_shops.", ".trans('messages.province').': '.$str_province.", ".trans('messages.menu_market').': '.$str_market);
+                    $sheet->cells('A2', function ($cells) use ($str_shops, $str_market, $str_province) {
+                        $cells->setValue(trans('messages.shop') . ': ' . $str_shops . ", " . trans('messages.province') . ': ' . $str_province . ", " . trans('messages.menu_market') . ': ' . $str_market);
                         $cells->setFont(array(
                             'bold' => true
                         ));
@@ -208,23 +229,6 @@ class ReportShopsController extends Controller
         return response()->download($path);
     }
 
-    private function shopSqlFilter($arrShopId = '')
-    {
-        $result = Shop::leftJoin('comments', 'shops.id', '=', 'comments.shop_id');
-        $result->select(DB::raw('shops.id
-                  ,shops.user_id
-                  ,shops.shop_title
-                  ,shops.shop_subtitle
-                  ,shops.shop_name
-                  
-                  ,SUM(comments.score)/COUNT(comments.score) as shop_score'));
-        if (!empty($arrShopId)) {
-            $result->whereIn('shops.id', $arrShopId);
-        }
-        $result->orderBy('shop_score', 'desc');
-        return $results = $result->groupBy('shops.id')->get();
-
-    }
 
     private function getShops($arrId)
     {

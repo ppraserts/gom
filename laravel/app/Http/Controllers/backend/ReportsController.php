@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\OrderItem;
 use App\OrderStatusHistory;
 use App\ProductCategory;
+use App\ProductRequestMarket;
 use App\User;
 use App\Market;
 use App\Province;
@@ -440,6 +441,15 @@ class ReportsController extends BaseReports
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total_amounts;
         }
+
+        foreach ($orderSaleItem as $result) {
+            $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                ->select('market_title_th as market_name')
+                ->where('product_request_market.product_request_id', $result->product_request_id)
+                ->get();
+            $result->markets = $productMarkets;
+        }
+
         //return $orderSaleItem;
         return view('backend.reports.sale_item_list', compact('orderSaleItem'
             ,'productCategoryitem'

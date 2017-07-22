@@ -25,4 +25,9 @@ class Shop extends Model
         return $this->hasOne('App\User', 'id','user_id');
     }
 
+    public function market()
+    {
+        return $this->hasMany('App\UserMarket', 'user_id', 'user_id');
+    }
+
 }
