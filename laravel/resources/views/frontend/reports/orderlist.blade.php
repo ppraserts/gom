@@ -67,7 +67,7 @@ $pagetitle = trans('message.menu_order_list');
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
@@ -101,7 +101,7 @@ $pagetitle = trans('message.menu_order_list');
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -118,7 +118,7 @@ $pagetitle = trans('message.menu_order_list');
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
-                            <th>{{ trans('messages.i_buy') }}</th>
+                            {{--<th>{{ trans('messages.i_buy') }}</th>--}}
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
                             <th style="text-align:center;">{{ trans('messages.quantity') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
@@ -143,9 +143,9 @@ $pagetitle = trans('message.menu_order_list');
                                 <td>
                                     {{ $item->users_firstname_th. " ". $item->users_lastname_th }}
                                 </td>
-                                <th style="font-weight: 300;">
-                                    {{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}
-                                </th>
+                                {{--<th style="font-weight: 300;">--}}
+                                    {{--{{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}--}}
+                                {{--</th>--}}
                                 <td>{{ $item->product_name_th }}</td>
                                 <td>{{ $item->quantity.' '.$item->units }}</td>
                                 <td style="text-align:center;">{{ $item->total}}</td>

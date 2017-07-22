@@ -136,7 +136,7 @@ class ReportsController extends BaseReports
                     trans('messages.order_date'),
                     trans('messages.order_type'),
                     trans('messages.i_sale'),
-                    trans('messages.i_buy'),
+//                    trans('messages.i_buy'),
                     trans('messages.product_name'),
                     trans('messages.orderbyunit'),
                     trans('messages.order_total').'('.trans('messages.baht').')',
@@ -149,7 +149,7 @@ class ReportsController extends BaseReports
                     trans('messages.order_id'),
                     trans('messages.order_date'),
                     trans('messages.order_type'),
-                    trans('messages.i_sale'),
+//                    trans('messages.i_sale'),
                     trans('messages.i_buy'),
                     trans('messages.product_name'),
                     trans('messages.orderbyunit'),
@@ -164,12 +164,17 @@ class ReportsController extends BaseReports
                 } else {
                     $order_type = trans('messages.wholesale');
                 }
+                if($type == 'sale'){
+                    $user_flname = $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th;
+                }
+                if($type == 'buy'){
+                   $user_flname = $v->users_firstname_th . " " . $v->users_lastname_th;
+                }
                 $arr[] = array(
                     $v->id,
                     DateFuncs::dateToThaiDate($v->order_date),
                     $order_type,
-                    $v->users_firstname_th . " " . $v->users_lastname_th,
-                    $v->buyer->users_firstname_th . " " . $v->buyer->users_lastname_th,
+                    $user_flname,
                     $v->product_name_th,
                     $v->quantity.' '.$v->units,
                     $v->total,
