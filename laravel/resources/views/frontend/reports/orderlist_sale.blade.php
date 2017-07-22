@@ -67,7 +67,7 @@ $pagetitle = trans('message.menu_order_list');
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
@@ -86,7 +86,7 @@ $pagetitle = trans('message.menu_order_list');
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
-                            data-live-search="true"
+                            data-live-search="true" title=" "
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -101,7 +101,7 @@ $pagetitle = trans('message.menu_order_list');
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
-                    <button style="width: 400px;" class="btn btn-primary" type="submit">
+                    <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
@@ -117,7 +117,7 @@ $pagetitle = trans('message.menu_order_list');
                             <th style="text-align:center;">{{ trans('messages.order_id') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
-                            <th>{{ trans('messages.i_sale') }}</th>
+                            {{--<th>{{ trans('messages.i_sale') }}</th>--}}
                             <th>{{ trans('messages.i_buy') }}</th>
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
                             <th style="text-align:center;">{{ trans('messages.quantity') }}</th>
@@ -140,9 +140,9 @@ $pagetitle = trans('message.menu_order_list');
                                         {{trans('messages.wholesale')}}
                                     @endif
                                 </td>
-                                <td>
-                                    {{ $item->users_firstname_th. " ". $item->users_lastname_th }}
-                                </td>
+                                {{--<td>--}}
+                                    {{--{{ $item->users_firstname_th. " ". $item->users_lastname_th }}--}}
+                                {{--</td>--}}
                                 <th style="font-weight: 300;">
                                     {{ $item->buyer->users_firstname_th. " ". $item->buyer->users_lastname_th }}
                                 </th>
@@ -233,7 +233,7 @@ $pagetitle = trans('message.menu_order_list');
 
     $('#productcategorys_id').on('change', function () {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>" + '/' + cateId, function (data) {
+        $.get("<?php echo url('user/reports/getproductbycate')?>" + '/' + cateId, function (data) {
             if (data.R == 'Y') {
                 console.log(data.res);
                 $("#product_type_name").html(data.res);

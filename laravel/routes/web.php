@@ -188,6 +188,11 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
 
     Route::get('reports/list-sale','frontend\ReportsController@listSale');
+    Route::get('reports/getproductbycate/{id}','frontend\ReportsController@getProductByCate');
+
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
+
 
 });
 
