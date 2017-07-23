@@ -78,12 +78,12 @@ class ReportProductsController extends BaseReports
             $market_id= $request->input('market_id');
             $results = $this->sqlFilter($productcategorys_id,$market_id);
 
-            $product_category_name = trans('messages.show_all');
+            $product_category_name = trans('messages.all');
             if(!empty($productcategorys_id)){
                $productCategory = BaseReports::productCategory($productcategorys_id);
                 $product_category_name = $productCategory->productcategory_title_th;
             }
-            $market_name = trans('messages.menu_market').' : '.trans('messages.show_all_market');
+            $market_name = trans('messages.menu_market').' : '.trans('messages.all');
             if(!empty($market_id)){
                 $market = BaseReports::market($market_id);
                 $market_name = trans('messages.menu_market').' : '.$market->market_title_th;

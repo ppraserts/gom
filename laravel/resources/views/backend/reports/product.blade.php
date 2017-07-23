@@ -31,7 +31,7 @@
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control"
                             data-error={{trans('validation.attributes.message_validate_product_category')}}
                             required='required'>
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategory_id) && $itemcategory->id == $productcategory_id) selected @endif>
@@ -47,7 +47,7 @@
                     </strong>
                     <select class="form-control" name="market_id" id="market_id">
                         <option value="">
-                            {{ trans('messages.show_all_market') }}
+                            {{ trans('messages.all') }}
                         </option>
                         @if(!empty($markets) && count($markets) > 0)
                             @foreach($markets as $market)

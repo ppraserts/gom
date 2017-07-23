@@ -69,7 +69,7 @@ $pagetitle = trans('messages.menu_order_list');
                         {{trans('messages.userstatus')}} :
                     </strong>
                     <select name="order_status" id="order_status" class="form-control">
-                        <option value="">แสดงทุกสถานะ</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
                             สั่งซื้อ</option>
                         <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
@@ -85,16 +85,14 @@ $pagetitle = trans('messages.menu_order_list');
                             ยกเลิกรายการสั่งซื้อ
                         </option>
                     </select>
-
                 </div>
-
                 <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)
@@ -110,7 +108,7 @@ $pagetitle = trans('messages.menu_order_list');
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
-                            data-live-search="true"
+                            data-live-search="true" title=" "
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)

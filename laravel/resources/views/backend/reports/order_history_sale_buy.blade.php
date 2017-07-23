@@ -49,7 +49,7 @@
                             required='required'
                             data-live-search="true">
                         @if(count($users) > 0)
-                            <option value="">{{ trans('messages.please_select') }}</option>
+                            <option value="">{{ trans('messages.all') }}</option>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}"
                                         @if(!empty($user_id) and $user_id == $user->id) selected @endif>

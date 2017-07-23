@@ -63,7 +63,7 @@
                         {{ trans('messages.menu_market') }} :
                     </strong>
                     <select id="market_id" name="market_id" class="form-control">
-                        <option value="">{{ trans('messages.show_all_market') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($markets as $market)
                             <option value="{{ $market->id }}" @if(!empty($market_id) && $market->id == $market_id)) selected @endif>
                                 {{ $market->market_title_th }}
@@ -78,7 +78,7 @@
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}" @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id)) selected @endif>
                                 {{ $itemcategory->{ "productcategory_title_".Lang::locale()} }}
@@ -92,7 +92,7 @@
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
-                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true"
+                    <select class="selectpicker form-control" name="pid[]" id="product_type_name"  data-live-search="true" title=" "
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)

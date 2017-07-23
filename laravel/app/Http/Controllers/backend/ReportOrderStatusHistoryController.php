@@ -136,22 +136,22 @@ class ReportOrderStatusHistoryController extends BaseReports
             }
             $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . $filter;
             if (empty($filter)) {
-                $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . trans('messages.show_all');
+                $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . trans('messages.all');
             }
 
-            $order_status_name = trans('messages.userstatus').' : '.trans('messages.show_all_order_status');
+            $order_status_name = trans('messages.userstatus').' : '.trans('messages.all');
             if(!empty($order_status_id)){
                 $orderStatu = BaseReports::orderStatus($order_status_id);
                 $order_status_name = trans('messages.userstatus').' : '.$orderStatu->status_name;
             }
 
-            $i_sale_username = trans('messages.i_sale').' : -';
+            $i_sale_username = trans('messages.i_sale').' : '.trans('messages.all');
             if(!empty($i_sale)){
                 $user = BaseReports::user($i_sale);
                 $i_sale_username = trans('messages.i_sale').' : '.$user->users_firstname_th.' '.$user->users_lastname_th;
             }
 
-            $i_buy_username = trans('messages.i_buy').' : -';
+            $i_buy_username = trans('messages.i_buy').' : '.trans('messages.all');
             if(!empty($i_buy)){
                 $user = BaseReports::user($i_buy);
                 $i_buy_username = trans('messages.i_buy').' : '.$user->users_firstname_th.' '.$user->users_lastname_th;;

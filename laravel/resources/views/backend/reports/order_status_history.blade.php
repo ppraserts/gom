@@ -68,7 +68,7 @@
                         {{trans('messages.userstatus')}} :
                     </strong>
                     <select name="order_status" id="order_status" class="form-control">
-                        <option value="">{{trans('messages.show_all_order_status')}}</option>
+                        <option value="">{{trans('messages.all')}}</option>
                         <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
                             สั่งซื้อ</option>
                         <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
@@ -92,7 +92,7 @@
                     <select class="selectpicker form-control" name="i_sale" id="i_sale"
                             data-live-search="true">
                         <option value="">
-                            {{ trans('messages.please_select_i_sale') }}
+                            {{ trans('messages.all') }}
                         </option>
                         @if(count($iwanttosale) > 0)
                             @foreach($iwanttosale as $user_sale)
@@ -111,7 +111,7 @@
                     <select class="selectpicker form-control" name="i_buy" id="i_buy"
                             data-live-search="true">
                         <option value="">
-                            {{ trans('messages.please_select_i_buy') }}
+                            {{ trans('messages.all') }}
                         </option>
                         @if(count($iwanttobuy) > 0)
                             @foreach($iwanttobuy as $user_buy)

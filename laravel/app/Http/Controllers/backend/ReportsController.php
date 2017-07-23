@@ -125,9 +125,9 @@ class ReportsController extends BaseReports
             $productTypeNameArr = $request->input('product_type_name');
             $start_date = $request->input('start_date');
             $end_date = $request->input('end_date');
-            $product_category_name = trans('messages.show_all');
+            $product_category_name = trans('messages.all');
 
-            $order_status_name = trans('messages.userstatus').' : '.trans('messages.show_all');
+            $order_status_name = trans('messages.userstatus').' : '.trans('messages.all');
              if(!empty($request->input('order_status'))){
                  $order_status_id = $request->input('order_status');
                  $orderStatu = BaseReports::orderStatus($order_status_id);
@@ -144,7 +144,7 @@ class ReportsController extends BaseReports
 
             $gropProduct = trans('validation.attributes.productcategorys_id').' : '.$product_category_name;
 
-            $productStr = trans('messages.show_all');
+            $productStr = trans('messages.all');
             if (!empty($productTypeNameArr)) {
                 $res = $this->getProductCate($productTypeNameArr);
                 foreach ($res as $re) {
@@ -249,9 +249,9 @@ class ReportsController extends BaseReports
             $productcategorys_id = $request->input('productcategorys_id');
             $product_id_arr = $request->input('product_type_name');
 
-            $market_name =  trans('messages.menu_market').' : '.trans('messages.show_all');
-            $productcategorys_name = trans('validation.attributes.productcategorys_id').' : '.trans('messages.show_all');
-            $product_name = trans('messages.menu_add_product').' : '.trans('messages.show_all');
+            $market_name =  trans('messages.menu_market').' : '.trans('messages.all');
+            $productcategorys_name = trans('validation.attributes.productcategorys_id').' : '.trans('messages.all');
+            $product_name = trans('messages.menu_add_product').' : '.trans('messages.all');
 
             if(!empty($market_id)){
                 $market = BaseReports::market($market_id);
@@ -569,7 +569,7 @@ class ReportsController extends BaseReports
         if (!empty($users_province)) {
             $province = trans('messages.province').' : '.$users_province;
         }
-        $shop_name = trans('messages.shop_name').' : '.trans('messages.show_all');
+        $shop_name = trans('messages.shop_name').' : '.trans('messages.all');
         if (!empty($shop_select_arr)) {
             $shops = BaseReports::shops($shop_select_arr);
             foreach ($shops as $re) {
