@@ -2,6 +2,8 @@
 <html lang="th-TH">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="{{url('css/bootstrap.min.css')}}" rel="stylesheet" media="all">
+
     <style>
         @font-face {
             font-family: 'thaisansneue';
@@ -17,15 +19,18 @@
         }
 
         body {
-            font-family: "thaisansneue";
+            font-family: "thaisansneue" !important;
+            line-height: 12px;
         }
+
     </style>
+
 </head>
 <body>
-<div class="col-sm-12">
+<div class="col-md-12" style="width: 960px;">
     <div class="row">
         <h2>{{ trans('messages.order_detail') }}</h2>
-        <div class="col-md-4">
+        <div class="col-md-4" style="width: 377px; float: left;">
             <div class="row">
                 <?php
                 $statusHistory_n = count($order->statusHistory);
@@ -43,7 +48,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" style="width: 377px; float: left;">
             <div class="row">
                 <h3>{{ trans('messages.i_buy') }}</h3>
 
@@ -64,7 +69,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" style="width: 377px; float: left;">
             <div class="row">
                 <h3>{{ trans('messages.i_sale') }}</h3>
 
@@ -85,7 +90,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="width: 960px;">
             <div class="row">
                 <h3>{{trans('messages.title_receiving_address')}}</h3>
                 <b>{{trans('messages.text_delivery_channel')}} : </b>{{$order->delivery_chanel}}
@@ -94,7 +99,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="width: 960px;">
             <div class="row">
                 <h3>{{ trans('messages.product_list') }}</h3>
                 <div class="table-responsive">
@@ -126,7 +131,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="width: 960px;">
             <div class="row">
                 <h3>{{ trans('messages.order_status_history') }}</h3>
                 <div class="table-responsive">

@@ -126,6 +126,9 @@ class OrderController extends Systems
 
         $data['order'] = $order;
         $pdf = PDF::loadView('pdf.orderdetail', $data);
+        $pdf->setPaper('legal', 'landscape');
+        //return $pdf->stream('test_pdf.pdf');
+        //return view('pdf.orderdetail', $data);
         return $pdf->download('invoice.pdf');
     }
 
