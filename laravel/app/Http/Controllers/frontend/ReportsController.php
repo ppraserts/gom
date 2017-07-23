@@ -492,7 +492,6 @@ class ReportsController extends BaseReports
                     ->select('market_title_th as market_name')
                     ->where('product_request_market.product_request_id', $result->product_request_id)
                     ->get();
-                $result->markets = $productMarkets;
                 $marketArrStr = array();
                 foreach ($productMarkets as $productMarket){
                     array_push($marketArrStr,'- '.$productMarket->market_name);

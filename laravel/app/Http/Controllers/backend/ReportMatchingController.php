@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Market;
 use App\Product;
 use App\ProductCategory;
+use App\ProductRequestMarket;
 use App\Province;
 use App\Http\Controllers\Controller;
 use App\ProductRequest;
@@ -55,6 +56,7 @@ class ReportMatchingController extends BaseReports
                 ->whereRaw('product_requests.price <= b.pricerange_end');
         });
         $matching->join('products', 'product_requests.products_id', '=', 'products.id');
+        $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $matching->join('users as seller', 'product_requests.users_id', '=', 'seller.id');
         $matching->join('users as buyer', 'b.users_id', '=', 'buyer.id');
         if (!empty($request->input('product_market'))) {
@@ -70,6 +72,7 @@ class ReportMatchingController extends BaseReports
             'b.pricerange_start',
             'b.pricerange_end',
             'b.created_at as buy_date',
+            'product_requests.id',
             'product_requests.volumn',
             'product_requests.price',
             'product_requests.units',
@@ -117,7 +120,14 @@ class ReportMatchingController extends BaseReports
 
         $matching->groupBy('product_requests.id');
         $matchings = $matching->paginate(config('app.paginate'));
-//            return $matchings;
+
+        foreach ($matchings as $result) {
+            $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                ->select('market_title_th as market_name')
+                ->where('product_request_market.product_request_id', $result->id)
+                ->get();
+            $result->markets = $productMarkets;
+        }
 
         $provinces = Province::all();
         $productCategoryitem = ProductCategory::all();
@@ -148,6 +158,7 @@ class ReportMatchingController extends BaseReports
                     ->whereRaw('product_requests.price <= b.pricerange_end');
             });
             $matching->join('products', 'product_requests.products_id', '=', 'products.id');
+            $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
             $matching->join('users as seller', 'product_requests.users_id', '=', 'seller.id');
             $matching->join('users as buyer', 'b.users_id', '=', 'buyer.id');
             if (!empty($request->input('product_market'))) {
@@ -163,6 +174,7 @@ class ReportMatchingController extends BaseReports
                 'b.pricerange_start',
                 'b.pricerange_end',
                 'b.created_at as buy_date',
+                'product_requests.id',
                 'product_requests.volumn',
                 'product_requests.price',
                 'product_requests.units',
@@ -197,6 +209,18 @@ class ReportMatchingController extends BaseReports
             $matching->groupBy('product_requests.id');
             $matchings = $matching->get();
 
+            foreach ($matchings as $result) {
+                $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                    ->select('market_title_th as market_name')
+                    ->where('product_request_market.product_request_id', $result->id)
+                    ->get();
+                $marketArrStr = array();
+                foreach ($productMarkets as $productMarket){
+                    array_push($marketArrStr,'- '.$productMarket->market_name);
+                }
+                $result->markets = implode(", ",$marketArrStr);
+            }
+
             $productStr = trans('messages.show_all');
             if (!empty($productTypeNameArr)) {
                 $res = $this->getProductCate($productTypeNameArr);
@@ -213,9 +237,9 @@ class ReportMatchingController extends BaseReports
             }
 
             $arr[] = array(
-                trans('messages.no'),
-                trans('validation.attributes.product_title'),
                 trans('messages.text_product_type_name'),
+                trans('messages.menu_market'),
+                trans('validation.attributes.product_province_selling'),
                 trans('messages.i_sale'),
                 trans('messages.date_want_sale'),
                 trans('messages.i_buy'),
@@ -226,9 +250,8 @@ class ReportMatchingController extends BaseReports
             $bahtStr = trans('messages.baht');
             foreach ($matchings as $i => $v) {
                 $arr[] = array(
-                    $i + 1,
-                    $v->product_title,
                     $v->product_name_th,
+                    $v->markets,
                     $v->seller_firstname . " " . $v->seller_lastname,
                     DateFuncs::mysqlToThaiDate($v->sale_date),
                     $v->buyer_firstname . " " . $v->buyer_lastname,
