@@ -28,7 +28,7 @@
                     </strong>
                     <select class="selectpicker form-control" name="shop[]" id="shop"
                             data-error={{trans('validation.attributes.message_validate_shop')}}
-                            data-live-search="true"
+                            data-live-search="true" title=" "
                             multiple>
                         @if(count($shops))
                             @foreach($shops as $shop)

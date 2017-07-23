@@ -94,7 +94,7 @@ $pagetitle = trans('message.menu_order_list');
                     </label>
                     <div style="padding-right: 0;">
                         <select class="selectpicker form-control" name="shop_select_id[]" id="shop_select_id"
-                                data-live-search="true"
+                                data-live-search="true" title=" "
                                 multiple>
                             @if(count($allShops) > 0)
                                 @foreach($allShops as $shop)

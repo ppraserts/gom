@@ -38,7 +38,6 @@ class ReportOrderHistoryController extends Controller
         return view('backend.reports.order_history_sale_buy', compact('users'));
     }
 
-
     public function exportExcel(Request $request)
     {
         if ($request->ajax()) {

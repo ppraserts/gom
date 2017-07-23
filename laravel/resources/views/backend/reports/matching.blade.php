@@ -61,7 +61,7 @@
                         :</strong>
                     <div style="padding-right: 0;">
                         <select class="selectpicker form-control" name="province_type_name[]" id="province_type_name"
-                                data-live-search="true"
+                                data-live-search="true" title=" "
                                 multiple>
                             @if(count($provinces))
                                 @foreach($provinces as $province)
@@ -83,7 +83,7 @@
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.menu_product_category') }}</option>
+                        <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
@@ -101,7 +101,7 @@
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
-                            data-live-search="true"
+                            data-live-search="true" title=" "
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
