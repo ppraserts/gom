@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
+use PDF;
 use DB,Response,Validator;
 use App\Order;
 use App\OrderItem;
@@ -106,6 +107,26 @@ class OrderController extends Systems
 //        $userId = $user->id;
         //return $order;
         return view('frontend.orderdetail', compact('order','orderId'));
+    }
+
+    public function exportPdf(Request $request,$order_id){
+        $orderType = $request->input('status');
+        if(!empty($orderType)){
+            Session::put('orderType',$orderType);
+        }
+
+        $order = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'order_status.status_name','order_status.id as orderStatusId','users.users_firstname_th','users.users_lastname_th','users.id as userId')
+            ->where('orders.id', $order_id)->first();
+//        $order->orderItems = OrderItem::with(['product','productRequest'])->where('order_id',$order_id)->get();
+        $orderItem = new OrderItem();
+        $order->orderItems = $orderItem->orderItemDetail($order_id);
+        $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
+
+        $data['order'] = $order;
+        $pdf = PDF::loadView('pdf.orderdetail', $data);
+        return $pdf->download('invoice.pdf');
     }
 
     public function getHtmlConfirmSale(Request $request, $confirm_sale_type = ''){

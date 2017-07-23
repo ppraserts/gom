@@ -165,6 +165,7 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('order','frontend\OrderController@index');
     Route::get('shoporder','frontend\OrderController@shoporder');
     Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('orderdetail/pdf/{order_id}','frontend\OrderController@exportPdf');
     Route::get('quotation/index','frontend\QuotationController@index');
     Route::get('quotationRequest/{product_request_id}/{quantity}','frontend\QuotationController@store');
     Route::get('quote/index','frontend\QuoteController@index');

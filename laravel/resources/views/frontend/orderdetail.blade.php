@@ -6,11 +6,11 @@ $pagetitle = trans('message.menu_order_list');
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
     <?php
-    $actionSetActive ='';
-    if(!empty(Session::get('orderType')) and Session::get('orderType') == 'sale'){
-       $actionSetActive ='shoporder';
-    }elseif(!empty(Session::get('orderType')) and Session::get('orderType') == 'buy'){
-        $actionSetActive ='order';
+    $actionSetActive = '';
+    if (!empty(Session::get('orderType')) and Session::get('orderType') == 'sale') {
+        $actionSetActive = 'shoporder';
+    } elseif (!empty(Session::get('orderType')) and Session::get('orderType') == 'buy') {
+        $actionSetActive = 'order';
     }
     ?>
     @include('shared.usermenu', array('setActive'=>$actionSetActive))
@@ -24,12 +24,15 @@ $pagetitle = trans('message.menu_order_list');
             <div class="col-md-4">
                 <div class="row">
                     <?php
-                      $statusHistory_n = count($order->statusHistory);
+                    $statusHistory_n = count($order->statusHistory);
                     ?>
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
                     <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
-                    <p><b>{{ trans('messages.order_status') }} : </b>{{$order->statusHistory[$statusHistory_n-1]['status_text']}}</p>
-                    <p><b>{{ trans('messages.order_type') }} : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}</p>
+                    <p><b>{{ trans('messages.order_status') }}
+                            : </b>{{$order->statusHistory[$statusHistory_n-1]['status_text']}}</p>
+                    <p><b>{{ trans('messages.order_type') }}
+                            : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
+                    </p>
                     <h4><b>{{ trans('messages.total_order') }}
                             : </b>{{$order->total_amount}}  {{trans('messages.baht')}}
                     </h4>
@@ -81,12 +84,14 @@ $pagetitle = trans('message.menu_order_list');
             <div class="col-md-12">
                 <div class="row">
                     <h3>{{trans('messages.title_receiving_address')}}</h3>
-                        <b>{{trans('messages.text_delivery_channel')}} : </b>{{$order->delivery_chanel}}
+                    <b>{{trans('messages.text_delivery_channel')}} : </b>{{$order->delivery_chanel}}
                     @if(!empty($order->address_delivery))
                         <br/><b>{{trans('messages.text_address_delivery')}} : </b>{{$order->address_delivery}}
                     @endif
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <h3>{{ trans('messages.product_list') }}</h3>
@@ -97,7 +102,8 @@ $pagetitle = trans('message.menu_order_list');
                                 <th width="70px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
                                 <th>{{ trans('messages.shop_product') }}</th>
                                 <th width="100px" style="text-align:center;">{{ trans('messages.quantity') }}</th>
-                                <th width="110px" style="text-align:center;">{{ trans('validation.attributes.price') }}</th>
+                                <th width="110px"
+                                    style="text-align:center;">{{ trans('validation.attributes.price') }}</th>
                                 <th width="110px" style="text-align:center;">{{ trans('messages.total_order') }}</th>
                             </tr>
                             </thead>
@@ -119,6 +125,8 @@ $pagetitle = trans('message.menu_order_list');
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <h3>{{ trans('messages.order_status_history') }}</h3>
@@ -146,29 +154,30 @@ $pagetitle = trans('message.menu_order_list');
                                         @endif
                                         <?php
                                         if($item->status_id == 6){
-                                            $arr = explode("\n",$item->note);
+                                            $arr = explode("\n", $item->note);
                                             if (sizeof($arr)) {
                                                 $countArr = count($arr);
                                                 $count_i = 1;
-                                                $br ='';
+                                                $br = '';
                                                 foreach ($arr as $ele) {
                                                     $ele = trim($ele);
-                                                    if($count_i == $countArr){
+                                                    if ($count_i == $countArr) {
                                                         echo $ele;
-                                                    }else{
-                                                        echo $ele.'<br/>';
+                                                    } else {
+                                                        echo $ele . '<br/>';
                                                     }
                                                     $count_i++;
                                                 }
                                             }
-                                        }else if($item->status_id !=4 and $item->status_id != 6){
+                                        }else if($item->status_id != 4 and $item->status_id != 6){
                                         ?>
                                         {!! $item->note !!}
                                         <?php }?>
                                     </td>
                                     <td style="text-align:left;">
                                         @if(!empty($item->image_payment_url))
-                                            <a href="{{url('upload/payments/'.$item->image_payment_url)}}" target="_blank">
+                                            <a href="{{url('upload/payments/'.$item->image_payment_url)}}"
+                                               target="_blank">
                                                 {{trans('messages.download')}}
                                             </a>
                                         @else
@@ -183,185 +192,189 @@ $pagetitle = trans('message.menu_order_list');
                         </table>
                     </div>
                 </div>
+
+                <?php
+                $user = auth()->guard('user')->user();
+                $userId = $user->id;
+                ?>
+
+                @if($order->buyer->id == $userId and $status_id == 7)
+                    @include('frontend.order_element.payment')
+                @endif
+                @if($order->userId == $userId)
+                    @if($status_id == 1)
+                        @include('frontend.order_element.confirm_sale')
+                    @endif
+                    @if($status_id == 8)
+                        @include('frontend.order_element.delivery')
+                    @endif
+                @endif
+                @if($status_id == 4 || $status_id == 5)
+                @else
+                    @if($status_id <= 2)
+                        @include('frontend.order_element.canceled')
+                    @endif
+                @endif
             </div>
-            <?php
-            $user = auth()->guard('user')->user();
-            $userId = $user->id;
-            ?>
 
-            @if($order->buyer->id == $userId and $status_id == 7)
-                @include('frontend.order_element.payment')
-            @endif
-            @if($order->userId == $userId)
-                @if($status_id == 1)
-                    @include('frontend.order_element.confirm_sale')
-                @endif
-                @if($status_id == 8)
-                    @include('frontend.order_element.delivery')
-                @endif
-            @endif
-            @if($status_id == 4 || $status_id == 5)
-            @else
-                @if($status_id <= 2)
-                    @include('frontend.order_element.canceled')
-                @endif
-            @endif
         </div>
-
+        <div class="row">
+            <a href="{{url('user/orderdetail/pdf/'.$order->id)}}" class="btn btn-primary"><span class="glyphicon glyphicon-export"></span> {{trans('messages.download_pdf')}}</a>
+        </div>
     </div>
-@endsection
-@push('scripts')
-<script>
-    $("#payment_channel").on("change", function () {
-        var payment_channel = $("#payment_channel option:selected").val();
-        if(payment_channel == 'บัญชีธนาคาร'){
-            payment_channel = 1;
-            $.get("<?php echo url('/user/orderdetail/html-payment-channel')?>/"+ payment_channel, function (data) {
-                if (data.r == 'Y') {
-                    if (data.data_html != '') {
+        @endsection
+        @push('scripts')
+        <script>
+            $("#payment_channel").on("change", function () {
+                var payment_channel = $("#payment_channel option:selected").val();
+                if (payment_channel == 'บัญชีธนาคาร') {
+                    payment_channel = 1;
+                    $.get("<?php echo url('/user/orderdetail/html-payment-channel')?>/" + payment_channel, function (data) {
+                        if (data.r == 'Y') {
+                            if (data.data_html != '') {
 //                        $("#html_payment_channel").html(data.data_html);
-                        $('#note').val(data.data_html);
-                    } else {
-                        //$("#html_payment_channel").html('Error....');
-                    }
+                                $('#note').val(data.data_html);
+                            } else {
+                                //$("#html_payment_channel").html('Error....');
+                            }
+                        } else {
+                            //$("#html_payment_channel").html('');
+                        }
+                    });
                 } else {
-                    //$("#html_payment_channel").html('');
+                    $("#note").val(payment_channel);
                 }
             });
-        }else{
-            $("#note").val(payment_channel);
-        }
-    });
 
-    $(document).ready(function(){
-        $("#form-image_payment").submit(function (e) {
-            var payment_file =  $('#payment_image').val();
-            if (payment_file == '') {
-                $('#payment_image').val('');
-                $('#ms_payment_image').css({
-                    'color': '#a94442',
-                    'background-color': 'rgba(255, 235, 59, 0.18)',
-                    'font-size': '15px'
-                });
-                $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
-                $('#payment_image').focus;
-                return false;
-            }
-        })
-    });
-
-    $("#payment_image").on("change", function () {
-        var ext = $('#payment_image').val().split('.').pop().toLowerCase();
-        $("#ms_payment_image").empty();
-        if($.inArray(ext, ['gif','png','jpg','jpeg','pdf','PDF','JPG']) == -1) {
-
-            $('#payment_image').val('');
-            $('#ms_payment_image').css({
-                'color': '#a94442',
-                'background-color': 'rgba(255, 235, 59, 0.18)',
-                'font-size': '15px'
+            $(document).ready(function () {
+                $("#form-image_payment").submit(function (e) {
+                    var payment_file = $('#payment_image').val();
+                    if (payment_file == '') {
+                        $('#payment_image').val('');
+                        $('#ms_payment_image').css({
+                            'color': '#a94442',
+                            'background-color': 'rgba(255, 235, 59, 0.18)',
+                            'font-size': '15px'
+                        });
+                        $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
+                        $('#payment_image').focus;
+                        return false;
+                    }
+                })
             });
-            $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
-            $('#payment_image').focus();
-            return false;
-        }
-    });
 
-    $("#delivery_image").on("change", function () {
-        var ext = $('#delivery_image').val().split('.').pop().toLowerCase();
-        $("#ms_delivery_image").empty();
-        if($.inArray(ext, ['gif','png','jpg','jpeg','pdf','PDF','JPG']) == -1) {
+            $("#payment_image").on("change", function () {
+                var ext = $('#payment_image').val().split('.').pop().toLowerCase();
+                $("#ms_payment_image").empty();
+                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'pdf', 'PDF', 'JPG']) == -1) {
 
-            $('#delivery_image').val('');
-            $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
-            $('#delivery_image').focus();
-            return false;
-        }
-    });
+                    $('#payment_image').val('');
+                    $('#ms_payment_image').css({
+                        'color': '#a94442',
+                        'background-color': 'rgba(255, 235, 59, 0.18)',
+                        'font-size': '15px'
+                    });
+                    $("#ms_payment_image").html("<?php echo trans('validation.attributes.message_validate_type_payment')?>");
+                    $('#payment_image').focus();
+                    return false;
+                }
+            });
 
-    $('#pick_start_date').datepicker({
-        format: 'yyyy-mm-dd',
-        language: 'th-th',
-        autoclose: true,
-        toggleActive: false,
-        todayHighlight: false,
-        todayBtn: false,
-        startView: 2,
-        maxViewMode: 2
-    });
-    $('#pick_end_date').datepicker({
-        format: 'yyyy-mm-dd',
-        language: 'th-th',
-        autoclose: true,
-        toggleActive: false,
-        todayHighlight: false,
-        todayBtn: false,
-        startView: 2,
-        maxViewMode: 2
-    });
+            $("#delivery_image").on("change", function () {
+                var ext = $('#delivery_image').val().split('.').pop().toLowerCase();
+                $("#ms_delivery_image").empty();
+                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'pdf', 'PDF', 'JPG']) == -1) {
 
-    initialViews();
+                    $('#delivery_image').val('');
+                    $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
+                    $('#delivery_image').focus();
+                    return false;
+                }
+            });
 
-    function initialViews() {
+            $('#pick_start_date').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'th-th',
+                autoclose: true,
+                toggleActive: false,
+                todayHighlight: false,
+                todayBtn: false,
+                startView: 2,
+                maxViewMode: 2
+            });
+            $('#pick_end_date').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'th-th',
+                autoclose: true,
+                toggleActive: false,
+                todayHighlight: false,
+                todayBtn: false,
+                startView: 2,
+                maxViewMode: 2
+            });
 
-        //Selling Period
-        var selling_period = '{{$item->selling_period}}';
-        if (selling_period == 'year') {
-            $('.div_selling_period_date').hide();
-        } else {
-            $("input[type=radio][name=selling_period]:first").attr('checked', true);
-        }
-    }
+            initialViews();
 
-    $(document).ready(function() {
-        $("#delivery_form").submit(function (e) {
-            var delivery_chanel = $("#delivery_chanel").val();
-            var order_date = $("#order_date").val();
-            var delivery_image = $('#delivery_image').val();
-            $("#mss_delivery_chanel").empty();
-            if (delivery_chanel == '') {
-                $("#delivery_chanel").focus();
-                $("#mss_delivery_chanel").html("<?php echo trans('messages.message_validate_delivery_chanel')?>");
-                return false;
-            }
-            $("#mss_order_date").empty();
-            if (order_date == '') {
-                $("#order_date").focus();
-                $("#mss_order_date").html("<?php echo trans('messages.message_validate_delivery_date')?>");
-                return false;
-            }
-            if (delivery_image == '') {
-                $('#delivery_image').val('');
+            function initialViews() {
 
-                $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
-                $('#delivery_image').focus;
-                return false;
+                //Selling Period
+                var selling_period = '{{$item->selling_period}}';
+                if (selling_period == 'year') {
+                    $('.div_selling_period_date').hide();
+                } else {
+                    $("input[type=radio][name=selling_period]:first").attr('checked', true);
+                }
             }
 
+            $(document).ready(function () {
+                $("#delivery_form").submit(function (e) {
+                    var delivery_chanel = $("#delivery_chanel").val();
+                    var order_date = $("#order_date").val();
+                    var delivery_image = $('#delivery_image').val();
+                    $("#mss_delivery_chanel").empty();
+                    if (delivery_chanel == '') {
+                        $("#delivery_chanel").focus();
+                        $("#mss_delivery_chanel").html("<?php echo trans('messages.message_validate_delivery_chanel')?>");
+                        return false;
+                    }
+                    $("#mss_order_date").empty();
+                    if (order_date == '') {
+                        $("#order_date").focus();
+                        $("#mss_order_date").html("<?php echo trans('messages.message_validate_delivery_date')?>");
+                        return false;
+                    }
+                    if (delivery_image == '') {
+                        $('#delivery_image').val('');
 
-        });
+                        $("#ms_delivery_image").html("<?php echo trans('validation.attributes.message_validate_delivery_image')?>");
+                        $('#delivery_image').focus;
+                        return false;
+                    }
 
-        $("#form_cancled").submit(function (e) {
-            var cancled_note = $("#cancled_note").val();
 
-            if (cancled_note == '') {
-                $("#cancled_note").focus();
-                $("#mss_cancled_note").html("<?php echo trans('validation.attributes.message_validate_note')?>");
-                return false;
-            }
-        });
+                });
 
-        $("#form_payment_channel").submit(function (e) {
-            var payment_channel = $("#payment_channel option:selected").val();
-            if(payment_channel == ''){
-                $('#payment_channel').focus();
-                $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_order_channel')?>");
-                return false;
-            }
-        })
-    });
+                $("#form_cancled").submit(function (e) {
+                    var cancled_note = $("#cancled_note").val();
 
-</script>
-@endpush
+                    if (cancled_note == '') {
+                        $("#cancled_note").focus();
+                        $("#mss_cancled_note").html("<?php echo trans('validation.attributes.message_validate_note')?>");
+                        return false;
+                    }
+                });
+
+                $("#form_payment_channel").submit(function (e) {
+                    var payment_channel = $("#payment_channel option:selected").val();
+                    if (payment_channel == '') {
+                        $('#payment_channel').focus();
+                        $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_order_channel')?>");
+                        return false;
+                    }
+                })
+            });
+
+        </script>
+    @endpush
 
 
