@@ -28,8 +28,8 @@
                     </strong>
                     <select class="selectpicker form-control" name="shop[]" id="shop"
                             data-error={{trans('validation.attributes.message_validate_shop')}}
-                            data-live-search="true" title=" "
-                            multiple>
+                            data-live-search="true"
+                            multiple title="{{trans('messages.all')}}">
                         @if(count($shops))
                             @foreach($shops as $shop)
                                 <option value="{{$shop->id}}"

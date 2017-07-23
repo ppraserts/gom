@@ -61,13 +61,27 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                <div class="col-md-4 {{ $errors->has('user_market') ? 'has-error' : '' }}"
+                     style="padding-left: 0">
+                    <strong>
+                        {{ trans('validation.attributes.market') }}:
+                    </strong>
+                    <select id="market_id" name="market_id" class="form-control">
+                        <option value="">{{ trans('messages.show_all_market') }}</option>
+                        @foreach ($markets as $market)
+                            <option value="{{ $market->id }}" @if(!empty($market_id) && $market->id == $market_id)) selected @endif>
+                                {{ $market->market_title_th }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control">
-                        <option value="">{{ trans('messages.all') }}</option>
+                        <option value="">{{ trans('messages.menu_product_category') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
                                     @if(!empty($productcategorys_id) && $itemcategory->id == $productcategorys_id))
@@ -81,13 +95,13 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
 
 
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0;">
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
-                            data-live-search="true" title=" "
-                            multiple>
+                            data-live-search="true"
+                            multiple title="{{trans('messages.all')}}">
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
                                 <option value="{{$product->id}}"
@@ -101,23 +115,25 @@ $pagetitle = trans('message.menu_order_list');
             </div>
             <div class="row">
                 <div class="text-center" style="padding-left: 0px; padding-right: 0;">
+                    <strong>{{trans('messages.type_report')}}</strong>
+                    <input type="radio" name="format_report" value="1" checked> {{trans('messages.type_report_chart')}}
+                    <input type="radio" name="format_report" value="2" @if(Request::input('format_report') == 2) checked @endif> {{trans('messages.type_report_table')}}
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center" style="padding-left: 0px; padding-right: 0; margin-top: 15px;">
                     <button style="width: 200px;" class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> {{ trans('messages.search') }}
                     </button>
                 </div>
             </div>
         </form>
-
-        <div class="row" style="margin-top: 10px">
-            @if(count($orderSaleItem) > 0 && count($errors) < 1)
-                <div id="container" style="min-width: 400px; height: auto; margin: 0px auto; padding-top:2%;"></div>
-            @else
-                <div class="alert alert-warning text-center">
-                    <strong>{{trans('messages.data_not_found')}}</strong>
-                </div>
-            @endif
-
-        </div>
+        @if(Request::input('format_report') == 1 or empty(Request::input('format_report')))
+            @include('backend.reports.ele_sale_item_report_charts')
+        @elseif(Request::input('format_report') == 2)
+            @include('backend.reports.ele_sale_item_report_table')
+        @endif
     </div>
 @endsection
 @push('scripts')
@@ -150,7 +166,7 @@ $pagetitle = trans('message.menu_order_list');
 
     $('#productcategorys_id').on('change', function() {
         var cateId = this.value;
-        $.get("<?php echo url('user/reports/getproductbycate')?>"+'/'+cateId, function(data){
+        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
             if(data.R == 'Y'){
                 console.log(data.res);
                 $("#product_type_name" ).html(data.res);
@@ -237,7 +253,7 @@ demo.css
                 colorByPoint: true,
                 data: [<?php $n = 1; foreach ($orderSaleItem as $val){ ?>{
                     name: '<?php echo $val->product_name_th?>',
-                    y: <?php echo $val->total_amounts?>,
+                    y: <?php echo $val->total?>,
                     drilldown: '<?php echo $val->product_name_th?>'
                 }<?php if(count($orderSaleItem) == $n){
                 }else{?>,<?php }}?>]

@@ -54,7 +54,7 @@
                             <tr>
                                 <td>{{  $quotation->product_name_th }}</td>
                                 <td>{{  $quotation->product_title }}</td>
-                                <td>{{  $quotation->volumnrange_start . " - " . $quotation->volumnrange_end . " " .$quotation->units }}</td>
+                                <td>{{  $quotation->quantity ." ".$quotation->units }}</td>
                             </tr>
                             </tbody>
                         </table>

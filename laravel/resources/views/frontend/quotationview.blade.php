@@ -81,9 +81,9 @@
                                     <td style="width: 115px;">
                                         @if($user->user_id != $quotation->buyer_id)
                                             <input type="number" class="form-control" id="qty"
-                                                   value="{{$quotation->min_order}}">
+                                                   value="{{$quotation->quantity}}" min="{{$quotation->min_order}}">
                                         @else
-                                            {{$quotation->min_order}}
+                                            {{$quotation->quantity}}
                                         @endif
                                     </td>
                                     <td>

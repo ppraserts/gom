@@ -184,6 +184,9 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('reports/buy/download','frontend\ReportsController@actionDownload');
     Route::get('reports/sale','frontend\ReportsController@SaleItemIndex');
     Route::post('reports/sale','frontend\ReportsController@SaleItemFilter');
+    Route::post('reports/saleitem/export','frontend\ReportsController@saleItemExportExcel');
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
     Route::get('reports/list-sale','frontend\ReportsController@listSale');
     Route::get('reports/getproductbycate/{id}','frontend\ReportsController@getProductByCate');
 
