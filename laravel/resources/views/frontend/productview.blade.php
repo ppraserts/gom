@@ -25,14 +25,6 @@ function renderHTML($text)
                              class="img-circle">
                         <br/><br/>
                     @endif
-                    @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
-                        @if($productRequest->iwantto == "sale")
-                            @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale") && $productRequest['productstatus'] == "open")
-                                <button class="btn btn-primary" onclick="showAddQuotation()">
-                                    {{trans('messages.quotation_request')}}</button>
-                            @endif
-                        @endif
-                    @endif
                 @endif
                 <div class="clearfix"
                      style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>

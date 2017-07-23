@@ -253,7 +253,7 @@ demo.css
                 colorByPoint: true,
                 data: [<?php $n = 1; foreach ($orderSaleItem as $val){ ?>{
                     name: '<?php echo $val->product_name_th?>',
-                    y: <?php echo $val->total_amounts?>,
+                    y: <?php echo $val->total?>,
                     drilldown: '<?php echo $val->product_name_th?>'
                 }<?php if(count($orderSaleItem) == $n){
                 }else{?>,<?php }}?>]

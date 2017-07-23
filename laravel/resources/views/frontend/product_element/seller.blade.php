@@ -15,7 +15,8 @@
 
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
-    <strong>{{ trans('messages.text_firstname_lastname') }} : </strong> {{$productRequest->users_firstname_th.' '.$productRequest->users_lastname_th}}
+    <strong>{{ trans('messages.text_firstname_lastname') }}
+        : </strong> {{$productRequest->users_firstname_th.' '.$productRequest->users_lastname_th}}
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12">
     <strong>{{ trans('messages.text_moblie_phone') }} : </strong> {{$productRequest->users_mobilephone}}
@@ -42,29 +43,29 @@
     if (!empty($productRequest->users_addressname)) {
         $address = $productRequest->users_addressname;
         if (!empty($productRequest->users_street)) {
-            $address .= ' '.trans('messages.text_road').' : ' . $productRequest->users_street;
+            $address .= ' ' . trans('messages.text_road') . ' : ' . $productRequest->users_street;
         } else {
-            $address .= ' '.trans('messages.text_road').' : -';
+            $address .= ' ' . trans('messages.text_road') . ' : -';
         }
         if (!empty($productRequest->users_district)) {
-            $address .= ' '.trans('messages.text_sub_district').' : ' . $productRequest->users_district;
+            $address .= ' ' . trans('messages.text_sub_district') . ' : ' . $productRequest->users_district;
         } else {
-            $address .= ' '.trans('messages.text_sub_district').' : -';
+            $address .= ' ' . trans('messages.text_sub_district') . ' : -';
         }
         if (!empty($productRequest->users_city)) {
-            $address .= '<br/>'.trans('messages.text_district').' : ' . $productRequest->users_city;
+            $address .= '<br/>' . trans('messages.text_district') . ' : ' . $productRequest->users_city;
         } else {
-            $address .= '<br/>'.trans('messages.text_district').' : -';
+            $address .= '<br/>' . trans('messages.text_district') . ' : -';
         }
         if (!empty($productRequest->users_province)) {
-            $address .= ' '.trans('messages.orderbyprovince').' : ' . $productRequest->users_province;
+            $address .= ' ' . trans('messages.orderbyprovince') . ' : ' . $productRequest->users_province;
         } else {
-            $address .= ' '.trans('messages.orderbyprovince').'  : -';
+            $address .= ' ' . trans('messages.orderbyprovince') . '  : -';
         }
         if (!empty($productRequest->users_postcode)) {
-            $address .= '<br/>'.trans('messages.text_zip_code').' : ' . $productRequest->users_postcode;
+            $address .= '<br/>' . trans('messages.text_zip_code') . ' : ' . $productRequest->users_postcode;
         } else {
-            $address .= '<br/>'.trans('messages.text_zip_code').' : -';
+            $address .= '<br/>' . trans('messages.text_zip_code') . ' : -';
         }
     }
     ?>
@@ -170,13 +171,20 @@
             @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
                 @if($productRequest->iwantto == "sale")
                     @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "retail") && $productRequest['productstatus'] == "open" && $productRequest['product_stock'] >0)
-                    <p>
                         <button type="button"
                                 onclick="addToCart('{{$productRequest['id']}}' , '{{$productRequest['users_id']}}' , '{{$productRequest['price']}}' , '{{$productRequest['min_order']}}')"
                                 class="btn btn-primary">
                             <i class="fa fa-shopping-cart"></i> {{trans('messages.add_to_cart')}}
                         </button>
-                    </p>
+
+                    @endif
+                @endif
+            @endif
+            @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
+                @if($productRequest->iwantto == "sale")
+                    @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale") && $productRequest['productstatus'] == "open")
+                        <button class="btn btn-primary" onclick="showAddQuotation()">
+                            {{trans('messages.quotation_request')}}</button>
                     @endif
                 @endif
             @endif
