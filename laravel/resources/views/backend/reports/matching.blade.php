@@ -78,6 +78,22 @@
                 </div>
             </div>
             <div class="row">
+
+                <div class="col-md-4 {{ $errors->has('product_market') ? 'has-error' : '' }}"
+                     style="padding-left: 0px;">
+                    <strong>
+                        {{ trans('validation.attributes.market') }}:
+                    </strong>
+                    <select id="product_market" name="product_market" class="form-control">
+                        <option value="">{{ trans('messages.all') }}</option>
+                        @foreach ($markets as $market)
+                            <option value="{{ $market->id }}"
+                                    @if(!empty($product_market) && $market->id == $product_market)) selected @endif>
+                                {{ $market->market_title_th }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
@@ -96,13 +112,13 @@
                     </select>
                 </div>
 
-
                 <div class="form-group col-md-4" style="padding-left: 0px;">
-                    <strong style="padding-right: 0; padding-left: 0;">
+                    <strong style="padding-right: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
                     <select class="selectpicker form-control" name="pid[]" id="product_type_name"
                             data-live-search="true"
+                            title="{{trans('messages.all')}}"
                             multiple>
                         @if(!empty($products) && count($products))
                             @foreach($products as $product)
@@ -112,23 +128,6 @@
                                 </option>
                             @endforeach
                         @endif
-                    </select>
-                </div>
-
-
-                <div class="col-md-4 {{ $errors->has('product_market') ? 'has-error' : '' }}"
-                     style="padding-left: 0px; padding-right: 0;">
-                    <strong>
-                        {{ trans('validation.attributes.market') }}:
-                    </strong>
-                    <select id="product_market" name="product_market" class="form-control">
-                        <option value="">{{ trans('messages.all') }}</option>
-                        @foreach ($markets as $market)
-                            <option value="{{ $market->id }}"
-                                    @if(!empty($product_market) && $market->id == $product_market)) selected @endif>
-                                {{ $market->market_title_th }}
-                            </option>
-                        @endforeach
                     </select>
                 </div>
             </div>
@@ -147,9 +146,9 @@
                     <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
-                            <th width="60px" style="text-align:center;">{{ trans('messages.no') }}</th>
-                            <th style="text-align:center;">{{ trans('validation.attributes.product_title') }}</th>
                             <th style="text-align:center;">{{ trans('messages.text_product_type_name') }}</th>
+                            <th>{{ trans('messages.menu_market') }}</th>
+                            <th>{{ trans('validation.attributes.product_province_selling') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
                             <th>{{ trans('messages.date_want_sale') }}</th>
                             <th>{{ trans('messages.i_buy') }}</th>
@@ -162,9 +161,13 @@
                         <tbody>
                         @foreach ($matchings as $key => $item)
                             <tr>
-                                <td style="text-align:center;">{{ $key+1 }}</td>
-                                <td style="text-align:center;">{{ $item->product_title }}</td>
                                 <td style="text-align:center;">{{ $item->product_name_th }}</td>
+                                <td>
+                                    @foreach($item->markets as $market)
+                                        <p>- {{$market->market_name}}</p>
+                                    @endforeach
+                                </td>
+                                <td>{{ $item->province }}</td>
                                 <td>{{ $item->seller_firstname. " ". $item->seller_lastname }}</td>
                                 <td style="text-align:center;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->sale_date) }}</td>
                                 <td>{{ $item->buyer_firstname. " ". $item->buyer_lastname }}</td>
@@ -178,23 +181,23 @@
                         </tbody>
                     </table>
                 </div>
-                    <div class="row">
-                        <div class="col-md-6">{!! $matchings->appends(Request::all()) !!}</div>
-                        <div class="col-md-6">
-                            <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
-                                <button class="btn btn-primary pull-right" id="export" type="button">
-                                    <span class="glyphicon glyphicon-export"></span>
-                                    {{trans('messages.export_excel')}}
-                                </button>
-                            </div>
+                <div class="row">
+                    <div class="col-md-6">{!! $matchings->appends(Request::all()) !!}</div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+                            <button class="btn btn-primary pull-right" id="export" type="button">
+                                <span class="glyphicon glyphicon-export"></span>
+                                {{trans('messages.export_excel')}}
+                            </button>
                         </div>
                     </div>
                 </div>
-            @else
-                <div class="alert alert-warning text-center">
-                    <strong>{{trans('messages.data_not_found')}}</strong>
-                </div>
-            @endif
+        </div>
+        @else
+            <div class="alert alert-warning text-center">
+                <strong>{{trans('messages.data_not_found')}}</strong>
+            </div>
+        @endif
         <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
     </div>
 @endsection
