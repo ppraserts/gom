@@ -132,7 +132,7 @@ $pagetitle = trans('message.menu_order_list');
         @if(Request::input('format_report') == 1 or empty(Request::input('format_report')))
             @include('backend.reports.ele_sale_item_report_charts')
         @elseif(Request::input('format_report') == 2)
-            @include('backend.reports.ele_sale_item_report_table')
+            @include('frontend.reports.ele_sale_item_report_table')
         @endif
     </div>
 @endsection

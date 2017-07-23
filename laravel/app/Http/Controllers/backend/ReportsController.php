@@ -273,23 +273,45 @@ class ReportsController extends BaseReports
 
            $orderLists =  $this->saleFilterExport($start_date,$end_date,$market_id,$productcategorys_id,$product_id_arr);
 
+            foreach ($orderLists as $result) {
+                $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                    ->select('market_title_th as market_name')
+                    ->where('product_request_market.product_request_id', $result->product_request_id)
+                    ->get();
+                $marketArrStr = array();
+                foreach ($productMarkets as $productMarket){
+                    array_push($marketArrStr,'- '.$productMarket->market_name);
+                }
+                $result->markets = implode(", ",$marketArrStr);
+            }
+
             $product_name_arr = $product_name;
             $str_start_and_end_date = trans('messages.text_start_date') . ' : - ' . trans('messages.text_end_date') . ' : -';
             if (!empty($start_date) and !empty($end_date)) {
                 $str_start_and_end_date = trans('messages.text_start_date') . ' : ' . $start_date . ' ' . trans('messages.text_end_date') . ' : ' . $end_date;
             }
+            $markets = Market::all();
+            $str_market = trans('messages.all');
+            if (!empty($user_market)) {
+                foreach ($markets as $market) {
+                    if ($market->id = $user_market) {
+                        $str_market = $market->market_title_th;
+                    }
+                }
+                $market_name = trans('messages.menu_market').': '.$str_market;
+            }
 
             $arr[] = array(
-                trans('messages.id_product_type'),
+                trans('messages.menu_market'),
                 trans('messages.product_name'),
                 trans('messages.sum_prict_order')
             );
 
             foreach ($orderLists as $v) {
                 $arr[] = array(
-                    $v->products_id,
+                    $v->markets,
                     $v->product_name_th,
-                    $v->total_amounts
+                    $v->total
                 );
             }
             $data = $arr;
@@ -376,20 +398,20 @@ class ReportsController extends BaseReports
 
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
-        $orderList->join('user_market', 'user_market.user_id', '=', 'users.id');
-        $orderList->join('markets', 'markets.id', '=', 'user_market.market_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
+        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-//        $orderList->select(DB::raw('orders.*,SUM(orders.total_amount) as total_amounts
-        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total
         ,products.product_name_th
         ,products.product_name_en
-        ,markets.market_title_th
         ,order_status.status_name
         ,users.users_firstname_th
         ,users.users_lastname_th
         ,products.id as products_id
+            ,order_items.product_request_id
+            ,order_items.quantity
+            ,product_requests.units
         '));
 
         if (!empty($request->input('productcategorys_id'))){
@@ -402,10 +424,11 @@ class ReportsController extends BaseReports
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
+
         $market_id = '';
         if (!empty($request->input('market_id'))) {
             $market_id = $request->input('market_id');
-            $orderList->where('markets.id', $market_id);
+            $orderList->where('product_request_market.market_id', $market_id);
         }
 
         $defult_ymd_last_month='';
@@ -450,7 +473,6 @@ class ReportsController extends BaseReports
             $result->markets = $productMarkets;
         }
 
-        //return $orderSaleItem;
         return view('backend.reports.sale_item_list', compact('orderSaleItem'
             ,'productCategoryitem'
             ,'productcategorys_id'
@@ -735,19 +757,20 @@ class ReportsController extends BaseReports
     private function saleFilterExport($date_start,$date_end,$market_id='',$productcategorys_id='',$product_id_arr = array()){
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
-        $orderList->join('user_market', 'user_market.user_id', '=', 'users.id');
-        $orderList->join('markets', 'markets.id', '=', 'user_market.market_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total_amounts
+        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+        $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total
         ,products.product_name_th
         ,products.product_name_en
-        ,markets.market_title_th
         ,order_status.status_name
         ,users.users_firstname_th
         ,users.users_lastname_th
         ,products.id as products_id
+            ,order_items.product_request_id
+            ,order_items.quantity
+            ,product_requests.units
         '));
         if (!empty($date_start) and !empty($date_end)) {
             $date_start = DateFuncs::convertYear($date_start);

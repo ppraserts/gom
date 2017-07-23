@@ -37,7 +37,7 @@ class ProductsViewController extends Controller
             ->join('products', 'product_requests.products_id', '=', 'products.id')
             ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id')
             ->select(DB::raw('users.*, users.id AS user_id ,product_requests.*, products.product_name_th
-                ,sum(comments.score)/count(comments.score) as avg_score'))
+                ,sum(comments.score)/count(comments.product_id) as avg_score'))
             ->where('product_requests.id', $id)
             ->first();
 

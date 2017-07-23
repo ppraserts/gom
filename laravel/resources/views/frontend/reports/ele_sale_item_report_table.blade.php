@@ -48,40 +48,34 @@
 @push('scripts')
 <script src="{{url('jquery-plugin-for-bootstrap-loading-modal/build/bootstrap-waitingfor.js')}}"></script>
 <script type="text/javascript">
-    //***********************************************
     $("#export").click(function () {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         var market_id = $("#market_id").val();
-        var productcategorys_id = $("#productcategorys_id").val();
+        //var product_type_name = $("#product_type_name option:selected").val();
         var product_type_name = [];
         $('#product_type_name option:selected').each(function (i, selected) {
             product_type_name[i] = $(selected).val();
         });
-
         waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
             progressType: 'success'
         });
         var productcategorys_id =$('#productcategorys_id option:selected').val();
         var key_token = $('input[name=_token]').val();
-        var type = 'sale';
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php echo url('admin/reports/sale/export')?>",
-            data: {start_date: start_date
-                ,end_date: end_date
-                ,market_id:market_id
-                ,productcategorys_id:productcategorys_id
-                ,product_type_name:product_type_name
-            },
+            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
+                $page = '?page=' . Request::input('page');
+            } echo url('user/reports/saleitem/export' . $page)?>",
+            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name,productcategorys_id:productcategorys_id,market_id:market_id},
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
                 $(".a-download").click(function () {
                     waitingDialog.hide();
                     window.open(
-                        "<?php echo url('admin/reports/buy/download/?file=')?>" + response.file,
+                        "<?php echo url('user/reports/buy/download/?file=')?>" + response.file,
                         '_blank'
                     );
                 });

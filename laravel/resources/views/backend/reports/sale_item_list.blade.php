@@ -255,7 +255,7 @@ demo.css
                 colorByPoint: true,
                 data: [<?php $n = 1; foreach ($orderSaleItem as $val){ ?>{
                     name: '<?php echo $val->product_name_th?>',
-                    y: <?php echo $val->total_amounts?>,
+                    y: <?php echo $val->total?>,
                     drilldown: '<?php echo $val->product_name_th?>'
                 }<?php if(count($orderSaleItem) == $n){
                 }else{?>,<?php }}?>]
@@ -265,52 +265,5 @@ demo.css
     });
 </script>
 <?php } }?>
-<script type="text/javascript">
-    //***********************************************
-    $("#export").click(function () {
-        var start_date = $("#start_date").val();
-        var end_date = $("#end_date").val();
-        var market_id = $("#market_id").val();
-        var productcategorys_id = $("#productcategorys_id").val();
-        var product_type_name = [];
-        $('#product_type_name option:selected').each(function (i, selected) {
-            product_type_name[i] = $(selected).val();
-        });
-
-        waitingDialog.show('<?php echo trans('messages.text_loading_lease_wait')?>', {
-            progressType: 'success'
-        });
-        var productcategorys_id =$('#productcategorys_id option:selected').val();
-        var key_token = $('input[name=_token]').val();
-        var type = 'sale';
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': key_token},
-            type: "POST",
-            url: "<?php echo url('admin/reports/sale/export')?>",
-            data: {start_date: start_date
-                ,end_date: end_date
-                ,market_id:market_id
-                ,productcategorys_id:productcategorys_id
-                ,product_type_name:product_type_name
-            },
-            success: function (response) {
-                $('.modal-content').empty();
-                $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');
-                $(".a-download").click(function () {
-                    waitingDialog.hide();
-                    window.open(
-                        "<?php echo url('admin/reports/buy/download/?file=')?>" + response.file,
-                        '_blank'
-                    );
-                });
-                return false;
-            },
-            error: function (response) {
-                alert('error..');
-                return false;
-            }
-        })
-    });
-</script>
 
 @endpush

@@ -29,8 +29,7 @@
                         * {{ trans('validation.attributes.productcategorys_id') }}:
                     </strong>
                     <select id="productcategorys_id" name="productcategorys_id" class="form-control"
-                            data-error={{trans('validation.attributes.message_validate_product_category')}}
-                            required='required'>
+                            data-error={{trans('validation.attributes.message_validate_product_category')}}>
                         <option value="">{{ trans('messages.all') }}</option>
                         @foreach ($productCategoryitem as $key => $itemcategory)
                             <option value="{{ $itemcategory->id }}"
@@ -93,8 +92,7 @@
                     <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
-                            <th width="120px" style="text-align:center;">{{trans('messages.text_product_id')}}</th>
-                            <th>{{trans('messages.text_product_th')}}</th>
+                            <th>{{trans('messages.product_name')}}</th>
                             <th style="text-align:center;">{{trans('messages.menu_market')}}</th>
                             <th style="text-align:center;">{{trans('messages.text_product_score')}}</th>
                         </tr>
@@ -102,11 +100,14 @@
                         <tbody>
                         @foreach ($results as $result)
                             <tr>
-                                <td style="text-align:center;">{{ $result->id }}</td>
                                 <td>{{$result->product_name_th}}</a>  </td>
-                                <td>{{ $result->market_title_th }}</td>
                                 <td>
-                                    @if(!empty($result->product_score)){{ number_format($result->product_score,2) }} @else
+                                    @foreach($result->markets as $market)
+                                        <p>- {{$market->market_name}}</p>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @if(!empty($result->product_score)){{ (float)$result->product_score }} @else
                                         0 @endif
                                     {{ trans('messages.text_star') }}
                                 </td>

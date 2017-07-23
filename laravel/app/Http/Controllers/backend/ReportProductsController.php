@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\backend;
 
+use App\ProductRequestMarket;
 use DB;
 use App\Product;
 use App\Market;
@@ -19,30 +20,20 @@ class ReportProductsController extends BaseReports
         $this->middleware('admin');
     }
 
-    private $rules = [
-        'productcategorys_id' => 'required',
-    ];
 
     public function index(Request $request)
     {
-        if (!empty($request->input('is_search'))) {
-            $validator = $this->getValidationFactory()->make($request->all(), $this->rules, [], []);
-            if ($validator->fails()) {
-                $request['productcategorys_id'] = $request['productcategorys_id'];
-                $this->throwValidationException($request, $validator);
-            }
-        }
+
         $markets = Market::all();
         $productCategoryitem = BaseReports::productCategorys();
-        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id')
-            ->join('product_requests', 'product_requests.products_id', '=', 'products.id')
+        $result = Product::join('product_requests', 'product_requests.products_id', '=', 'products.id')
             ->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id')
-            ->join('markets', 'markets.id', '=', 'product_request_market.market_id');
+            ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id');
         $result->select(DB::raw('products.id
               ,products.product_name_th
               ,products.product_name_en
-              ,markets.market_title_th
-              ,SUM(comments.score)/COUNT(comments.score) as product_score'));
+              ,product_requests.id as product_request_id
+              ,SUM(comments.score)/COUNT(comments.product_id) as product_score'));
         $productcategory_id= '';
         if(!empty($request->input('productcategorys_id'))){
             $productcategory_id = $request->input('productcategorys_id');
@@ -62,6 +53,15 @@ class ReportProductsController extends BaseReports
         $result->orderBy('product_score', 'desc');
         $result->groupBy('products.id');
         $results = $result->paginate(config('app.paginate'));
+
+        foreach ($results as $result) {
+            $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                ->select('market_title_th as market_name')
+                ->where('product_request_market.product_request_id', $result->product_request_id)
+                ->get();
+            $result->markets = $productMarkets;
+        }
+//        return $results;
         return view('backend.reports.product', compact('productCategoryitem'
             ,'results'
             ,'markets'
@@ -77,6 +77,18 @@ class ReportProductsController extends BaseReports
             $productcategorys_id = $request->input('productcategorys_id');
             $market_id= $request->input('market_id');
             $results = $this->sqlFilter($productcategorys_id,$market_id);
+
+            foreach ($results as $result) {
+                $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
+                    ->select('market_title_th as market_name')
+                    ->where('product_request_market.product_request_id', $result->product_request_id)
+                    ->get();
+                $marketArrStr = array();
+                foreach ($productMarkets as $productMarket){
+                    array_push($marketArrStr,'- '.$productMarket->market_name);
+                }
+                $result->markets = implode(", ",$marketArrStr);
+            }
 
             $product_category_name = trans('messages.all');
             if(!empty($productcategorys_id)){
@@ -104,8 +116,8 @@ class ReportProductsController extends BaseReports
                 $arr[] = array(
                     $v->id,
                     $v->product_name_th,
-                    $v->market_title_th,
-                    $product_score
+                    $v->markets,
+                    (float)$product_score
                 );
             }
 
@@ -166,13 +178,14 @@ class ReportProductsController extends BaseReports
 
     private function sqlFilter($productcategory_id ='',$market_id=''){
 
-        $result = Product::leftJoin('comments', 'products.id', '=', 'comments.product_id')
-            ->join('product_requests', 'product_requests.products_id', '=', 'products.id')
+        $result = Product::join('product_requests', 'product_requests.products_id', '=', 'products.id')
             ->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id')
-            ->join('markets', 'markets.id', '=', 'product_request_market.market_id');
+            ->join('markets', 'markets.id', '=', 'product_request_market.market_id')
+            ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id');
         $result->select(DB::raw('products.id
               ,products.product_name_th
               ,products.product_name_en
+              ,product_requests.id as product_request_id
               ,markets.market_title_th
               ,SUM(comments.score)/COUNT(comments.score) as product_score'));
 

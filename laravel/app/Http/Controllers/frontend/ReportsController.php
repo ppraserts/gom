@@ -344,14 +344,6 @@ class ReportsController extends BaseReports
             ,order_items.quantity
             ,product_requests.units
         '));
-//        $orderList->select(DB::raw('orders.*, order_status.status_name
-//            ,users.users_firstname_th
-//            ,users.users_lastname_th
-//            ,products.product_name_th
-//            ,order_items.quantity
-//            ,product_requests.units
-//            ,order_items.total'
-//        ));
 
 
         $orderList->where('orders.user_id', $user->id);
@@ -417,6 +409,7 @@ class ReportsController extends BaseReports
         return view('frontend.reports.sale_item_list', compact('orderSaleItem'
             , 'products'
             , 'productTypeNameArr'
+            , 'productcategorys_id'
             , 'sumAll'
             , 'productCategoryitem'
             , 'defult_ymd_last_month'
@@ -521,6 +514,16 @@ class ReportsController extends BaseReports
                 $str_start_and_end_date = trans('messages.text_start_date') . ' : ' . $start_date . ' ' . trans('messages.text_end_date') . ' : ' . $end_date;
             }
 
+            // filter market
+            $str_market = trans('messages.all');
+            if (!empty($user_market)) {
+                foreach ($markets as $market) {
+                    if ($market->id = $user_market) {
+                        $str_market = $market->market_title_th;
+                    }
+                }
+            }
+
 
             $title_report = trans('messages.report_title_sale');
             $arr[] = array(
@@ -538,8 +541,8 @@ class ReportsController extends BaseReports
                 );
             }
             $data = $arr;
-            $info = Excel::create('dgtfarm-saleitem-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString) {
+            $info = Excel::create('dgtfarm-saleitem-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market) {
                     $sheet->mergeCells('A1:I1');
                     $sheet->mergeCells('A2:I3');
                     $sheet->mergeCells('A4:I5');
@@ -563,8 +566,8 @@ class ReportsController extends BaseReports
                         'H' => '#,##0'
                     ));
 
-                    $sheet->cells('A2', function ($cells) use ($productcategoryString, $productStr) {
-                        $cells->setValue($productcategoryString . ' ' . trans('messages.menu_add_product') . ': ' . $productStr);
+                    $sheet->cells('A2', function ($cells) use ($productcategoryString, $productStr,$str_market) {
+                        $cells->setValue($productcategoryString . ', ' . trans('messages.menu_add_product') . ': ' . $productStr.", ".trans('messages.menu_market').": ".$str_market);
                         $cells->setFont(array(
                             'bold' => true
                         ));

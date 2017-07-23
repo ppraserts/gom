@@ -93,7 +93,6 @@
                     <table class="table table-bordered table-striped table-hover" style="font-size: 13px;">
                         <thead>
                         <tr>
-                            <th width="60px" style="text-align:center;">{{ trans('messages.text_shop_id') }}</th>
                             <th>{{ trans('messages.text_shop_url') }}</th>
                             <th style="text-align:center;">{{ trans('messages.text_shop_title') }}</th>
                             <th style="text-align:center;">{{ trans('messages.menu_market') }}</th>
@@ -104,12 +103,15 @@
                         <tbody>
                         @foreach ($results as $result)
                             <tr>
-                                <td style="text-align:center;">{{ $result->id }}</td>
                                 <td><a href="{{ url($result->shop_name) }}"
                                        target="_blank">{{ url($result->shop_name) }}</a>
                                 </td>
                                 <td>{{ $result->shop_title }}</td>
-                                <td>{{ $result->market_name }}</td>
+                                <td>
+                                    @foreach($result->markets as $market)
+                                        <p>- {{$market->market_name}}</p>
+                                        @endforeach
+                                </td>
                                 <td>{{ $result->users_province }}</td>
                                 <td>
                                     @if(!empty($result->shop_score)){{ (float)$result->shop_score }} @else 0 @endif

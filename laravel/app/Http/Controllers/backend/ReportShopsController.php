@@ -146,7 +146,7 @@ class ReportShopsController extends Controller
             }
 
             // filter market
-            $str_market = trans('messages.show_all_market');
+            $str_market = trans('messages.all');
             if (!empty($user_market)) {
                 foreach ($markets as $market) {
                     if ($market->id = $user_market) {
