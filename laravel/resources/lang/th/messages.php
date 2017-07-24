@@ -325,5 +325,7 @@ return [
     'date_want_buy' => 'วันที่ต้องการซื้อ',
     'date_want_sale' => 'วันที่ต้องการขาย',
     'download_pdf' => 'ส่งออกข้อมูลในรูปแบบ PDF',
-    'please_input_price' => 'กรุณาระบุราคา'
+    'please_input_price' => 'กรุณาระบุราคา',
+    'report_order' => 'รายงานการสั่งซื้อ',
+    'report_sale' => 'รายงานการขาย',
 ];

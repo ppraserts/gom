@@ -21,8 +21,8 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h2>{{ trans('messages.menu_order_list') }}</h2>
+        <div class="row text-center">
+            <h2>{{ trans('messages.report_order') }}</h2>
         </div>
         {{csrf_field()}}
         <form action="{{url('user/reports/buy')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">

@@ -275,4 +275,5 @@ Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 Route::get('/migrate/productprovince/', 'MigrateController@product_province');
 Route::get('/migrate/badword/', 'MigrateController@badword');
 Route::get('/fix/product/', 'FixController@removeDubProduct');
+Route::get('/fix/matchingprovince/', 'FixController@fixMatchingProvince');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

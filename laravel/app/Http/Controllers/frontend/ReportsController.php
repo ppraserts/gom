@@ -10,6 +10,7 @@ use App\ProductRequestMarket;
 use DB, Validator, Response;
 use App\Order;
 use Excel;
+use Illuminate\Support\Facades\Lang;
 use Storage;
 use App\OrderPayment;
 use App\Product;
@@ -281,8 +282,8 @@ class ReportsController extends BaseReports
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $orderList->where('orders.order_date', '>=', $request->input('start_date'));
-            $orderList->where('orders.order_date', '<=', $request->input('end_date'));
+            $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
+            $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
             $defult_ymd_last_month = $request->input('start_date');
@@ -621,11 +622,11 @@ class ReportsController extends BaseReports
 
         if (!empty($start_date)) {
             $start_date = DateFuncs::convertYear($start_date);
-            $orderList->where('orders.order_date', '>=', $start_date);
+            $orderList->whereDate('orders.order_date', '>=', $start_date);
         }
         if (!empty($end_date)) {
             $end_date = DateFuncs::convertYear($end_date);
-            $orderList->where('orders.order_date', '<=', $end_date);
+            $orderList->whereDate('orders.order_date', '<=', $end_date);
         }
         if (!empty($productTypeNameArr)) {
             $orderList->whereIn('products.id', $productTypeNameArr);

@@ -723,11 +723,11 @@ class ReportsController extends BaseReports
         ));
         if (!empty($start_date)) {
             $start_date = DateFuncs::convertYear($start_date);
-            $orderList->where('orders.order_date', '>=', $start_date);
+            $orderList->whereDate('orders.order_date', '>=', $start_date);
         }
         if (!empty($end_date)) {
             $end_date = DateFuncs::convertYear($end_date);
-            $orderList->where('orders.order_date', '<=', $end_date);
+            $orderList->whereDate('orders.order_date', '<=', $end_date);
         }
         if (!empty($productTypeNameArr)) {
             $productTypeNameArr = $productTypeNameArr;
@@ -784,7 +784,7 @@ class ReportsController extends BaseReports
             $orderList->where('products.productcategory_id', $productcategorys_id);
         }
         if (!empty($market_id)){
-            $orderList->where('markets.id',$market_id);
+            $orderList->where('product_request_market.market_id',$market_id);
         }
 
         if (count($product_id_arr) > 0) {
