@@ -45,11 +45,11 @@
                         {{ trans('messages.member') }}:
                     </strong>
                     <select class="selectpicker form-control" name="user" id="user"
-                            data-error={{trans('messages.please_select_user')}}
+                            data-error={{trans('messages.please_select_user')}} title="{{ trans('messages.please_select') }}"
                             required='required'
                             data-live-search="true">
                         @if(count($users) > 0)
-                            <option value="">{{ trans('messages.all') }}</option>
+                            {{--<option value="">{{ trans('messages.please_select') }}</option>--}}
                             @foreach($users as $user)
                                 <option value="{{$user->id}}"
                                         @if(!empty($user_id) and $user_id == $user->id) selected @endif>
@@ -86,10 +86,10 @@
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
-                                <th>{{ trans('messages.i_sale') }}</th>
+                                <th>{{ trans('messages.i_buy') }}</th>
                             @endif
                             @if(!empty($type_sale_buy) and $type_sale_buy == 'buy')
-                                <th>{{ trans('messages.i_buy') }}</th>
+                                <th>{{ trans('messages.i_sale') }}</th>
                             @endif
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
                             <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
@@ -110,11 +110,17 @@
                                     {{ $result->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
                                 </td>
                                 @if(!empty($type_sale_buy) and $type_sale_buy == 'sale')
-                                    <td>{{ $result->users_firstname_th. " ". $result->users_lastname_th }}</td>
-                                @elseif(!empty($type_sale_buy) and $type_sale_buy == 'buy')
-                                    <th style="font-weight: normal">
+                                    <td>
                                         {{ $result->buyer->users_firstname_th. " ". $result->buyer->users_lastname_th }}
-                                    </th>
+                                        {{--<br/>--sale--<br/>--}}
+                                        {{--{{ $result->users_firstname_th. " ". $result->users_lastname_th }}--}}
+                                    </td>
+                                @elseif(!empty($type_sale_buy) and $type_sale_buy == 'buy')
+                                    <td>
+                                        {{--{{ $result->users_firstname_th. " ". $result->users_lastname_th }}--}}
+                                        {{--<br/>--buy--<br/>--}}
+                                        {{ $result->user->users_firstname_th. " ". $result->user->users_lastname_th }}
+                                    </td>
                                 @endif
 
                                 <td>{{ $result->product_name_th }}</td>
