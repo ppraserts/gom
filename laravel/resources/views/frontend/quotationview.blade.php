@@ -2,7 +2,12 @@
 @section('page_heading',trans('message.menu_order_list'))
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
+    {{--@if($user->id == $quotation->seller_id)
+        @include('shared.usermenu', array('setActive'=>'quote'))
+    @else--}}
     @include('shared.usermenu', array('setActive'=>'quotation'))
+    {{--@endif--}}
+
     <div class="col-sm-12">
         <div class="row">
             <div class="panel panel-default" style="margin-top: 30px">
@@ -16,7 +21,11 @@
                                 <thead>
                                 <tr>
                                     <th width="180">{{ trans('messages.quotation_date') }}</th>
+
+                                    <th>{{ trans('messages.i_buy') }}</th>
+
                                     <th>{{ trans('messages.i_sale') }}</th>
+
                                     @if($quotation->user->users_mobilephone !='')
                                         <th>{{ trans('validation.attributes.users_mobilephone') }}</th>
                                     @endif
@@ -31,7 +40,11 @@
                                 <tbody>
                                 <tr>
                                     <td>{{  \App\Helpers\DateFuncs::mysqlToThaiDate($quotation->updated_at) }}</td>
+
+                                    <td>{{  $quotation->buyer_firstname . " " .$quotation->buyer_lastname }}</td>
+
                                     <td>{{  $quotation->users_firstname_th . " " .$quotation->users_lastname_th }}</td>
+
                                     @if($quotation->user->users_mobilephone !='')
                                         <td>{{ $quotation->user->users_mobilephone }}</td>
                                     @endif
@@ -79,9 +92,9 @@
                                     <td>{{  $quotation->product_name_th }}</td>
                                     <td>{{  $quotation->product_title }}</td>
                                     <td style="width: 115px;">
-                                        @if($user->user_id != $quotation->buyer_id)
+                                        @if($user->id != $quotation->seller_id)
                                             <input type="number" class="form-control" id="qty"
-                                                   value="{{$quotation->quantity}}" min="{{$quotation->min_order}}">
+                                                   value="{{$quotation->quantity}}" min="{{$quotation->quantity}}">
                                         @else
                                             {{$quotation->quantity}}
                                         @endif
@@ -113,14 +126,16 @@
                                     </tbody>
                                 </table>
                             @endif
-                            <div class="panel panel-default" style="margin-top: 30px">
-                                <div class="panel-heading">
-                                    <h4>{{ trans('messages.title_delivery_product') }}</h4>
+                            @if($user->id != $quotation->seller_id)
+                                <div class="panel panel-default" style="margin-top: 30px">
+                                    <div class="panel-heading">
+                                        <h4>{{ trans('messages.title_delivery_product') }}</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        @include('frontend.quotation.address_delivery')
+                                    </div>
                                 </div>
-                                <div class="panel-body">
-                                    @include('frontend.quotation.address_delivery')
-                                </div>
-                            </div>
+                            @endif
                         </div>
                         <div class="col-md-4">
                             <strong>รูปภาพสินค้า</strong>
@@ -130,7 +145,7 @@
                                  src="{{url($quotation->product1_file)}}">
                         </div>
                     </div>
-                    @if($user->user_id != $quotation->buyer_id)
+                    @if($user->id != $quotation->seller_id)
                         <div class="row">
                             <div class="col-md-2 col-md-offset-5">
                                 <button type="button" class="btn btn-primary"

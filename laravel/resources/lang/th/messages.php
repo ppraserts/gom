@@ -157,7 +157,7 @@ return [
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'product_list' => 'รายการสินค้า',
     'order_status' => 'สถานะ',
-    'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
+    'order_status_history' => 'สถานะการสั่งซื้อ',
     'order_type' => 'ประเภทการสั่งซื้อ',
     'text_note' => 'บันทึกเพิ่มเติม',
     'cancel_list_buy'=>'ยกเลิกรายการสั่งซื้อ',
@@ -325,4 +325,5 @@ return [
     'date_want_buy' => 'วันที่ต้องการซื้อ',
     'date_want_sale' => 'วันที่ต้องการขาย',
     'download_pdf' => 'ส่งออกข้อมูลในรูปแบบ PDF',
+    'please_input_price' => 'กรุณาระบุราคา'
 ];

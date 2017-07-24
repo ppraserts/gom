@@ -65,7 +65,7 @@
                     {!! Form::model($quotation, ['method' => 'PATCH','route' => ['quote.update', $quotation->id] ,'files' => true]) !!}
                     <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
                         <strong>* {{ trans('messages.quote_price') }} ({{ trans('messages.baht') }}/{{ $quotation->units }}):</strong>
-                        {!! Form::number('price', null, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control')) !!}
+                        {!! Form::number('price', null, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control', 'min' => '1','oninvalid'=>"this.setCustomValidity('".trans('messages.please_input_price')."')")) !!}
                     </div>
 
                     <div class="form-group {{ $errors->has('remark') ? 'has-error' : '' }}">
