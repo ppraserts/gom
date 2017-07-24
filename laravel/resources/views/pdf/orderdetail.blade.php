@@ -6,11 +6,30 @@
     <link href="{{url('css/bootstrap.min.css')}}" rel="stylesheet" media="all">
 
     <style>
+
         @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
             src: url("{{ url('fonts/THSarabun/THSarabunNew.ttf') }}") format('truetype');
+        }
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: bold;
+            src: url("{{ url('fonts/THSarabun/THSarabunNew Bold.ttf') }}") format('truetype');
+        }
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: normal;
+            src: url("{{ url('fonts/THSarabun/THSarabunNew Italic.ttf') }}") format('truetype');
+        }
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: bold;
+            src: url("{{ url('fonts/THSarabun/THSarabunNew BoldItalic.ttf') }}") format('truetype');
         }
         body {
             font-family:'THSarabunNew' !important;
