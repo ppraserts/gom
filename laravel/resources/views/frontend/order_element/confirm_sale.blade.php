@@ -9,7 +9,7 @@
             <div class="form-group">
                 <strong>{{ trans('messages.text_payment_channel') }}:</strong>
                 <select name="payment_channel" id="payment_channel">
-                    <option value="">* {{trans('messages.payment_gateway')}}</option>
+                    <option value="">* {{trans('messages.select_payment_gateway')}}</option>
                     <option value="บัญชีธนาคาร">{{trans('messages.book_bank')}}</option>
                     <option value="เงินสด">{{trans('messages.cash')}}</option>
                 </select>

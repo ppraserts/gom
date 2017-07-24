@@ -62,10 +62,11 @@
                 </div>
 
                 <div class="col-md-6">
-                    {!! Form::model($quotation, ['method' => 'PATCH','route' => ['quote.update', $quotation->id] ,'files' => true]) !!}
+                    {!! Form::model($quotation, ['method' => 'PATCH','route' => ['quote.update', $quotation->id] ,'files' => true,'data-toggle'=>'validator' ]) !!}
                     <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
                         <strong>* {{ trans('messages.quote_price') }} ({{ trans('messages.baht') }}/{{ $quotation->units }}):</strong>
-                        {!! Form::number('price', null, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control', 'min' => '1','oninvalid'=>"this.setCustomValidity('".trans('messages.please_input_price')."')")) !!}
+                        {!! Form::number('price', null, array('placeholder' => trans('validation.attributes.price'),'class' => 'form-control', 'min' => '1', 'data-error'=>trans('messages.please_input_price'))) !!}
+                        <div class="help-block with-errors"></div>
                     </div>
 
                     <div class="form-group {{ $errors->has('remark') ? 'has-error' : '' }}">
@@ -91,3 +92,6 @@
 
     </div>
 @endsection
+@push('scripts')
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
+@endpush
