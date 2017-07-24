@@ -16,9 +16,13 @@
                             <label>{{$productRequest->units}}</label>
                         </div>
                     </div>
+                    <div class="row">
+                        <div id="quantity-error" class="col-md-12 help-block with-errors"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="addQuotation({{$productRequest['id']}})"><i class="fa fa-shopping-cart"></i> {{trans('messages.quotation_request')}}</button>
+                    <button type="button" class="btn btn-success" onclick="addQuotation({{$productRequest['id']}})"><i
+                                class="fa fa-shopping-cart"></i> {{trans('messages.quotation_request')}}</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                 </div>
             </div>

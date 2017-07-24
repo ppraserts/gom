@@ -126,6 +126,11 @@ function renderHTML($text)
 
     function addQuotation(productRequestId) {
         var quantity = $('input[name=quantity]').val();
+        if (quantity<1){
+            $('#quantity-error').css('color', '#a94442');
+            $('#quantity-error').html('กรุณากรอกจำนวน');
+            return;
+        }
         window.location = BASE_URL + '/user/quotationRequest/' + productRequestId + '/' + quantity;
     }
 
