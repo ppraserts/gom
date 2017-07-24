@@ -214,7 +214,7 @@
 </div>
 <script type="text/php">
     if ( isset($pdf) ) {
-        $pdf->page_text(450, 18, DateFuncs::dateTimeToThaiDatetime(date('Y-m-d H:i:s'),false)."  หน้า {PAGE_NUM} / {PAGE_COUNT}",'', 16, array(0,0,0));
+        $pdf->page_text(450, 18, "วันเวลาที่สั่งพิมพ์ ".DateFuncs::dateTimeToThaiDatetime(date('Y-m-d H:i:s'),false)."  หน้า {PAGE_NUM} / {PAGE_COUNT}",'', 16, array(0,0,0));
     }
 </script>
 </body>
