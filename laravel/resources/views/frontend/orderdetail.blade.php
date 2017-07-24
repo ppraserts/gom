@@ -219,7 +219,9 @@ $pagetitle = trans('message.menu_order_list');
 
         </div>
         <div class="row">
-            <a href="{{url('user/orderdetail/pdf/'.$order->id)}}" class="btn btn-primary"><span class="glyphicon glyphicon-export"></span> {{trans('messages.download_pdf')}}</a>
+            <a href="{{url('user/orderdetail/pdf/'.$order->id)}}" class="btn btn-primary pull-right">
+                <span class="glyphicon glyphicon-export"></span> {{trans('messages.download_pdf')}}
+            </a>
         </div>
     </div>
         @endsection
