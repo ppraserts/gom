@@ -69,8 +69,10 @@ class QuoteController extends Controller
         $quotation = Quotation::join('product_requests', 'quotation.product_request_id', '=', 'product_requests.id')
             ->join('products', 'product_requests.products_id', '=', 'products.id')
             ->join('users','users.id','=','product_requests.users_id')
-            ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','product_requests.*','product_requests.*','quotation.*','products.product_name_th')
+            ->join('users as buyer','buyer.id','=','quotation.user_id')
+            ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','buyer.users_firstname_th as buyer_firstname','buyer.users_lastname_th as buyer_lastname','product_requests.*','product_requests.*','quotation.*','products.product_name_th')
             ->where('quotation.id', $id)->first();
+//        return $quotation;
         return view('frontend.quotationview', compact('quotation','user'));
     }
 }

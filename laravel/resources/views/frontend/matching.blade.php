@@ -79,7 +79,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
 
 
                                     @if(($col_md_4_item['selling_type'] == "all" || $col_md_4_item['selling_type'] == "wholesale"))
-                                        @if($col_md_4_item['quotation_id'] == null)
+                                        {{--@if($col_md_4_item['quotation_id'] == null)--}}
                                             <div class="col-md-12" style="margin-top: 10px;">
                                                 <p class="btn-wholesale">
                                                     <i class="fa fa-file-text-o"></i>
@@ -87,22 +87,22 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                                        class="hidden-sm">{{ trans('messages.quotation_request')}}</a>
                                                 </p>
                                             </div>
-                                        @elseif($col_md_4_item['is_reply'] == 1)
-                                            <div class="col-md-12" style="margin-top: 10px;">
+                                        {{--@elseif($col_md_4_item['is_reply'] == 1)--}}
+                                            {{--<div class="col-md-12" style="margin-top: 10px;">
                                                 <p class="btn-wholesale">
                                                     <i class="fa fa-file-text-o"></i>
                                                     <a href="{{ url('user/quotation/'.$col_md_4_item['quotation_id']) }}"
                                                        class="hidden-sm">{{ trans('messages.quotation_view')}}</a></p>
-                                            </div>
-                                        @else
-                                            <div class="col-md-12" style="margin-top: 10px;">
+                                            </div>--}}
+                                        {{--@else--}}
+                                            {{--<div class="col-md-12" style="margin-top: 10px;">
                                                 <p class="btn-wholesale">
                                                     <i class="fa fa-file-text-o"></i>
                                                     <span
                                                             class="hidden-sm">{{ trans('messages.quotation_request_waiting')}}</span>
                                                 </p>
-                                            </div>
-                                        @endif
+                                            </div>--}}
+                                        {{--@endif--}}
                                     @endif
                                 </div>
 

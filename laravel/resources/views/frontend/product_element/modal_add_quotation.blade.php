@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="form-inline col-md-12">
                             <strong>จำนวนที่ต้องการ</strong>
-                            <input type="number" name="quantity" min="1"/>
+                            <input type="number" name="quantity" min="{{$productRequest->min_order}}"/>
                             <label>{{$productRequest->units}}</label>
                         </div>
                     </div>
