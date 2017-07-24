@@ -54,7 +54,7 @@ class ProductRequest extends Model
             } else if ($column == "province") {
                 $conditionStr .= " and (a.province_selling = b.province_selling OR a.province_selling = 0 OR b.province_selling = 0)";
             } else if ($column == "quantity") {
-                $conditionStr .= " and b.volumnrange_start >= a.min_order";
+                $conditionStr .= " and (b.volumnrange_start >= a.min_order && b.unit = a.unit)";
             }
         }
         $results = DB::select(
@@ -100,7 +100,7 @@ class ProductRequest extends Model
                                                           and a.products_id = b.products_id
                                                           and a.productstatus = 'open'
                                                           and a.users_id != $userid
-                                                          AND ((a.add_packing != -1 && b.add_packing != -1) OR (a.add_packing = -1 && b.add_packing = -1 && a.package_unit = b.package_unit))
+                                                          AND ((a.add_packing != -1 && b.add_packing != -1) OR (a.add_packing = -1 && b.add_packing = -1 && a.package_unit = b.package_unit && a.packing_size = b.packing_size))
                                                           $conditionStr
                                                       JOIN `products` p on a.products_id = p.id
                                                       LEFT JOIN quotation q ON a.id = q.product_request_id
@@ -221,7 +221,7 @@ class ProductRequest extends Model
             } else if ($column == "province") {
                 $conditionStr .= " and (sale.province_selling = buy.province_selling OR sale.province_selling = 0 OR buy.province_selling = 0)";
             } else if ($column == "quantity") {
-                $conditionStr .= " and buy.volumnrange_start >= sale.min_order";
+                $conditionStr .= " and (b.volumnrange_start >= a.min_order && b.unit = a.unit)";
             }
         }
 
@@ -271,7 +271,7 @@ class ProductRequest extends Model
                                                             and buy.pricerange_end>=sale.price
                                                             and buy.volumnrange_start >= sale.min_order
                                                             and buy.users_id != $userid
-                                                            AND ((buy.add_packing != -1 && sale.add_packing != -1) OR (buy.add_packing = -1 && sale.add_packing = -1 && buy.package_unit = sale.package_unit))
+                                                            AND ((buy.add_packing != -1 && sale.add_packing != -1) OR (buy.add_packing = -1 && sale.add_packing = -1 && buy.package_unit = sale.package_unit && buy.packing_size = sale.packing_size))
                                                             $conditionStr
                                                     JOIN `products` p on buy.products_id = p.id
                                           ) as matching

@@ -577,13 +577,13 @@
                                     required="required">
                                 <option value="">{{ trans('validation.attributes.units') }}</option>
                                 @foreach ($unitsItem as $key => $unit)
-                                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                    @if($item->package_unit == $unit->units_th)
+                                        <option selected value="{{ $unit->units_th }}">
+                                            {{ $unit->units_th }}
                                         </option>
                                     @else
-                                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        <option value="{{ $unit->units_th }}">
+                                            {{ $unit->units_th }}
                                         </option>
                                     @endif
                                 @endforeach
@@ -618,13 +618,13 @@
                                 data-error={{trans('validation.attributes.message_validate_min_order_units')}} required='required'>
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
-                                @if($item->units == $unit->{ "units_".Lang::locale()})
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}" selected="selected">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                @if($item->units == $unit->units_th)
+                                    <option value="{{ $unit->units_th }}" selected="selected">
+                                        {{ $unit->units_th }}
                                     </option>
                                 @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                        {{ $unit->{ "units_".Lang::locale()} }}
+                                    <option value="{{ $unit->units_th }}">
+                                        {{ $unit->units_th }}
                                     </option>
                                 @endif
                             @endforeach
@@ -808,17 +808,17 @@
             <strong>
                 * {{ trans('validation.attributes.units_package') }} :
             </strong>
-            <select id="package_unitpackage_unit" name="package_unit" class="form-control"
+            <select id="package_unit" name="package_unit" class="form-control"
                     data-error='{{trans('validation.attributes.message_validate_units')}}'>
                 <option value="">{{ trans('validation.attributes.units') }}</option>
                 @foreach ($unitsItem as $key => $unit)
-                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                            {{ $unit->{ "units_".Lang::locale()} }}
+                    @if($item->package_unit == $unit->units_th)
+                        <option selected value="{{ $unit->units_th }}">
+                            {{ $unit->units_th }}
                         </option>
                     @else
-                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                            {{ $unit->{ "units_".Lang::locale()} }}
+                        <option value="{{ $unit->units_th }}">
+                            {{ $unit->units_th }}
                         </option>
                     @endif
                 @endforeach

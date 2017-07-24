@@ -105,7 +105,7 @@
                                         </strong>
                                     </td>
                                     {{--<td>{{  $quotation->discount }}</td>--}}
-                                    <td><span id="show_price_total">{{$quotation->min_order * $quotation->price}}</span>
+                                    <td><span id="show_price_total">{{$quotation->quantity * $quotation->price}}</span>
                                     </td>
                                 </tr>
                                 </tbody>

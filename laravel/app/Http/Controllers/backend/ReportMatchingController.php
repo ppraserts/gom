@@ -51,7 +51,7 @@ class ReportMatchingController extends BaseReports
                 ->where('product_requests.iwantto', '=', 'sale')
                 ->where('b.iwantto', '=', 'buy')
                 ->where('product_requests.productstatus', '=', 'open')
-                ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit))')
+                ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
                 ->whereRaw('product_requests.price >= b.pricerange_start')
                 ->whereRaw('product_requests.price <= b.pricerange_end');
         });
@@ -152,7 +152,7 @@ class ReportMatchingController extends BaseReports
                     ->where('product_requests.iwantto', '=', 'sale')
                     ->where('b.iwantto', '=', 'buy')
                     ->where('product_requests.productstatus', '=', 'open')
-                    ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit))')
+                    ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
                     ->whereRaw('product_requests.price >= b.pricerange_start')
                     ->whereRaw('product_requests.price <= b.pricerange_end');
             });

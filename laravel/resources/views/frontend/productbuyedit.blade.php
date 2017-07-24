@@ -322,13 +322,13 @@
                                     required="required">
                                 <option value="">{{ trans('validation.attributes.units') }}</option>
                                 @foreach ($unitsItem as $key => $unit)
-                                    @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                                        <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                    @if($item->package_unit == $unit->units_th)
+                                        <option selected value="{{ $unit->units_th }}">
+                                            {{ $unit->units_th }}
                                         </option>
                                     @else
-                                        <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                            {{ $unit->{ "units_".Lang::locale()} }}
+                                        <option value="{{ $unit->units_th }}">
+                                            {{ $unit->units_th }}
                                         </option>
                                     @endif
                                 @endforeach
@@ -359,11 +359,11 @@
                                 required="required">
                             <option value="">{{ trans('validation.attributes.units') }}</option>
                             @foreach ($unitsItem as $key => $unit)
-                                @if($item->units == $unit->{ "units_".Lang::locale()})
+                                @if($item->units == $unit->units_th)
                                     <option selected
-                                            value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                            value="{{ $unit->units_th }}">{{ $unit->units_th }}</option>
                                 @else
-                                    <option value="{{ $unit->{ "units_".Lang::locale()} }}">{{ $unit->{ "units_".Lang::locale()} }}</option>
+                                    <option value="{{ $unit->units_th }}">{{ $unit->units_th }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -416,46 +416,47 @@
             </div>
         </div>
         </div>
-        <div id="use-it-check-add_packing" style="display:none;">
-            <div id="div_packing_size"
-                 class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
-                <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
-                {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
-                <div class="help-block with-errors"></div>
-            </div>
-            <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
-                <strong>
-                    * {{ trans('validation.attributes.units_package') }} :
-                </strong>
-                <select id="package_unitpackage_unit" name="package_unit" class="form-control"
-                        data-error='{{trans('validation.attributes.message_validate_units')}}'>
-                    <option value="">{{ trans('validation.attributes.units') }}</option>
-                    @foreach ($unitsItem as $key => $unit)
-                        @if($item->package_unit == $unit->{ "units_".Lang::locale()})
-                            <option selected value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                {{ $unit->{ "units_".Lang::locale()} }}
-                            </option>
-                        @else
-                            <option value="{{ $unit->{ "units_".Lang::locale()} }}">
-                                {{ $unit->{ "units_".Lang::locale()} }}
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
-                <div class="help-block with-errors"></div>
-            </div>
-            <div class="col-md-12">
-                <hr/>
-            </div>
-        </div>
-        <style>
-            .pd-top-10 {
-                padding-top: 10px;
-            }
 
-            .min-width-100pc {
-                width: 100% !important;
-            }
-        </style>
     </form>
+    <div id="use-it-check-add_packing" style="display:none;">
+        <div id="div_packing_size"
+             class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('packing_size') ? 'has-error' : ''}}">
+            <strong>* {{ trans('validation.attributes.product_package_size') }} :</strong>
+            {!! Form::number('packing_size', $item->packing_size, array('placeholder' => trans('validation.attributes.product_package_size'),'class' => 'form-control','data-error'=>trans('validation.attributes.message_validate_product_package_size'),'required'=>'required')) !!}
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-xs-6 col-sm-6 col-md-4 {{ $errors->has('units_package') ? 'has-error' : '' }}">
+            <strong>
+                * {{ trans('validation.attributes.units_package') }} :
+            </strong>
+            <select id="package_unit" name="package_unit" class="form-control"
+                    data-error='{{trans('validation.attributes.message_validate_units')}}'>
+                <option value="">{{ trans('validation.attributes.units') }}</option>
+                @foreach ($unitsItem as $key => $unit)
+                    @if($item->package_unit == $unit->{ "units_th"})
+                        <option selected value="{{ $unit->units_th }}">
+                            {{ $unit->units_th }}
+                        </option>
+                    @else
+                        <option value="{{ $unit->units_th }}">
+                            {{ $unit->units_th }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="col-md-12">
+            <hr/>
+        </div>
+    </div>
+    <style>
+        .pd-top-10 {
+            padding-top: 10px;
+        }
+
+        .min-width-100pc {
+            width: 100% !important;
+        }
+    </style>
 @stop

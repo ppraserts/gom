@@ -226,7 +226,6 @@ class ProductsSaleEditController extends Controller
         $productRequest->is_showprice = 1;
         $productRequest->volumn = $request->volumn;
         $productRequest->min_order = $request->min_order;
-        $productRequest->package_unit = $request->package_unit;
         $productRequest->productstatus = $request->productstatus;
         $productRequest->units = $request->units;
 //        $productRequest->city = $request->city;
@@ -243,6 +242,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->packing_size = $request->packing_size;
         if(!empty($request->add_packing)){
             $productRequest->add_packing = $request->add_packing;
+            $productRequest->package_unit = $request->package_unit;
         }
         $productRequest->province_selling = $request->province_selling;
         $province = Province::where('PROVINCE_ID',$request->province_selling)->first();
