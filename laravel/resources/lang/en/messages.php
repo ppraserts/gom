@@ -157,7 +157,7 @@ return [
     'view_order_detail' => 'ดูรายละเอียดการสั่งซื้อ',
     'product_list' => 'รายการสินค้า',
     'order_status' => 'สถานะ',
-    'order_status_history' => 'ประวัติสถานะการสั่งซื้อ',
+    'order_status_history' => 'สถานะการสั่งซื้อ',
     'order_type' => 'ประเภทการสั่งซื้อ',
     'text_note' => 'บันทึกเพิ่มเติม',
     'cancel_list_buy'=>'ยกเลิกรายการสั่งซื้อ',
