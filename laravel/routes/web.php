@@ -258,6 +258,9 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::post('reports/matching/export','backend\ReportMatchingController@exportExcel');
     Route::get('reports/matching/download','backend\ReportMatchingController@actionDownload');
 
+    //export PDF
+    Route::get('orderdetail/pdf/{order_id}','backend\ReportsController@exportPdf');
+
 });
 
 Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
