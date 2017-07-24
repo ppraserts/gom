@@ -13,32 +13,15 @@
             });
         }
     });
-    $('#province').on('change', function (e) {
-        console.log(e);
-        var state_id = e.target.value;
 
-        $.get('{{ url('information') }}/create/ajax-state?province_id=' + state_id, function (data) {
-            console.log(data);
-            var option = '';
-            $('#city').empty();
-
-            //option += '<option value="">{{ trans('validation.attributes.products_id') }}</option>';
-            $.each(data, function (index, subCatObj) {
-                option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
-            });
-            $('#city').append(option);
-            $("#city").val('{{ $item->city==""? old('city'):$item->city}}');
-            $("#city").trigger("change");
-        });
-    });
     setTimeout(function () {
         var itemcategory = '{{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}';
         if (itemcategory != "")
             $("#productcategorys_id").val({{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}).change();
 
-        var itemprovince = '{{ $item->province==""? old('province') : $item->province }}';
-        if (itemprovince != "")
-            $("#province").val('{{ $item->province==""? old('province') : $item->province }}').change();
+        var itemprovince_source = '{{ $item->province_source==""? old('province_source') : $item->province_source }}';
+        if (itemprovince_source != "")
+            $("#province_source").val('{{ $item->province_source==""? old('province_source') : $item->province }}').change();
     }, 500);
 
     var products_array = [];
@@ -525,14 +508,14 @@
                 <div class="row">
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.production_province') }} : </strong>
-                        <select id="province" name="province" class="form-control">
+                        <select id="province_source" name="province_source" class="form-control">
                             <option value="">{{ trans('messages.select_province') }}</option>
                             @foreach ($provinceItem as $key => $province)
-                                @if($item->province == $province->PROVINCE_NAME)
+                                @if($item->province_source == $province->PROVINCE_ID)
                                     <option selected
-                                            value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                            value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @else
-                                    <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
+                                    <option value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -540,7 +523,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province_selling') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.product_province_selling') }} :</strong>
                         <select id="province_selling" name="province_selling" class="form-control">
-                            <option value="">{{ trans('messages.select_province') }}</option>
+                            <option value="0">{{ trans('messages.select_province') }}</option>
                             @foreach ($provinceItem as $key => $province)
                                 @if($item->province_selling == $province->PROVINCE_ID)
                                     <option selected

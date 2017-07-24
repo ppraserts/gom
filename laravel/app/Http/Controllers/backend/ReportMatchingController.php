@@ -59,9 +59,6 @@ class ReportMatchingController extends BaseReports
         $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $matching->join('users as seller', 'product_requests.users_id', '=', 'seller.id');
         $matching->join('users as buyer', 'b.users_id', '=', 'buyer.id');
-        if (!empty($request->input('product_market'))) {
-            $matching->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
-        }
         $matching->select(
             'seller.users_firstname_th as seller_firstname',
             'seller.users_lastname_th as seller_lastname',
@@ -95,6 +92,8 @@ class ReportMatchingController extends BaseReports
             $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
+            $matching->where('product_requests.created_at', '>=', $defultDateMonthYear['ymd_last_month']);
+            $matching->where('product_requests.created_at', '<=', $defultDateMonthYear['ymd_today']);
             $matching->where('b.created_at', '>=', $defultDateMonthYear['ymd_last_month']);
             $matching->where('b.created_at', '<=', $defultDateMonthYear['ymd_today']);
         }

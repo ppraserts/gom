@@ -173,7 +173,7 @@ $url = "user/iwanttosale";
                                 <span class="glyphicon glyphicon-tag"></span>
                                 <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 40, '...', 'UTF-8'); ?></i><br/>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                {{ mb_strimwidth($col_md_4_item['city'] ." ".$col_md_4_item['province'], 0, 40, '...', 'UTF-8') }}
+                                {{ mb_strimwidth($col_md_4_item['province'], 0, 40, '...', 'UTF-8') }}
                                 <br/><br/>
                             </div>
 

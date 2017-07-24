@@ -161,29 +161,33 @@ $url = "user/iwanttobuy";
                         <div class="row">
                             <div class="price col-md-12">
                                 <h4>{{ $product_name }}</h4>
-                                จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}<br>
+                                จำนวน
+                                : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}<br>
                                 <span class="hidden-sm">
-                                     {{trans('messages.orderbyprice')}} : {{ floatval($col_md_4_item['pricerange_start']) }}
+                                     {{trans('messages.orderbyprice')}}
+                                    : {{ floatval($col_md_4_item['pricerange_start']) }}
                                     - {{ floatval($col_md_4_item['pricerange_end']) }} {{trans('messages.baht')}}
                                 </span>
                                 <br/>
-
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                                @if(!empty($col_md_4_item['city']) and !empty($col_md_4_item['province']))
-                                    {{mb_strimwidth($col_md_4_item['city'].' '.$col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
-                                @else
-                                    {{trans('messages.allprovince')}}
-                                @endif
-                                <br/><br/>
+                                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; padding-bottom: 5px;">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                    @if(!empty($col_md_4_item['province']))
+                                        {{$col_md_4_item['province']}}
+                                    @else
+                                        {{trans('messages.allprovince')}}
+                                    @endif
+                                </div>
+                                <br/>
                             </div>
                         </div>
                         <div class="clear-left">
-                                <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
-                                    <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
-                                </a>
-                                <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
-                                    <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
-                                </a>
+                            <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
+                            </a>
+                            <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}"
+                               class="btn btn-info btn-sm">
+                                <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
+                            </a>
                         </div>
                         <div class="clearfix">
                         </div>

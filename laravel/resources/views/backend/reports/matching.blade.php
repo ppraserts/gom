@@ -17,8 +17,8 @@
                 </div>
             </div>
         @endif
-        <div class="row">
-            <h4>{{ trans('messages.matching_report') }}</h4>
+        <div class="row text-center">
+            <h2>{{ trans('messages.matching_report') }}</h2>
         </div>
         {{csrf_field()}}
         <form action="{{url('admin/reports/matching')}}" class="form-horizontal" id="myForm" method="GET" data-toggle="validator" role="form">
@@ -66,8 +66,8 @@
                                 multiple>
                             @if(count($provinces))
                                 @foreach($provinces as $province)
-                                    <option value="{{$province->id}}"
-                                            @if(!empty($provinceTypeNameArr)) @if(in_array($province->id, $provinceTypeNameArr)) selected @endif @endif>
+                                    <option value="{{$province->PROVINCE_ID}}"
+                                            @if(!empty($provinceTypeNameArr)) @if(in_array($province->PROVINCE_ID, $provinceTypeNameArr)) selected @endif @endif>
                                         {{$province->PROVINCE_NAME}}
                                     </option>
                                 @endforeach

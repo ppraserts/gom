@@ -100,11 +100,7 @@
                                 </div>
                                 <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; padding-bottom: 5px;">
                                     <span class="glyphicon glyphicon-map-marker"></span>
-                                    {{--{{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}--}}
-                                    <?php
-                                    $city_province = $col_md_4_item['city'] . ' ' . $col_md_4_item['province'];
-                                    echo $city_province;
-                                    ?>
+                                    {{$col_md_4_item['province']}}
                                 </div>
                             </div>
                         </div>
@@ -181,8 +177,8 @@
                                 </span>
                                 <br/>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                @if(!empty($col_md_4_item['city']) and !empty($col_md_4_item['province']))
-                                    {{mb_strimwidth($col_md_4_item['city'].' '.$col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
+                                @if(!empty($col_md_4_item['province']))
+                                    {{mb_strimwidth($col_md_4_item['province'], 0, 33, '...', 'UTF-8')}}
                                 @else
                                     {{trans('messages.allprovince')}}
                                 @endif

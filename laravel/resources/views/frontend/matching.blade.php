@@ -73,7 +73,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                         <span class="glyphicon glyphicon-tag"></span>
                                         <i title="{{ $col_md_4_item['product_name_th'] }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
                                         <span class="glyphicon glyphicon-map-marker"></span>
-                                        {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                                        {{ $col_md_4_item['province'] }}
 
                                     </div>
 
@@ -117,7 +117,8 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                     <div class="col-md-12">
                                         <p>
                                             <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}"
-                                               class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                                               class="btn btn-info btn-sm">{{ trans('messages.button_moredetail')}}</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -167,12 +168,16 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
                                 <div class="row">
                                     <div class="price col-md-9">
                                         <h4>{{ $col_md_4_item['product_name_th'] }}</h4>
-                                        จำนวน : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
+                                        จำนวน
+                                        : {{ floatval($col_md_4_item['volumnrange_start']) }} {{ $col_md_4_item['units'] }}
                                         <br>
-                                        <span class="glyphicon glyphicon-tag"></span>
-                                        <i>{{ $col_md_4_item['product_title'] }}</i><br>
                                         <span class="glyphicon glyphicon-map-marker"></span>
-                                        {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                                        @if(empty($col_md_4_item['province']))
+                                            {{trans('messages.allprovince')}}
+                                            @else
+                                            {{ $col_md_4_item['province'] }}
+                                        @endif
+
                                         <br/><br/>
                                     </div>
 
