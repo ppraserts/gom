@@ -43,6 +43,8 @@ class ReportOrderHistoryController extends Controller
         if ($request->ajax()) {
             $type_sale_buy = $request->input('type_sale_buy');
             $user_id = $request->input('user_id');
+            $filter_user = User::where('id', $user_id)->first();
+            $filter_user_fname_lname = $filter_user->users_firstname_th. " ". $filter_user->users_lastname_th;
             $results = $this->sqlFilter($type_sale_buy, $user_id);
             if ($type_sale_buy == 'sale'){
                 $i_sale_buy = trans('messages.i_sale');
@@ -50,7 +52,7 @@ class ReportOrderHistoryController extends Controller
                     trans('messages.order_id'),
                     trans('messages.order_date'),
                     trans('messages.order_type'),
-                    trans('messages.i_sale'),
+                    trans('messages.i_buy'),
                     trans('messages.product_name'),
                     trans('messages.orderbyunit'),
                     trans('messages.order_total').'('.trans('messages.baht').')',
@@ -63,7 +65,7 @@ class ReportOrderHistoryController extends Controller
                     trans('messages.order_id'),
                     trans('messages.order_date'),
                     trans('messages.order_type'),
-                    trans('messages.i_buy'),
+                    trans('messages.i_sale'),
                     trans('messages.product_name'),
                     trans('messages.orderbyunit'),
                     trans('messages.order_total').'('.trans('messages.baht').')',
@@ -79,10 +81,10 @@ class ReportOrderHistoryController extends Controller
                     $order_type = trans('messages.wholesale');
                 }
                 if ($type_sale_buy == 'sale'){
-                    $fname_lname = $v->users_firstname_th. " ". $v->users_lastname_th;
+                    $fname_lname = $v->buyer->users_firstname_th. " ". $v->buyer->users_lastname_th;
                 }
                 if ($type_sale_buy == 'buy'){
-                    $fname_lname = $v->buyer->users_firstname_th. " ". $v->buyer->users_lastname_th;
+                    $fname_lname = $v->user->users_firstname_th. " ". $v->user->users_lastname_th;
                 }
                 $order_date = DateFuncs::dateToThaiDate($v->order_date);
                 $arr[] = array(
@@ -98,8 +100,8 @@ class ReportOrderHistoryController extends Controller
             }
 
             $data = $arr;
-            $info = Excel::create('order-history-sale-buy-excell', function($excel) use($data,$i_sale_buy,$fname_lname) {
-                $excel->sheet('Sheetname', function($sheet) use($data,$i_sale_buy,$fname_lname) {
+            $info = Excel::create('order-history-sale-buy-excell', function($excel) use($data,$i_sale_buy,$filter_user_fname_lname) {
+                $excel->sheet('Sheetname', function($sheet) use($data,$i_sale_buy,$filter_user_fname_lname) {
                     $sheet->mergeCells('A1:H1');
                     $sheet->mergeCells('A2:D3');
                     $sheet->mergeCells('E2:H3');
@@ -121,20 +123,22 @@ class ReportOrderHistoryController extends Controller
                             'bold'       =>  true
                         ));
                     });
-                    $sheet->cells('A2', function($cells) use($fname_lname) {
-                        $cells->setValue(trans('messages.member').' : '.$fname_lname);
-                        $cells->setFont(array(
-                            'bold'       =>  true
-                        ));
-                        $cells->setValignment('center');
-                    });
-                    $sheet->cells('E2', function($cells) use($i_sale_buy) {
+                    $sheet->cells('A2', function($cells) use($i_sale_buy) {
                         $cells->setValue(trans('messages.type_sale_buy').' : '.$i_sale_buy);
                         $cells->setFont(array(
                             'bold'       =>  true
                         ));
                         $cells->setValignment('center');
                     });
+
+                    $sheet->cells('E2', function($cells) use($filter_user_fname_lname) {
+                        $cells->setValue(trans('messages.member').' : '.$filter_user_fname_lname);
+                        $cells->setFont(array(
+                            'bold'       =>  true
+                        ));
+                        $cells->setValignment('center');
+                    });
+
 
                     $sheet->rows($data);//fromArray
                 });
