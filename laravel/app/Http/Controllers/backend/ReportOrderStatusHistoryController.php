@@ -136,9 +136,9 @@ class ReportOrderStatusHistoryController extends BaseReports
                 $d_start = trans('messages.text_start_date') . ' : ' .  DateFuncs::dateToThaiDate($start_date);
                 $d_end = trans('messages.text_end_date') . ' : ' . DateFuncs::dateToThaiDate($end_date);
             }
-            $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . $filter;
+            $filter_text = trans('messages.order_id') . ' : ' . $filter;
             if (empty($filter)) {
-                $filter_text = trans('messages.order_id') . '/' . trans('messages.order_status') . ' : ' . trans('messages.all');
+                $filter_text = trans('messages.order_id') .' : ' . trans('messages.all');
             }
 
             $order_status_name = trans('messages.userstatus').' : '.trans('messages.all');

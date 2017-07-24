@@ -53,11 +53,11 @@
                 </div>
                 <div class="form-group form-group-sm col-md-4" style="padding-left: 0px; padding-right: 0;">
                     <strong style="padding-right: 0;padding-left: 0;">
-                    {{ trans('messages.order_id').'/'.trans('messages.order_status') }} :
+                    {{ trans('messages.order_id') }} :
                     </strong>
                     <div style="padding-right: 0px;">
                         <input type="text" id="filter" name="filter" class="form-control" value=""
-                               placeholder="{{ trans('messages.order_id').'/'.trans('messages.order_status') }}">
+                               placeholder="{{ trans('messages.order_id') }}">
                     </div>
                 </div>
             </div>
