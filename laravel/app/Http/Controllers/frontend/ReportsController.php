@@ -332,10 +332,10 @@ class ReportsController extends BaseReports
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+//        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('SUM(order_items.total) as total
-            ,products.product_name_th
+            ,product_requests.id as product_requests_id
             ,products.product_name_en
             ,order_status.status_name
             ,users.users_firstname_th
@@ -345,7 +345,6 @@ class ReportsController extends BaseReports
             ,order_items.quantity
             ,product_requests.units
         '));
-
 
         $orderList->where('orders.user_id', $user->id);
         if (!empty($request->input('productcategorys_id'))) {
@@ -357,12 +356,6 @@ class ReportsController extends BaseReports
         if (!empty($request->input('pid'))) {
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
-        }
-
-        $market_id = '';
-        if (!empty($request->input('market_id'))) {
-            $market_id = $request->input('market_id');
-            $orderList->where('product_request_market.market_id', $market_id);
         }
 
         $defult_ymd_last_month = '';
@@ -384,17 +377,28 @@ class ReportsController extends BaseReports
         $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
         $orderList->orderBy('products.product_name_th', 'ASC');
-        $orderList->paginate(config('app.paginate'));
+
+        $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
+            ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
+            ->join('product_request_market', 'product_request_market.product_request_id', '=', 'sub.product_requests_id');
+
+        $market_id = '';
+        if (!empty($request->input('market_id'))) {
+            $market_id = $request->input('market_id');
+            $oderList2->where('product_request_market.market_id', $market_id);
+        }
+        $oderList2->groupBy('sub.product_requests_id');
+
         //$orderSaleItem = $orderList->paginate(config('app.paginate'));
         if (!empty($request->input('format_report')) and $request->input('format_report') == 2) {
-            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+            $orderSaleItem = $oderList2->paginate(config('app.paginate'));
         } else {
-            $orderSaleItem = $orderList->get();
+            $orderSaleItem = $oderList2->get();
         }
 
         $sumAll = 0;
         foreach ($orderSaleItem as $value) {
-            $sumAll = $sumAll + $value->total_amounts;
+            $sumAll = $sumAll + $value->total;
         }
         $productCategoryitem = ProductCategory::all();
         $markets = Market::all();
@@ -429,9 +433,10 @@ class ReportsController extends BaseReports
             $orderList->join('users', 'users.id', '=', 'orders.user_id');
             $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
             $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-            $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+//            $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
             $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
             $orderList->select(DB::raw('SUM(order_items.total) as total
+            ,product_requests.id as product_requests_id
             ,products.product_name_th
             ,products.product_name_en
             ,order_status.status_name
@@ -466,17 +471,23 @@ class ReportsController extends BaseReports
                 $orderList->whereIn('products.id', $productTypeNameArr);
             }
 
-            $market_id = '';
-            if (!empty($request->input('market_id'))) {
-                $market_id = $request->input('market_id');
-                $orderList->where('product_request_market.market_id', $market_id);
-            }
 
             $orderList->where('orders.order_status', '=', 4);
             $orderList->groupBy('products.id');
             $orderList->orderBy('products.product_name_th', 'ASC');
-            $orderList->paginate(config('app.paginate'));
-            $orderSaleItem = $orderList->get();
+
+            $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
+                ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
+                ->join('product_request_market', 'product_request_market.product_request_id', '=', 'sub.product_requests_id');
+
+            $market_id = '';
+            if (!empty($request->input('market_id'))) {
+                $market_id = $request->input('market_id');
+                $oderList2->where('product_request_market.market_id', $market_id);
+            }
+            $oderList2->groupBy('sub.product_requests_id');
+
+            $orderSaleItem = $oderList2->get();
 
             $productCategoryitem = ProductCategory::all();
             $markets = Market::all();

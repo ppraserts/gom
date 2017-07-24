@@ -401,9 +401,10 @@ class ReportsController extends BaseReports
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+//        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total
+        ,product_requests.id as product_requests_id
         ,products.product_name_th
         ,products.product_name_en
         ,order_status.status_name
@@ -426,12 +427,6 @@ class ReportsController extends BaseReports
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
 
-        $market_id = '';
-        if (!empty($request->input('market_id'))) {
-            $market_id = $request->input('market_id');
-            $orderList->where('product_request_market.market_id', $market_id);
-        }
-
         $defult_ymd_last_month='';
         $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
@@ -449,13 +444,26 @@ class ReportsController extends BaseReports
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $orderList->where('orders.order_status', '=', 4);
-        $orderList->groupBy('products.id');
+        $orderList->groupBy('product_requests.id');
         //$orderList->orderBy('orders.id', 'DESC');
         $orderList->orderBy('products.product_name_th', 'ASC');
+
+        $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
+            ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
+            ->join('product_request_market', 'product_request_market.product_request_id', '=', 'sub.product_requests_id');
+
+        $market_id = '';
+        if (!empty($request->input('market_id'))) {
+            $market_id = $request->input('market_id');
+            $oderList2->where('product_request_market.market_id', $market_id);
+        }
+        $oderList2->groupBy('sub.product_requests_id');
+
+
         if (!empty($request->input('format_report')) and $request->input('format_report') == 2) {
-            $orderSaleItem = $orderList->paginate(config('app.paginate'));
+            $orderSaleItem = $oderList2->paginate(config('app.paginate'));
         }else{
-            $orderSaleItem = $orderList->get();
+            $orderSaleItem = $oderList2->get();
         }
 
         $productCategoryitem = ProductCategory::all();
@@ -463,7 +471,7 @@ class ReportsController extends BaseReports
         //
         $sumAll = 0;
         foreach ($orderSaleItem as $value) {
-            $sumAll = $sumAll + $value->total_amounts;
+            $sumAll = $sumAll + $value->total;
         }
 
         foreach ($orderSaleItem as $result) {
@@ -761,8 +769,9 @@ class ReportsController extends BaseReports
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
-        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+//        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $orderList->select(DB::raw('orders.*,SUM(order_items.total) as total
+        ,product_requests.id as product_requests_id
         ,products.product_name_th
         ,products.product_name_en
         ,order_status.status_name
@@ -783,9 +792,6 @@ class ReportsController extends BaseReports
         if (!empty($productcategorys_id)){
             $orderList->where('products.productcategory_id', $productcategorys_id);
         }
-        if (!empty($market_id)){
-            $orderList->where('product_request_market.market_id',$market_id);
-        }
 
         if (count($product_id_arr) > 0) {
             $orderList->whereIn('products.id', $product_id_arr);
@@ -793,7 +799,17 @@ class ReportsController extends BaseReports
         $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
         $orderList->orderBy('products.product_name_th', 'ASC');
-        return $orderLists = $orderList->get();
+
+        $orderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
+            ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
+            ->join('product_request_market', 'product_request_market.product_request_id', '=', 'sub.product_requests_id');
+
+        $market_id = '';
+        if (!empty($market_id)){
+            $orderList2->where('product_request_market.market_id',$market_id);
+        }
+        $orderList2->groupBy('sub.product_requests_id');
+        return $orderList2->get();
 
     }
 
