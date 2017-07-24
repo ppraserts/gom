@@ -62,8 +62,10 @@ class ReportOrderStatusHistoryController extends BaseReports
             }
             if (!empty($i_sale) and !empty($i_buy)) {
                 $result->where(function ($query) use ($i_sale,$i_buy) {
-                    $query->orWhere('orders.user_id', $i_sale);
-                    $query->orWhere('orders.buyer_id', $i_buy);
+                    //$query->orWhere('orders.user_id', $i_sale);
+                    //$query->orWhere('orders.buyer_id', $i_buy);
+                    $query->where('orders.user_id', $i_sale);
+                    $query->where('orders.buyer_id', $i_buy);
                 });
             }
             if (empty($i_sale) and !empty($i_buy)) {
@@ -268,8 +270,10 @@ class ReportOrderStatusHistoryController extends BaseReports
         }
         if (!empty($i_sale) and !empty($i_buy)) {
             $result->where(function ($query) use ($i_sale,$i_buy) {
-                $query->orWhere('orders.user_id', $i_sale);
-                $query->orWhere('orders.buyer_id', $i_buy);
+                //$query->orWhere('orders.user_id', $i_sale);
+                //$query->orWhere('orders.buyer_id', $i_buy);
+                $query->where('orders.user_id', $i_sale);
+                $query->where('orders.buyer_id', $i_buy);
             });
         }
         if (empty($i_sale) and !empty($i_buy)) {
