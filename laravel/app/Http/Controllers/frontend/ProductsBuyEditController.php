@@ -143,7 +143,13 @@ class ProductsBuyEditController extends Controller
         $productRequest->pricerange_start = $request->pricerange_start;
         $productRequest->pricerange_end = $request->pricerange_end;
         $productRequest->volumnrange_start = $request->volumnrange_start;
-        $productRequest->province = $request->province;
+        $province = Province::where('PROVINCE_ID',$request->province_selling)->first();
+        if ($province != null){
+            $productRequest->province = $province->PROVINCE_NAME;
+        }else{
+            $productRequest->province = trans('messages.allprovince');
+        }
+        $productRequest->province_selling = $request->province_selling;
         //$productRequest->product_description = $request->product_description;
 
         $productRequest->iwantto = $user->iwanttobuy;
@@ -155,6 +161,7 @@ class ProductsBuyEditController extends Controller
         $productRequest->packing_size = $request->packing_size;
         if(!empty($request->add_packing)){
             $productRequest->add_packing = $request->add_packing;
+            $productRequest->package_unit = $request->package_unit;
         }
         //return $productRequest;
 

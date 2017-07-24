@@ -4,7 +4,11 @@
         <div class="price col-md-12">
             <h4 title="{{ $productRequest->product_name_th }}"><?php echo mb_strimwidth($productRequest->product_name_th, 0, 40, '...', 'UTF-8'); ?></h4>
             <span class="glyphicon glyphicon-map-marker"></span>
-            {{ mb_strimwidth($productRequest->city ." ".$productRequest->province, 0, 40, '...', 'UTF-8') }}
+            @if(!empty($productRequest->province))
+                {{ mb_strimwidth($productRequest->province, 0, 40, '...', 'UTF-8') }}
+            @else
+                {{trans('messages.allprovince')}}
+            @endif
             <br/><br/>
         </div>
 

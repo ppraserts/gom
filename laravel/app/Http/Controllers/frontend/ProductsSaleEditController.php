@@ -230,7 +230,7 @@ class ProductsSaleEditController extends Controller
         $productRequest->productstatus = $request->productstatus;
         $productRequest->units = $request->units;
 //        $productRequest->city = $request->city;
-        $productRequest->province = $request->province;
+
         $productRequest->productcategorys_id = $request->productcategorys_id;
         $productRequest->products_id = $product_id;
         $productRequest->users_id = $user->id;
@@ -245,6 +245,12 @@ class ProductsSaleEditController extends Controller
             $productRequest->add_packing = $request->add_packing;
         }
         $productRequest->province_selling = $request->province_selling;
+        $province = Province::where('PROVINCE_ID',$request->province_selling)->first();
+        if ($province != null){
+            $productRequest->province = $province->PROVINCE_NAME;
+        }else{
+            $productRequest->province = trans('messages.allprovince');
+        }
         $productRequest->start_selling_date = DateFuncs::convertThaiDateToMysql($request->start_selling_date);
         $productRequest->end_selling_date = DateFuncs::convertThaiDateToMysql($request->end_selling_date);
         $productRequest->selling_period = $request->selling_period;

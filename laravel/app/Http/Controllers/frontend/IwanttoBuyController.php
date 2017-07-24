@@ -55,7 +55,6 @@ class IwanttoBuyController extends Controller
                 $query->where(function ($query) use ($search) {
                     $query->Where('product_title', 'like', '%' . $search . '%')
                         ->orWhere('units', 'like', '%' . $search . '%')
-                        ->orWhere('city', 'like', '%' . $search . '%')
                         ->orWhere('province', 'like', '%' . $search . '%')
                         ->orWhere('product_name_th', 'like', '%' . $search . '%');
 
@@ -69,7 +68,6 @@ class IwanttoBuyController extends Controller
         $items = $query->orderBy('product_requests.created_at', 'desc')
             ->paginate(12);
         //dd($items);
-
 
         return view('frontend.iwanttobuy', compact('items', 'productCategoryitem'))
             ->with('i', ($request->input('page', 1) - 1) * config('app.paginate'));

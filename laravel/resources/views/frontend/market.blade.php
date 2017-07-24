@@ -37,7 +37,7 @@ use App\Http\Controllers\frontend\MarketController;
 							  <span class="glyphicon glyphicon-tag"></span>
 							  <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
                               <span class="glyphicon glyphicon-map-marker"></span>
-                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              {{ $col_md_4_item['province'] }}
                               <br/><br/>
                           </div>
                           <div class="rating hidden-sm col-md-4">
@@ -89,7 +89,7 @@ use App\Http\Controllers\frontend\MarketController;
                           <div class="price col-md-9">
                                <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
                               <span class="glyphicon glyphicon-map-marker"></span>
-                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              {{ $col_md_4_item['province'] }}
                               <br/><br/>
                           </div>
                           <div class="rating hidden-sm col-md-3">

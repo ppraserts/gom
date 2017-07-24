@@ -158,7 +158,7 @@
         </p>
         <p>
             <span class="glyphicon glyphicon-map-marker"></span>
-            {{ $productRequest->city }} {{ $productRequest->province }}
+            {{ $productRequest->province }}
         </p>
         @if($user!=null && $user->id == $productRequest->users_id)
             <p>
