@@ -68,11 +68,11 @@ $pagetitle = trans('message.menu_order_list');
                             : </b>{{$order->user->users_firstname_th. " ". $order->user->users_lastname_th}}</p>
                     @if(isset($order->user->users_mobilephone))<p>
                         <b>{{ trans('validation.attributes.users_mobilephone') }}
-                            : </b>{{ $order->user->users_mobilephone }}</p>@endif
-                    @if(isset($order->user->users_phone))<p><b>{{ trans('validation.attributes.users_phone') }}
-                            : </b>{{ $order->user->users_phone }}</p>@endif
-                    @if(isset($order->user->email))<p><b>{{ trans('validation.attributes.email') }}
-                            : </b>{{ $order->user->email }}</p>@endif
+                            : </b>{{ $order->user->users_mobilephone }}</p>
+                    @endif
+                    @if(isset($order->user->email))
+                        <p><b>{{ trans('validation.attributes.email') }} : </b>{{ $order->user->email }}</p>
+                    @endif
                     <p><b>{{ trans('validation.attributes.users_addressname') }}
                             : </b>{{ $order->user->users_addressname . " " . $order->user->users_district . " " . $order->user->users_city . " " . $order->user->users_province . " " . $order->user->users_postcode }}
                     </p>

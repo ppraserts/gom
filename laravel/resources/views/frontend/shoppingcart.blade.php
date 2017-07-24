@@ -47,8 +47,7 @@
             $user_address = DB::table('users')->where('id' , $userId)->first();
             $users_addressname = '-';
             if(!empty($user_address->users_addressname)){ $users_addressname = $user_address->users_addressname; }
-            $users_street = '-';
-            if(!empty($user_address->users_street)){ $users_street = $user_address->users_street; }
+
             $users_district = '-';
             if(!empty($user_address->users_district)){ $users_district = $user_address->users_district; }
             $users_city = '-';
@@ -57,7 +56,7 @@
             if(!empty($user_address->users_province)){ $users_province = $user_address->users_province; }
             $users_postcode = '-';
             if(!empty($user_address->users_postcode)){ $users_postcode = $user_address->users_postcode; }
-            $address = 'บ้านเลขที่: '.$users_addressname.' ถนน: '.$users_street.' ตำบล: '.$users_district.' อำเภอ: '.$users_city.' จังหวัด: '.$users_province.' ไปรษณีย์: '.$users_postcode;
+            $address = 'บ้านเลขที่: '.$users_addressname.' ตำบล: '.$users_district.' อำเภอ: '.$users_city.' จังหวัด: '.$users_province.' ไปรษณีย์: '.$users_postcode;
         @endphp
         <input type="hidden" id="count_key" value="{{count($shopping_carts)}}">
         @foreach($shopping_carts as $key => $carts)
