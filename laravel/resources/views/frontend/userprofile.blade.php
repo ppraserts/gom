@@ -191,7 +191,7 @@
                         @if($item->iwanttosale == 'sale')
                             @if(isset($standards))
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-inline col-md-12" style="margin-bottom: 7px;">
                                         <strong>{{ trans('validation.attributes.guarantee') }} :</strong>
                                         @for($i = 0 ; $i < count($standards) ; $i++)
                                             <label class="checkbox-inline">
@@ -200,6 +200,8 @@
                                                 {{$standards[$i]->name}}
                                             </label>
                                         @endfor
+                                        <span style="margin-left: 10px">อื่นๆ ระบุ</span>
+                                        <input id="other_standard" class="form-control" type="text" value="{{$item->other_standard}}" disabled>
                                     </div>
                                 </div>
                             @endif
