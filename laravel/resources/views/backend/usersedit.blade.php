@@ -138,6 +138,8 @@ $controllerAction = "users.update";
                         @else
                             @if(!empty($item->other_standard))
                                 ,<span>อื่นๆ : {{$item->other_standard}}</span>
+                            @else
+                                -
                             @endif
                         @endif
 
