@@ -62,7 +62,7 @@ class CompanysController extends Controller
                                                     $query->where('users_membertype','=', 'company')
                                                                 ->where('is_active','=', 0);
                                                 })->count();
-        $standards = Standard::join('user_standard', 'user_standard.id', '=', 'standards.id')
+        $standards = Standard::join('user_standard', 'user_standard.standard_id', '=', 'standards.id')
             ->where('user_standard.user_id', $id)->get();
         $standard = null;
         if ($standards!=null){

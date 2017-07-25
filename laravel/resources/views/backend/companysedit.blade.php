@@ -127,16 +127,18 @@ $controllerAction = "companys.update";
                 {{ trans('validation.attributes.guarantee') }}
                 :
                 <strong>
-                    @if($standard!=null)
+                    @if(!empty($standard))
                         {{$standard}}
-                    @else
                         @if(!empty($item->other_standard))
                             ,<span>อื่นๆ : {{$item->other_standard}}</span>
+                        @endif
+                    @else
+                        @if(!empty($item->other_standard))
+                            <span>อื่นๆ : {{$item->other_standard}}</span>
                         @else
                             -
                         @endif
                     @endif
-
                 </strong>
             </div>
             @endif
