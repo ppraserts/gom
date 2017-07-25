@@ -180,7 +180,7 @@ class ReportMatchingController extends BaseReports
                 'product_requests.province',
                 'product_requests.product_title',
                 'products.product_name_th',
-                'products.created_at as sale_date',
+                'product_requests.created_at as sale_date',
                 'product_requests.products_id as products_id'
             );
             $str_start_and_end_date = trans('messages.text_start_date') . ' : - ' . trans('messages.text_end_date') . ' : -';

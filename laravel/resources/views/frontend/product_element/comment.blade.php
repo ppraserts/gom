@@ -26,7 +26,7 @@
                     {{ trans('messages.text_share_comment_product')}}
                 </p>
                 <label class="ratingStarsTitle">{{ trans('messages.text_rate_product')}}</label>
-                <form class="form-horizontal" method="post" action="{{url('productview/'.$productRequest->id.'/'.md5($productRequest->id))}}">
+                <form class="form-horizontal" method="post" action="{{url('user/productview/'.$productRequest->id.'/'.md5($productRequest->id))}}">
                     {{csrf_field()}}
                     <div class="stars">
                         <input class="star star-5" id="star-5" type="radio" name="star" checked value="5"/>

@@ -376,7 +376,6 @@ class ReportsController extends BaseReports
         }
         $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
-        $orderList->orderBy('products.product_name_th', 'ASC');
 
         $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
             ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
@@ -388,6 +387,7 @@ class ReportsController extends BaseReports
             $oderList2->where('product_request_market.market_id', $market_id);
         }
         $oderList2->groupBy('sub.product_requests_id');
+        $oderList2->orderBy('sub.product_name_th', 'ASC');
 
         //$orderSaleItem = $orderList->paginate(config('app.paginate'));
         if (!empty($request->input('format_report')) and $request->input('format_report') == 2) {
@@ -474,7 +474,6 @@ class ReportsController extends BaseReports
 
             $orderList->where('orders.order_status', '=', 4);
             $orderList->groupBy('products.id');
-            $orderList->orderBy('products.product_name_th', 'ASC');
 
             $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
                 ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
@@ -486,7 +485,7 @@ class ReportsController extends BaseReports
                 $oderList2->where('product_request_market.market_id', $market_id);
             }
             $oderList2->groupBy('sub.product_requests_id');
-
+            $oderList2->orderBy('sub.product_name_th', 'ASC');
             $orderSaleItem = $oderList2->get();
 
             $productCategoryitem = ProductCategory::all();
