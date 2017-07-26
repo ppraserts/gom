@@ -29,9 +29,9 @@ class ReportOrderStatusHistoryController extends BaseReports
 
     public function orderList(Request $request)
     {
-        $iwanttosale = User::where('iwanttosale','sale')->get();
-        $iwanttobuy = User::where('iwanttobuy','buy')->get();
-        $order_status_id ='';
+        $iwanttosale = User::where('iwanttosale', 'sale')->get();
+        $iwanttobuy = User::where('iwanttobuy', 'buy')->get();
+        $order_status_id = '';
         $i_sale = '';
         $i_buy = '';
         if (!empty($request->input('is_search'))) {
@@ -61,7 +61,7 @@ class ReportOrderStatusHistoryController extends BaseReports
                 $result->where('orders.order_status', $order_status_id);
             }
             if (!empty($i_sale) and !empty($i_buy)) {
-                $result->where(function ($query) use ($i_sale,$i_buy) {
+                $result->where(function ($query) use ($i_sale, $i_buy) {
                     //$query->orWhere('orders.user_id', $i_sale);
                     //$query->orWhere('orders.buyer_id', $i_buy);
                     $query->where('orders.user_id', $i_sale);
@@ -80,6 +80,8 @@ class ReportOrderStatusHistoryController extends BaseReports
                     $query->where('orders.id', 'like', '%' . $filter . '%');
                     $query->orWhere('order_status.status_name', 'like', '%' . $filter . '%');
                 });
+            }else{
+                $filter = '';
             }
 
             $result->orderBy('orders.id', 'DESC');
@@ -88,12 +90,13 @@ class ReportOrderStatusHistoryController extends BaseReports
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
             return view('backend.reports.order_status_history',
-                compact('results','defult_ymd_last_month','defult_ymd_today'
-                    ,'iwanttosale'
-                    ,'iwanttobuy'
-                    ,'order_status_id'
-                    ,'i_sale'
-                    ,'i_buy'
+                compact('results', 'defult_ymd_last_month', 'defult_ymd_today'
+                    , 'iwanttosale'
+                    , 'iwanttobuy'
+                    , 'order_status_id'
+                    , 'i_sale'
+                    , 'i_buy'
+                ,'filter'
                 ));
         } else {
             $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
@@ -108,12 +111,13 @@ class ReportOrderStatusHistoryController extends BaseReports
                 ->orderBy('orders.id', 'DESC')
                 ->paginate(config('app.paginate'));
             return view('backend.reports.order_status_history',
-                compact('results','defult_ymd_last_month','defult_ymd_today'
-                    ,'iwanttosale'
-                    ,'iwanttobuy'
-                    ,'order_status_id'
-                    ,'i_sale'
-                    ,'i_buy'
+                compact('results', 'defult_ymd_last_month', 'defult_ymd_today'
+                    , 'iwanttosale'
+                    , 'iwanttobuy'
+                    , 'order_status_id'
+                    , 'i_sale'
+                    , 'i_buy'
+                    , 'filter'
                 ));
         }
     }
@@ -128,35 +132,35 @@ class ReportOrderStatusHistoryController extends BaseReports
             $i_sale = $request->input('i_sale');
             $i_buy = $request->input('i_buy');
             //query call function getDataToexcel
-            $results = $this->getDataToexcel($start_date, $end_date, $filter,$order_status_id,$i_sale,$i_buy);
+            $results = $this->getDataToexcel($start_date, $end_date, $filter, $order_status_id, $i_sale, $i_buy);
 
             $d_start = trans('messages.text_start_date') . ' : -';
             $d_end = trans('messages.text_end_date') . ' : -';
             if (!empty($request->input('start_date')) and !empty($request->input('end_date'))) {
-                $d_start = trans('messages.text_start_date') . ' : ' .  DateFuncs::dateToThaiDate($start_date);
+                $d_start = trans('messages.text_start_date') . ' : ' . DateFuncs::dateToThaiDate($start_date);
                 $d_end = trans('messages.text_end_date') . ' : ' . DateFuncs::dateToThaiDate($end_date);
             }
             $filter_text = trans('messages.order_id') . ' : ' . $filter;
             if (empty($filter)) {
-                $filter_text = trans('messages.order_id') .' : ' . trans('messages.all');
+                $filter_text = trans('messages.order_id') . ' : ' . trans('messages.all');
             }
 
-            $order_status_name = trans('messages.userstatus').' : '.trans('messages.all');
-            if(!empty($order_status_id)){
+            $order_status_name = trans('messages.userstatus') . ' : ' . trans('messages.all');
+            if (!empty($order_status_id)) {
                 $orderStatu = BaseReports::orderStatus($order_status_id);
-                $order_status_name = trans('messages.userstatus').' : '.$orderStatu->status_name;
+                $order_status_name = trans('messages.userstatus') . ' : ' . $orderStatu->status_name;
             }
 
-            $i_sale_username = trans('messages.i_sale').' : '.trans('messages.all');
-            if(!empty($i_sale)){
+            $i_sale_username = trans('messages.i_sale') . ' : ' . trans('messages.all');
+            if (!empty($i_sale)) {
                 $user = BaseReports::user($i_sale);
-                $i_sale_username = trans('messages.i_sale').' : '.$user->users_firstname_th.' '.$user->users_lastname_th;
+                $i_sale_username = trans('messages.i_sale') . ' : ' . $user->users_firstname_th . ' ' . $user->users_lastname_th;
             }
 
-            $i_buy_username = trans('messages.i_buy').' : '.trans('messages.all');
-            if(!empty($i_buy)){
+            $i_buy_username = trans('messages.i_buy') . ' : ' . trans('messages.all');
+            if (!empty($i_buy)) {
                 $user = BaseReports::user($i_buy);
-                $i_buy_username = trans('messages.i_buy').' : '.$user->users_firstname_th.' '.$user->users_lastname_th;;
+                $i_buy_username = trans('messages.i_buy') . ' : ' . $user->users_firstname_th . ' ' . $user->users_lastname_th;;
             }
 
 
@@ -166,7 +170,7 @@ class ReportOrderStatusHistoryController extends BaseReports
                 trans('messages.i_sale'),
                 trans('messages.i_buy'),
                 trans('messages.order_date'),
-                trans('messages.order_total').'('.trans('messages.baht').')',
+                trans('messages.order_total') . '(' . trans('messages.baht') . ')',
                 trans('messages.order_status'),
             );
 
@@ -193,8 +197,8 @@ class ReportOrderStatusHistoryController extends BaseReports
             }
 
             $data = $arr;
-            $info = Excel::create('order-status-history-excell', function ($excel) use ($data, $d_start, $d_end, $filter_text,$order_status_name,$i_sale_username,$i_buy_username) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $d_start, $d_end, $filter_text,$order_status_name,$i_sale_username,$i_buy_username) {
+            $info = Excel::create('order-status-history-excell', function ($excel) use ($data, $d_start, $d_end, $filter_text, $order_status_name, $i_sale_username, $i_buy_username) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $d_start, $d_end, $filter_text, $order_status_name, $i_sale_username, $i_buy_username) {
                     $sheet->mergeCells('A1:G1');
                     $sheet->mergeCells('A2:C3');
                     $sheet->mergeCells('D2:G3');
@@ -236,8 +240,8 @@ class ReportOrderStatusHistoryController extends BaseReports
                         $cells->setValignment('center');
                     });
 
-                    $sheet->cells('A4', function ($cells) use ($order_status_name,$i_sale_username,$i_buy_username) {
-                        $cells->setValue($order_status_name.' '.$i_sale_username.' '.$i_buy_username);
+                    $sheet->cells('A4', function ($cells) use ($order_status_name, $i_sale_username, $i_buy_username) {
+                        $cells->setValue($order_status_name . ' ' . $i_sale_username . ' ' . $i_buy_username);
                         $cells->setFont(array(
                             'bold' => true
                         ));
@@ -258,7 +262,7 @@ class ReportOrderStatusHistoryController extends BaseReports
         }
     }
 
-    private function getDataToexcel($start_date = '', $end_date = '', $filter = '',$order_status_id ='',$i_sale='',$i_buy='')
+    private function getDataToexcel($start_date = '', $end_date = '', $filter = '', $order_status_id = '', $i_sale = '', $i_buy = '')
     {
         $result = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $result->join('users', 'users.id', '=', 'orders.user_id');
@@ -269,7 +273,7 @@ class ReportOrderStatusHistoryController extends BaseReports
             $result->where('orders.order_status', $order_status_id);
         }
         if (!empty($i_sale) and !empty($i_buy)) {
-            $result->where(function ($query) use ($i_sale,$i_buy) {
+            $result->where(function ($query) use ($i_sale, $i_buy) {
                 //$query->orWhere('orders.user_id', $i_sale);
                 //$query->orWhere('orders.buyer_id', $i_buy);
                 $query->where('orders.user_id', $i_sale);

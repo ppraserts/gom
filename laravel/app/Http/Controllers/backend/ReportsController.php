@@ -58,12 +58,15 @@ class ReportsController extends BaseReports
 
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('users as buyer', 'buyer.id', '=', 'orders.buyer_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*, order_status.status_name
             ,users.users_firstname_th
             ,users.users_lastname_th
+            ,buyer.users_firstname_th as buyer_firstname_th
+            ,buyer.users_lastname_th as buyer_lastname_th
             ,products.product_name_th
             ,order_items.quantity
             ,product_requests.units
@@ -717,12 +720,15 @@ class ReportsController extends BaseReports
     {
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
+        $orderList->join('users as buyer', 'buyer.id', '=', 'orders.buyer_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*, order_status.status_name
             ,users.users_firstname_th
             ,users.users_lastname_th
+            ,buyer.users_firstname_th as buyer_firstname_th
+            ,buyer.users_lastname_th as buyer_lastname_th
             ,products.product_name_th
             ,order_items.quantity
             ,product_requests.units

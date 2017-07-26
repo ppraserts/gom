@@ -44,7 +44,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5 col-sm-5">
-                            <div class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
+                            <div id="shop_name_group" class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
                                                 href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}
@@ -195,6 +195,7 @@
             @endif
 
             {{--Shop Slide--}}
+            @if($shop->id > 0 && $shop->shop_name != "")
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>{{ trans('messages.shop_image')}}</strong></div>
                 <div class="panel-body">
@@ -313,6 +314,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>ข้อมูลการชำระเงิน</strong></div>
@@ -540,13 +542,22 @@
 
         $('#check_url').on('click', function () {
             var uri = $('#shop_name').val();
+            if(uri.length ==0){
+                $('#shop_name_group').addClass('has-error');
+                $('#shop_name_message').html('ต้องกรอก URL ร้าน');
+                $('#shop_name_message').css('color', '#FF0000');
+                return;
+            }else {
+                $('#shop_name_group').removeClass('has-error');
+            }
             $.get("<?php echo url('user/checkshopname')?>" + "/" + uri, function (res) {
+                console.log(res);
                 if(res.used == true){
                     $('#shop_name_message').html('สามารถใช้ชื่อนี้ได้');
                     $('#shop_name_message').css('color', '#04ff8e');
                 }else{
                     $('#shop_name_message').html('ไม่สามารถใช้ชื่อนี้ได้');
-                    $('#shop_name_message').css('color', '#FF');
+                    $('#shop_name_message').css('color', '#FF0000');
                 }
                 return false;
             });

@@ -1,5 +1,5 @@
 <?php
-$pagetitle = trans('message.menu_order_list');
+$pagetitle = trans('message.report_order');
 ?>
 @extends('layouts.main')
 @section('page_heading',$pagetitle)

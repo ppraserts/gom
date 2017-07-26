@@ -168,9 +168,8 @@ class ShopSettingController extends Controller
 
     public function checkShopName(Request $request,$shop_name){
         if($request->ajax()){
-
-            $validator = $this->getValidationFactory()->make($request->all(), $this->rules(null));
-            if ($validator->fails()) {
+            $shop = Shop::where('shop_name',$shop_name)->first();
+            if ($shop != null) {
                 return response()->json(array('used' => false));
             }
             return response()->json(array('used' => true));

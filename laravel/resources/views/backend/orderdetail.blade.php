@@ -1,5 +1,5 @@
 <?php
-$pagetitle = trans('messages.menu_order_list');
+$pagetitle = trans('messages.order_detail');
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
