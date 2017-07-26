@@ -9,12 +9,12 @@
 
             <div class="form-group ">
                 <strong> * {{trans('messages.shipping_type')}} :</strong>
-                <input type="text" id="delivery_chanel" name="delivery_chanel" class="form-control" style="margin-bottom: 5px;">
+                <input type="text" id="delivery_chanel" name="delivery_chanel" class="form-control" style="margin-bottom: 5px; width: 320px;">
                 <span id="mss_delivery_chanel" class="alert-danger"></span>
             </div>
             <div class="form-group ">
                 <strong> * {{trans('messages.shipping_date')}} :</strong>
-                <div class='input-group date' id='pick_start_date' style="margin-bottom: 5px;">
+                <div class='input-group date' id='pick_start_date' style="margin-bottom: 5px; width: 320px;">
                     <input  class="form-control" id="order_date" name="order_date" type="text" value="">
                     <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>

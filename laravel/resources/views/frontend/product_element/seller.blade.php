@@ -21,14 +21,7 @@
 <div class="col-xs-12 col-sm-12 col-md-12">
     <strong>{{ trans('messages.text_moblie_phone') }} : </strong> {{$productRequest->users_mobilephone}}
 </div>
-<div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
-    <strong>{{ trans('messages.text_phone') }} : </strong>
-    @if(!empty($productRequest->users_phone))
-        {{$productRequest->users_phone}}
-    @else
-        -
-    @endif
-</div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
     <strong>{{ trans('messages.text_email') }} : </strong>
     @if(!empty($productRequest->email))
@@ -42,11 +35,7 @@
     <?php
     if (!empty($productRequest->users_addressname)) {
         $address = $productRequest->users_addressname;
-        if (!empty($productRequest->users_street)) {
-            $address .= ' ' . trans('messages.text_road') . ' : ' . $productRequest->users_street;
-        } else {
-            $address .= ' ' . trans('messages.text_road') . ' : -';
-        }
+
         if (!empty($productRequest->users_district)) {
             $address .= ' ' . trans('messages.text_sub_district') . ' : ' . $productRequest->users_district;
         } else {
@@ -78,7 +67,19 @@
 <div class="row">
     <div class="col-md-12">
         <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px;"></div>
-        <p><strong>{{ $productRequest->product_title }}</strong></p>
+        <p><strong>{{ $productRequest->product_name_th }}</strong></p>
+        @if(!empty($productRequest->product_title))
+        <p>
+            <span class="glyphicon glyphicon-tag"></span>
+            {{ $productRequest->product_title }}
+        </p>
+        @endif
+        @if(!empty($productRequest->province))
+        <p>
+            <span class="glyphicon glyphicon-map-marker"></span>
+            {{ $productRequest->province }}
+        </p>
+        @endif
         <?php
         $avg_score = 0;
         if (!empty($productRequest->avg_score)) {
@@ -127,6 +128,11 @@
 
         </p>
         <p>
+            @if($productRequest->add_packing == 1)
+                {{ trans('validation.attributes.product_package_size') }} {{$productRequest->packing_size}} {{$productRequest->package_unit}}
+            @endif
+        </p>
+        <p>
             {{ trans('validation.attributes.price') }} :
             <strong>
                 @if($productRequest->iwantto == "buy")
@@ -135,13 +141,21 @@
                 @endif
                 @if($productRequest->iwantto == "sale")
                     @if($productRequest->is_showprice)
-                        {{ floatval($productRequest->price) }}
+                        {{ floatval($productRequest->price) }} {{ trans('messages.baht') }}/{{$productRequest->units}}
                     @endif
                     @if(!$productRequest->is_showprice)
                         {{ trans('messages.product_no_price') }}
                     @endif
                 @endif
             </strong>
+        </p>
+        <p>
+            @if($productRequest->iwantto == "sale")
+                @if($productRequest->add_packing == 1)
+                    {{ trans('validation.attributes.product_package_size') }} :
+                    <strong>{{$productRequest->packing_size}} {{$productRequest->package_unit}}</strong>
+                @endif
+            @endif
         </p>
 
         <p>
@@ -156,10 +170,7 @@
                 @endif
             </strong>
         </p>
-        <p>
-            <span class="glyphicon glyphicon-map-marker"></span>
-            {{ $productRequest->province }}
-        </p>
+
         @if($user!=null && $user->id == $productRequest->users_id)
             <p>
                 <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}"

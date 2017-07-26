@@ -99,7 +99,7 @@ $pagetitle = trans('message.menu_order_list');
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
-                                <th width="70px" style="text-align:center;">{{ trans('messages.order_id') }}</th>
+                                <th width="70px" style="text-align:center;">{{ trans('messages.no') }}</th>
                                 <th>{{ trans('messages.shop_product') }}</th>
                                 <th width="100px" style="text-align:center;">{{ trans('messages.quantity') }}</th>
                                 <th width="110px"
