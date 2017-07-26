@@ -245,6 +245,7 @@ class ProductsSaleEditController extends Controller
             $productRequest->package_unit = $request->package_unit;
         }
         $productRequest->province_selling = $request->province_selling;
+        $productRequest->province_source = $request->province_source;
         $province = Province::where('PROVINCE_ID',$request->province_selling)->first();
         if ($province != null){
             $productRequest->province = $province->PROVINCE_NAME;

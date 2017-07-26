@@ -172,8 +172,10 @@ $url = "user/iwanttosale";
                                 <h4 title="{{ $product_name }}"><?php echo mb_strimwidth($product_name, 0, 40, '...', 'UTF-8'); ?></h4>
                                 <span class="glyphicon glyphicon-tag"></span>
                                 <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 40, '...', 'UTF-8'); ?></i><br/>
+                                @if(!empty($col_md_4_item['province']))
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{ mb_strimwidth($col_md_4_item['province'], 0, 40, '...', 'UTF-8') }}
+                                @endif
                                 <br/><br/>
                             </div>
 
@@ -190,7 +192,7 @@ $url = "user/iwanttosale";
                             <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                             </a>
-                            <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm">
+                            <a href="{{ url('user/productsaleedit/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm pull-right">
                                 <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
                             </a>
                         </div>

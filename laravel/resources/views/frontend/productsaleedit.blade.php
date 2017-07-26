@@ -20,8 +20,8 @@
             $("#productcategorys_id").val({{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}).change();
 
         var itemprovince_source = '{{ $item->province_source==""? old('province_source') : $item->province_source }}';
-        if (itemprovince_source != "")
-            $("#province_source").val('{{ $item->province_source==""? old('province_source') : $item->province }}').change();
+        {{--if (itemprovince_source != "")--}}
+            {{--$("#province_source").val('{{ $item->province_source==""? old('province_source') : $item->province }}').change();--}}
     }, 500);
 
     var products_array = [];
