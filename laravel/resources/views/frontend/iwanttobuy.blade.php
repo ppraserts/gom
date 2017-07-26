@@ -185,7 +185,7 @@ $url = "user/iwanttobuy";
                                 <i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}
                             </a>
                             <a href="{{ url('user/productbuyedit/'.$col_md_4_item['id']) }}"
-                               class="btn btn-info btn-sm">
+                               class="btn btn-info btn-sm pull-right">
                                 <i class="fa fa-pencil-square-o"></i> {{ trans('messages.edit')}}
                             </a>
                         </div>

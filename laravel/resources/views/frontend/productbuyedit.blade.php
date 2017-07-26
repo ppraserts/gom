@@ -18,8 +18,8 @@
             $("#productcategorys_id").val({{ $item->id==0? old('productcategorys_id') : $item->productcategorys_id }}).change();
 
         var itemprovince = '{{ $item->province_selling==""? old('province_selling') : $item->province }}';
-        if (itemprovince != "")
-            $("#province").val('{{ $item->province_selling==""? old('province_selling') : $item->province }}').change();
+        //if (itemprovince != "")
+        /*    $("#province").val('{{ $item->province_selling==""? old('province_selling') : $item->province }}').change();*/
     }, 500);
 
     var products_array = [];
@@ -394,7 +394,7 @@
                         <select id="province" name="province_selling" class="form-control min-width-100pc">
                             <option value="0">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
-                                @if($item->province_selling == $province->PROVINCE_NAME)
+                                @if($item->province_selling == $province->PROVINCE_NAME or $item->province_selling == $province->PROVINCE_ID)
                                     <option selected
                                             value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @else
