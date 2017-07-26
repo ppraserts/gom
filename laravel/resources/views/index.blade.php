@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +12,26 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+          rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600|Lato:100,300,400,700"
+          rel="stylesheet">
 
 </head>
 
 <body class="home home-intro version-two three">
-<header class="header header-intro" style="background: url(images/bg-themev302.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+<header class="header header-intro"
+        style="background: url(images/bg-themev302.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
     <div class="login-home" style="padding: 25px; background-color: transparent">
-        <a href="{{url('user/login')}}" style="display: inline-block;">
-            <img src="{{url('images/person.png')}}"> <span style="color: #FFF; font-size: 1.7em; display: inline-block; vertical-align: middle; margin-left: 5px;">เข้าสู่ระบบ</span>
-        </a>
+        @if($user==null)
+            <a href="{{url('user/login')}}" style="display: inline-block;">
+                <img src="{{url('images/person.png')}}"> <span
+                        style="color: #FFF; font-size: 1.7em; display: inline-block; vertical-align: middle; margin-left: 5px;">เข้าสู่ระบบ</span>
+            </a>
+        @else
+            <a href="{{url('user/userprofiles')}}" style="display: inline-block;">
+                <h3 style="color: #fff;">{{$user->users_firstname_th .' '. $user->users_lastname_th}}</h3></a>
+        @endif
     </div>
 
     <div class="text-vertical-center">

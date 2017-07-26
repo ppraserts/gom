@@ -131,14 +131,6 @@
         });
 
 
-        //Packing
-        $('input[type=radio][name=is_packing]').change(function () {
-            if (this.value == '0') {
-                $('#div_packing_size').show();
-            } else if (this.value == '1') {
-                $('#div_packing_size').hide();
-            }
-        });
         //Selling Period
         $('input[type=radio][name=selling_period]').change(function () {
             if (this.value == 'period') {
@@ -706,29 +698,6 @@
                     </div>
                 </div>
 
-                {{-- -------------------------hidden row--------------------- --}}
-                <div class="row " style="margin-top: 15px; display: none">
-                    <div class="col-xs-4 col-sm-4 col-md-4 {{ $errors->has('city') ? 'has-error' : '' }}">
-                        <strong>* {{ trans('validation.attributes.city') }}
-                            :</strong>
-                        <select id="city" name="city" class="form-control">
-                        </select>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4">
-                        <input type="radio" name="is_packing"
-                               value="0" {{ $item->is_packing == 0? 'checked="checked"' : '' }}>
-                        บรรจุสินค้า
-                        <input type="radio" name="is_packing"
-                               value="1" {{ $item->is_packing == 1 ? 'checked="checked"' : '' }}>
-                        ไม่บรรจุสินค้า
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 {{ $errors->has('is_showprice') ? 'has-error' : '' }}">
-                        <label class="control-label"><strong>{{ trans('validation.attributes.is_showprice') }}
-                                :</strong> </label>
-                        <input value="1" type="checkbox" id="is_showprice"
-                               name="is_showprice" {{ $item->is_showprice == 0? '' : 'checked' }}>
-                    </div>
-                </div>
             </div>
         </div>
         {{-- start form panel 3 --}}

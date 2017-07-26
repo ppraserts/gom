@@ -51,7 +51,7 @@ class ReportMatchingController extends BaseReports
                 ->where('product_requests.iwantto', '=', 'sale')
                 ->where('b.iwantto', '=', 'buy')
                 ->where('product_requests.productstatus', '=', 'open')
-                ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
+                ->whereRaw('((product_requests.add_packing != 1 && b.add_packing != 1) OR (product_requests.add_packing = 1 && b.add_packing = 1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
                 ->whereRaw('product_requests.price >= b.pricerange_start')
                 ->whereRaw('product_requests.price <= b.pricerange_end');
         });
@@ -69,6 +69,7 @@ class ReportMatchingController extends BaseReports
             'b.pricerange_start',
             'b.pricerange_end',
             'b.created_at as buy_date',
+            'product_requests.created_at as sale_date',
             'product_requests.id',
             'product_requests.volumn',
             'product_requests.price',
@@ -76,7 +77,6 @@ class ReportMatchingController extends BaseReports
             'product_requests.province',
             'product_requests.product_title',
             'products.product_name_th',
-            'products.created_at as sale_date',
             'product_requests.products_id as products_id'
         );
         $defult_ymd_last_month='';
@@ -131,6 +131,7 @@ class ReportMatchingController extends BaseReports
         $provinces = Province::all();
         $productCategoryitem = ProductCategory::all();
         $markets = Market::all();
+
         return view('backend.reports.matching',
             compact('matchings', 'products', 'provinces', 'productcategorys_id',
                 'productTypeNameArr', 'provinceTypeNameArr','productCategoryitem',
@@ -152,7 +153,7 @@ class ReportMatchingController extends BaseReports
                     ->where('product_requests.iwantto', '=', 'sale')
                     ->where('b.iwantto', '=', 'buy')
                     ->where('product_requests.productstatus', '=', 'open')
-                    ->whereRaw('((product_requests.add_packing != -1 && b.add_packing != -1) OR (product_requests.add_packing = -1 && b.add_packing = -1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
+                    ->whereRaw('((product_requests.add_packing != 1 && b.add_packing != 1) OR (product_requests.add_packing = 1 && b.add_packing = 1 && product_requests.package_unit = b.package_unit && product_requests.packing_size = b.packing_size))')
                     ->whereRaw('product_requests.price >= b.pricerange_start')
                     ->whereRaw('product_requests.price <= b.pricerange_end');
             });

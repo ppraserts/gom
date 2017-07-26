@@ -30,6 +30,8 @@ class HomeController extends Controller
     }
 
     public function index(){
+//        $user = null;
+        $user = auth()->guard('user')->user();
         /*$markets = Market::all();
         $market_params = array();
         foreach ($markets as $market){
@@ -38,7 +40,7 @@ class HomeController extends Controller
         if (!empty($market_params)) {
             $market_params = implode("&", $market_params);
         }*/
-        return view('index', compact('market_params'));
+        return view('index', compact('user'));
     }
 
     /**
