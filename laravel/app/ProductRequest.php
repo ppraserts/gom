@@ -487,7 +487,7 @@ class ProductRequest extends Model
                             join products b on a.products_id = b.id
                             $join_market
                             LEFT JOIN comments c on a.id = c.product_id
-                            where a.`iwantto` = '$iwantto'
+                            where a.`iwantto` = '$iwantto' and u.`is_active` = 1
                             $sqlcondition 
                             GROUP BY a.id
                             order by avg_score desc, a.sequence asc, a.updated_at desc
@@ -536,7 +536,7 @@ class ProductRequest extends Model
                             join shops s on u.id = s.user_id
                             $join_market
                             LEFT JOIN comments c on a.id = c.product_id
-                            where a.`iwantto` = '$iwantto'
+                            where a.`iwantto` = '$iwantto' and u.`is_active` = 1
                             $sqlcondition $sqlSearchByShopName 
                             GROUP BY a.id
                             order by avg_score desc, a.sequence asc, a.updated_at desc

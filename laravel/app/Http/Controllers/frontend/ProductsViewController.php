@@ -41,6 +41,9 @@ class ProductsViewController extends Controller
             ->where('product_requests.id', $id)
             ->first();
 
+        if($productRequest->is_active == 0){
+            return abort(404);
+        }
         $user = auth()->guard('user')->user();
 
         $status_comment = '';

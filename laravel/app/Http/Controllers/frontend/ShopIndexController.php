@@ -29,8 +29,10 @@ class ShopIndexController extends Controller
     public function index($shop_name)
     {
         $user = auth()->guard('user')->user();
-
         $shop = Shop::with(['user'])->where('shop_name',$shop_name)->first();
+        if($shop->user->is_active == 0){
+            return abort(404);
+        }
         if ($shop == null) {
             return abort(404);
         }
