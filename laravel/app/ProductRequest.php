@@ -263,11 +263,10 @@ class ProductRequest extends Model
                                                       JOIN product_requests sale on
                                                             sale.users_id=$userid
                                                             and sale.iwantto = 'sale'
+                                                            AND sale.productstatus = 'open'
                                                             AND buy.iwantto =  'buy'
                                                             and buy.productcategorys_id = sale.productcategorys_id
                                                             and buy.products_id = sale.products_id
-                                                            and buy.pricerange_start <= sale.price 
-                                                            and buy.pricerange_end>=sale.price
                                                             and buy.volumnrange_start >= sale.min_order
                                                             and buy.users_id != $userid
                                                             AND ((buy.add_packing != 1 && sale.add_packing != 1) OR (buy.add_packing = 1 && sale.add_packing = 1 && buy.package_unit = sale.package_unit && buy.packing_size = sale.packing_size))
