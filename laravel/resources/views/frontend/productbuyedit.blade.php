@@ -394,7 +394,7 @@
                         <select id="province" name="province_selling" class="form-control min-width-100pc">
                             <option value="0">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
-                                @if($item->province_selling == $province->PROVINCE_NAME or $item->province_selling == $province->PROVINCE_ID)
+                                @if($item->province_selling == $province->PROVINCE_ID)
                                     <option selected
                                             value="{{ $province->PROVINCE_ID }}">{{ $province->PROVINCE_NAME }}</option>
                                 @else

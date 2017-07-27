@@ -501,7 +501,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.production_province') }} : </strong>
                         <select id="province_source" name="province_source" class="form-control">
-                            <option value="">{{ trans('messages.select_province') }}</option>
+                            <option value="0">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
                                 @if($item->province_source == $province->PROVINCE_ID)
                                     <option selected
@@ -515,7 +515,7 @@
                     <div class="col-xs-4 col-sm-6 col-md-4 {{ $errors->has('province_selling') ? 'has-error' : '' }}">
                         <strong> {{ trans('validation.attributes.product_province_selling') }} :</strong>
                         <select id="province_selling" name="province_selling" class="form-control">
-                            <option value="0">{{ trans('messages.select_province') }}</option>
+                            <option value="0">{{ trans('messages.allprovince') }}</option>
                             @foreach ($provinceItem as $key => $province)
                                 @if($item->province_selling == $province->PROVINCE_ID)
                                     <option selected
