@@ -84,12 +84,13 @@ class MatchingController extends Controller
         }
         $itemsbuy = null;
         if($userItem->iwanttobuy == 'buy'){
-            $itemsbuy = $productRequest->matchWithBuy($userItem->id, $conditions, $orderby, $order);
+            $itemsbuy = $productRequest->matchWithBuy($userItem->id, $conditions, $orderby, $order);  //match with i want buy(myUser_id == user_id)
         }
         $itemssale = null;
-        if($userItem->iwanttobuy == 'sale') {
-            $itemssale = $productRequest->matchingWithSale($userItem->id, $conditions, $orderby, $order);
+        if($userItem->iwanttosale == 'sale') {
+            $itemssale = $productRequest->matchingWithSale($userItem->id, $conditions, $orderby, $order); //match with i want sale(myUser_id == user_id)
         }
+
         return view('frontend.matching', compact('itemsbuy', 'itemssale', 'userItem', 'price_order', 'quantity_order', 'province_order', 'orderby', 'conditions', 'filterprice', 'filterprovince', 'filterquantity'));
     }
 }

@@ -27,7 +27,8 @@ class QuotationController extends Controller
         $user = auth()->guard('user')->user();
         $quotations = Quotation::join('product_requests', 'quotation.product_request_id', '=', 'product_requests.id')
             ->join('products', 'product_requests.products_id', '=', 'products.id')
-            ->select('quotation.*','product_requests.product_title','products.product_name_th')
+            ->join('users', 'product_requests.users_id', '=', 'users.id')
+            ->select('quotation.*','product_requests.product_title','products.product_name_th','users.users_firstname_th','users.users_lastname_th')
             ->where('quotation.user_id', $user->id)->Where(function ($query) {
                 $search = \Request::get('search');
                 $query->where('product_requests.product_title', 'like', '%' . $search . '%')
@@ -35,9 +36,8 @@ class QuotationController extends Controller
             })
             ->orderBy('quotation.id', 'DESC')
             ->paginate(config('app.paginate'));
-        $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'));
 
-        return view('frontend.quotationindex', compact('quotations', 'data'));
+        return view('frontend.quotationindex', compact('quotations'));
     }
 
     /**
@@ -76,6 +76,14 @@ class QuotationController extends Controller
             ->join('users as buyer','buyer.id','=','quotation.user_id')
             ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','buyer.users_firstname_th as buyer_firstname','buyer.users_lastname_th as buyer_lastname','product_requests.*','product_requests.*','quotation.*','products.product_name_th')
             ->where('quotation.id', $id)->first();
+
+//        $order
+
+        $canBuy = true;
+
+        if ($user->id != $quotation->seller_id){
+
+        }
         return view('frontend.quotationview', compact('quotation','user'));
     }
 

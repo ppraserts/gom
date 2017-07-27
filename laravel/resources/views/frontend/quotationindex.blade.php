@@ -46,8 +46,9 @@ $i =0;
                         <th width="160px">{{ trans('messages.quotation_request_date') }}</th>
                         <th>{{ trans('validation.attributes.product_name_th') }}</th>
                         <th>{{ trans('validation.attributes.product_title') }}</th>
+                        <th>{{ trans('messages.i_sale') }}</th>
                         <th width="220px" style="text-align:center;">{{ trans('messages.Description') }}</th>
-                        <th width="100px" style="text-align:center;">{{ trans('messages.button_delete') }}</th>
+                        {{--<th width="100px" style="text-align:center;">{{ trans('messages.button_delete') }}</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@ $i =0;
                                 <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->created_at,true) }}</td>
                                 <td>{{ $item->product_name_th }}</td>
                                 <td>{{ $item->product_title }}</td>
+                                <td>{{ $item->users_firstname_th." ".$item->users_lastname_th }}</td>
                                 <td style="text-align:center;">
                                     @if($item->is_reply == 1)
                                     <a class="btn btn-info"
@@ -67,17 +69,6 @@ $i =0;
                                         @else
                                         {{ trans('messages.quotation_request_waiting') }}
                                     @endif
-                                </td>
-                                <td style="text-align:center;">
-                                    <?php
-                                    $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->promotion_title]);
-                                    ?>
-                                    {!! Form::open(['method' => 'DELETE','route' => ['quotation.destroy', $item->id],'style'=>'display:inline']) !!}
-                                    <button onclick="return confirm('{{$confirmdelete}}');"
-                                            class="btn btn-danger" type="submit">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach
