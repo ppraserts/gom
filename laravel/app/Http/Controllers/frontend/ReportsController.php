@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Market;
 use App\ProductCategory;
 use App\ProductRequestMarket;
-use DB, Validator, Response;
+use DB, Validator, Response,View;
 use App\Order;
 use Excel;
 use Illuminate\Support\Facades\Lang;
@@ -87,7 +87,7 @@ class ReportsController extends BaseReports
         $orderList->orderBy('orders.order_date', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderLists = $orderList->paginate(config('app.paginate'));
-        $productCategoryitem = ProductCategory::all();
+        $productCategoryitem = ProductCategory::orderBy('productcategory_title_th', 'ASC')->get();
 
         return view('frontend.reports.orderlist', compact('orderLists'
             , 'products'
@@ -299,7 +299,7 @@ class ReportsController extends BaseReports
         $orderList->orderBy('orders.order_date', 'DESC');
         $orderList->paginate(config('app.paginate'));
         $orderLists = $orderList->paginate(config('app.paginate'));
-        $productCategoryitem = ProductCategory::all();
+        $productCategoryitem = ProductCategory::orderBy('productcategory_title_th', 'ASC')->get();
 
         return view('frontend.reports.orderlist_sale', compact('orderLists'
             , 'products'
@@ -655,6 +655,16 @@ class ReportsController extends BaseReports
     private function productCategory($id)
     {
         return ProductCategory::where('productcategorys.id', $id)->first();
+    }
+
+    public function getProductByCate($productCateId)
+    {
+        $products = Product::select(DB::raw('products.id,products.product_name_th'))
+            ->where('products.productcategory_id', $productCateId)->get();
+
+        $dataView = View::make('frontend.reports.ele_products')->with('products', $products);
+        $dataHtml = $dataView->render();
+        return Response::json(array('R'=>'Y','res'=>$dataHtml));
     }
 
 
