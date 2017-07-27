@@ -52,7 +52,7 @@ class ProductRequest extends Model
             if ($column == "price") {
                 $conditionStr .= " and (a.`price` between b.`pricerange_start` and b.`pricerange_end`)";
             } else if ($column == "province") {
-                $conditionStr .= " and (a.province_selling = b.province_selling OR a.province_selling = 0 OR b.province_selling = 0)";
+                $conditionStr .= " and (a.province_selling = b.province_selling OR a.province_source = b.province_selling OR a.province_selling = 0 OR b.province_selling = 0)";
             } else if ($column == "quantity") {
                 $conditionStr .= " and (b.volumnrange_start >= a.min_order && b.units = a.units)";
             }
@@ -185,7 +185,6 @@ class ProductRequest extends Model
                                                               and a.province like CONCAT('%', b.province , '%')
                                                               and a.productstatus = 'open'
                                                               and b.volumnrange_start >= a.min_order
-                                                      union
                                                       SELECT 'white' as Colors ,a.*
                                                       FROM `product_requests` a
                                                       join `product_requests` b on b.users_id=$userid
@@ -219,7 +218,7 @@ class ProductRequest extends Model
             if ($column == "price") {
                 $conditionStr .= " and (sale.`price` between buy.`pricerange_start` and buy.`pricerange_end`)";
             } else if ($column == "province") {
-                $conditionStr .= " and (sale.province_selling = buy.province_selling OR sale.province_selling = 0 OR buy.province_selling = 0)";
+                $conditionStr .= " and (sale.province_selling = buy.province_selling OR sale.province_source = buy.province_selling OR sale.province_selling = 0 OR buy.province_selling = 0)";
             } else if ($column == "quantity") {
                 $conditionStr .= " and (buy.volumnrange_start >= sale.min_order && buy.units = sale.units)";
             }
@@ -490,7 +489,7 @@ class ProductRequest extends Model
                             where a.`iwantto` = '$iwantto' and u.`is_active` = 1
                             $sqlcondition 
                             GROUP BY a.id
-                            order by avg_score desc, a.sequence asc, a.updated_at desc
+                            order by a.updated_at desc
               "));
         } else {
             $results = DB::select(
@@ -539,7 +538,7 @@ class ProductRequest extends Model
                             where a.`iwantto` = '$iwantto' and u.`is_active` = 1
                             $sqlcondition $sqlSearchByShopName 
                             GROUP BY a.id
-                            order by avg_score desc, a.sequence asc, a.updated_at desc
+                            order by a.updated_at desc
               "));
         }
 

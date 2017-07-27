@@ -29,8 +29,8 @@
                         style="color: #FFF; font-size: 1.7em; display: inline-block; vertical-align: middle; margin-left: 5px;">เข้าสู่ระบบ</span>
             </a>
         @else
-            <a href="{{url('user/userprofiles')}}" style="display: inline-block;">
-                <h3 style="color: #fff;">{{$user->users_firstname_th .' '. $user->users_lastname_th}}</h3></a>
+            <a href="{{url('user/userprofiles')}}" style="display: inline-block; text-decoration: none;">
+                <h3 style="color: #aec54b;">{{$user->users_firstname_th .' '. $user->users_lastname_th}}</h3></a>
         @endif
     </div>
 

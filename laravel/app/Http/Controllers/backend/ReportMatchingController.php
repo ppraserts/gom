@@ -68,8 +68,8 @@ class ReportMatchingController extends BaseReports
             'b.volumnrange_end',
             'b.pricerange_start',
             'b.pricerange_end',
-            'b.created_at as buy_date',
-            'product_requests.created_at as sale_date',
+            'b.updated_at as buy_date',
+            'product_requests.updated_at as sale_date',
             'product_requests.id',
             'product_requests.volumn',
             'product_requests.price',
@@ -82,20 +82,20 @@ class ReportMatchingController extends BaseReports
         $defult_ymd_last_month='';
         $defult_ymd_today='';
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
-            $matching->whereDate('product_requests.created_at', '>=', $request->input('start_date'));
-            $matching->whereDate('product_requests.created_at', '<=', $request->input('end_date'));
-            $matching->whereDate('b.created_at', '>=', $request->input('start_date'));
-            $matching->whereDate('b.created_at', '<=', $request->input('end_date'));
+            $matching->whereDate('product_requests.updated_at', '>=', $request->input('start_date'));
+            $matching->whereDate('product_requests.updated_at', '<=', $request->input('end_date'));
+            $matching->whereDate('b.updated_at', '>=', $request->input('start_date'));
+            $matching->whereDate('b.updated_at', '<=', $request->input('end_date'));
             $request['start_date'] = DateFuncs::thai_date($request['start_date']);
             $request['end_date'] = DateFuncs::thai_date($request['end_date']);
         }else{
             $defultDateMonthYear = BaseReports::dateToDayAndLastMonth();
             $defult_ymd_last_month = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_last_month']);
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
-            $matching->whereDate('product_requests.created_at', '>=', $defultDateMonthYear['ymd_last_month']);
-            $matching->whereDate('product_requests.created_at', '<=', $defultDateMonthYear['ymd_today']);
-            $matching->whereDate('b.created_at', '>=', $defultDateMonthYear['ymd_last_month']);
-            $matching->whereDate('b.created_at', '<=', $defultDateMonthYear['ymd_today']);
+            $matching->whereDate('product_requests.updated_at', '>=', $defultDateMonthYear['ymd_last_month']);
+            $matching->whereDate('product_requests.updated_at', '<=', $defultDateMonthYear['ymd_today']);
+            $matching->whereDate('b.updated_at', '>=', $defultDateMonthYear['ymd_last_month']);
+            $matching->whereDate('b.updated_at', '<=', $defultDateMonthYear['ymd_today']);
         }
         if (!empty($request->input('productcategorys_id'))){
             $productcategorys_id = $request->input('productcategorys_id');
@@ -173,7 +173,7 @@ class ReportMatchingController extends BaseReports
                 'b.volumnrange_end',
                 'b.pricerange_start',
                 'b.pricerange_end',
-                'b.created_at as buy_date',
+                'b.updated_at as buy_date',
                 'product_requests.id',
                 'product_requests.volumn',
                 'product_requests.price',
@@ -181,16 +181,16 @@ class ReportMatchingController extends BaseReports
                 'product_requests.province',
                 'product_requests.product_title',
                 'products.product_name_th',
-                'product_requests.created_at as sale_date',
+                'product_requests.updated_at as sale_date',
                 'product_requests.products_id as products_id'
             );
             $str_start_and_end_date = trans('messages.text_start_date') . ' : - ' . trans('messages.text_end_date') . ' : -';
             if (!empty($start_date) and !empty($end_date)) {
                 $str_start_and_end_date = trans('messages.text_start_date') . ' : ' . DateFuncs::dateToThaiDate($start_date) . ' ' . trans('messages.text_end_date') . ' : ' . DateFuncs::dateToThaiDate($end_date);
-                $matching->whereDate('product_requests.created_at', '>=', $start_date);
-                $matching->whereDate('product_requests.created_at', '<=', $end_date);
-                $matching->whereDate('b.created_at', '>=', $start_date);
-                $matching->whereDate('b.created_at', '<=', $end_date);
+                $matching->whereDate('product_requests.updated_at', '>=', $start_date);
+                $matching->whereDate('product_requests.updated_at', '<=', $end_date);
+                $matching->whereDate('b.updated_at', '>=', $start_date);
+                $matching->whereDate('b.updated_at', '<=', $end_date);
             }
 
             if (!empty($request->input('product_type_name'))) {

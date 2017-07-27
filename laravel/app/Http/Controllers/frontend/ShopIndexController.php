@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Market;
 use App\Promotions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -82,8 +83,14 @@ class ShopIndexController extends Controller
             }
         }
 
+        $markets = Market::all();
+        $allMarketsStr = '';
+        foreach ($markets as $market){
+            $allMarketsStr .= '&markets[]='.$market->id;
+        }
 
-        return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment','user'))
+
+        return view('frontend.shopindex', compact('theme' , 'products','promotions','status_comment','user','allMarketsStr'))
             ->with('comments', $comments)
             ->with('shop', $shop);
     }

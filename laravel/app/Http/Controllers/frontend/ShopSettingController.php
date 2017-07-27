@@ -168,6 +168,9 @@ class ShopSettingController extends Controller
 
     public function checkShopName(Request $request,$shop_name){
         if($request->ajax()){
+            if ($shop_name == 'user' || $shop_name == 'admin'){
+                return response()->json(array('used' => false));
+            }
             $shop = Shop::where('shop_name',$shop_name)->first();
             if ($shop != null) {
                 return response()->json(array('used' => false));
