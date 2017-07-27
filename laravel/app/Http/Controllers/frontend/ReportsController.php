@@ -400,7 +400,8 @@ class ReportsController extends BaseReports
         foreach ($orderSaleItem as $value) {
             $sumAll = $sumAll + $value->total;
         }
-        $productCategoryitem = ProductCategory::all();
+        //$productCategoryitem = ProductCategory::all();
+        $productCategoryitem = ProductCategory::orderBy('productcategory_title_th', 'ASC')->get();
         $markets = Market::all();
 
         foreach ($orderSaleItem as $result) {
