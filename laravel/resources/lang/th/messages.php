@@ -328,4 +328,5 @@ return [
     'please_input_price' => 'กรุณาระบุราคา',
     'report_order' => 'รายงานการสั่งซื้อ',
     'report_sale' => 'รายงานการขาย',
+    'order_detail_sale'  => 'รายละเอียดการขาย'
 ];

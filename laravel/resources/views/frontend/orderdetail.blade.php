@@ -27,7 +27,10 @@ $pagetitle = trans('message.menu_order_list');
                     $statusHistory_n = count($order->statusHistory);
                     ?>
                     <h3>{{ trans('messages.order_id') . " : " . $order->id }}</h3>
-                    <p><b>{{ trans('messages.order_date') }} : </b>{{$order->order_date}}</p>
+                    <p>
+                        <b>{{ trans('messages.order_date') }} : </b>
+                        {{\App\Helpers\DateFuncs::mysqlToThaiDate($order->order_date,false)}}
+                    </p>
                     <p><b>{{ trans('messages.order_status') }}
                             : </b>{{$order->statusHistory[$statusHistory_n-1]['status_text']}}</p>
                     <p><b>{{ trans('messages.order_type') }}
