@@ -166,7 +166,7 @@ $pagetitle = trans('message.report_title_sale');
 
     $('#productcategorys_id').on('change', function() {
         var cateId = this.value;
-        $.get("<?php echo url('admin/reports/getproductbycate')?>"+'/'+cateId, function(data){
+        $.get("<?php echo url('user/reports/getproductbycate')?>"+'/'+cateId, function(data){
             if(data.R == 'Y'){
                 console.log(data.res);
                 $("#product_type_name" ).html(data.res);
