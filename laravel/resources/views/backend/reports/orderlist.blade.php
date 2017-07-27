@@ -1,5 +1,5 @@
 <?php
-$pagetitle = trans('messages.menu_order_list');
+$pagetitle = trans('messages.report_title_sale');
 ?>
 @extends('layouts.dashboard')
 @section('page_heading',$pagetitle)
@@ -21,7 +21,7 @@ $pagetitle = trans('messages.menu_order_list');
             </div>
         @endif
         <div class="row text-center">
-            <h2>{{ trans('messages.menu_order_list') }}</h2>
+            <h2>{{ trans('messages.report_order') }}</h2>
 
         </div>
         {{csrf_field()}}
@@ -143,6 +143,7 @@ $pagetitle = trans('messages.menu_order_list');
                             <th style="text-align:center;">{{ trans('messages.order_date') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_type') }}</th>
                             <th>{{ trans('messages.i_sale') }}</th>
+                            <th>{{ trans('messages.i_buy') }}</th>
                             <th style="text-align:center;">{{ trans('messages.product_name') }}</th>
                             <th style="text-align:center;">{{ trans('messages.orderbyunit') }}</th>
                             <th style="text-align:center;">{{ trans('messages.order_total').'('.trans('messages.baht').')' }}</th>
@@ -165,6 +166,7 @@ $pagetitle = trans('messages.menu_order_list');
                                     @endif
                                 </td>
                                 <td>{{ $item->users_firstname_th. " ". $item->users_lastname_th }}</td>
+                                <td>{{ $item->buyer_firstname_th. " ". $item->buyer_lastname_th }}</td>
                                 <td>{{ $item->product_name_th }}</td>
                                 <td>{{ $item->quantity.' '.$item->units }}</td>
                                 {{--<td style="text-align:center;">{{ $item->total_amount}}</td>--}}

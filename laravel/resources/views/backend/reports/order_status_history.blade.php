@@ -56,7 +56,7 @@
                     {{ trans('messages.order_id') }} :
                     </strong>
                     <div style="padding-right: 0px;">
-                        <input type="text" id="filter" name="filter" class="form-control" value=""
+                        <input type="text" id="filter" name="filter" class="form-control" value="@if(!empty($filter)){{$filter}}@endif"
                                placeholder="{{ trans('messages.order_id') }}">
                     </div>
                 </div>
