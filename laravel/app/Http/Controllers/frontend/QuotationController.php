@@ -77,14 +77,19 @@ class QuotationController extends Controller
             ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','buyer.users_firstname_th as buyer_firstname','buyer.users_lastname_th as buyer_lastname','product_requests.*','product_requests.*','quotation.*','products.product_name_th')
             ->where('quotation.id', $id)->first();
 
-//        $order
+
 
         $canBuy = true;
 
         if ($user->id != $quotation->seller_id){
-
+            $order = Order::where('quotation_id',$id)->first();
+            if ($order!=null && $order->quotation_id){
+                $canBuy = false;
+            }
+        }else{
+            $canBuy = false;
         }
-        return view('frontend.quotationview', compact('quotation','user'));
+        return view('frontend.quotationview', compact('quotation','user','canBuy'));
     }
 
     public function destroy($id)
@@ -107,7 +112,8 @@ class QuotationController extends Controller
             $total =  $request->input('price_total');
             $qty=  $request->input('qty');
             $unit_price=  $request->input('unit_price');
-            $this->saveOrder($user_id,$product_request_id,$current_user,$qty,$total,$unit_price,$delivery_chanel,$address_delivery);
+            $quotation_id = $request->input('quotation_id');
+            $this->saveOrder($user_id,$product_request_id,$current_user,$qty,$total,$unit_price,$delivery_chanel,$address_delivery,$quotation_id);
             return Response::json(array('R'=>'Y'));
 
         }
@@ -116,7 +122,7 @@ class QuotationController extends Controller
 
     }
 
-    private function saveOrder($user_id,$product_request_id,$current_user,$qty,$total,$unit_price,$delivery_chanel,$address_delivery ='')
+    private function saveOrder($user_id,$product_request_id,$current_user,$qty,$total,$unit_price,$delivery_chanel,$address_delivery ='',$quotation_id)
     {
         if (!empty($user_id)) {
             $data['user_id'] = trim($user_id);
@@ -127,6 +133,7 @@ class QuotationController extends Controller
             $data['order_date'] = date('Y-m-d H:i:s');
             $data['delivery_chanel'] = $delivery_chanel;
             $data['address_delivery'] = $address_delivery;
+            $data['quotation_id'] = $quotation_id;
             $Order_id = Order::insertGetId($data);
             // Save Order Items
             $data_ot['order_id'] = trim($Order_id);

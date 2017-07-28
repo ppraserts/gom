@@ -92,7 +92,7 @@
                                     <td>{{  $quotation->product_name_th }}</td>
                                     <td>{{  $quotation->product_title }}</td>
                                     <td style="width: 115px;">
-                                        @if($user->id != $quotation->seller_id)
+                                        @if($canBuy)
                                             <input type="number" class="form-control" id="qty"
                                                    value="{{$quotation->quantity}}" min="{{$quotation->quantity}}">
                                         @else
@@ -145,11 +145,11 @@
                                  src="{{url($quotation->product1_file)}}">
                         </div>
                     </div>
-                    @if($user->id != $quotation->seller_id)
+                    @if($canBuy)
                         <div class="row">
                             <div class="col-md-2 col-md-offset-5">
                                 <button type="button" class="btn btn-primary"
-                                        onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->seller_id}}','{{$quotation->price}}','{{$quotation->min_order}}')">
+                                        onclick="addToCart('{{$quotation->product_request_id}}','{{$quotation->seller_id}}','{{$quotation->price}}','{{$quotation->min_order}}','{{$quotation->id}}')">
                                     <i class="fa fa-shopping-cart"></i>
                                     สั่งซื้อสินค้า
                                 </button>
@@ -206,7 +206,7 @@
         return false;
     }
 
-    function addToCart(productRequestId, userId, unit_price, min_order) {
+    function addToCart(productRequestId, userId, unit_price, min_order,quotation_id) {
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = '{{url('/user/quotation/checkout')}}';
@@ -238,7 +238,8 @@
                 price_total: priceTotal,
                 qty: qty,
                 delivery_chanel: delivery_chanel,
-                address_delivery: address_delivery_new
+                address_delivery: address_delivery_new,
+                quotation_id : quotation_id
             },
             dataType: 'json',
             success: function (response) {
