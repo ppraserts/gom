@@ -325,7 +325,7 @@ class ReportsController extends BaseReports
                 trans('messages.product_name'),
                 trans('messages.sum_price_order_type_retail'),
                 trans('messages.sum_price_order_type_wholesale'),
-                trans('messages.sum_prict_order')
+                trans('messages.sum_prict_order_type')
             );
 
             foreach ($orderLists as $v) {

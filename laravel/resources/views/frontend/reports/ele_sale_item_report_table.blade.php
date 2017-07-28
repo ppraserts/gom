@@ -8,7 +8,7 @@
                     <th style="text-align:center;">{{trans('messages.product_name')}}</th>
                     <th style="text-align:center;">{{trans('messages.sum_price_order_type_retail')}}</th>
                     <th style="text-align:center;">{{trans('messages.sum_price_order_type_wholesale')}}</th>
-                    <th style="text-align:center;">{{trans('messages.sum_prict_order')}}</th>
+                    <th style="text-align:center;">{{trans('messages.sum_prict_order_type')}}</th>
                 </tr>
                 </thead>
                 <tbody>
