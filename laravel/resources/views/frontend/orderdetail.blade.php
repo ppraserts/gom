@@ -152,7 +152,9 @@ $pagetitle = trans('message.menu_order_list');
                                     <td style="text-align:left; max-width: 400px;">
                                         @if($item->status_id == 4)
                                             {{trans('messages.shipping_type')}} : {{$item->delivery_chanel}}<br/>
-                                            {{trans('messages.shipping_date')}} :{{$item->order_date}} <br/>
+                                            {{trans('messages.shipping_date')}} :
+                                            {{\App\Helpers\DateFuncs::mysqlToThaiDate($item->order_date)}}
+                                            <br/>
                                             {!! $item->note !!}
                                         @endif
                                         <?php
