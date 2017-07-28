@@ -274,8 +274,12 @@ class ReportsController extends BaseReports
                 }
                 $product_name = trans('messages.menu_add_product').' : '. implode(",",$arrProduct);
             }
+            $selling_type='';
+            if(!empty($request->input('selling_type'))){
+                $selling_type = $request->input('selling_type');
+            }
 
-           $orderLists =  $this->saleFilterExport($start_date,$end_date,$market_id,$productcategorys_id,$product_id_arr);
+           $orderLists =  $this->saleFilterExport($start_date,$end_date,$market_id,$productcategorys_id,$product_id_arr,$selling_type);
 
             foreach ($orderLists as $result) {
                 $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
@@ -294,6 +298,17 @@ class ReportsController extends BaseReports
             if (!empty($start_date) and !empty($end_date)) {
                 $str_start_and_end_date = trans('messages.text_start_date') . ' : ' . $start_date . ' ' . trans('messages.text_end_date') . ' : ' . $end_date;
             }
+
+            if (!empty($request->input('selling_type'))) {
+                if($request->input('selling_type') == 'retail'){
+                    $str_start_and_end_date.= ' '.trans('messages.order_type_sale').' : '.trans('messages.retail');
+                }elseif($request->input('selling_type') == 'wholesale'){
+                    $str_start_and_end_date.= ' '.trans('messages.order_type_sale').' : '.trans('messages.wholesale');
+                }
+            }else{
+                $str_start_and_end_date.= ' '.trans('messages.order_type_sale').' : '.trans('messages.all');
+            }
+
             $markets = Market::all();
             $str_market = trans('messages.all');
             if (!empty($user_market)) {
@@ -308,24 +323,56 @@ class ReportsController extends BaseReports
             $arr[] = array(
                 trans('messages.menu_market'),
                 trans('messages.product_name'),
-                trans('messages.sum_prict_order')
+                trans('messages.sum_price_order_type_retail'),
+                trans('messages.sum_price_order_type_wholesale'),
+                trans('messages.sum_prict_order_type')
             );
 
             foreach ($orderLists as $v) {
+                $get_order_by_type = DB::table('orders');
+                $get_order_by_type->join('order_items', 'orders.id', '=', 'order_items.order_id');
+                $get_order_by_type->join('product_requests', 'order_items.product_request_id', '=', 'product_requests.id');
+                $get_order_by_type->select(DB::raw('SUM(order_items.total) as total,orders.order_type'));
+                $get_order_by_type->where('order_items.product_request_id',  $v->product_requests_id);
+                if (!empty($request->input('selling_type'))) {
+                    $get_order_by_type->where('orders.order_type', $request->input('selling_type'));
+                }
+                $get_order_by_type->where('orders.order_status', '=', 4);
+                $get_order_by_type->groupBy('orders.order_type');
+                $get_order_by_types = $get_order_by_type->get();
+
+                $retail = 0;
+                $wholesale = 0;
+                foreach($get_order_by_types as $order_total){
+                    if($order_total->order_type == "retail"){
+                        if(!empty($order_total->total)){
+                            $retail = $order_total->total;
+                        }
+                    }
+                    if($order_total->order_type == "wholesale"){
+                        if(!empty($order_total->total)){
+                            $wholesale = $order_total->total;
+                        }
+                    }
+                }
+
                 $arr[] = array(
                     $v->markets,
                     $v->product_name_th,
-                    $v->total
+                    //$v->total,
+                    $retail,
+                    $wholesale,
+                    $retail+$wholesale
                 );
             }
             $data = $arr;
             $info = Excel::create('dgtfarm-orders-sale-excel', function ($excel) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
                 $excel->sheet('Sheetname', function ($sheet) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
 
-                    $sheet->mergeCells('A1:C1');
-                    $sheet->mergeCells('A2:C3');
-                    $sheet->mergeCells('A4:C5');
-                    $sheet->mergeCells('A6:C7');
+                    $sheet->mergeCells('A1:E1');
+                    $sheet->mergeCells('A2:E3');
+                    $sheet->mergeCells('A4:E5');
+                    $sheet->mergeCells('A6:E7');
                     $sheet->setSize(array(
                         'A1' => array(
                             'height' => 50
@@ -384,7 +431,6 @@ class ReportsController extends BaseReports
 
     public function SaleItemIndex(Request $request)
     {
-
         if (!empty($request->input('is_search'))) {
 
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);
@@ -428,6 +474,11 @@ class ReportsController extends BaseReports
         if (!empty($request->input('pid'))) {
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
+        }
+
+        if (!empty($request->input('selling_type'))) {
+            $selling_type = $request->input('selling_type');
+            $orderList->where('orders.order_type', $selling_type);
         }
 
         $defult_ymd_last_month='';
@@ -768,7 +819,7 @@ class ReportsController extends BaseReports
         return Response::json(array('R'=>'Y','res'=>$dataHtml));
     }
 
-    private function saleFilterExport($date_start,$date_end,$market_id='',$productcategorys_id='',$product_id_arr = array()){
+    private function saleFilterExport($date_start,$date_end,$market_id='',$productcategorys_id='',$product_id_arr = array(),$selling_type=''){
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
@@ -801,6 +852,10 @@ class ReportsController extends BaseReports
         if (count($product_id_arr) > 0) {
             $orderList->whereIn('products.id', $product_id_arr);
         }
+        if (!empty($selling_type)) {
+            $orderList->where('orders.order_type', $selling_type);
+        }
+
         $orderList->where('orders.order_status', '=', 4);
         $orderList->groupBy('products.id');
 

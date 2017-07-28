@@ -328,5 +328,9 @@ return [
     'please_input_price' => 'กรุณาระบุราคา',
     'report_order' => 'รายงานการสั่งซื้อ',
     'report_sale' => 'รายงานการขาย',
-    'order_detail_sale'  => 'รายละเอียดการขาย'
+    'order_detail_sale'  => 'รายละเอียดการขาย',
+    'order_type_sale'  => 'ประเภทการขาย',
+    'sum_price_order_type_retail' => 'ยอดค้าปลีก(บาท)',
+    'sum_price_order_type_wholesale' => 'ยอดค้าส่ง(บาท)',
+    'sum_prict_order_type' => 'ยอดขายรวม(บาท)',
 ];
