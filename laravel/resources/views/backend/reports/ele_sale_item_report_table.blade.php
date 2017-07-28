@@ -30,6 +30,7 @@
                         if (!empty(Request::input('selling_type'))) {
                             $get_order_by_type->where('orders.order_type', Request::input('selling_type'));
                         }
+                        $get_order_by_type->where('orders.order_status', '=', 4);
                         $get_order_by_type->groupBy('orders.order_type');
                         $get_order_by_types = $get_order_by_type->get();
 

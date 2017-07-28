@@ -561,6 +561,7 @@ class ReportsController extends BaseReports
                 if (!empty($request->input('selling_type'))) {
                     $get_order_by_type->where('orders.order_type', $request->input('selling_type'));
                 }
+                $get_order_by_type->where('orders.order_status', '=', 4);
                 $get_order_by_type->groupBy('orders.order_type');
                 $get_order_by_types = $get_order_by_type->get();
 
