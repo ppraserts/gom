@@ -49,7 +49,7 @@ class RegisterController extends Controller
     public function getRegisterForm()
     {
         $standards = Standard::all();
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')
             ->get();
         return view('frontend/auth/register', compact('provinceItem', 'standards'));
     }
@@ -57,7 +57,7 @@ class RegisterController extends Controller
     public function getCompanyRegisterForm()
     {
         $standards = Standard::all();
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')
             ->get();
         return view('frontend/auth/companyregister', compact('provinceItem', 'standards'));
     }

@@ -96,6 +96,7 @@ class User extends Authenticatable
             'users_company_th' => '',
             'users_company_en' => '',
             'other_standard' => $input['other_standard'],
+            'requset_email_system' => 1,
         ]);
     }
 
@@ -141,6 +142,7 @@ class User extends Authenticatable
             'users_company_th' => $input['users_company_th'],
 //            'users_company_en' => $input['users_company_en'],
             'other_standard' => $input['other_standard'],
+            'requset_email_system' => 1,
         ]);
     }
 

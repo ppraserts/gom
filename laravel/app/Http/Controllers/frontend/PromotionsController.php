@@ -67,6 +67,7 @@ class PromotionsController extends Controller
                 $query->where('promotion_title', 'like', '%' . $search . '%')
                     ->orWhere('promotion_description', 'like', '%' . $search . '%');
             })
+                ->select(DB::raw('*,end_date < NOW() as expired'))
                 ->orderBy('sequence', 'ASC')
                 ->paginate(config('app.paginate'));
             $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'),
@@ -156,7 +157,7 @@ class PromotionsController extends Controller
             'user_id' => $user->id,
             'shop_id' => $shop->id
         );
-        $item = Promotions::find($id);
+        $item = Promotions::where('id',$id)->select(DB::raw('*,end_date < NOW() as expired'))->first();
         $promotion_recommends = PormotionRecomment::select(DB::raw('SUM(count_recommend) as sum_recommend, COUNT(email) as count_email,
         id,promotion_id,recommend_date,email,detail,created_at'))
             ->where('promotion_id',$id)

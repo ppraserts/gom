@@ -125,9 +125,13 @@ if ($mode == "create") {
             @if($method === "PATCH")
                 <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px">
                     <strong>{{ trans('messages.link') }} : </strong>
+                    @if($item->expired)
+                        {{url ($shop->shop_name."/promotion/".$item->id)}} ({{trans('messages.promotion_expired')}})
+                        @else
                     <a href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">
                         {{ url ($shop->shop_name."/promotion/".$item->id) }}
                     </a>
+                        @endif
                 </div>
             @endif
 

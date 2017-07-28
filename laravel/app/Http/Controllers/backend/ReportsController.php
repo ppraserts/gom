@@ -601,7 +601,7 @@ class ReportsController extends BaseReports
                 $sumAll = $sumAll + $value->total;
             }
         }
-        $provinces = Province::all();
+        $provinces = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
         $allShops = User::join('orders', 'orders.user_id', '=', 'users.id')
             ->join('shops', 'shops.user_id', '=', 'users.id')
             ->select('shops.*')

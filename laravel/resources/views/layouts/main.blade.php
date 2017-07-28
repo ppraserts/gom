@@ -71,13 +71,13 @@ if (is_array($carts)) {
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ url('/') }}"> <i class="fa fa-home" aria-hidden="true"></i><span>DGT</span>Farm</a>
-            @if(!empty(ucfirst(Session::get('firstname'))))
+            @if($user!=null)
                 <ul class="nav navbar-nav navbar-left user_loget">
                     <li>
                         <span style="color: #a4a4a4;"> {{ trans('messages.menu_user') }} :</span>
                         <span class="box_header_username">
                             <a href="{{url('user/userprofiles')}}">
-                                {{ Session::get('firstname').' '.Session::get('lastname') }}
+                                {{ $user->users_firstname_th.' '.$user->users_lastname_th }}
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>
                         </span>

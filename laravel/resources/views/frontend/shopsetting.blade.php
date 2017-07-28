@@ -47,8 +47,7 @@
                             <div id="shop_name_group" class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
-                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}
-                                            /<span
+                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
                                                     id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a>
                                     </div>
                                 @else

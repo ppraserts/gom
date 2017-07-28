@@ -74,8 +74,7 @@ class ProductsSaleEditController extends Controller
     {
         $useritem = auth()->guard('user')->user();
         $showDelete = false;
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
-            ->get();
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
         $grades = config('constants.grades');
         $standards = Standard::all();
 

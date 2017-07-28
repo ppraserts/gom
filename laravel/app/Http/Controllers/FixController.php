@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Amphur;
+use App\District;
 use App\Product;
 use App\ProductRequest;
 use App\Province;
@@ -107,6 +109,12 @@ class FixController extends Controller
             }
             $productRequest->save();
         }
+    }
+
+    public function fixStarAmphurDistrict(){
+        District::where('DISTRICT_NAME','like','%*%')->delete();
+        Amphur::where('AMPHUR_NAME','like','%*%')->delete();
+        echo '########### SUCCESS ############';
     }
 
 }

@@ -39,8 +39,7 @@ class ProductsBuyEditController extends Controller
     public function show($id)
     {
         $useritem = auth()->guard('user')->user();
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
-            ->get();
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
 
         if ($id == 0) {
             $item = new ProductRequest();

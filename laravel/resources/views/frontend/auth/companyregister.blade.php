@@ -34,12 +34,11 @@
                 $('#users_city').empty();
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
                 });
                 $('#users_city').append(option);
-                $("#users_city").val({{ old('users_city') }});
+                $("#users_city").val('{{ old('users_city') }}');
                 $("#users_city").trigger("change");
             });
         });
@@ -53,14 +52,20 @@
                 var option = '';
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.DISTRICT_NAME + '">' + subCatObj.DISTRICT_NAME + '</option>';
                 });
                 $('#users_district').append(option);
-                $("#users_district").val({{ old('users_district') }});
+                $("#users_district").val('{{ old('users_district') }}');
             });
         });
+
+        setTimeout(function () {
+            var itemprovince = '{{  old('users_province') }}';
+            console.log('itemprovince = '+itemprovince);
+            if (itemprovince != "")
+                $("#users_province").val('{{ old('users_province') }}').change();
+        }, 500);
 
         $("#form").submit(function (e) {
 

@@ -66,14 +66,14 @@ Route::group(['middleware' => ['guest']], function () {
         if($province_id != "")
         {
             $province = Province::where('PROVINCE_NAME','=',$province_id)->get();
-            $subcategories = Amphur::where('PROVINCE_ID','=',$province[0]->PROVINCE_ID)->get();
+            $subcategories = Amphur::where('PROVINCE_ID','=',$province[0]->PROVINCE_ID)->orderByRaw('CONVERT (AMPHUR_NAME USING tis620)', 'ASC')->get();
         }
 
         $city_id = Input::get('city_id');
         if($city_id != "")
         {
             $city = Amphur::where('AMPHUR_NAME','=',$city_id)->get();
-            $subcategories = District::where('AMPHUR_ID','=',$city[0]->AMPHUR_ID)->get();
+            $subcategories = District::where('AMPHUR_ID','=',$city[0]->AMPHUR_ID)->orderByRaw('CONVERT (DISTRICT_NAME USING tis620)', 'ASC')->get();
         }
 
         $search = Input::get('query');
@@ -276,4 +276,5 @@ Route::get('/migrate/productprovince/', 'MigrateController@product_province');
 Route::get('/migrate/badword/', 'MigrateController@badword');
 Route::get('/fix/product/', 'FixController@removeDubProduct');
 Route::get('/fix/matchingprovince/', 'FixController@fixMatchingProvince');
+Route::get('/fix/fixstar/', 'FixController@fixStarAmphurDistrict');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

@@ -42,12 +42,11 @@
                 $('#users_city').empty();
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
                 });
                 $('#users_city').append(option);
-                $("#users_city").val({{ old('users_city') }});
+                $("#users_city").val('{{ old('users_city') }}');
                 $("#users_city").trigger("change");
             });
         });
@@ -61,14 +60,20 @@
                 var option = '';
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ Lang::get('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.DISTRICT_NAME + '">' + subCatObj.DISTRICT_NAME + '</option>';
                 });
                 $('#users_district').append(option);
-                $("#users_district").val({{ old('users_district') }});
+                $("#users_district").val('{{ old('users_district') }}');
             });
         });
+
+        setTimeout(function () {
+            var itemprovince = '{{  old('users_province') }}';
+            console.log('itemprovince = '+itemprovince);
+            if (itemprovince != "")
+                $("#users_province").val('{{ old('users_province') }}').change();
+        }, 500);
 
         $('#iwanttosale').bind('change', function () {
             if (this.checked) {
@@ -271,77 +276,7 @@
                                     @endif
                                 </div>
                             </div>
-                            {{--<div class="form-group{{ $errors->has('users_firstname_en') ? ' has-error' : '' }}">
-                                <label for="users_firstname_en"
-                                       class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_firstname_en') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="users_firstname_en" type="text" class="form-control"
-                                           name="users_firstname_en" value="{{ old('users_firstname_en') }}" autofocus>
-
-                                    @if ($errors->has('users_firstname_en'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_firstname_en') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group{{ $errors->has('users_lastname_en') ? ' has-error' : '' }}">
-                                <label for="users_lastname_en"
-                                       class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_lastname_en') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="users_lastname_en" type="text" class="form-control"
-                                           name="users_lastname_en" value="{{ old('users_lastname_en') }}" autofocus>
-
-                                    @if ($errors->has('users_lastname_en'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_lastname_en') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>--}}
-                            {{--<div class="form-group{{ $errors->has('users_gender') ? ' has-error' : '' }}">
-                                <label for="users_gender"
-                                       class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_gender') }}</label>
-
-                                <div class="col-md-6">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="users_gender" id="users_gender1" value="male"
-                                               checked="checked"> {{ trans('messages.gender_male')}}
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="users_gender" id="users_gender2"
-                                               value="female"> {{ trans('messages.gender_female')}}
-                                    </label>
-
-                                    @if ($errors->has('users_gender'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_gender') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>--}}
-                            {{--<div class="form-group{{ $errors->has('users_dateofbirth') ? ' has-error' : '' }}">
-                                <label for="users_dateofbirth"
-                                       class="col-md-4 control-label">* {{ Lang::get('validation.attributes.users_dateofbirth') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input id="users_dateofbirth" type="text" class="form-control"
-                                               name="users_dateofbirth" style="cursor: pointer;"
-                                               value="{{ old('users_dateofbirth') }}" autofocus readonly>
-                                        <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar" style="cursor: pointer;"></span>
-                                    </span>
-                                    </div>
-                                    @if ($errors->has('users_lastname_en'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_dateofbirth') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>--}}
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email"
@@ -371,21 +306,6 @@
                                     @endif
                                 </div>
                             </div>
-                            {{--<div class="form-group{{ $errors->has('users_phone') ? ' has-error' : '' }}">
-                                <label for="users_phone"
-                                       class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_phone') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="users_phone" type="text" class="form-control" name="users_phone"
-                                           value="{{ old('users_phone') }}" autofocus>
-
-                                    @if ($errors->has('users_phone'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_phone') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>--}}
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-10 form-group{{ $errors->has('users_addressname') ? ' has-error' : '' }}">
                                     <label for="users_addressname"
@@ -401,21 +321,6 @@
                                     @endif
                                 </div>
                             </div>
-                            {{--<div class="form-group{{ $errors->has('users_street') ? ' has-error' : '' }}">
-                                <label for="users_street"
-                                       class="col-md-4 control-label">{{ Lang::get('validation.attributes.users_street') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="users_street" type="text" class="form-control" name="users_street"
-                                           value="{{ old('users_street') }}" autofocus>
-
-                                    @if ($errors->has('users_street'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('users_street') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>--}}
 
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-5 form-group{{ $errors->has('users_province') ? ' has-error' : '' }}">

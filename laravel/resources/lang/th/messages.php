@@ -334,4 +334,7 @@ return [
     'sum_price_order_type_wholesale' => 'ยอดค้าส่ง(บาท)',
     'sum_prict_order_type' => 'ยอดขายรวม(บาท)',
     'please_select_province' => 'กรุณาเลือกจังหวัด',
+    'register_date' => 'วันเวลาที่สมัคร',
+    'updated_date' => 'วันเวลาที่ปรับปรุงข้อมูล',
+    'promotion_expired' => 'หมดเวลาโปรโมชั่นแล้ว',
 ];

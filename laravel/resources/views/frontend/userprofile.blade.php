@@ -24,7 +24,6 @@
                 $('#users_city').empty();
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ trans('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.AMPHUR_NAME + '">' + subCatObj.AMPHUR_NAME + '</option>';
                 });
@@ -43,7 +42,6 @@
                 var option = '';
                 $('#users_district').empty();
 
-                //option += '<option value="">{{ trans('validation.attributes.products_id') }}</option>';
                 $.each(data, function (index, subCatObj) {
                     option += '<option value="' + subCatObj.DISTRICT_NAME + '">' + subCatObj.DISTRICT_NAME + '</option>';
                 });

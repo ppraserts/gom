@@ -126,7 +126,7 @@ class ReportMatchingController extends BaseReports
             $result->markets = $productMarkets;
         }
 
-        $provinces = Province::all();
+        $provinces = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
         $productCategoryitem = ProductCategory::all();
         $markets = Market::all();
 

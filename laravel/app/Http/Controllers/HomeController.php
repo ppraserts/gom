@@ -154,8 +154,7 @@ class HomeController extends Controller
         //echo Hash::check('12345', $user->password);
         //echo $user = auth()->authenticate();
         //echo auth()->user()->password;
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
-            ->get();
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
 
         $aboutusItem = AboutUs::find(1);
         $bannerItem = SlideImage::where('slideimage_type', '=', 'B')

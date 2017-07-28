@@ -89,7 +89,7 @@ $pagetitle = trans('message.menu_promotion');
                                 <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->start_date) }}</td>
                                 <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date) }}</td>
                                 <td style="text-align:center;">
-                                    <a target="_bank" class="btn btn-info"
+                                    <a target="_bank" class="btn btn-info {{$item->expired ? 'hidden' : ''}}"
                                        href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">
                                         <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                     </a>

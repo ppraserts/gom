@@ -31,6 +31,9 @@ class UserProfileController extends Controller
         'users_imageprofile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:500',
     ];
 
+    private $messsages = ['users_imageprofile.max' => 'ขนาดไฟล์รูปใหญ่เกินไป'];
+
+
     public function __construct()
     {
         $this->middleware('user');
@@ -39,8 +42,7 @@ class UserProfileController extends Controller
     public function index(Request $request)
     {
         $item = auth()->guard('user')->user();
-        $provinceItem = Province::orderBy('PROVINCE_NAME', 'ASC')
-            ->get();
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
         $standards = Standard::all();
         $user_standard = UserStandard::where('user_id', $item->id)->get();
         for ($i = 0; $i < $standards->count(); $i++) {
@@ -70,7 +72,7 @@ class UserProfileController extends Controller
     {
         $user = auth()->guard('user')->user();
         if ($user->users_membertype == "personal") {
-            $this->validate($request, $this->rules);
+            $this->validate($request, $this->rules,$this->messsages);
             $user->users_firstname_th = $request->input('users_firstname_th');
             $user->users_lastname_th = $request->input('users_lastname_th');
             $user->users_firstname_en = $request->input('users_firstname_en');
@@ -81,7 +83,7 @@ class UserProfileController extends Controller
         }
 
         if ($user->users_membertype == "company") {
-            $this->validate($request, $this->rulescompany);
+            $this->validate($request, $this->rulescompany,$this->messsages);
             $user->users_firstname_th = $request->input('users_company_th');
             $user->users_company_th = $request->input('users_company_th');
             $user->users_company_th = $request->input('users_company_th');

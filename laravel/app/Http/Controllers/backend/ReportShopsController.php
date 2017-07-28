@@ -73,7 +73,7 @@ class ReportShopsController extends Controller
         }
 
         $markets = Market::all();
-        $provinces = Province::all();
+        $provinces = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
 
 
 
@@ -134,7 +134,7 @@ class ReportShopsController extends Controller
             }
 
             $markets = Market::all();
-            $provinces = Province::all();
+            $provinces = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
 
             $str_shops = trans('messages.show_all');
             if (count($shopArr) > 0) {
