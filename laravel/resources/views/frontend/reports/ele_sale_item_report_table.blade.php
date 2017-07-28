@@ -6,6 +6,8 @@
                 <tr>
                     <th>{{trans('messages.menu_market')}}</th>
                     <th style="text-align:center;">{{trans('messages.product_name')}}</th>
+                    <th style="text-align:center;">{{trans('messages.sum_price_order_type_retail')}}</th>
+                    <th style="text-align:center;">{{trans('messages.sum_price_order_type_wholesale')}}</th>
                     <th style="text-align:center;">{{trans('messages.sum_prict_order')}}</th>
                 </tr>
                 </thead>
@@ -18,7 +20,43 @@
                             @endforeach
                         </td>
                         <td>{{ $item->product_name_th }}</td>
-                        <td style="text-align:center;">{{ number_format($item->total) }}</td>
+                        <?php
+                            //number_format($item->total)
+                        $get_order_by_type = DB::table('orders');
+                        $get_order_by_type->join('order_items', 'orders.id', '=', 'order_items.order_id');
+                        $get_order_by_type->join('product_requests', 'order_items.product_request_id', '=', 'product_requests.id');
+                        $get_order_by_type->select(DB::raw('SUM(order_items.total) as total,orders.order_type'));
+                        $get_order_by_type->where('order_items.product_request_id',  $item->product_requests_id);
+                        if (!empty(Request::input('selling_type'))) {
+                            $get_order_by_type->where('orders.order_type', Request::input('selling_type'));
+                        }
+                        $get_order_by_type->groupBy('orders.order_type');
+                        $get_order_by_types = $get_order_by_type->get();
+
+                        $retail = 0;
+                        $wholesale = 0;
+                        foreach($get_order_by_types as $order_total){
+                            if($order_total->order_type == "retail"){
+                                if(!empty($order_total->total)){
+                                    $retail = $order_total->total;
+                                }
+                            }
+                            if($order_total->order_type == "wholesale"){
+                                if(!empty($order_total->total)){
+                                    $wholesale = $order_total->total;
+                                }
+                            }
+                        }
+                        ?>
+                        <td style="text-align:center;">
+                            {{number_format($retail)}}
+                        </td>
+                        <td style="text-align:center;">
+                            {{number_format($wholesale)}}
+                        </td>
+                        <td style="text-align:center;">
+                            {{number_format($retail+$wholesale)}}
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -30,6 +68,7 @@
             <strong>{{trans('messages.data_not_found')}}</strong>
         </div>
     @endif
+    <input type="hidden" id="btn_close" value="{{trans('messages.btn_close')}}">
 </div>
 @if(count($orderSaleItem) > 0)
     <div class="row">
@@ -52,6 +91,7 @@
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         var market_id = $("#market_id").val();
+        var selling_type = $("#selling_type").val();
         //var product_type_name = $("#product_type_name option:selected").val();
         var product_type_name = [];
         $('#product_type_name option:selected').each(function (i, selected) {
@@ -65,10 +105,14 @@
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
-                $page = '?page=' . Request::input('page');
-            } echo url('user/reports/saleitem/export' . $page)?>",
-            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name,productcategorys_id:productcategorys_id,market_id:market_id},
+            url: "<?php echo url('user/reports/saleitem/export')?>",
+            data: {start_date: start_date
+                ,end_date: end_date
+                ,product_type_name: product_type_name
+                ,productcategorys_id:productcategorys_id
+                ,market_id:market_id
+                ,selling_type:selling_type
+            },
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');

@@ -34,7 +34,7 @@ $pagetitle = trans('message.report_title_sale');
                 }
             </style>
             <div class="row">
-                <div class="form-group col-md-6" style="padding-left: 0px;">
+                <div class="form-group col-md-4" style="padding-left: 0px;">
                     <strong style="padding-right: 0; padding-left: 0;">*
                         {{ trans('messages.text_start_date') }}:
                     </strong>
@@ -47,7 +47,7 @@ $pagetitle = trans('message.report_title_sale');
                     <div class="help-block with-errors"></div>
                     <span id="with_errors_start_date"> </span>
                 </div>
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group col-md-4" style="padding-left: 0px;">
                     <strong style="padding-right: 0;padding-left: 0;">
                         * {{ trans('messages.text_end_date') }} :
                     </strong>
@@ -58,6 +58,32 @@ $pagetitle = trans('message.report_title_sale');
                             </span>
                     </div>
                     <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0;">
+                    <strong style="padding-right: 0;padding-left: 0;">
+                        {{trans('messages.order_type_sale')}} :
+                    </strong>
+                    <select id="selling_type" name="selling_type" class="form-control">
+                        <option value="">{{ trans('messages.all') }}</option>
+                        <?php
+                            $r_selected = "";
+                            $w_selected = "";
+                            if(!empty(Request::input('selling_type'))){
+                                if(Request::input('selling_type') == 'retail'){
+                                    $r_selected = "selected";
+                                }
+                                if(Request::input('selling_type') == 'wholesale'){
+                                    $w_selected = "selected";
+                                }
+                            }
+                        ?>
+                        <option value="retail" {{$r_selected}}>
+                            {{trans('messages.retail')}}
+                        </option>
+                        <option value="wholesale" {{$w_selected}}>
+                            {{trans('messages.wholesale')}}
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="row">
