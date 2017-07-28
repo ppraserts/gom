@@ -4,7 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Market;
 use App\UserMarket;
-use File;
+use File,Mail;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Illuminate\Http\Request;

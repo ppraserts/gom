@@ -333,4 +333,5 @@ return [
     'sum_price_order_type_retail' => 'ยอดค้าปลีก(บาท)',
     'sum_price_order_type_wholesale' => 'ยอดค้าส่ง(บาท)',
     'sum_prict_order_type' => 'ยอดขายรวม(บาท)',
+    'please_select_province' => 'กรุณาเลือกจังหวัด',
 ];

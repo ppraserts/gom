@@ -253,7 +253,7 @@
                                 <strong>{{ trans('validation.attributes.users_province') }}
                                     :</strong>
                                 <select id="users_province" name="users_province" class="form-control">
-                                    <option value="">{{ trans('messages.allprovince') }}</option>
+                                    <option value="">{{ trans('messages.please_select_province') }}</option>
                                     @foreach ($provinceItem as $key => $province)
                                         @if($item->users_province == $province->PROVINCE_NAME)
                                             <option selected

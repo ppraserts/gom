@@ -166,16 +166,16 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->email }}</strong>
                 </div>
-                <div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_dateofbirth') }}
-                    :
-                    <strong>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->users_dateofbirth) }}</strong>
-                </div>
-                <div class="form-group {{ $errors->has('users_gender') ? 'has-error' : '' }}">
-                    {{ trans('validation.attributes.users_gender') }}
-                    :
-                    <strong>{{ $item->users_gender == 'male'? trans('messages.gender_male') : trans('messages.gender_female') }}</strong>
-                </div>
+                {{--<div class="form-group {{ $errors->has('users_dateofbirth') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_dateofbirth') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->users_dateofbirth) }}</strong>--}}
+                {{--</div>--}}
+                {{--<div class="form-group {{ $errors->has('users_gender') ? 'has-error' : '' }}">--}}
+                    {{--{{ trans('validation.attributes.users_gender') }}--}}
+                    {{--:--}}
+                    {{--<strong>{{ $item->users_gender == 'male'? trans('messages.gender_male') : trans('messages.gender_female') }}</strong>--}}
+                {{--</div>--}}
                 <div class="form-group {{ $errors->has('users_addressname') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_addressname') }}
                     :
