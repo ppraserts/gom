@@ -30,6 +30,7 @@ class User extends Authenticatable
         , 'users_company_th'
         , 'users_company_en'
         , 'other_standard'
+        , 'requset_email_system'
     ];
 
     /**

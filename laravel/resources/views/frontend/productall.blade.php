@@ -76,7 +76,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                         <th>{{ Lang::get('messages.menu_product_category') }}</th>
                         <th>{{ Lang::get('validation.attributes.sequence') }}</th>
                         <th width="130px" style="text-align:center;">
-                            <a class="btn btn-success" href="{{ url ('user/userproduct/create') }}">
+                            <a class="btn btn-success" href="{{ url ('user/userproduct/create') }}" data-toggle="tooltip" title="{{trans('messages.add')}}">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </a>
                         </th>
@@ -120,3 +120,11 @@ $pagetitle = Lang::get('message.menu_add_product');
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+@endpush

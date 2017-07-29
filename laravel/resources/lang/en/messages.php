@@ -337,4 +337,6 @@ return [
     'register_date' => 'วันเวลาที่สมัคร',
     'updated_date' => 'วันเวลาที่ปรับปรุงข้อมูล',
     'promotion_expired' => 'หมดเวลาโปรโมชั่นแล้ว',
+    'add' => 'เพิ่ม',
+    'view_promotion_detail' => 'ดูรายละเอียดโปรโมชั่น',
 ];

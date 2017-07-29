@@ -48,7 +48,7 @@
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
                                                 href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
-                                                    id="uri">{{isset($shop->shop_name)?$shop->shop_name:""}}</span></a>
+                                                    id="uri">{{isset($shop->shop_name)?$shop->shop_name:old('shop_name')}}</span></a>
                                     </div>
                                 @else
                                     <strong>* {{ trans('validation.attributes.shop_name') }} URL
@@ -56,9 +56,9 @@
                                                                           style="margin-bottom: 10px;">{{isset($shop->shop_name)?$shop->shop_name:""}}</span>
                                 @endif
                                 @if($shop->id > 0 && $shop->shop_name != "")
-                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
+                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:old('shop_name'), array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
                                 @else
-                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:"", array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
+                                    {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:old('shop_name'), array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
                                         <br>
                                         <input class="btn btn-primary" type="button" id="check_url" value="ตรวจสอบ URL"/>
                                         <span id="shop_name_message" style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}

@@ -73,7 +73,8 @@ class QuoteController extends Controller
             ->select('users.users_firstname_th','users.users_lastname_th','users.id as seller_id','users.users_mobilephone','users.users_phone','buyer.users_firstname_th as buyer_firstname','buyer.users_lastname_th as buyer_lastname','product_requests.*','product_requests.*','quotation.*','products.product_name_th')
             ->where('quotation.id', $id)->first();
 
-        $canBuy = true;
+        $canBuy = false;
+
         return view('frontend.quotationview', compact('quotation','user','canBuy'));
     }
 }

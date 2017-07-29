@@ -110,7 +110,20 @@
                                 </tr>
                                 </tbody>
                             </table>
-
+                            @if($quotation->add_packing == 1)
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ trans('validation.attributes.units_package')." / ".$quotation->units }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{  $quotation->packing_size }} {{  $quotation->package_unit }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            @endif
                             @if(!empty($quotation->remark))
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
@@ -126,7 +139,7 @@
                                     </tbody>
                                 </table>
                             @endif
-                            @if($user->id != $quotation->seller_id)
+                            @if($canBuy)
                                 <div class="panel panel-default" style="margin-top: 30px">
                                     <div class="panel-heading">
                                         <h4>{{ trans('messages.title_delivery_product') }}</h4>

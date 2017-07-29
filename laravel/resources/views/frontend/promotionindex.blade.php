@@ -25,9 +25,10 @@ $pagetitle = trans('message.menu_promotion');
                         </div>
                     @endif
 
-                        @if($setting_shop)
+                    @if($setting_shop)
                         <div class="alert alert-danger">
-                            <strong>{{ trans('messages.required_shop_setting')}}</strong> <a href="{{ url('/user/shopsetting') }}">{{ trans('messages.shop_setting') }}</a>
+                            <strong>{{ trans('messages.required_shop_setting')}}</strong> <a
+                                    href="{{ url('/user/shopsetting') }}">{{ trans('messages.shop_setting') }}</a>
                         </div>
                     @endif
 
@@ -87,14 +88,22 @@ $pagetitle = trans('message.menu_promotion');
                                 <td>{{ $item->promotion_title }}</td>
                                 <td>{{ $item->promotion_description }}</td>
                                 <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->start_date) }}</td>
-                                <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date) }}</td>
+                                <td>
+                                    @if($item->expired)
+                                        <span style="color: #F00;">{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date) }}</span>
+                                    @else
+                                        {{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->end_date) }}
+                                    @endif
+                                </td>
                                 <td style="text-align:center;">
                                     <a target="_bank" class="btn btn-info {{$item->expired ? 'hidden' : ''}}"
-                                       href="{{ url ($shop->shop_name."/promotion/".$item->id) }}">
+                                       href="{{ url ($shop->shop_name."/promotion/".$item->id) }}" data-toggle="tooltip"
+                                       title="{{trans('messages.view_promotion_detail')}}">
                                         <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                     </a>
                                     <a class="btn btn-primary"
-                                       href="{{ url ('user/promotion/'.$item->id.'/edit') }}">
+                                       href="{{ url ('user/promotion/'.$item->id.'/edit') }}" data-toggle="tooltip"
+                                       title="{{trans('messages.edit')}}">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </a>
                                     <?php
@@ -102,7 +111,8 @@ $pagetitle = trans('message.menu_promotion');
                                     ?>
                                     {!! Form::open(['method' => 'DELETE','route' => ['promotion.destroy', $item->id],'style'=>'display:inline']) !!}
                                     <button onclick="return confirm('{{$confirmdelete}}');"
-                                            class="btn btn-danger" type="submit">
+                                            class="btn btn-danger" type="submit" data-toggle="tooltip"
+                                            title="{{trans('messages.button_delete')}}">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </button>
                                     {!! Form::close() !!}
@@ -119,3 +129,10 @@ $pagetitle = trans('message.menu_promotion');
         </div>
     </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+@endpush
