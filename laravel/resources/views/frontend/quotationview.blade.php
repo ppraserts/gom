@@ -82,7 +82,7 @@
                                     <th>{{ trans('validation.attributes.product_name_th') }}</th>
                                     <th>{{ trans('validation.attributes.product_title') }}</th>
                                     <th>จำนวน</th>
-                                    <th>{{ trans('validation.attributes.price') }}</th>
+                                    <th>{{ trans('messages.unit_price') }}</th>
                                     {{--<th>{{ trans('validation.attributes.discount') }}</th>--}}
                                     <th>รวม</th>
                                 </tr>
@@ -101,7 +101,7 @@
                                     </td>
                                     <td>
                                         <strong>
-                                            {{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}
+                                            {{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}@if($quotation->add_packing == 1)({{  $quotation->packing_size }} {{  $quotation->package_unit }})@endif
                                         </strong>
                                     </td>
                                     {{--<td>{{  $quotation->discount }}</td>--}}
@@ -110,20 +110,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            @if($quotation->add_packing == 1)
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>{{ trans('validation.attributes.units_package')." / ".$quotation->units }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>{{  $quotation->packing_size }} {{  $quotation->package_unit }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            @endif
                             @if(!empty($quotation->remark))
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
