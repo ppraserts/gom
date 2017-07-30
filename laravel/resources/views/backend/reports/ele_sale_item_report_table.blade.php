@@ -25,8 +25,9 @@
                         $get_order_by_type = DB::table('orders');
                         $get_order_by_type->join('order_items', 'orders.id', '=', 'order_items.order_id');
                         $get_order_by_type->join('product_requests', 'order_items.product_request_id', '=', 'product_requests.id');
+                        $get_order_by_type->join('products', 'products.id', '=', 'product_requests.products_id');
                         $get_order_by_type->select(DB::raw('SUM(order_items.total) as total,orders.order_type'));
-                        $get_order_by_type->where('order_items.product_request_id',  $item->product_requests_id);
+                        $get_order_by_type->where('products.id',  $item->products_id);
                         if (!empty(Request::input('selling_type'))) {
                             $get_order_by_type->where('orders.order_type', Request::input('selling_type'));
                         }
