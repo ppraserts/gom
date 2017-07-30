@@ -54,7 +54,11 @@
                             <tr>
                                 <td>{{  $quotation->product_name_th }}</td>
                                 <td>{{  $quotation->product_title }}</td>
-                                <td>{{  $quotation->quantity ." ".$quotation->units }}@if($quotation->add_packing == 1)({{  $quotation->packing_size }} {{  $quotation->package_unit }})@endif</td>
+                                <td>{{  $quotation->quantity ." ".$quotation->units }}
+                                    @if($quotation->add_packing == 1)
+                                        ({{$quotation->units.trans('messages.each')}} {{  $quotation->packing_size }} {{  $quotation->package_unit }})
+                                    @endif
+                                </td>
                             </tr>
                             </tbody>
                         </table>

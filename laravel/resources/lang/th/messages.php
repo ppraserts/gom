@@ -339,4 +339,5 @@ return [
     'promotion_expired' => 'หมดเวลาโปรโมชั่นแล้ว',
     'add' => 'เพิ่ม',
     'view_promotion_detail' => 'ดูรายละเอียดโปรโมชั่น',
+    'each' => 'ละ',
 ];

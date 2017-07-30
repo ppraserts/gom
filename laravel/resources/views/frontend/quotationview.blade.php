@@ -101,7 +101,10 @@
                                     </td>
                                     <td>
                                         <strong>
-                                            {{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}@if($quotation->add_packing == 1)({{  $quotation->packing_size }} {{  $quotation->package_unit }})@endif
+                                            {{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}
+                                            @if($quotation->add_packing == 1)
+                                                ({{$quotation->units .trans('messages.each')}} {{  $quotation->packing_size }} {{  $quotation->package_unit }})
+                                            @endif
                                         </strong>
                                     </td>
                                     {{--<td>{{  $quotation->discount }}</td>--}}
