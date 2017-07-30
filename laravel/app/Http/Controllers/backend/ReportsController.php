@@ -498,7 +498,7 @@ class ReportsController extends BaseReports
             $defult_ymd_today = DateFuncs::convertToThaiDate($defultDateMonthYear['ymd_today']);
         }
         $orderList->where('orders.order_status', '=', 4);
-        $orderList->groupBy('product_requests.id');
+        $orderList->groupBy('products.id');
         //$orderList->orderBy('orders.id', 'DESC');
 
         $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
