@@ -114,7 +114,7 @@ return [
     'quotation_date'=> 'วันที่เสนอราคา',
     'send_quotation'=> 'ส่งใบเสนอราคา',
     'product_no_price' => 'สอบถามราคา',
-    'allprovince'  => 'ทุกจังหวัด',
+    'allprovince'  => ' ทุกจังหวัด',
     'select_province'  => 'เลือกจังหวัด',
     'registercomplete'  => 'ขอบคุณที่สมัครใช้บริการ ระบบจะตรวจสอบข้อมูลผู้ซื้อ/ผู้ขายภายใน 24 ชั่วโมง',
     'i_buy' => 'ผู้ซื้อ',

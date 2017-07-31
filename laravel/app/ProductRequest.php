@@ -43,7 +43,7 @@ class ProductRequest extends Model
         if ($orderby == "province")
             $orderbycondition = "matching.province";
         else if ($orderby == "quantity")
-            $orderbycondition = "matching.units";
+            $orderbycondition = "matching.min_order";
         else if ($orderby == "price")
             $orderbycondition = "matching.price";
 
@@ -209,9 +209,9 @@ class ProductRequest extends Model
         if ($orderby == "province")
             $orderbycondition = "matching.province";
         else if ($orderby == "quantity")
-            $orderbycondition = "matching.units";
+            $orderbycondition = "matching.volumnrange_start";
         else if ($orderby == "price")
-            $orderbycondition = "matching.price";
+            $orderbycondition = "matching.pricerange_end";
 
         $conditionStr = "";
         foreach ($whereColumn as $column) {

@@ -51,43 +51,31 @@ class MatchingController extends Controller
         $quantity_order = "asc";
         $province_order = "asc";
         if ($orderby == "price") {
-            if ($filterprice) {
-                $price_order = $order;
-            } else {
-                $orderby = "";
-            }
+            $price_order = $order;
         } else if ($orderby == "quantity") {
-            if ($filterquantity) {
-                $quantity_order = $order;
-            } else {
-                $orderby = "";
-            }
+            $quantity_order = $order;
         } else if ($orderby == "province") {
-            if ($filterprovince) {
-                $province_order = $order;
-            } else {
-                $orderby = "";
-            }
+            $province_order = $order;
         }
 
         /** if old oderby disable */
-        if ($orderby == ""){
+        if ($orderby == "") {
             if ($filterprice) {
                 $orderby = "price";
-            }else if ($filterquantity){
+            } else if ($filterquantity) {
                 $orderby = "quantity";
-            }else if ($filterprovince){
+            } else if ($filterprovince) {
                 $orderby = "province";
-            }else{
+            } else {
                 $orderby = "price";
             }
         }
         $itemsbuy = null;
-        if($userItem->iwanttobuy == 'buy'){
+        if ($userItem->iwanttobuy == 'buy') {
             $itemsbuy = $productRequest->matchWithBuy($userItem->id, $conditions, $orderby, $order);  //match with i want buy(myUser_id == user_id)
         }
         $itemssale = null;
-        if($userItem->iwanttosale == 'sale') {
+        if ($userItem->iwanttosale == 'sale') {
             $itemssale = $productRequest->matchingWithSale($userItem->id, $conditions, $orderby, $order); //match with i want sale(myUser_id == user_id)
         }
 

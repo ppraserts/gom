@@ -11,7 +11,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
     <div class="btn-group"><a
                 href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>$orderby,'filterprice'=>!$filterprice])) }}"
                 class="btn btn-info"><span class="fa fa-check {{$filterprice ? '' : 'invisible'}}"/></a>
-        <a class="btn btn-default {{$filterprice ? '' : 'disabled'}} {{ $orderby == "price" ? 'active' : '' }}"
+        <a class="btn btn-default {{--{{$filterprice ? '' : 'disabled'}}--}} {{ $orderby == "price" ? 'active' : '' }}"
            href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>'price','toggleorder'=>$price_order])) }}"
            role="button">
             <span class="fa fa-sort-amount-{{$price_order}}"></span> {{ trans('messages.orderbyprice') }}
@@ -20,7 +20,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
     <div class="btn-group"><a
                 href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>$orderby,'filterquantity'=>!$filterquantity])) }}"
                 class="btn btn-info"><span class="fa fa-check {{$filterquantity ? '' : 'invisible'}}"/></a>
-        <a class="btn btn-default {{$filterquantity ? '' : 'disabled'}} {{ $orderby == "quantity" ? 'active' : '' }}"
+        <a class="btn btn-default {{--{{$filterquantity ? '' : 'disabled'}}--}} {{ $orderby == "quantity" ? 'active' : '' }}"
            href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>'quantity','toggleorder'=>$quantity_order])) }}"
            role="button">
             <span class="fa fa-sort-amount-{{$quantity_order}}"></span> {{ trans('messages.orderbyunit') }}
@@ -29,7 +29,7 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
     <div class="btn-group"><a
                 href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>$orderby,'filterprovince'=>!$filterprovince])) }}"
                 class="btn btn-info"><span class="fa fa-check {{$filterprovince ? '' : 'invisible'}}"/></a>
-        <a class="btn btn-default {{$filterprovince ? '' : 'disabled'}} {{ $orderby == "province" ? 'active' : '' }}"
+        <a class="btn btn-default {{--{{$filterprovince ? '' : 'disabled'}}--}} {{ $orderby == "province" ? 'active' : '' }}"
            href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>'province','toggleorder'=>$province_order])) }}"
            role="button">
             <span class="fa fa-sort-alpha-{{$province_order}}"></span> {{ trans('messages.orderbyprovince') }}
