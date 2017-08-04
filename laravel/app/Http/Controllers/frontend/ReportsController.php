@@ -190,8 +190,9 @@ class ReportsController extends BaseReports
                 );
             }
             $data = $arr;
-            $info = Excel::create('dgtfarm-orders-buy-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString) {
+            $rowData = count($data)+7;
+            $info = Excel::create('dgtfarm-orders-buy-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$rowData) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$rowData) {
                     $sheet->mergeCells('A1:I1');
                     $sheet->mergeCells('A2:I3');
                     $sheet->mergeCells('A4:I5');
@@ -238,6 +239,20 @@ class ReportsController extends BaseReports
                     });
 
                     $sheet->rows($data);
+                    $rowSum = $rowData+1;
+                    $sheet->mergeCells('A'.$rowSum.':G'.$rowSum);
+                    $sheet->cells('A'.$rowSum, function ($cells){
+                        $cells->setValue('ยอดรวมสุทธิ');
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('right');
+                    });
+                    $sheet->cells('H'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(H9:H'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
                 });
             })->store('xls', false, true);
             return response()->json(array('file' => $info['file']));
@@ -662,7 +677,7 @@ class ReportsController extends BaseReports
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
         $orderList->join('order_items', 'order_items.order_id', '=', 'orders.id');
         $orderList->join('product_requests', 'product_requests.id', '=', 'order_items.product_request_id');
-        $orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
+        //$orderList->join('product_request_market', 'product_request_market.product_request_id', '=', 'product_requests.id');
         $orderList->join('products', 'products.id', '=', 'product_requests.products_id');
         $orderList->select(DB::raw('orders.*, order_status.status_name
             ,users.users_firstname_th
