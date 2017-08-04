@@ -15,7 +15,7 @@
         @if(count($shopping_carts) > 0)
             <div class="row">
                 <div class="pull-right">
-                    <a href="{{url('result')}}" type="button" class="btn btn-primary">
+                    <a href="{{url('result?markets[]=1&markets[]=2&markets[]=3')}}" type="button" class="btn btn-primary">
                         <span class="fa fa-cart-plus"></span> {{ trans('messages.continue_shopping') }}
                     </a>
                     <button type="submit" class="btn btn-info">
@@ -29,7 +29,7 @@
                 <h2 class="text-center">{{ trans('messages.not_found_an_orders') }}</h2>
                 <BR>
                 <div class="text-center">
-                    <a href="{{url('result')}}" type="button" class="btn btn-primary">
+                    <a href="{{url('result?markets[]=1&markets[]=2&markets[]=3')}}" type="button" class="btn btn-primary">
                         <span class="fa fa-cart-plus"></span> {{ trans('messages.continue_shopping') }}
                     </a>
                 </div>
@@ -147,7 +147,7 @@
                                             {{--<span class="btn btn-default minus disabled"><i class="fa fa-minus"></i></span>--}}
                                         {{--@endif--}}
 
-                                        @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] > $cart["qty"] and $cart["qty"] < $cart['product_request']['product_stock'])
+                                        @if($cart['product_request']['volumn'] > 0 and $cart['product_request']['volumn'] >= $cart["qty"] and $cart["qty"] <= $cart['product_request']['product_stock'])
 
 
                                         <input class="text-center btn btn-default product_quantity"

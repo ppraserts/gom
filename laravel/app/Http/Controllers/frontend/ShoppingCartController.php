@@ -27,7 +27,7 @@ class ShoppingCartController extends Controller
             $arr_summary_quantities = $this->sumQuantitiesWithSameProduct($carts_in_session);
             $shopping_carts = $this->summarizeDataShoppingCarts($arr_summary_quantities);
         }
-        //return $shopping_carts;
+        //return $arr_summary_quantities;
         return view('frontend.shoppingcart', compact('shopping_carts'));
     }
 
@@ -250,6 +250,9 @@ class ShoppingCartController extends Controller
                 $value['product_request'] = ProductRequest::join('products', 'product_requests.products_id', '=', 'products.id')
                 ->select('product_requests.*', 'products.product_name_th', 'products.product_name_en')
                 ->where('product_requests.id',$value['product_request_id'])->first();
+                if($value['qty'] > $value['product_request']->product_stock){
+                    $value['qty'] = $value['product_request']->product_stock;
+                }
                 $arr_more_data[$key] = $value;
             }
         }
