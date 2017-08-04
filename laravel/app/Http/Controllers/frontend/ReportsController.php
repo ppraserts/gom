@@ -65,10 +65,15 @@ class ReportsController extends BaseReports
             $orderList->where('products.productcategory_id', $productcategorys_id);
         }
 
-        if (!empty($request->input('pid'))) {
+        if (!empty($request->input('pid')[0]) && count($request->input('pid')) > 0) {
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
         }
+
+        if (!empty($request->input('order_status'))) {
+            $orderList->where('orders.order_status', $request->input('order_status'));
+        }
+
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
             $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
             $orderList->whereDate('orders.order_date', '<=', $request->input('end_date'));
@@ -111,15 +116,20 @@ class ReportsController extends BaseReports
             $buyer_id = $user->id;
             $type = $request->input('type'); // sale or buy
             $productcategorys_id = $request->input('productcategorys_id');
-            $orderLists = $this->getOrders($buyer_id, $start_date, $end_date, $productTypeNameArr, $type);
+            $order_status = $request->input('order_status');
+            $orderLists = $this->getOrders($buyer_id, $start_date, $end_date, $productTypeNameArr, $type,$order_status);
 
             $productStr = trans('messages.show_all');
             if (!empty($productTypeNameArr)) {
                 $res = $this->getProductCate($productTypeNameArr);
-                foreach ($res as $re) {
-                    $productStrs[] = $re->product_name_th;
+                $productStr='';
+                if(count($res) > 0){
+                    foreach ($res as $re) {
+                        $productStrs[] = $re->product_name_th;
+                    }
+                    $productStr = implode(",", $productStrs);
                 }
-                $productStr = implode(",", $productStrs);
+
             }
             $productcategoryString = trans('validation.attributes.productcategorys_id') . ' : ' . trans('messages.show_all');
             if (!empty($productcategorys_id)) {
@@ -646,7 +656,7 @@ class ReportsController extends BaseReports
         }
     }
 
-    private function getOrders($buyer_id, $start_date = '', $end_date = '', $productTypeNameArr = '', $type)
+    private function getOrders($buyer_id, $start_date = '', $end_date = '', $productTypeNameArr = '', $type,$order_status='')
     {
         $orderList = Order::join('order_status', 'order_status.id', '=', 'orders.order_status');
         $orderList->join('users', 'users.id', '=', 'orders.user_id');
@@ -678,8 +688,11 @@ class ReportsController extends BaseReports
             $end_date = DateFuncs::convertYear($end_date);
             $orderList->whereDate('orders.order_date', '<=', $end_date);
         }
-        if (!empty($productTypeNameArr)) {
+        if (!empty($productTypeNameArr[0])) {
             $orderList->whereIn('products.id', $productTypeNameArr);
+        }
+        if (!empty($order_status)) {
+            $orderList->where('orders.order_status', $order_status);
         }
         //$orderList->groupBy('orders.id');
         $orderList->orderBy('orders.order_date', 'DESC');
