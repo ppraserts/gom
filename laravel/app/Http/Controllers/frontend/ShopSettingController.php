@@ -48,7 +48,9 @@ class ShopSettingController extends Controller
         $is_exist_shop = $this->isExistShop($user->id);
         if (!$is_exist_shop) {
             $shop = new Shop();
-            $shop->theme = 'theme3'; // default theme
+            if ($request->input('theme') == ''){
+                $shop->theme = 'theme3'; // default theme
+            }
             $this->validate($request, $this->rules(null));
         } else {
             $shop = Shop::where('user_id', $user->id)->first();
@@ -61,6 +63,7 @@ class ShopSettingController extends Controller
         $shop->shop_subtitle = $request->input('shop_subtitle');
         $shop->shop_description = $request->input('shop_description');
         $shop->bank = $request->input('bank');
+        $shop->theme = $request->input('theme');
         $shop->text_color = $request->input('text_color');
 
         if ($request->input('image_file_1_type') == 0){
