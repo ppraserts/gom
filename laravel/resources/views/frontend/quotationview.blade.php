@@ -189,6 +189,8 @@
     </div>
 @endsection
 @push('scripts')
+
+<script src="{{url('bootstrap-validator/js/validator.js')}}"></script>
 <script>
 
     $(document).ready(function () {

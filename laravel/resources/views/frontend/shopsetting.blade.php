@@ -202,6 +202,11 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
+                            {{trans('messages.shop_image_size_suggestions')}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-10">
@@ -221,6 +226,7 @@
                                             </div>
                                             <div id="image_file_3_form">
                                                 {!! Form::file('image_file_3', null, array('class' => 'filestyle')) !!}
+                                                {{trans('messages.shop_image_size_suggestions')}} 1170 x 560 Pixel
                                             </div>
                                         </div>
                                     </div>
@@ -257,6 +263,7 @@
                                             </div>
                                             <div id="image_file_1_form">
                                                 {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
+                                                {{trans('messages.shop_image_size_suggestions')}} 1140 x 560 Pixel
                                             </div>
                                         </div>
                                     </div>
@@ -294,6 +301,7 @@
                                             </div>
                                             <div id="image_file_2_form">
                                                 {!! Form::file('image_file_2', null, array('class' => 'filestyle')) !!}
+                                                {{trans('messages.shop_image_size_suggestions')}} 1170 x 560 Pixel
                                             </div>
                                         </div>
                                     </div>

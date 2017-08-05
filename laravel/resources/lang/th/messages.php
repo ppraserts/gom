@@ -340,4 +340,5 @@ return [
     'add' => 'เพิ่ม',
     'view_promotion_detail' => 'ดูรายละเอียดโปรโมชั่น',
     'each' => 'ละ',
+    'shop_image_size_suggestions' => 'ขนาดรูปที่เหมาะสม : ',
 ];
