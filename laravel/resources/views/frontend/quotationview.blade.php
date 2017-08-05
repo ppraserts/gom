@@ -245,11 +245,11 @@
             $('#quotation_quantity').html('{{ $quotation->quantity }}');
             $('#alertQtyModal').modal('show');
             $('#qty').val('{{ $quotation->quantity }}').change();
-            var price_by_product = parseInt($('#price-by-product').val());
-            var new_price_total = qty * price_by_product;
+            var price_by_product = parseInt('{{$quotation->price}}');
+            var new_price_total = $('#qty').val() * price_by_product;
             $('#price-total').val(new_price_total);
             $('#show_price_total').html(new_price_total);
-            return
+            return;
         }
         //alert(CSRF_TOKEN); return false;
         var delivery_chanel = $('#delivery_chanel option:selected').val();
@@ -307,7 +307,6 @@
         var qty = parseInt($(this).val());
         var min_order = parseInt($('#min_order').val());
         var price_by_product = parseInt($('#price-by-product').val());
-        var price_total = parseInt($('#price-total').val());
 
         if (qty < min_order || qty < '{{ $quotation->quantity }}') {
             $('#qty').css({'border-color': '#a94442'});
@@ -318,7 +317,7 @@
         var new_price_total = qty * price_by_product;
         $('#price-total').val(new_price_total);
         $('#show_price_total').html(new_price_total);
-        return false
+        return false;
     });
 
 </script>
