@@ -61,7 +61,7 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
+                <div class="col-md-4 {{ $errors->has('productcategorys_id') ? 'has-error' : '' }}"
                      style="padding-left: 0;">
                     <strong>
                         {{ trans('validation.attributes.productcategorys_id') }}:
@@ -81,7 +81,7 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
 
 
-                <div class="form-group col-md-6" style="padding-left: 0px; padding-right: 0;">
+                <div class="form-group col-md-4" style="padding-left: 0px;">
                     <strong style="padding-right: 0; padding-left: 0;">
                         {{ trans('messages.text_product_type_name') }} :
                     </strong>
@@ -96,6 +96,29 @@ $pagetitle = trans('message.menu_order_list');
                                 </option>
                             @endforeach
                         @endif
+                    </select>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0;">
+                    <strong>
+                        {{trans('messages.userstatus')}} :
+                    </strong>
+                    <select name="order_status" id="order_status" class="form-control">
+                        <option value="">{{ trans('messages.all') }}</option>
+                        <?php $order_status_id = Request::input('order_status');?>
+                        <option value="1" @if(!empty($order_status_id) && $order_status_id == 1) selected @endif>
+                            สั่งซื้อ</option>
+                        <option value="7" @if(!empty($order_status_id) && $order_status_id == 7) selected @endif>
+                            ยืนยันการสั่งซื้อ
+                        </option>
+                        <option value="3" @if(!empty($order_status_id) && $order_status_id == 3) selected @endif>
+                            แจ้งชำระเงิน
+                        </option>
+                        <option value="4" @if(!empty($order_status_id) && $order_status_id == 4) selected @endif>
+                            จัดส่งแล้ว
+                        </option>
+                        <option value="5" @if(!empty($order_status_id) && $order_status_id == 5) selected @endif>
+                            ยกเลิกรายการสั่งซื้อ
+                        </option>
                     </select>
                 </div>
             </div>
@@ -245,6 +268,7 @@ $pagetitle = trans('message.menu_order_list');
     $("#export").click(function () {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
+        var order_status = $("#order_status option:selected").val();
         //var product_type_name = $("#product_type_name option:selected").val();
         var product_type_name = [];
         $('#product_type_name option:selected').each(function (i, selected) {
@@ -259,10 +283,14 @@ $pagetitle = trans('message.menu_order_list');
         $.ajax({
             headers: {'X-CSRF-TOKEN': key_token},
             type: "POST",
-            url: "<?php $page = ''; if (!empty(Request::input('page'))) {
-                $page = '?page=' . Request::input('page');
-            } echo url('user/reports/buy/export' . $page)?>",
-            data: {start_date: start_date, end_date: end_date, product_type_name: product_type_name,type:type,productcategorys_id:productcategorys_id},
+            url: "<?php echo url('user/reports/buy/export')?>",
+            data: {start_date: start_date
+                , end_date: end_date
+                , product_type_name: product_type_name
+                ,type:type
+                ,productcategorys_id:productcategorys_id
+                ,order_status:order_status
+            },
             success: function (response) {
                 $('.modal-content').empty();
                 $('.modal-content').html('<div class="modal-body text-center"><button class="btn btn-info a-download" id="btn-download" style="margin-right: 5px;"><?php echo trans('messages.download')?></button><button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo trans('messages.btn_close')?></button></div>');

@@ -301,10 +301,12 @@ class ReportsController extends BaseReports
             $products = Product::where('productcategory_id', $productcategorys_id)->get();
             $orderList->where('products.productcategory_id', $productcategorys_id);
         }
-
-        if (!empty($request->input('pid'))) {
+        if (!empty($request->input('pid')[0]) && count($request->input('pid')) > 0) {
             $productTypeNameArr = $request->input('pid');
             $orderList->whereIn('products.id', $productTypeNameArr);
+        }
+        if (!empty($request->input('order_status'))) {
+            $orderList->where('orders.order_status', $request->input('order_status'));
         }
         if (!empty($request->input('start_date')) && !empty($request->input('end_date'))) {
             $orderList->whereDate('orders.order_date', '>=', $request->input('start_date'));
@@ -497,8 +499,6 @@ class ReportsController extends BaseReports
             $oderList2 = DB::table( DB::raw("({$orderList->toSql()}) as sub") )
                 ->mergeBindings($orderList->getQuery()) // you need to get underlying Query Builder
                 ->join('product_request_market', 'product_request_market.product_request_id', '=', 'sub.product_requests_id');
-
-            $market_id = '';
             if (!empty($request->input('market_id'))) {
                 $market_id = $request->input('market_id');
                 $oderList2->where('product_request_market.market_id', $market_id);
@@ -506,10 +506,7 @@ class ReportsController extends BaseReports
             $oderList2->groupBy('sub.product_requests_id');
             $oderList2->orderBy('sub.product_name_th', 'ASC');
             $orderSaleItem = $oderList2->get();
-
-            $productCategoryitem = ProductCategory::all();
             $markets = Market::all();
-
             foreach ($orderSaleItem as $result) {
                 $productMarkets = ProductRequestMarket::join('markets', 'product_request_market.market_id', '=', 'markets.id')
                     ->select('market_title_th as market_name')
@@ -521,7 +518,6 @@ class ReportsController extends BaseReports
                 }
                 $result->markets = implode(", ",$marketArrStr);
             }
-
 
             ############## excel #############
 
@@ -553,7 +549,6 @@ class ReportsController extends BaseReports
             }else{
                 $str_start_and_end_date.= ' '.trans('messages.order_type_sale').' : '.trans('messages.all');
             }
-
 
             // filter market
             $str_market = trans('messages.all');
@@ -615,8 +610,9 @@ class ReportsController extends BaseReports
                 );
             }
             $data = $arr;
-            $info = Excel::create('dgtfarm-saleitem-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market) {
+            $rowData = count($data)+7;
+            $info = Excel::create('dgtfarm-saleitem-excel', function ($excel) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market,$rowData) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data, $productStr, $str_start_and_end_date, $title_report, $productcategoryString,$str_market,$rowData) {
                     $sheet->mergeCells('A1:E1');
                     $sheet->mergeCells('A2:E3');
                     $sheet->mergeCells('A4:E5');
@@ -663,8 +659,29 @@ class ReportsController extends BaseReports
                         ));
                         $cells->setValignment('center');
                     });
-
                     $sheet->rows($data);
+                    $rowSum = $rowData+1;
+                    $sheet->mergeCells('A'.$rowSum.':B'.$rowSum);
+                    $sheet->cells('A'.$rowSum, function ($cells){
+                        $cells->setValue('ยอดรวมสุทธิ');
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('right');
+                    });
+                    $sheet->cells('C'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(C9:C'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('D'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(D9:D'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('E'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(E9:E'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
                 });
             })->store('xls', false, true);
             return response()->json(array('file' => $info['file']));

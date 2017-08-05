@@ -366,8 +366,9 @@ class ReportsController extends BaseReports
                 );
             }
             $data = $arr;
-            $info = Excel::create('dgtfarm-orders-sale-excel', function ($excel) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
-                $excel->sheet('Sheetname', function ($sheet) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr) {
+            $rowData = count($data)+7;
+            $info = Excel::create('dgtfarm-orders-sale-excel', function ($excel) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr,$rowData) {
+                $excel->sheet('Sheetname', function ($sheet) use ($data,$str_start_and_end_date,$market_name,$productcategorys_name,$product_name_arr,$rowData) {
 
                     $sheet->mergeCells('A1:E1');
                     $sheet->mergeCells('A2:E3');
@@ -417,6 +418,28 @@ class ReportsController extends BaseReports
                     });
 
                     $sheet->rows($data);
+                    $rowSum = $rowData+1;
+                    $sheet->mergeCells('A'.$rowSum.':B'.$rowSum);
+                    $sheet->cells('A'.$rowSum, function ($cells){
+                        $cells->setValue('ยอดรวมสุทธิ');
+                        $cells->setFont(array(
+                            'bold' => true
+                        ));
+                        $cells->setValignment('center');
+                        $cells->setAlignment('right');
+                    });
+                    $sheet->cells('C'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(C9:C'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('D'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(D9:D'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
+                    $sheet->cells('E'.$rowSum, function ($cells) use ($rowData) {
+                        $cells->setValue('=SUM(E9:E'.$rowData.')');
+                        $cells->setValignment('center');
+                    });
                 });
             })->store('xls', false, true);
             return response()->json(array('file' => $info['file']));
