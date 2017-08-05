@@ -27,6 +27,7 @@
         <div class="row">
             {{--Shop Setting Form--}}
             {!! Form::open(array('route'=> 'shopsetting.store' ,'files' => true , 'method'=> 'POST')) !!}
+            {{ csrf_field() }}
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">
