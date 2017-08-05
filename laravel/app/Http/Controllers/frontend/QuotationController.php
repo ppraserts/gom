@@ -109,16 +109,15 @@ class QuotationController extends Controller
             $delivery_chanel =  $request->input('delivery_chanel');
             $address_delivery =  $request->input('address_delivery');
             $product_request_id =  $request->input('product_request_id');
-            $total =  $request->input('price_total');
-            $qty=  $request->input('qty');
-            $unit_price=  $request->input('unit_price');
             $quotation_id = $request->input('quotation_id');
+            $quotation = Quotation::find($quotation_id);
+            $unit_price=  $quotation->price;
+            $qty=  $request->input('qty');
+            $total =  $qty * $unit_price;
             $this->saveOrder($user_id,$product_request_id,$current_user,$qty,$total,$unit_price,$delivery_chanel,$address_delivery,$quotation_id);
             return Response::json(array('R'=>'Y'));
 
         }
-
-
 
     }
 
