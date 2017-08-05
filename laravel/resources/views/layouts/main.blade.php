@@ -13,7 +13,26 @@ $linkProfile = "/user/userprofiles";
 $carts = session('carts');
 $cart_items = 0;
 if (is_array($carts)) {
-    $cart_items = count($carts);
+    //$cart_items = count($carts);
+    $arr_txt_new = array("");
+    $number = 0;
+    foreach($carts as $value){
+        if(check($arr_txt_new,$value['product_request_id'])){
+            $arr_txt_new[$number] = $value['product_request_id'];
+            $number ++;
+        }
+    }
+    $cart_items = count($arr_txt_new);
+}
+
+
+function check($array_txt,$value){
+    foreach($array_txt as $value_txt){
+        if($value_txt == $value){
+            return false;
+        }
+    }
+    return true;
 }
 
 ?>
@@ -91,9 +110,11 @@ if (is_array($carts)) {
                 @if($cart_items > 0)
                     <li>
                         <div class="btn-nav">
-                            <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn"><span
-                                        class="badge">{{$cart_items}}</span> <i
-                                        class="fa fa-shopping-cart"></i> {{ trans('messages.shopping_cart') }}</a>
+                            <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn">
+                                <span class="badge">{{$cart_items}}</span>
+                                <i class="fa fa-shopping-cart"></i>
+                                {{ trans('messages.shopping_cart') }}
+                            </a>
                         </div>
                     </li>
                 @endif
