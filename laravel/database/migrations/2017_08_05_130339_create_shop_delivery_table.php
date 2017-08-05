@@ -16,7 +16,7 @@ class CreateShopDeliveryTable extends Migration
         Schema::create('shop_delivery', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('shop_id')->nullable(false);
-            $table->integer('delivery_name')->nullable(false);
+            $table->string('delivery_name')->nullable(false);
             $table->integer('delivery_price')->nullable(false);
         });
     }

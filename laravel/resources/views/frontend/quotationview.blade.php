@@ -103,7 +103,8 @@
                                         <strong>
                                             {{  $quotation->price. " " .trans('messages.baht')." / ".$quotation->units }}
                                             @if($quotation->add_packing == 1)
-                                                ({{$quotation->units .trans('messages.each')}} {{  $quotation->packing_size }} {{  $quotation->package_unit }})
+                                                ({{$quotation->units .trans('messages.each')}} {{  $quotation->packing_size }} {{  $quotation->package_unit }}
+                                                )
                                             @endif
                                         </strong>
                                     </td>
@@ -163,7 +164,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div id="alertModal" class="modal fade" role="dialog">
+    {{--<div id="alertModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -176,6 +177,31 @@
                     <p style="color: orange;">
                         *** {{ trans('messages.text_min_order') }} : <span
                                 id="qty_min_order"></span> {{$quotation->units}}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        {{trans('messages.text_close')}}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>--}}
+    <!-- Modal -->
+    <div id="alertQtyModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ข้อความ</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="color: red;">{{ trans('messages.qty_less_than_quotation_quantity') }}</p>
+                    <p style="color: orange;">
+                        *** {{ trans('messages.quantity') }} : <span
+                                id="quotation_quantity"></span> {{$quotation->units}}
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -208,12 +234,23 @@
         return false;
     }
 
-    function addToCart(productRequestId, userId, unit_price, min_order,quotation_id) {
+    function addToCart(productRequestId, userId, unit_price, min_order, quotation_id) {
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = '{{url('/user/quotation/checkout')}}';
         var priceTotal = $('#price-total').val();
         var qty = $('#qty').val();
+
+        if (qty < min_order || qty < '{{ $quotation->quantity }}') {
+            $('#quotation_quantity').html('{{ $quotation->quantity }}');
+            $('#alertQtyModal').modal('show');
+            $('#qty').val('{{ $quotation->quantity }}').change();
+            var price_by_product = parseInt('{{$quotation->price}}');
+            var new_price_total = $('#qty').val() * price_by_product;
+            $('#price-total').val(new_price_total);
+            $('#show_price_total').html(new_price_total);
+            return;
+        }
         //alert(CSRF_TOKEN); return false;
         var delivery_chanel = $('#delivery_chanel option:selected').val();
         var address_delivery = $('textarea#address_delivery').val();
@@ -241,7 +278,7 @@
                 qty: qty,
                 delivery_chanel: delivery_chanel,
                 address_delivery: address_delivery_new,
-                quotation_id : quotation_id
+                quotation_id: quotation_id
             },
             dataType: 'json',
             success: function (response) {
@@ -270,17 +307,17 @@
         var qty = parseInt($(this).val());
         var min_order = parseInt($('#min_order').val());
         var price_by_product = parseInt($('#price-by-product').val());
-        var price_total = parseInt($('#price-total').val());
-        if (qty < min_order) {
-            $('#qty_min_order').html(min_order);
-            $('#alertModal').modal('show');
-            $('#qty').val(min_order).change();
-            return false
+
+        if (qty < min_order || qty < '{{ $quotation->quantity }}') {
+            $('#qty').css({'border-color': '#a94442'});
+        }else {
+            $('#qty').css({'border-color': ''});
         }
+
         var new_price_total = qty * price_by_product;
         $('#price-total').val(new_price_total);
         $('#show_price_total').html(new_price_total);
-        return false
+        return false;
     });
 
 </script>

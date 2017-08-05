@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\ShopDelivery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shop;
 use File;
+use Illuminate\Support\Facades\Input;
 use Image;
 
 class ShopSettingController extends Controller
@@ -39,7 +41,9 @@ class ShopSettingController extends Controller
         if ($shop == null){
             $shop = new Shop();
         }
-        return view('frontend.shopsetting', compact('shop'));
+        $deliveryList = ShopDelivery::where('shop_id',$shop->id)->get();
+
+        return view('frontend.shopsetting', compact('shop','deliveryList'));
     }
 
     public function store(Request $request)
@@ -105,6 +109,19 @@ class ShopSettingController extends Controller
             'shop_name' => $shop->shop_name,
         );
         session(['shop' => $shop_setting]);
+
+        $delivery_name_arr = Input::get('delivery_name');
+        $delivery_price_arr = Input::get('delivery_price');
+
+        $shopDeliveryList = ShopDelivery::where('shop_id',$shop->id)->get();
+        foreach ($shopDeliveryList as $shopDelivery){
+            $shopDelivery->delete();
+        }
+        if (is_array($delivery_name_arr)){
+            foreach ($delivery_name_arr as $index => $name){
+                ShopDelivery::create(['shop_id' => $shop->id,'delivery_name' =>$name,'delivery_price'=>$delivery_price_arr[$index]]);
+            }
+        }
 
         return redirect()->route('shopsetting.index')->with('success', trans('messages.message_update_success'));
     }

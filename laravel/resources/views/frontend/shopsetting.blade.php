@@ -44,10 +44,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5 col-sm-5">
-                            <div id="shop_name_group" class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
+                            <div id="shop_name_group"
+                                 class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
-                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
+                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}
+                                            /<span
                                                     id="uri">{{isset($shop->shop_name)?$shop->shop_name:old('shop_name')}}</span></a>
                                     </div>
                                 @else
@@ -59,10 +61,11 @@
                                     {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:old('shop_name'), array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name', 'readonly')) !!}
                                 @else
                                     {!! Form::text('shop_name', isset($shop->shop_name)?$shop->shop_name:old('shop_name'), array('placeholder' => trans('validation.attributes.shop_name'),'class' => 'form-control' , 'id' => 'shop_name')) !!}
-                                        <br>
-                                        <input class="btn btn-primary" type="button" id="check_url" value="ตรวจสอบ URL"/>
-                                        <span id="shop_name_message" style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}
-                                            *{{trans('messages.cant_change_url')}}</span>
+                                    <br>
+                                    <input class="btn btn-primary" type="button" id="check_url" value="ตรวจสอบ URL"/>
+                                    <span id="shop_name_message"
+                                          style="color: #ff2222; padding-top: 10px;"> *{{trans('messages.english_only')}}
+                                        *{{trans('messages.cant_change_url')}}</span>
                                 @endif
 
 
@@ -197,126 +200,135 @@
 
             {{--Shop Slide--}}
             @if($shop->id > 0 && $shop->shop_name != "")
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>{{ trans('messages.shop_image')}}</strong></div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="form-group row">
-                                            <strong>{{ trans('validation.attributes.shop_theme_image') }} 1
-                                                :</strong><br>
-                                            <div class="btn-group" data-toggle="buttons"
-                                                 style="padding-top: 5px; padding-bottom: 10px;">
-                                                <label class="btn btn-default {{ $shop->image_file_3 ==""  ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_3_type', '0',  $shop->image_file_3 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.use_theme_image') }}
-                                                </label>
-                                                <label class="btn btn-default {{ $shop->image_file_3 !="" ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_3_type', '1', $shop->image_file_3 !="" ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.choose_image') }}
-                                                </label>
-                                            </div>
-                                            <div id="image_file_3_form">
-                                                {!! Form::file('image_file_3', null, array('class' => 'filestyle')) !!}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>{{ trans('messages.shop_image')}}</strong></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                {{trans('messages.shop_image_size_suggestions')}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group row">
+                                                <strong>{{ trans('validation.attributes.shop_theme_image') }} 1
+                                                    :</strong><br>
+                                                <div class="btn-group" data-toggle="buttons"
+                                                     style="padding-top: 5px; padding-bottom: 10px;">
+                                                    <label class="btn btn-default {{ $shop->image_file_3 ==""  ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_3_type', '0',  $shop->image_file_3 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.use_theme_image') }}
+                                                    </label>
+                                                    <label class="btn btn-default {{ $shop->image_file_3 !="" ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_3_type', '1', $shop->image_file_3 !="" ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.choose_image') }}
+                                                    </label>
+                                                </div>
+                                                <div id="image_file_3_form">
+                                                    {!! Form::file('image_file_3', null, array('class' => 'filestyle')) !!}
+                                                    {{trans('messages.shop_image_size_suggestions')}} 1170 x 560 Pixel
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="theme-header-image">
-                                        @if($shop->image_file_3 != '')
-                                            <img id="img_theme3" class="img-thumbnail" width="304" height="236"
-                                                 src="{{ asset($shop->image_file_3) }}" class="img-responsive"
-                                                 alt="a">
-                                        @else
-                                            <img id="img_theme3" class="img-thumbnail" width="304" height="236"
-                                                 src="{{asset('/assets/theme/images/header-3.jpg')}}"
-                                                 class="img-responsive"
-                                                 alt="a">
-                                        @endif
+                                        <div class="theme-header-image">
+                                            @if($shop->image_file_3 != '')
+                                                <img id="img_theme3" class="img-thumbnail" width="304" height="236"
+                                                     src="{{ asset($shop->image_file_3) }}" class="img-responsive"
+                                                     alt="a">
+                                            @else
+                                                <img id="img_theme3" class="img-thumbnail" width="304" height="236"
+                                                     src="{{asset('/assets/theme/images/header-3.jpg')}}"
+                                                     class="img-responsive"
+                                                     alt="a">
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="form-group row">
-                                            <strong>{{ trans('validation.attributes.shop_theme_image') }}
-                                                2:</strong><br>
-                                            <div class="btn-group" data-toggle="buttons"
-                                                 style="padding-top: 5px; padding-bottom: 10px;">
-                                                <label class="btn btn-default {{ $shop->image_file_1 ==""  ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_1_type', '0',  $shop->image_file_1 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.use_theme_image') }}
-                                                </label>
-                                                <label class="btn btn-default {{ $shop->image_file_1 !="" ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_1_type', '1', $shop->image_file_1 !="" ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.choose_image') }}
-                                                </label>
-                                            </div>
-                                            <div id="image_file_1_form">
-                                                {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group row">
+                                                <strong>{{ trans('validation.attributes.shop_theme_image') }}
+                                                    2:</strong><br>
+                                                <div class="btn-group" data-toggle="buttons"
+                                                     style="padding-top: 5px; padding-bottom: 10px;">
+                                                    <label class="btn btn-default {{ $shop->image_file_1 ==""  ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_1_type', '0',  $shop->image_file_1 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.use_theme_image') }}
+                                                    </label>
+                                                    <label class="btn btn-default {{ $shop->image_file_1 !="" ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_1_type', '1', $shop->image_file_1 !="" ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.choose_image') }}
+                                                    </label>
+                                                </div>
+                                                <div id="image_file_1_form">
+                                                    {!! Form::file('image_file_1', null, array('class' => 'filestyle')) !!}
+                                                    {{trans('messages.shop_image_size_suggestions')}} 1140 x 560 Pixel
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        @if($shop->image_file_1 != '')
-                                            <img id="img_theme1" class="img-thumbnail" width="304" height="236"
-                                                 src="{{ asset($shop->image_file_1) }}" class="img-responsive"
-                                                 alt="a">
-                                        @else
-                                            <img id="img_theme1" class="img-thumbnail" width="304" height="236"
-                                                 src="{{asset('/assets/theme/images/header-1.jpg')}}"
-                                                 class="img-responsive"
-                                                 alt="a">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="form-group row">
-                                            <strong>{{ trans('validation.attributes.shop_theme_image') }}
-                                                3:</strong><br>
-                                            <div class="btn-group" data-toggle="buttons"
-                                                 style="padding-top: 5px; padding-bottom: 10px;">
-                                                <label class="btn btn-default {{ $shop->image_file_2 ==""  ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_2_type', '0',  $shop->image_file_2 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.use_theme_image') }}
-                                                </label>
-                                                <label class="btn btn-default {{ $shop->image_file_2 !="" ? 'active' : '' }}">
-                                                    {{ Form::radio('image_file_2_type', '1', $shop->image_file_2 !="" ,['autocomplete' => 'off']) }}
-                                                    {{ trans('messages.choose_image') }}
-                                                </label>
-                                            </div>
-                                            <div id="image_file_2_form">
-                                                {!! Form::file('image_file_2', null, array('class' => 'filestyle')) !!}
-                                            </div>
+                                        <div class="form-group">
+                                            @if($shop->image_file_1 != '')
+                                                <img id="img_theme1" class="img-thumbnail" width="304" height="236"
+                                                     src="{{ asset($shop->image_file_1) }}" class="img-responsive"
+                                                     alt="a">
+                                            @else
+                                                <img id="img_theme1" class="img-thumbnail" width="304" height="236"
+                                                     src="{{asset('/assets/theme/images/header-1.jpg')}}"
+                                                     class="img-responsive"
+                                                     alt="a">
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        @if($shop->image_file_2 != '')
-                                            <img id="img_theme2" class="img-thumbnail" width="304" height="236"
-                                                 src="{{ asset($shop->image_file_2) }}" class="img-responsive"
-                                                 alt="a">
-                                        @else
-                                            <img id="img_theme2" class="img-thumbnail" width="304" height="236"
-                                                 src="{{asset('/assets/theme/images/header-2.jpg')}}"
-                                                 class="img-responsive"
-                                                 alt="a">
-                                        @endif
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group row">
+                                                <strong>{{ trans('validation.attributes.shop_theme_image') }}
+                                                    3:</strong><br>
+                                                <div class="btn-group" data-toggle="buttons"
+                                                     style="padding-top: 5px; padding-bottom: 10px;">
+                                                    <label class="btn btn-default {{ $shop->image_file_2 ==""  ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_2_type', '0',  $shop->image_file_2 ==""  ? 'active' : '' ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.use_theme_image') }}
+                                                    </label>
+                                                    <label class="btn btn-default {{ $shop->image_file_2 !="" ? 'active' : '' }}">
+                                                        {{ Form::radio('image_file_2_type', '1', $shop->image_file_2 !="" ,['autocomplete' => 'off']) }}
+                                                        {{ trans('messages.choose_image') }}
+                                                    </label>
+                                                </div>
+                                                <div id="image_file_2_form">
+                                                    {!! Form::file('image_file_2', null, array('class' => 'filestyle')) !!}
+                                                    {{trans('messages.shop_image_size_suggestions')}} 1170 x 560 Pixel
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @if($shop->image_file_2 != '')
+                                                <img id="img_theme2" class="img-thumbnail" width="304" height="236"
+                                                     src="{{ asset($shop->image_file_2) }}" class="img-responsive"
+                                                     alt="a">
+                                            @else
+                                                <img id="img_theme2" class="img-thumbnail" width="304" height="236"
+                                                     src="{{asset('/assets/theme/images/header-2.jpg')}}"
+                                                     class="img-responsive"
+                                                     alt="a">
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
 
+            {{--payment--}}
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>ข้อมูลการชำระเงิน</strong></div>
                 <div class="panel-body">
@@ -330,75 +342,74 @@
                     </div>
                 </div>
             </div>
+
+            {{--delivery--}}
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>{{trans('messages.text_delivery_channel')}}</strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="delivery_table" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{trans('messages.text_delivery_channel')}}</th>
+                                    <th>{{trans('messages.delivery_price')}}</th>
+                                    <th width="100px">{{trans('messages.button_delete')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody id="delivery_tb">
+                                @if(count($deliveryList) < 1)
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="delivery_name[]" class="form-control"
+                                                   value="ฟรีค่าจัดส่ง" readonly="true" required="true"
+                                                   oninvalid="this.setCustomValidity('กรุณากรอกช่องทางการจัดส่ง')">
+                                        </td>
+                                        <td>
+                                            {{Form::number('delivery_price[]', 0 , array('class' => 'form-control','readonly' => 'true'))}}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger hidden" type="button">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @else
+                                    @foreach($deliveryList as $index => $delivery)
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="delivery_name[]" class="form-control" value="{{$delivery->delivery_name}}" @if($index == 0)readonly="true"@endif required="true" oninvalid="this.setCustomValidity('กรุณากรอกช่องทางการจัดส่ง')">
+                                            </td>
+                                            <td>
+                                                <input type="number" value="{{$delivery->delivery_price}}" name="delivery_price[]" class="form-control" {{$index == 0 ? 'readonly' : ''}}>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger {{$index == 0 ? 'hidden' : ''}}" type="button">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                            <button class="btn btn-info" type="button"
+                                    onclick="addRow()">{{trans('messages.add') . trans('messages.text_delivery_channel')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    {{ trans('messages.button_save')}}</button>
+            </div>
             {!! Form::close() !!}
         </div>
         <BR>
         {{--Shop Theme--}}
         @if($shop!= null)
-            {{--<div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong>{{ trans('messages.shop_theme')}}</strong></div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <strong>{{ trans('messages.shop_theme') }} 1</strong>
-                                <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="{{ asset('/images/small_theme3.png') }}" alt="">
-                                    <div class="overlay">
-                                        <h2>รูปแบบที่ 1</h2>
-                                        <button class="info" data-toggle="modal"
-                                                data-target="#modal1">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme3' ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
-                                    </div>
-                                </div>
-                                @if($shop->theme=="theme3")
-                                    <div class="text-center"><i class="fa fa-2x fa-check-square-o"
-                                                                style="color:#00cc66"></i></div>
-                                @endif
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <strong>{{ trans('messages.shop_theme') }} 2</strong>
-                                <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="{{ asset('/images/small_theme1.png') }}" alt="">
-                                    <div class="overlay">
-                                        <h2>รูปแบบที่ 2</h2>
-                                        <button class="info" data-toggle="modal"
-                                                data-target="#modal2">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme1'  ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
-                                    </div>
-                                </div>
-                                @if($shop->theme=="theme1")
-                                    <div class="text-center"><i class="fa fa-2x fa-check-square-o"
-                                                                style="color:#00cc66"></i></div>
-                                @endif
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-
-                                @if($shop->theme=="theme2")
-                                    <i class="fa fa-2x fa-check-square-o" style="color:#00cc66"></i>
-                                @endif
-                                <strong>{{ trans('messages.shop_theme') }} 3</strong>
-                                <div class="hover ehover1 classWithPad">
-                                    <img class="img-responsive" src="{{ asset('/images/small_theme2.png') }}" alt="">
-                                    <div class="overlay">
-                                        <h2>รูปแบบที่ 3</h2>
-                                        <button class="info" data-toggle="modal"
-                                                data-target="#modal3">{{ trans('messages.preview')}}</button>
-                                        <a href="{{ url('user/settheme' , 'theme2' ) }}"
-                                           class="info">{{ trans('messages.apply')}}</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>--}}
-        <!-- modals; the pop up boxes that contain the code for the effects -->
             <div id="modal1" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false"
                  data-backdrop="static">
                 <div class="vertical-alignment-helper">
@@ -508,6 +519,8 @@
             </div><!-- /.modal -->
         @endif
     </div>
+
+
 @stop
 @push('scripts')
 <script>
@@ -544,20 +557,20 @@
 
         $('#check_url').on('click', function () {
             var uri = $('#shop_name').val();
-            if(uri.length ==0){
+            if (uri.length == 0) {
                 $('#shop_name_group').addClass('has-error');
                 $('#shop_name_message').html('ต้องกรอก URL ร้าน');
                 $('#shop_name_message').css('color', '#FF0000');
                 return;
-            }else {
+            } else {
                 $('#shop_name_group').removeClass('has-error');
             }
             $.get("<?php echo url('user/checkshopname')?>" + "/" + uri, function (res) {
                 console.log(res);
-                if(res.used == true){
+                if (res.used == true) {
                     $('#shop_name_message').html('สามารถใช้ชื่อนี้ได้');
                     $('#shop_name_message').css('color', '#04ff8e');
-                }else{
+                } else {
                     $('#shop_name_message').html('ไม่สามารถใช้ชื่อนี้ได้');
                     $('#shop_name_message').css('color', '#FF0000');
                 }
@@ -575,6 +588,8 @@
         setupFillURI();
 
         checkImageSource();
+
+        initRemoveRow();
 
     });
 
@@ -649,6 +664,22 @@
         @endif
     }
 
+    function addRow() {
+//        $('#delivery_tb').append($('#delivery_row').html());
+        $('#delivery_table tbody>tr:last').clone(true).insertAfter('#delivery_table tbody>tr:last');
+        $('#delivery_table tbody>tr:last td:eq(0) input[type=text]').val('');
+        $('#delivery_table tbody>tr:last td:eq(0) input[type=text]').prop('readonly', false);
+        $('#delivery_table tbody>tr:last td:eq(1) input[type=number]').val('0');
+        $('#delivery_table tbody>tr:last td:eq(1) input[type=number]').prop('readonly', false);
+        $('#delivery_table tbody>tr:last td:eq(2) button').removeClass('hidden');
+    }
+
+    function initRemoveRow() {
+        $('#delivery_table').on('click', 'tbody>tr button', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+        });
+    }
+
 </script>
 @endpush
-

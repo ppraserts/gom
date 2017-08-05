@@ -340,4 +340,7 @@ return [
     'add' => 'เพิ่ม',
     'view_promotion_detail' => 'ดูรายละเอียดโปรโมชั่น',
     'each' => 'ละ',
+    'shop_image_size_suggestions' => 'ขนาดรูปที่เหมาะสม : ',
+    'qty_less_than_quotation_quantity' => 'จำนวนสินค้า ต้องไม่น้อยกว่า ปริมาณที่ขอในใบเสนอราคา',
+    'delivery_price' => 'ค่าจัดส่ง (บาท)',
 ];
