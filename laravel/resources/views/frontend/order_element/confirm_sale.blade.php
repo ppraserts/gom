@@ -21,6 +21,16 @@
                 <strong>* {{ trans('messages.text_note') }}:</strong>
                 <textarea name="note" id="note" class="form-control" rows="7"></textarea>
             </div>
+            <div class="form-group">
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+                        <td>เลือก</td>
+                        <td>ช่องทางการจัดส่ง</td>
+                        <td>ค่าจัดส่ง (บาท)</td>
+                        <td>ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)</td>
+                    </tr>
+                </table>
+            </div>
             <div class="form-group ">
                 <button class="btn btn-default" type="submit">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
