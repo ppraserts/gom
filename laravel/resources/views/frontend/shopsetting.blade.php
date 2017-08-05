@@ -104,9 +104,11 @@
 
             {{--Shop Theme--}}
             @if($shop!= null)
+
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>{{ trans('messages.shop_theme')}}</strong></div>
                     <div class="panel-body">
+                        <input type="hidden" name="theme" value="theme3"/>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group" style="padding-left: 10px;">
@@ -133,7 +135,7 @@
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
 
                                     <i id="check3"
-                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme3" ? 'visible' : 'hidden'}}"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme3"||old('theme')=="theme3" ? 'visible' : 'hidden'}}"
                                        style="color:#00cc66; margin-right: 8px;"></i>
 
                                     <strong style="position: absolute; top: 5px;">{{ trans('messages.shop_theme') }}
@@ -153,7 +155,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
                                     <i id="check1"
-                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme1" ? 'visible' : 'hidden'}}"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme1"||old('theme')=="theme1" ? 'visible' : 'hidden'}}"
                                        style="color:#00cc66; margin-right: 8px;"></i>
                                     <strong style="position: absolute; top: 5px;">{{ trans('messages.shop_theme') }}
                                         2</strong>
@@ -172,7 +174,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div style="min-height: 28px; margin-left: 10px; position: relative">
                                     <i id="check2"
-                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme2" ? 'visible' : 'hidden'}}"
+                                       class="fa fa-2x fa-check-square-o {{$shop->theme=="theme2"||old('theme')=="theme2" ? 'visible' : 'hidden'}}"
                                        style="color:#00cc66; margin-right: 8px;"></i>
                                     <strong style="position: absolute;top: 5px;">{{ trans('messages.shop_theme') }}
                                         3</strong>
@@ -515,6 +517,7 @@
 
         $('.settheme').on('click', function () {
             var theme = $(this).val();
+            $('input[type="hidden"][name="theme"]').val(theme);
             $.get("<?php echo url('user/settheme')?>" + "/" + theme, function (data, status) {
                 $("#check1").hide();
                 $("#check2").hide();
