@@ -112,7 +112,7 @@ function check($array_txt,$value){
                         <div class="btn-nav">
                             <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn">
                                 <span class="badge">{{$cart_items}}</span>
-                                <i class="fa fa-shopping-cart"></i>{{$cart_items_n}}
+                                <i class="fa fa-shopping-cart"></i>
                                 {{ trans('messages.shopping_cart') }}
                             </a>
                         </div>

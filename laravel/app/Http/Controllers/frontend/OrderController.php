@@ -151,6 +151,7 @@ class OrderController extends Systems
         return view('errors.404');
     }
 
+
     public  function storeStatusHistory(Request $request)
     {
         //return $request->all();
@@ -162,19 +163,23 @@ class OrderController extends Systems
         $shipping_channel_arr = $request->input('shipping_channel');
         $delivery_charge_arr = $request->input('delivery_charge');
         $sum_delivery_price = $request->input('sum_delivery_price');
+
+
+
         $order_delivery_arr = array();
         if(count($shipping_channel_arr) > 0) {
+            $num_i =1;
             foreach ($shipping_channel_arr as $key => $shipping_channel) {
                 $selected = 0;
-                if (!empty($selectedArr[$key])) {
+                if (in_array($key, $selectedArr)){
                     $selected = 1;
                 }
                 $order_delivery_arr[] = array(
                     $shipping_channel, $delivery_charge_arr[$key], $sum_delivery_price[$key], $selected
                 );
+                $num_i++;
             }
         }
-        //return $order_delivery_arr;
         if(count($order_delivery_arr) > 0){
             foreach ($order_delivery_arr as $order_delivery){
                 $orderDelivery = new OrderDelivery();

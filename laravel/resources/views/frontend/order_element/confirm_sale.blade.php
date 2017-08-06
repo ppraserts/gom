@@ -32,10 +32,13 @@
                         <td>{{ trans('messages.net_balance_shipping') }}</td>
                     </tr>
                     @if(count($shopdeliverys) > 0)
-                        <?php $i=1;?>
+                        <?php $i=0;?>
                         @foreach($shopdeliverys as $shopdelivery)
                             <tr>
-                                <td class="text-center"><input type="checkbox" name="selected[]" value="{{$i}}"></td>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]" value="{{$i}}">
+
+                                </td>
                                 <td>
                                     <input type="text" name="shipping_channel[]" class="form-control" value="{{$shopdelivery->delivery_name}}">
                                 </td>
