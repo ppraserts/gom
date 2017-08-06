@@ -7,9 +7,9 @@
             <input type="hidden" name="status_current" value="2">
             {{csrf_field()}}
             <div class="form-group">
-                <strong>{{ trans('messages.text_payment_channel') }}:</strong>
+                <strong>* {{ trans('messages.text_payment_channel') }} : </strong>
                 <select name="payment_channel" id="payment_channel">
-                    <option value="">* {{trans('messages.select_payment_gateway')}}</option>
+                    <option value="">{{trans('messages.select_payment_gateway')}}</option>
                     <option value="บัญชีธนาคาร">{{trans('messages.book_bank')}}</option>
                     <option value="เงินสด">{{trans('messages.cash')}}</option>
                 </select>
@@ -18,19 +18,47 @@
             <div class="form-group" id="html_payment_channel">
             </div>
             <div class="form-group">
-                <strong>* {{ trans('messages.text_note') }}:</strong>
+                <strong> {{ trans('messages.text_note') }} : </strong>
                 <textarea name="note" id="note" class="form-control" rows="7"></textarea>
             </div>
+            @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')
             <div class="form-group">
+                <h3 style="margin-top: 5px;">{{ trans('messages.shipping_information') }}</h3>
                 <table class="table table-bordered table-striped table-hover">
                     <tr>
-                        <td>เลือก</td>
-                        <td>ช่องทางการจัดส่ง</td>
-                        <td>ค่าจัดส่ง (บาท)</td>
-                        <td>ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)</td>
+                        <td>{{ trans('messages.selected') }}</td>
+                        <td>{{ trans('messages.text_delivery_channel') }}</td>
+                        <td>{{ trans('messages.delivery_price') }}</td>
+                        <td>{{ trans('messages.net_balance_shipping') }}</td>
                     </tr>
+                    @if(count($shopdeliverys) > 0)
+                        <?php $i=0;?>
+                        @foreach($shopdeliverys as $shopdelivery)
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]" value="{{$i}}">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="shipping_channel[]" class="form-control" value="{{$shopdelivery->delivery_name}}">
+                                </td>
+                                <td>
+                                    <input type="number" name="delivery_charge[]" class="form-control" value="{{$shopdelivery->delivery_price}}" onkeyup="DeliveryCharge(this.value,'{{$shopdelivery->id}}')">
+                                </td>
+                                <td>
+                                    <span id="sum_delivery_price_{{$shopdelivery->id}}">
+                                        {{$shopdelivery->delivery_price+$order->total_amount}}
+                                    </span>
+                                    <input type="hidden" id="input_sum_delivery_price_{{$shopdelivery->id}}" name="sum_delivery_price[]" value="{{$shopdelivery->delivery_price+$order->total_amount}}">
+                                </td>
+                            </tr>
+                            <?php $i++;?>
+                        @endforeach
+                    @endif
                 </table>
+                <small class="alert-danger" id="ms_order_delivery"></small>
             </div>
+            @endif
             <div class="form-group ">
                 <button class="btn btn-default" type="submit">
                     <span class="glyphicon glyphicon-floppy-disk"></span>

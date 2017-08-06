@@ -119,6 +119,11 @@ $pagetitle = trans('messages.order_detail');
                     </div>
                 </div>
             </div>
+            @if($order->order_status >= 3)
+                @include('frontend.order_element.user_buy_order_delivery')
+            @else
+                @include('frontend.order_element.list_order_delivery')
+            @endif
             <div class="col-md-12">
                 <div class="row">
                     <h3>{{ trans('messages.order_status_history') }}</h3>
@@ -184,7 +189,6 @@ $pagetitle = trans('messages.order_detail');
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <a href="{{url('admin/orderdetail/pdf/'.$order->id)}}" class="btn btn-primary pull-right">

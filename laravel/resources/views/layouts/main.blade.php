@@ -12,7 +12,7 @@ $user = auth()->guard('user')->user();
 $linkProfile = "/user/userprofiles";
 $carts = session('carts');
 $cart_items = 0;
-if (is_array($carts)) {
+if (is_array($carts) and count($carts) > 0) {
     //$cart_items = count($carts);
     $arr_txt_new = array("");
     $number = 0;

@@ -11,6 +11,7 @@ use App\Market;
 use App\Province;
 use App\Http\Controllers\Controller;
 use PDF;
+use App\OrderDelivery;
 
 use DB, Validator, Response;
 use App\Order;
@@ -787,7 +788,9 @@ class ReportsController extends BaseReports
 //        $user = auth()->guard('user')->user();
 //        $userId = $user->id;
         //return $order;
-        return view('backend.orderdetail', compact('order', 'orderId'));
+        $orderDeliverys = OrderDelivery::where('order_id',$order_id)->get();
+        $order_delivery = OrderDelivery::where('order_id',$order_id)->where('user_buy_id','!=',0)->first();
+        return view('backend.orderdetail', compact('order', 'orderId','orderDeliverys','order_delivery'));
     }
 
     private function ajaxfilter($start_date = '', $end_date = '', $productTypeNameArr = '')
@@ -909,8 +912,13 @@ class ReportsController extends BaseReports
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
         $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
+        $orderDeliverys = OrderDelivery::where('order_id',$order_id)->get();
+        $order_delivery = OrderDelivery::where('order_id',$order_id)->where('user_buy_id','!=',0)->first();
 
         $data['order'] = $order;
+        $data['orderDeliverys'] = $orderDeliverys;
+        $data['order_delivery'] = $order_delivery;
+
         $pdf = PDF::loadView('pdf.orderdetail', $data);
         //$pdf->setPaper('legal', 'landscape');
         //return $pdf->stream();
