@@ -27,6 +27,7 @@
         <div class="row">
             {{--Shop Setting Form--}}
             {!! Form::open(array('route'=> 'shopsetting.store' ,'files' => true , 'method'=> 'POST')) !!}
+            {{ csrf_field() }}
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">
@@ -48,8 +49,7 @@
                                  class="form-group {{ $errors->has('shop_name') ? 'has-error' : '' }}">
                                 @if($shop->id > 0 && $shop->shop_name != "")
                                     <div><strong>* {{ trans('validation.attributes.shop_name') }} URL : </strong><a
-                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}
-                                            /<span
+                                                href="{{ url($shop->shop_name) }}" target="_blank">{{URL::to('/')}}/<span
                                                     id="uri">{{isset($shop->shop_name)?$shop->shop_name:old('shop_name')}}</span></a>
                                     </div>
                                 @else
