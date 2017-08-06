@@ -238,10 +238,11 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var targetUrl = '{{url('/user/quotation/checkout')}}';
-        var priceTotal = $('#price-total').val();
-        var qty = $('#qty').val();
+        var priceTotal = parseInt($('#price-total').val());
+        var qty = parseInt($('#qty').val());
+        min_order = parseInt(min_order);
 
-        if (qty < min_order || qty < '{{ $quotation->quantity }}') {
+        if (qty < min_order || qty < {{ $quotation->quantity }}) {
             $('#quotation_quantity').html('{{ $quotation->quantity }}');
             $('#alertQtyModal').modal('show');
             $('#qty').val('{{ $quotation->quantity }}').change();
