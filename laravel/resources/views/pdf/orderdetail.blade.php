@@ -145,6 +145,26 @@
                 </div>
             </div>
         </div>
+        @if(Request::segment(1) == 'admin')
+            @if($order->order_status >= 3)
+                @include('pdf.ele_user_buy_order_delivery')
+            @else
+                @include('pdf.ele_list_order_delivery')
+            @endif
+        @else
+            <?php
+            $user_auth = auth()->guard('user')->user();
+            ?>
+            @if($order->user->id == $user_auth->id)
+                @if($order->order_status >= 3)
+                    @include('pdf.ele_user_buy_order_delivery')
+                @else
+                    @include('pdf.ele_list_order_delivery')
+                @endif
+            @else
+                @include('pdf.ele_user_buy_order_delivery')
+            @endif
+        @endif
         <div class="col-md-12" style="width: 700px;">
             <div class="row">
                 <h3>{{ trans('messages.order_status_history') }}</h3>
@@ -214,7 +234,7 @@
 </div>
 <script type="text/php">
     if ( isset($pdf) ) {
-        $pdf->page_text(380, 18, "วันเวลาที่สั่งพิมพ์ : ".DateFuncs::dateTimeToThaiDatetime(date('Y-m-d H:i:s'),false)."  หน้า {PAGE_NUM} / {PAGE_COUNT}",'', 16, array(0,0,0));
+        $pdf->page_text(380, 7, "วันเวลาที่สั่งพิมพ์ : ".DateFuncs::dateTimeToThaiDatetime(date('Y-m-d H:i:s'),false)."  หน้า {PAGE_NUM} / {PAGE_COUNT}",'', 16, array(0,0,0));
     }
 </script>
 </body>

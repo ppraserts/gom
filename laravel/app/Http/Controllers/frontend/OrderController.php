@@ -129,8 +129,13 @@ class OrderController extends Systems
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
         $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
+        $orderDeliverys = OrderDelivery::where('order_id',$order_id)->get();
+        $order_delivery = OrderDelivery::where('order_id',$order_id)->where('user_buy_id','!=',0)->first();
 
         $data['order'] = $order;
+        $data['orderDeliverys'] = $orderDeliverys;
+        $data['order_delivery'] = $order_delivery;
+
         $pdf = PDF::loadView('pdf.orderdetail', $data);
         //$pdf->setPaper('legal', 'landscape');
         //return $pdf->stream();
