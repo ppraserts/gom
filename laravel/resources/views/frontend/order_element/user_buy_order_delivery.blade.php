@@ -2,15 +2,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <h3>ข้อมูลการจัดส่ง</h3>
+                <h3>{{ trans('messages.shipping_information') }}</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                         <tr>
-                            <th style="text-align:center;">เลือก</th>
-                            <th style="text-align:center;">ช่องทางการจัดส่ง</th>
-                            <th style="text-align:center;">ค่าจัดส่ง (บาท)</th>
-                            <th style="text-align:center;">ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)</th>
+                            <td>{{ trans('messages.selected') }}</td>
+                            <td>{{ trans('messages.text_delivery_channel') }}</td>
+                            <td>{{ trans('messages.delivery_price') }}</td>
+                            <td>{{ trans('messages.net_balance_shipping') }}</td>
                         </tr>
                         </thead>
                         <tbody>

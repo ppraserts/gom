@@ -23,13 +23,13 @@
             </div>
             @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')
             <div class="form-group">
-                <h3 style="margin-top: 5px;">ข้อมูลการจัดส่ง</h3>
+                <h3 style="margin-top: 5px;">{{ trans('messages.shipping_information') }}</h3>
                 <table class="table table-bordered table-striped table-hover">
                     <tr>
-                        <td>เลือก</td>
-                        <td>ช่องทางการจัดส่ง</td>
-                        <td>ค่าจัดส่ง (บาท)</td>
-                        <td>ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)</td>
+                        <td>{{ trans('messages.selected') }}</td>
+                        <td>{{ trans('messages.text_delivery_channel') }}</td>
+                        <td>{{ trans('messages.delivery_price') }}</td>
+                        <td>{{ trans('messages.net_balance_shipping') }}</td>
                     </tr>
                     @if(count($shopdeliverys) > 0)
                         <?php $i=1;?>
