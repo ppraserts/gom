@@ -7,9 +7,9 @@
             <input type="hidden" name="status_current" value="2">
             {{csrf_field()}}
             <div class="form-group">
-                <strong>{{ trans('messages.text_payment_channel') }}:</strong>
+                <strong>* {{ trans('messages.text_payment_channel') }} : </strong>
                 <select name="payment_channel" id="payment_channel">
-                    <option value="">* {{trans('messages.select_payment_gateway')}}</option>
+                    <option value="">{{trans('messages.select_payment_gateway')}}</option>
                     <option value="บัญชีธนาคาร">{{trans('messages.book_bank')}}</option>
                     <option value="เงินสด">{{trans('messages.cash')}}</option>
                 </select>
@@ -18,7 +18,7 @@
             <div class="form-group" id="html_payment_channel">
             </div>
             <div class="form-group">
-                <strong>* {{ trans('messages.text_note') }}:</strong>
+                <strong> {{ trans('messages.text_note') }} : </strong>
                 <textarea name="note" id="note" class="form-control" rows="7"></textarea>
             </div>
             @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')

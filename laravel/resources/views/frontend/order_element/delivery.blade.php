@@ -9,7 +9,8 @@
 
             <div class="form-group ">
                 <strong> * {{trans('messages.shipping_type')}} :</strong>
-                <input type="text" id="delivery_chanel" name="delivery_chanel" class="form-control" style="margin-bottom: 5px; width: 320px;">
+                <input type="text" disabled  value="{{$order_delivery->shipping_channel}}" class="form-control disabled" style="margin-bottom: 5px; width: 320px;">
+                <input type="hidden" id="delivery_chanel" name="delivery_chanel" value="{{$order_delivery->shipping_channel}}" class="form-control" style="margin-bottom: 5px; width: 320px;">
                 <span id="mss_delivery_chanel" class="alert-danger"></span>
             </div>
             <div class="form-group ">

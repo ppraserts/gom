@@ -12,7 +12,7 @@ $user = auth()->guard('user')->user();
 $linkProfile = "/user/userprofiles";
 $carts = session('carts');
 $cart_items = 0;
-if (is_array($carts)) {
+if (is_array($carts) and count($carts) > 0) {
     //$cart_items = count($carts);
     $arr_txt_new = array("");
     $number = 0;
@@ -112,7 +112,7 @@ function check($array_txt,$value){
                         <div class="btn-nav">
                             <a href="{{url('user/shoppingcart')}}" class="btn btn-success btn-small navbar-btn">
                                 <span class="badge">{{$cart_items}}</span>
-                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-shopping-cart"></i>{{$cart_items_n}}
                                 {{ trans('messages.shopping_cart') }}
                             </a>
                         </div>

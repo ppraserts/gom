@@ -137,7 +137,11 @@ $pagetitle = trans('message.menu_order_list');
         </div>
         <?php $user_auth = auth()->guard('user')->user();?>
         @if($order->user->id == $user_auth->id)
-            @include('frontend.order_element.list_order_delivery')
+            @if($order->order_status >= 3)
+                @include('frontend.order_element.user_buy_order_delivery')
+            @else
+                @include('frontend.order_element.list_order_delivery')
+            @endif
         @else
             @include('frontend.order_element.user_buy_order_delivery')
         @endif
@@ -397,6 +401,7 @@ $pagetitle = trans('message.menu_order_list');
                         checked.push(parseInt($(this).val()));
                     }); //
                     $("#ms_order_delivery").html('');
+                    @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')
                     if(checked.length == 0){
                         $("#ms_order_delivery").html("<?php echo trans('validation.attributes.message_validate_order_delivery')?>");
                         return false;
@@ -413,6 +418,7 @@ $pagetitle = trans('message.menu_order_list');
                             return false;
                         }
                     });
+                    @endif
                     if (payment_channel == '') {
                         $('#payment_channel').focus();
                         $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_order_channel')?>");
