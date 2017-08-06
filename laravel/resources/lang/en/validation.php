@@ -248,7 +248,7 @@ return [
         'product_grade' => 'เกรด',
         'product_province_source' => 'แหล่งผลิด(จังหวัด)',
         'selling_period' => 'ช่วงเวลาจำหน่าย',
-        'product_province_selling' => 'สถานที่จำหน่าย(จังหวัด)',
+        'product_province_selling' => 'พื้นที่จำหน่าย',
         'product_selling_start_date' => 'วันเริ่มต้นจำหน่าย',
         'product_selling_end_date' => 'วันสิ้นสุดจำหน่าย',
         'message_validate_note' => 'กรุณากรอกบันทึกเพิ่มเติม',
@@ -285,6 +285,9 @@ return [
         'message_validate_type_payment' => 'กรุณาเลือกไฟล์รูปภาพ หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
         'message_validate_delivery_image' => 'กรุณาเลือกไฟล์ข้อมูลจัดส่งสินค้า หรือ PDF เท่านั้น (jpg.pdf,jpeg,png,gif) ',
         'message_validate_product1_file' => 'รูปภาพสินค้าจำเป็นต้องเลือกรูปภาพสินค้าอย่างน้อย 1 รูปภาพ',
+        'message_validate_order_delivery' => 'กรุณาเลือกช่องทางการจัดส่งอย่างน้อย 1 ช่อง',
+        'message_validate_shipping_channel' => 'กรุณากรอกข้อมูลช่องทางการจัดส่ง',
+        'message_validate_delivery_charge' => 'กรุณากรอกค่าจัดส่ง',
 
     ],
 
