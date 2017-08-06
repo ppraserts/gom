@@ -26,7 +26,10 @@
         <textarea id="hd_address_delivery" style="display: none">{{$address}}</textarea>
     </div>
     <div class="form-group" id="address_hidden">
-        <strong> * {{ trans('messages.text_address_delivery') }} :</strong>
+        <strong>
+            * {{ trans('messages.text_address_delivery') }} :
+            <span style="color: #8d8d8d; font-size: 13px;">({{trans('messages.text_not_delivery')}})</span>
+        </strong>
         <textarea name="address_delivery" id="address_delivery" class="form-control" style="margin-bottom: 5px;">{{$address}}</textarea>
         <span id="mss_address_delivery" class="alert-danger"></span>
     </div>

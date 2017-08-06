@@ -63,21 +63,23 @@
             <div class="row" style="background-color: white">
                 <div class="col-sm-12 col-md-12">
                     <h3>{{ trans('messages.title_delivery_product') }}</h3>
-                        <div class="form-group ">
-                            <strong> * {{ trans('messages.text_delivery_channel') }} :</strong>
-                            <select id="delivery_chanel_{{$key}}" class="form-control" name="delivery_chanel[]" onchange="hsHtml('{{$key}}')" id="payment_channel" style="margin-bottom: 5px;">
-                                <option value="จัดส่งตามที่อยู่">จัดส่งตามที่อยู่</option>
-                                <option value="รับเอง">รับเอง</option>
-                            </select>
-                            <span id="mss_delivery_chanel_{{$key}}" class="alert-danger"></span>
-                            <textarea id="hd_address_delivery_{{$key}}" style="display: none">{{$address}}</textarea>
-                        </div>
-                        <div class="form-group" id="hidden_{{$key}}">
-                            <strong> * {{ trans('messages.text_address_delivery') }} :</strong>
-                            <textarea name="address_delivery[]" id="address_delivery_{{$key}}" class="form-control" style="margin-bottom: 5px;">{{$address}}</textarea>
-                            <span id="mss_address_delivery_{{$key}}" class="alert-danger"></span>
-                        </div>
-
+                    <div class="form-group ">
+                        <strong> * {{ trans('messages.text_delivery_channel') }} :</strong>
+                        <select id="delivery_chanel_{{$key}}" class="form-control" name="delivery_chanel[]" onchange="hsHtml('{{$key}}')" id="payment_channel" style="margin-bottom: 5px;">
+                            <option value="จัดส่งตามที่อยู่">จัดส่งตามที่อยู่</option>
+                            <option value="รับเอง">รับเอง</option>
+                        </select>
+                        <span id="mss_delivery_chanel_{{$key}}" class="alert-danger"></span>
+                        <textarea id="hd_address_delivery_{{$key}}" style="display: none">{{$address}}</textarea>
+                    </div>
+                    <div class="form-group" id="hidden_{{$key}}">
+                        <strong>
+                            * {{ trans('messages.text_address_delivery') }} :
+                            <span style="color: #8d8d8d;">({{trans('messages.text_not_delivery')}})</span>
+                        </strong>
+                        <textarea name="address_delivery[]" id="address_delivery_{{$key}}" class="form-control" style="margin-bottom: 5px;">{{$address}}</textarea>
+                        <span id="mss_address_delivery_{{$key}}" class="alert-danger"></span>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-12">
                     @php
@@ -357,7 +359,7 @@
         if(delivery_chanel == 'รับเอง'){
             $('#hidden_'+key).empty();
         }else{
-            var html_address = '<strong> * ระบุสถานที่จัดส่ง :</strong><textarea name="address_delivery[]" id="address_delivery_'+key+'" class="form-control" style="margin-bottom: 5px;">'+hd_address_delivery+'</textarea><span id="mss_address_delivery_'+key+'" class="alert-danger"></span>';
+            var html_address = '<strong> * ระบุสถานที่จัดส่ง : <span style="color: #8d8d8d;">(<?php echo trans('messages.text_not_delivery')?>)</span></strong><textarea name="address_delivery[]" id="address_delivery_'+key+'" class="form-control" style="margin-bottom: 5px;">'+hd_address_delivery+'</textarea><span id="mss_address_delivery_'+key+'" class="alert-danger"></span>';
             $('#hidden_'+key).html(html_address);
         }
         return false;

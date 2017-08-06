@@ -36,8 +36,12 @@ $pagetitle = trans('message.menu_order_list');
                     <p><b>{{ trans('messages.order_type') }}
                             : </b>{{ $order->order_type== 'retail'? trans('messages.retail'): trans('messages.wholesale')}}
                     </p>
-                    <h4><b>{{ trans('messages.total_order') }}
-                            : </b>{{$order->total_amount}}  {{trans('messages.baht')}}
+                    <h4>
+                        <b>{{ trans('messages.total_order') }} : </b>
+                        {{$order->total_amount}}  {{trans('messages.baht')}}
+                        <script>
+                            var order_total_amount = "{{$order->total_amount}}";
+                        </script>
                     </h4>
                 </div>
             </div>
@@ -76,8 +80,9 @@ $pagetitle = trans('message.menu_order_list');
                     @if(isset($order->user->email))
                         <p><b>{{ trans('validation.attributes.email') }} : </b>{{ $order->user->email }}</p>
                     @endif
-                    <p><b>{{ trans('validation.attributes.users_addressname') }}
-                            : </b>{{ $order->user->users_addressname . " " . $order->user->users_district . " " . $order->user->users_city . " " . $order->user->users_province . " " . $order->user->users_postcode }}
+                    <p>
+                        <b>{{ trans('validation.attributes.users_addressname') }} : </b>
+                        {{ $order->user->users_addressname . " " . $order->user->users_district . " " . $order->user->users_city . " " . $order->user->users_province . " " . $order->user->users_postcode }}
                     </p>
                 </div>
             </div>
@@ -88,12 +93,13 @@ $pagetitle = trans('message.menu_order_list');
                 <div class="row">
                     <h3>{{trans('messages.title_receiving_address')}}</h3>
                     <b>{{trans('messages.text_delivery_channel')}} : </b>{{$order->delivery_chanel}}
-                    @if(!empty($order->address_delivery))
+                    @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')
                         <br/><b>{{trans('messages.text_address_delivery')}} : </b>{{$order->address_delivery}}
                     @endif
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -129,6 +135,12 @@ $pagetitle = trans('message.menu_order_list');
                 </div>
             </div>
         </div>
+        <?php $user_auth = auth()->guard('user')->user();?>
+        @if($order->user->id == $user_auth->id)
+            @include('frontend.order_element.list_order_delivery')
+        @else
+            @include('frontend.order_element.user_buy_order_delivery')
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -232,6 +244,13 @@ $pagetitle = trans('message.menu_order_list');
         @endsection
         @push('scripts')
         <script>
+            function DeliveryCharge(delivery_price,id) {
+                //alert(order_total_amount)
+                var price = parseInt(delivery_price) + parseInt(order_total_amount);
+                $('#sum_delivery_price_'+id).html(price);
+                $('#input_sum_delivery_price_'+id).val(price);
+                return false;
+            }
             $("#payment_channel").on("change", function () {
                 var payment_channel = $("#payment_channel option:selected").val();
                 if (payment_channel == 'บัญชีธนาคาร') {
@@ -373,6 +392,27 @@ $pagetitle = trans('message.menu_order_list');
 
                 $("#form_payment_channel").submit(function (e) {
                     var payment_channel = $("#payment_channel option:selected").val();
+                    var checked = []
+                    $("input[name='selected[]']:checked").map(function(){
+                        checked.push(parseInt($(this).val()));
+                    }); //
+                    $("#ms_order_delivery").html('');
+                    if(checked.length == 0){
+                        $("#ms_order_delivery").html("<?php echo trans('validation.attributes.message_validate_order_delivery')?>");
+                        return false;
+                    }
+                    $("input[name*='shipping_channel[]']").each(function() {
+                        if ($(this).val() == "" ) {
+                            $("#ms_order_delivery").html("<?php echo trans('validation.attributes.message_validate_shipping_channel')?>");
+                            return false;
+                        }
+                    });
+                    $("input[name*='delivery_charge[]']").each(function() {
+                        if ($(this).val() == "" ) {
+                            $("#ms_order_delivery").html("<?php echo trans('validation.attributes.message_validate_delivery_charge')?>");
+                            return false;
+                        }
+                    });
                     if (payment_channel == '') {
                         $('#payment_channel').focus();
                         $("#ms_payment_channel").html("<?php echo trans('messages.message_validate_order_channel')?>");

@@ -7,6 +7,8 @@ use App\Order;
 use App\OrderItem;
 use App\Shop;
 use App\ProductRequest;
+use App\ShopDelivery;
+use App\OrderDelivery;
 use Session;
 use App\OrderStatusHistory;
 use App\OrderPayment;
@@ -98,6 +100,7 @@ class OrderController extends Systems
             ->select('orders.*', 'order_status.status_name','order_status.id as orderStatusId','users.users_firstname_th','users.users_lastname_th','users.id as userId')
             ->where('orders.id', $order_id)->first();
 //        $order->orderItems = OrderItem::with(['product','productRequest'])->where('order_id',$order_id)->get();
+        //return $order;
         $orderItem = new OrderItem();
         $order->orderItems = $orderItem->orderItemDetail($order_id);
         $order->statusHistory = OrderStatusHistory::where('order_id',$order_id)->get();
@@ -106,7 +109,10 @@ class OrderController extends Systems
 //        $user = auth()->guard('user')->user();
 //        $userId = $user->id;
         //return $order;
-        return view('frontend.orderdetail', compact('order','orderId'));
+        $shopdeliverys = ShopDelivery::all();
+        $orderDeliverys = OrderDelivery::where('order_id',$order_id)->get();
+        $order_delivery = OrderDelivery::where('order_id',$order_id)->where('user_buy_id','!=',0)->first();
+        return view('frontend.orderdetail', compact('order','orderId','shopdeliverys','orderDeliverys','order_delivery'));
     }
 
     public function exportPdf(Request $request,$order_id){
@@ -147,27 +153,66 @@ class OrderController extends Systems
 
     public  function storeStatusHistory(Request $request)
     {
+        //return $request->all();
+        $user = auth()->guard('user')->user();
+        $userId = $user->id;
+        $order_id = $request->input('order_id');
+        /*********************************/
+        $selectedArr = $request->input('selected');
+        $shipping_channel_arr = $request->input('shipping_channel');
+        $delivery_charge_arr = $request->input('delivery_charge');
+        $sum_delivery_price = $request->input('sum_delivery_price');
+        $order_delivery_arr = array();
+        if(count($shipping_channel_arr) > 0) {
+            foreach ($shipping_channel_arr as $key => $shipping_channel) {
+                $selected = 0;
+                if (!empty($selectedArr[$key])) {
+                    $selected = 1;
+                }
+                $order_delivery_arr[] = array(
+                    $shipping_channel, $delivery_charge_arr[$key], $sum_delivery_price[$key], $selected
+                );
+            }
+        }
+        //return $order_delivery_arr;
+        if(count($order_delivery_arr) > 0){
+            foreach ($order_delivery_arr as $order_delivery){
+                $orderDelivery = new OrderDelivery();
+                //$orderDelivery->user_buy_id = '';
+                $orderDelivery->user_sale_id = $userId;
+                $orderDelivery->order_id = $order_id;
+                $orderDelivery->shipping_channel = $order_delivery[0];
+                $orderDelivery->delivery_charge = $order_delivery[1];
+                $orderDelivery->sum_delivery_charge = $order_delivery[2];
+                $orderDelivery->selected = $order_delivery[3];
+                $orderDelivery->save();
+            }
+        }
+
+
+
         $status_current = $request->input('status_current');
         $note = $request->input('note');
-        $order_id = $request->input('order_id');
+
         if ($status_current == 2) {
 
-            $payment_channel = $request->input('payment_channel');
+            //$payment_channel = $request->input('payment_channel');
             //insert status ยืนยันการสั่งซื้อ
             $status_id = 2;
             $status_text = 'ยืนยันการสั่งซื้อ';
             $orderStatusHistory = new OrderStatusHistory();
             $orderStatusHistory->status_id = $status_id;
             $orderStatusHistory->status_text = $status_text;
-            if (!empty($payment_channel) and  $payment_channel == 'เงินสด') {
-                $orderStatusHistory->note = $note;
-            }
+//            if (!empty($payment_channel) and  $payment_channel == 'เงินสด') {
+//                $orderStatusHistory->note = $note;
+//            }
+            //$orderStatusHistory->note = $note;
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
             $order['order_status'] = $status_id;
             Order::find($order_id)->update($order);
 
-            if (!empty($payment_channel) and $payment_channel == 'บัญชีธนาคาร'){
+            //if (!empty($payment_channel) and $payment_channel == 'บัญชีธนาคาร'){
                 //insert status แจ้งช่องทางการชำระเงิน
                 $status_id = 6;
                 $status_text = 'แจ้งช่องทางการชำระเงิน';
@@ -186,7 +231,10 @@ class OrderController extends Systems
                 //$orderStatusHistory->note = $note;
                 $orderStatusHistory->order_id = $order_id;
                 $orderStatusHistory->save();
-            }
+
+
+            //}
+
             return redirect('user/orderdetail/'.$order_id);
         }
         if ($status_current == 6) {
@@ -250,6 +298,13 @@ class OrderController extends Systems
 //            $orderStatusHistory->note = $note;
             $orderStatusHistory->order_id = $order_id;
             $orderStatusHistory->save();
+
+            //update OrderDelivery
+            if(!empty($request->input('user_buy_id'))){
+                $order_delivery_id = $request->input('user_buy_id');
+                $data_order_delivery['user_buy_id'] = $order_delivery_id;
+                OrderDelivery::find($order_delivery_id)->update($data_order_delivery);
+            }
 
             return redirect('user/orderdetail/'.$order_id);
         }

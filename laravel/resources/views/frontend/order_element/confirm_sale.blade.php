@@ -21,7 +21,9 @@
                 <strong>* {{ trans('messages.text_note') }}:</strong>
                 <textarea name="note" id="note" class="form-control" rows="7"></textarea>
             </div>
+            @if(!empty($order->address_delivery) and $order->address_delivery != 'undefined')
             <div class="form-group">
+                <h3 style="margin-top: 5px;">ข้อมูลการจัดส่ง</h3>
                 <table class="table table-bordered table-striped table-hover">
                     <tr>
                         <td>เลือก</td>
@@ -29,8 +31,31 @@
                         <td>ค่าจัดส่ง (บาท)</td>
                         <td>ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)</td>
                     </tr>
+                    @if(count($shopdeliverys) > 0)
+                        <?php $i=1;?>
+                        @foreach($shopdeliverys as $shopdelivery)
+                            <tr>
+                                <td class="text-center"><input type="checkbox" name="selected[]" value="{{$i}}"></td>
+                                <td>
+                                    <input type="text" name="shipping_channel[]" class="form-control" value="{{$shopdelivery->delivery_name}}">
+                                </td>
+                                <td>
+                                    <input type="number" name="delivery_charge[]" class="form-control" value="{{$shopdelivery->delivery_price}}" onkeyup="DeliveryCharge(this.value,'{{$shopdelivery->id}}')">
+                                </td>
+                                <td>
+                                    <span id="sum_delivery_price_{{$shopdelivery->id}}">
+                                        {{$shopdelivery->delivery_price+$order->total_amount}}
+                                    </span>
+                                    <input type="hidden" id="input_sum_delivery_price_{{$shopdelivery->id}}" name="sum_delivery_price[]" value="{{$shopdelivery->delivery_price+$order->total_amount}}">
+                                </td>
+                            </tr>
+                            <?php $i++;?>
+                        @endforeach
+                    @endif
                 </table>
+                <small class="alert-danger" id="ms_order_delivery"></small>
             </div>
+            @endif
             <div class="form-group ">
                 <button class="btn btn-default" type="submit">
                     <span class="glyphicon glyphicon-floppy-disk"></span>

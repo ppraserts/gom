@@ -228,7 +228,7 @@
         if (delivery_chanel == 'รับเอง') {
             $('#address_hidden').empty();
         } else {
-            var html_address = '<strong> * ระบุสถานที่จัดส่ง :</strong><textarea name="address_delivery" id="address_delivery" class="form-control" style="margin-bottom: 5px;">' + hd_address_delivery + '</textarea><span id="mss_address_delivery" class="alert-danger"></span>';
+            var html_address = '<strong> * ระบุสถานที่จัดส่ง :  <span style="color: #8d8d8d; font-size: 13px;">({{trans('messages.text_not_delivery')}})</span></strong><textarea name="address_delivery" id="address_delivery" class="form-control" style="margin-bottom: 5px;">' + hd_address_delivery + '</textarea><span id="mss_address_delivery" class="alert-danger"></span>';
             $('#address_hidden').html(html_address);
         }
         return false;
