@@ -8,7 +8,7 @@
               <h3>{{ trans('messages.membertype_individual') }}</h3>
               <p>
                   <a href="{{ url('/user/register') }}" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ trans('messages.menu_register') }}
+                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ trans('messages.menu_register') }}
                   </a>
               </p>
           </div>
@@ -20,7 +20,7 @@
               <h3>{{ trans('messages.membertype_company') }}</h3>
               <p>
                   <a href="{{ url('/user/companyregister') }}" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ trans('messages.menu_register') }}
+                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ trans('messages.menu_register') }}
                   </a>
               </p>
           </div>

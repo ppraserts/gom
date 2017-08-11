@@ -1,6 +1,6 @@
 <?php
 use App\Product;
-use App\Iwantto;
+use App\ProductRequest;
 use App\Amphur;
 use App\Province;
 use App\District;
@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Input;
 */
 
 Auth::routes();
+
 Route::group(['middleware' => ['guest']], function () {
-    //Route::get('/', 'HomeController@index');
+
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index1');
     Route::get('/choosemarket', 'HomeController@index2');
@@ -32,6 +33,8 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/sitemap', 'frontend\SitemapController@index');
     Route::get('/result', 'frontend\SearchController@index');
     Route::get('/market', 'frontend\MarketController@index');
+    Route::resource('productview','frontend\ProductsViewController');
+    Route::get('/unsubscribe', 'frontend\SearchController@unsubscribe');
 
     Route::get('/clear-cache', function() {
         $exitCode = Artisan::call('cache:clear');
@@ -63,14 +66,14 @@ Route::group(['middleware' => ['guest']], function () {
         if($province_id != "")
         {
             $province = Province::where('PROVINCE_NAME','=',$province_id)->get();
-            $subcategories = Amphur::where('PROVINCE_ID','=',$province[0]->PROVINCE_ID)->get();
+            $subcategories = Amphur::where('PROVINCE_ID','=',$province[0]->PROVINCE_ID)->orderByRaw('CONVERT (AMPHUR_NAME USING tis620)', 'ASC')->get();
         }
 
         $city_id = Input::get('city_id');
         if($city_id != "")
         {
             $city = Amphur::where('AMPHUR_NAME','=',$city_id)->get();
-            $subcategories = District::where('AMPHUR_ID','=',$city[0]->AMPHUR_ID)->get();
+            $subcategories = District::where('AMPHUR_ID','=',$city[0]->AMPHUR_ID)->orderByRaw('CONVERT (DISTRICT_NAME USING tis620)', 'ASC')->get();
         }
 
         $search = Input::get('query');
@@ -113,11 +116,6 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::post('logout', 'frontend\Auth\LoginController@getLogout');
-    //Route::get('user/dashboard', 'frontend\UserController@dashboard');
-
-    /*Route::get('user/userprofile/', function () {
-        return view('frontend.userprofile');
-    });*/
     Route::resource('userprofiles','frontend\UserProfileController');
     Route::post('updateprofiles', 'frontend\UserProfileController@updateProfile');
 
@@ -129,21 +127,73 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::resource('iwanttosale','frontend\IwanttoSaleController');
     Route::resource('matchings','frontend\MatchingController');
     Route::resource('productsaleedit','frontend\ProductsSaleEditController');
+    Route::post('productsaleupdate','frontend\ProductsSaleEditController@updatesale');
     Route::resource('productbuyedit','frontend\ProductsBuyEditController');
     Route::resource('productview','frontend\ProductsViewController');
+    Route::post('productview/{id}/{key}', 'frontend\ProductsViewController@storeComment');
+    Route::post('productview-update-status/{id}/', 'frontend\ProductsViewController@updateCommentStatus');
+    //Shop
+    Route::resource('shopsetting','frontend\ShopSettingController');
+    Route::resource('shoppingcart','frontend\ShoppingCartController');
+    Route::get('settheme/{theme}', 'frontend\ShopSettingController@setTheme');
+    Route::get('checkshopname/{name}', 'frontend\ShopSettingController@checkShopName');
+    Route::post('shoppingcart/addToCart', 'frontend\ShoppingCartController@addToCart');
+    Route::post('shoppingcart/checkout', 'frontend\ShoppingCartController@checkout');
+    Route::get('shoppingcart/deleteCartItem/{user_id}/{product_request_id}', ['as' => 'shoppingcart.deleteCartItem', 'uses' => 'frontend\ShoppingCartController@deleteCartItem']);
+    Route::get('shoppingcart/incrementQuantityCartItem/{user_id}/{product_request_id}/{unit_price}/{is_added}', ['as' => 'shoppingcart.incrementQuantityCartItem', 'uses' => 'frontend\ShoppingCartController@incrementQuantityCartItem']);
+    Route::get('shoppingcart/checkout/{user_id}/{total}', ['as' => 'shoppingcart.checkout', 'uses' => 'frontend\ShoppingCartController@checkout']);
+    Route::post('shoppingcart/checkoutAll', ['as' => 'shoppingcart.checkoutAll', 'uses' => 'frontend\ShoppingCartController@checkoutAll']);
 
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
-        $Iwantto = Iwantto::find($stateid);
+        $Iwantto = ProductRequest::find($stateid);
+        $Iwantto->standards()->detach();
         $Iwantto->delete();
         return [];
 
     });
+    Route::get('userproduct/all','frontend\ProductController@all');
+    Route::resource('userproduct','frontend\ProductController');
+    Route::get('userproduct-filters','frontend\ProductController@index');
+    Route::get('promotion/index','frontend\PromotionsController@index');
+    Route::resource('promotion','frontend\PromotionsController');
+    Route::get('order','frontend\OrderController@index');
+    Route::get('shoporder','frontend\OrderController@shoporder');
+    Route::get('orderdetail/{order_id}','frontend\OrderController@orderdetail');
+    Route::get('orderdetail/pdf/{order_id}','frontend\OrderController@exportPdf');
+    Route::get('quotation/index','frontend\QuotationController@index');
+    Route::get('quotationRequest/{product_request_id}/{quantity}','frontend\QuotationController@store');
+    Route::get('quote/index','frontend\QuoteController@index');
+//    Route::get('quotation/reply/{product_request_id}','frontend\QuotationController@reply');
+    Route::resource('quotation','frontend\QuotationController');
+    Route::resource('quote','frontend\QuoteController');
+    Route::get('orderdetail/html-payment-channel/{id}','frontend\OrderController@getHtmlConfirmSale');
+    Route::post('orderdetail/store-status-history','frontend\OrderController@storeStatusHistory');
+
+    //Route::get('userproduct/index','frontend\ProductController@index');
+    Route::post('recommend-promotion/{id}','frontend\PromotionsController@recommendPromotion');
+
+    //Reports
+    Route::get('reports/buy','frontend\ReportsController@index');
+    Route::post('reports/buy','frontend\ReportsController@actionFilter');
+    Route::post('reports/buy/export','frontend\ReportsController@actionExportExcel');
+    Route::get('reports/buy/download','frontend\ReportsController@actionDownload');
+    Route::get('reports/sale','frontend\ReportsController@SaleItemIndex');
+    Route::post('reports/sale','frontend\ReportsController@SaleItemFilter');
+    Route::post('reports/saleitem/export','frontend\ReportsController@saleItemExportExcel');
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
+    Route::get('reports/list-sale','frontend\ReportsController@listSale');
+    Route::get('reports/getproductbycate/{id}','frontend\ReportsController@getProductByCate');
+
+    Route::post('quotation/checkout', 'frontend\QuotationController@checkout');
+
+
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
-    //Route::get('dashboard', 'backend\AdminController@dashboard');
     Route::post('logout', 'backend\Auth\LoginController@getLogout');
     Route::get('/', 'backend\UserProfileController@index');
     Route::resource('userprofile','backend\UserProfileController');
@@ -164,4 +214,63 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
     Route::resource('news','backend\NewsController');
     Route::resource('reportuser','backend\ReportController');
     Route::resource('adminteam','backend\AdminteamController');
+    Route::resource('badword','backend\BadWordController');
+    Route::post('censor','backend\BadWordController@censor');
+    //Reports
+    Route::get('reports/buy','backend\ReportsController@index');
+//    Route::post('reports/buy','backend\ReportsController@actionFilter');
+    Route::post('reports/buy/export','backend\ReportsController@actionExportExcel');
+    Route::get('reports/buy/download','backend\ReportsController@actionDownload');
+    Route::get('reports/sale','backend\ReportsController@SaleItemIndex');
+    Route::post('reports/sale/export','backend\ReportsController@saleExportExcel');
+    Route::get('reports/salebyshop','backend\ReportsController@SaleItemByShop');
+    Route::post('reports/salebyshop/export','backend\ReportsController@SaleItemByShopExportExcel');
+//    Route::post('reports/sale','backend\ReportsController@SaleItemFilter');
+//    Route::post('reports/salebyshop','backend\ReportsController@SaleItemByShopFilter');
+    Route::get('reports/orderdetail/{order_id}','backend\ReportsController@orderdetail');
+    Route::get('reports/getproductbycate/{id}','backend\ReportsController@getProductByCate');
+
+    //Reports shops
+    Route::get('reports/shop','backend\ReportShopsController@reportShop');
+    Route::post('reports/shop','backend\ReportShopsController@shopFilter');
+    Route::post('reports/shop/export','backend\ReportShopsController@shopExportExcel');
+    Route::get('reports/shop/download','backend\ReportShopsController@actionDownload');
+    //Reports Products
+    Route::get('reports/product','backend\ReportProductsController@index');
+    Route::post('reports/product','backend\ReportProductsController@filter');
+    Route::post('reports/product/export','backend\ReportProductsController@exportExcel');
+    //Report OrderStatusHistory
+    Route::get('reports/orders','backend\ReportOrderStatusHistoryController@orderList');
+//    Route::post('reports/orders','backend\ReportOrderStatusHistoryController@filter');
+    Route::get('reports/orders/{id}/show','backend\ReportOrderStatusHistoryController@show');
+    Route::post('reports/orders/export','backend\ReportOrderStatusHistoryController@exportExcel');
+    //Report OrderHistoryByemp
+    Route::get('reports/order-history-sale-buy','backend\ReportOrderHistoryController@index');
+//    Route::post('reports/order-history-sale-buy','backend\ReportOrderHistoryController@filter');
+    Route::post('reports/order-history-sale-buy/export','backend\ReportOrderHistoryController@exportExcel');
+    //Reports Matching
+    Route::get('reports/matching','backend\ReportMatchingController@index');
+//    Route::post('reports/matching','backend\ReportMatchingController@matchingFilter');
+    Route::post('reports/matching/export','backend\ReportMatchingController@exportExcel');
+    Route::get('reports/matching/download','backend\ReportMatchingController@actionDownload');
+
+    //export PDF
+    Route::get('orderdetail/pdf/{order_id}','backend\ReportsController@exportPdf');
+
 });
+
+Route::get('{shop}/promotion/{id}', 'frontend\ShopIndexController@promotion');
+
+
+Route::get('/{shop}', 'frontend\ShopIndexController@index');
+Route::post('/{shop}/{id}/{key}', 'frontend\ShopIndexController@storeComment');
+Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
+
+//Route::get('/migrate/usermarket/{key}', 'MigrateController@user_market');
+//Route::get('/migrate/productmarket/{key}', 'MigrateController@product_market');
+Route::get('/migrate/productprovince/', 'MigrateController@product_province');
+Route::get('/migrate/badword/', 'MigrateController@badword');
+Route::get('/fix/product/', 'FixController@removeDubProduct');
+Route::get('/fix/matchingprovince/', 'FixController@fixMatchingProvince');
+Route::get('/fix/fixstar/', 'FixController@fixStarAmphurDistrict');
+//Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

@@ -80,6 +80,8 @@ else
               <br/>
               <input {{ (strpos($item->allow_menu, 'menu_download_document') !== false)? 'checked' : '' }} type="checkbox" name='chkallow_menu[]' value="menu_download_document"> {{ trans('messages.menu_download_document') }}
               <br/>
+              <input {{ (strpos($item->allow_menu, 'menu_bad_word') !== false)? 'checked' : '' }} type="checkbox" name='chkallow_menu[]' value="menu_bad_word"> {{ trans('messages.menu_bad_word') }}
+              <br/>
               <input {{ (strpos($item->allow_menu, 'menu_aboutus') !== false)? 'checked' : '' }} type="checkbox" name='chkallow_menu[]' value="menu_aboutus"> {{ trans('messages.menu_aboutus') }}
               <br/>
               <input {{ (strpos($item->allow_menu, 'menu_contactus') !== false)? 'checked' : '' }} type="checkbox" name='chkallow_menu[]' value="menu_contactus"> {{ trans('messages.menu_contactus') }}

@@ -11,200 +11,212 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Model\frontend\User;
-use App\Iwantto;
+use App\ProductRequest;
 use App\ProductCategory;
 use App\Units;
 use App\Amphur;
 use App\Province;
 use App\District;
 use App\Product;
+use App\Standard;
+use Illuminate\Support\Facades\Input;
 
 class ProductsBuyEditController extends Controller
 {
-  private $rules = [
-     'productcategorys_id' => 'required',
-     'products_id' => 'required',
-     //'product_title' => 'required',
-     //'product_description' => 'required',
-     'price' => 'required|numeric',
-     'volumn' => 'required|numeric',
-     'units' => 'required',
-     'city' => 'required',
-     'province' => 'required',
-     'product1_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-     'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-     'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-  ];
-
-  private $rules2 = [
-     'productcategorys_id' => 'required',
-     'products_id' => 'required',
-     //'product_title' => 'required',
-     //'product_description' => 'required',
-     'pricerange_start' => 'required|numeric',
-     'pricerange_end' => 'required|numeric',
-     'volumnrange_start' => 'required|numeric',
-     'volumnrange_end' => 'required|numeric',
-     'units' => 'required',
-     'city' => 'required',
-     'province' => 'required',
-  ];
-
-  private $rules3 = [
-     'productcategorys_id' => 'required',
-     'products_id' => 'required',
-     //'product_title' => 'required',
-     //'product_description' => 'required',
-     'price' => 'required|numeric',
-     'volumn' => 'required|numeric',
-     'units' => 'required',
-     'city' => 'required',
-     'province' => 'required',
-     'product1_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-     'product2_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-     'product3_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-  ];
+    private $rules = [
+        'productcategorys_id' => 'required',
+        'pricerange_start' => 'required',
+        'pricerange_end' => 'required',
+        'volumnrange_start' => 'required',
+    ];
 
 
-  public function __construct()
-  {
-      $this->middleware('user');
-  }
-
-  public function show($id)
-  {
-    $useritem = auth()->guard('user')->user();
-    $provinceItem = Province::orderBy('PROVINCE_NAME','ASC')
-                ->get();
-
-    if($id == 0)
+    public function __construct()
     {
-      $item = new Iwantto();
-      $item->id = 0;
-      $item->productstatus ='open';
-      $item->iwantto = $useritem->iwanttobuy;
-	  $product_name = (object)array();
-	  $product_name->product_name_th = '';
-    }
-    else {
-      $item = Iwantto::find($id);
-  	  $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
-
-      if($useritem->iwanttobuy != $item->iwantto )
-      {
-        return redirect()->action('frontend\UserProfileController@index');
-      }
+        $this->middleware('user');
     }
 
-    $productCategoryitem = ProductCategory::orderBy('sequence','ASC')
-                ->get();
-
-    $unitsItem = Units::orderBy('sequence','ASC')
-                ->get();
-
-    return view('frontend.productbuyedit',compact('item','useritem','productCategoryitem','unitsItem', 'provinceItem','product_name'));
-  }
-
-
-  public function update(Request $request, $id)
-  {
-    $useritem = auth()->guard('user')->user();
-
-    if($id==0)
+    public function show($id)
     {
-      $Iwantto = new Iwantto();
-      $Iwantto->id = 0;
+        $useritem = auth()->guard('user')->user();
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')->get();
+
+        if ($id == 0) {
+            $item = new ProductRequest();
+            $item->id = 0;
+            $item->productstatus = 'open';
+            $item->iwantto = $useritem->iwanttobuy;
+            $item->products_id = '';
+            $product_name = (object)array();
+            $product_name->product_name_th = '';
+        } else {
+            $item = ProductRequest::find($id);
+            $product_name = Product::where('id', '=', $item->products_id)->select('product_name_th')->first();
+
+            if ($useritem->iwanttobuy != $item->iwantto) {
+                return redirect()->action('frontend\UserProfileController@index');
+            }
+        }
+
+        $productCategoryitem = ProductCategory::orderBy('sequence', 'ASC')
+            ->get();
+
+        $unitsItem = Units::orderBy('sequence', 'ASC')
+            ->get();
+
+        $standards = Standard::all();
+        $grades = config('constants.grades');
+        for($i = 0;$i < $standards->count();$i++){
+            $standards[$i]->checked = false;
+            foreach ($item->standards as $standard){
+                if ($standards[$i]->id == $standard->id){
+                    $standards[$i]->checked = true;
+                }
+            }
+        }
+        //return $standards;
+        return view('frontend.productbuyedit', compact('item', 'useritem', 'productCategoryitem',
+            'unitsItem', 'provinceItem', 'product_name','standards','grades'));
     }
-    else {
-      $Iwantto = Iwantto::find($id);
-    }
 
-
-    $this->validate($request, $this->rules2);
-    $Iwantto->iwantto = $useritem->iwanttobuy;
-    $Iwantto->product_title = $request->product_title;
-    $Iwantto->product_description = $request->product_description;
-    $Iwantto->productstatus = $request->productstatus;
-    $Iwantto->productstatus = "open";
-    $Iwantto->pricerange_start = $request->pricerange_start;
-    $Iwantto->pricerange_end = $request->pricerange_end;
-    $Iwantto->volumnrange_start = $request->volumnrange_start;
-    $Iwantto->volumnrange_end = $request->volumnrange_end;
-    $Iwantto->units = $request->units;
-    $Iwantto->city = $request->city;
-    $Iwantto->province = $request->province;
-    $Iwantto->productcategorys_id = $request->productcategorys_id;
-    $Iwantto->products_id = $request->products_id;
-    $Iwantto->users_id = $useritem->id;
-
-    if($id==0)
+    public function update(Request $request, $id)
     {
-      $Iwantto->save();
-      $id = $Iwantto->id;
-    }
-    else {
-      $Iwantto->update();
+        $user = auth()->guard('user')->user();
+
+        $product_id = $request->products_id;
+        $productExist = false;
+        if ($request->products_id > 0){
+            $product = Product::find($product_id);
+            if ($product == null || $product->product_name_th != $request->fake_products_name){
+                $productExist = false;
+            }else{
+                $productExist = true;
+            }
+        }else if ($product_id == ''){
+            if ($request->fake_products_name != ''){
+                $product = Product::where('product_name_th','=',$request->fake_products_name)
+                    ->where('productcategory_id','=',$request->productcategorys_id)->first();
+                if ($product!=null){
+                    $productExist = true;
+                    $product_id = $product->id;
+                }
+            }
+        }
+
+        if (!$productExist){
+            $product = new Product();
+            $product->product_name_th = $request->fake_products_name;
+            $product->product_name_en = $request->fake_products_name;
+            $product->productcategory_id = $request->productcategorys_id;
+            $product->user_id = $user->id;
+            $product->sequence = 999;
+            $product->save();
+            $product_id = $product->id;
+        }
+        if ($id == 0) {
+            $productRequest = new ProductRequest();
+            $productRequest->id = 0;
+        } else {
+            $productRequest = ProductRequest::find($id);
+        }
+
+        $this->validate($request, $this->rules);
+        /*if ($id == 0)
+            $this->validate($request, $this->rules);
+        else{
+            $this->validate($request, $this->rules3);
+        }*/
+
+        $productRequest->productcategorys_id = $request->productcategorys_id; //
+        $productRequest->products_id = $request->products_id;
+        $arr_checked_product_standards = Input::get('product_standard');
+        if(!empty($request->product_other_standard)){
+            $productRequest->product_other_standard = $request->product_other_standard;
+        }
+        $productRequest->packing_size = $request->packing_size;
+        $productRequest->units = $request->units;
+        if ($request->grade == 'ไม่มี'){
+            $request->grade = '-';
+        }
+        $productRequest->grade = $request->grade;
+        $productRequest->pricerange_start = $request->pricerange_start;
+        $productRequest->pricerange_end = $request->pricerange_end;
+        $productRequest->volumnrange_start = $request->volumnrange_start;
+        $province = Province::where('PROVINCE_ID',$request->province_selling)->first();
+        if ($province != null){
+            $productRequest->province = $province->PROVINCE_NAME;
+        }else{
+            $productRequest->province = trans('messages.allprovince');
+        }
+        $productRequest->province_selling = $request->province_selling;
+        //$productRequest->product_description = $request->product_description;
+
+        $productRequest->iwantto = $user->iwanttobuy;
+        $productRequest->productstatus = $request->productstatus;
+        $productRequest->productstatus = "open";
+        $productRequest->products_id = $product_id;
+        $productRequest->users_id = $user->id;
+        $productRequest->selling_type = $request->selling_type;
+        $productRequest->packing_size = $request->packing_size;
+        if(!empty($request->add_packing)){
+            $productRequest->add_packing = $request->add_packing;
+            $productRequest->package_unit = $request->package_unit;
+        }
+        //return $productRequest;
+
+        if ($id == 0) {
+            $productRequest->save();
+            //Save to product_request_standard :: many to many relationship
+            if(is_array($arr_checked_product_standards)){
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
+            $id = $productRequest->id;
+        } else {
+            if(is_array($arr_checked_product_standards)){
+                $productRequest->standards()->detach();
+                foreach ($arr_checked_product_standards as $item){
+                    $productRequest->standards()->save(Standard::find($item));
+                }
+            }
+            $productRequest->update();
+        }
+
+        $itemsbuy = $productRequest->matchWithBuy($user->id, []);
+        $itemssale = $productRequest->matchingWithSale($user->id, []);
+
+        foreach ($itemsbuy as $item) {
+            if($item->products_id == $product_id)
+                $this->SendEmailMatching($item);
+        }
+
+        foreach ($itemssale as $item) {
+            if($item->products_id == $product_id)
+                $this->SendEmailMatching($item);
+        }
+
+        return redirect('user/iwanttobuy')
+            ->with('success', trans('messages.message_update_success'));
     }
 
-    $itemsbuy = $Iwantto->GetSaleMatchingWithBuy($useritem->id, '');
-    $itemssale = $Iwantto->GetBuyMatchingWithSale($useritem->id, '');
-
-    foreach($itemsbuy as $div_item)
+    private function SendEmailMatching($item)
     {
-        $this->SendEmailMatching($div_item);
+        if ($item->requset_email_system ==1){
+            $sendemailTo = $item->email;
+            $sendemailFrom = env('MAIL_USERNAME');
+
+            $data = array(
+                'fullname' => $item->users_firstname_th . " " . $item->users_lastname_th
+            );
+            sleep(0.1);
+            Mail::send('emails.matching', $data, function ($message) use ($sendemailTo, $sendemailFrom) {
+                $message->from($sendemailFrom
+                    , "DGTFarm");
+                $message->to($sendemailTo)
+                    ->subject("DGTFarm : " . trans('messages.email_subject_matching'));
+
+            });
+        }
     }
-
-    foreach($itemssale as $div_item)
-    {
-        $this->SendEmailMatching($div_item);
-    }
-
-    return redirect()->route('productbuyedit.show', ['id' => $id])
-                    ->with('success',trans('messages.message_update_success'));
-  }
-
-  private function SendEmailMatching($div_item)
-  {
-    $sendemailTo = $div_item->email;
-    $sendemailFrom = env('MAIL_USERNAME');
-
-    $data = array(
-        'fullname' => $div_item->users_firstname_th." ".$div_item->users_lastname_th
-    );
-    sleep(0.1);
-    Mail::send('emails.matching', $data, function ($message) use($sendemailTo, $sendemailFrom)
-    {
-        $message->from($sendemailFrom
-                , "Greenmart Online Market");
-        $message->to($sendemailTo)
-                ->subject("Greenmart Online Market : ".trans('messages.email_subject_matching'));
-
-    });
-  }
-
-  private function RemoveFolderImage($rawfile)
-  {
-      sleep(1);
-      if($rawfile != "")
-      {
-        $rawfileArr = explode("/", $rawfile);
-        $indexFile = count($rawfileArr) - 1;
-        $indexFolder = count($rawfileArr) - 2;
-        File::delete($rawfile);
-        File::deleteDirectory(config('app.upload_product').$rawfileArr[$indexFolder]);
-      }
-  }
-
-  private function UploadImage(Request $request, $imagecolumnname)
-  {
-      sleep(1);
-      $fileTimeStamp = time();
-      $imageTempName = $request->file($imagecolumnname)->getPathname();
-
-      $imageName = $request->{ $imagecolumnname }->getClientOriginalName();
-      $request->{ $imagecolumnname }->move(config('app.upload_product').$fileTimeStamp."/", $imageName);
-      $imageName = config('app.upload_product').$fileTimeStamp."/".$imageName;
-
-      return array('imageTempName'=> $imageTempName, 'imageName' => $imageName);
-  }
 }

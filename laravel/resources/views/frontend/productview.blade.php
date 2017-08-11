@@ -1,125 +1,151 @@
 <?php
 function renderHTML($text)
 {
-    if($text != "")
-      echo "<br/>".$text;
+    if ($text != "")
+        echo "<br/>" . $text;
 }
+
 ?>
 @extends('layouts.main')
 @section('content')
-@include('shared.usermenu', array('setActive'=>'matchings'))
-<br/>
-<div class="row">
-  <div class="col-md-4" style="padding-right:30px; text-align:center;">
-      @if($item[0]->users_imageprofile != "")
-        <img height="150" width="150" src="{{ url($item[0]->users_imageprofile) }}" alt="" class="img-circle">
-        <br/><br/>
-      @endif
-      <div class="row" >
-        <div class="col-md-12">
-          @if($item[0]->users_membertype == "personal")
-            {{ $item[0]->{"users_firstname_".Lang::locale()} }}
-            {{ $item[0]->{"users_lastname_".Lang::locale()} }}
-          @endif
-          @if($item[0]->users_membertype == "company")
-            {{ $item[0]->{"users_company_".Lang::locale()} }}
-          @endif
-          {{ renderHTML($item[0]->users_mobilephone) }}
-          {{ renderHTML($item[0]->users_phone) }}
-          {{ renderHTML($item[0]->users_fax) }}
-          {{ renderHTML($item[0]->email) }}
-          <br/><br/><button type="button" class="btn btn-primary">{{ trans('messages.inbox_message') }}</button>
-          <br/><br/><button class="btn btn-default" type="button" onclick="window.history.back();">
-            {{ trans('messages.backtoresult') }}
-          </button>
-        </div>
-      </div>
-  </div>
-  <div class="col-md-8" style="background-color:#FFFFFF; padding:20px;">
-    @if($item[0]->iwantto == "sale")
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            @if($item[0]->product1_file != "")
-              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            @endif
-            @if($item[0]->product2_file != "")
-              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            @endif
-            @if($item[0]->product3_file != "")
-              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            @endif
-          </ol>
-
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-            @if($item[0]->product1_file != "")
-            <div class="item crop-height-slide active">
-              <a href="{{ url($item[0]->product1_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product1_file') }}">
-				<img class="scale" src="{{ url($item[0]->product1_file) }}">
-			  </a>
-              <div class="carousel-caption"></div>
-            </div>
-            @endif
-            @if($item[0]->product2_file != "")
-            <div class="item crop-height-slide">
-              <a href="{{ url($item[0]->product2_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product2_file') }}">
-				<img class="scale" src="{{ url($item[0]->product2_file) }}">
-			  </a>
-              <div class="carousel-caption"></div>
-            </div>
-            @endif
-            @if($item[0]->product3_file != "")
-            <div class="item crop-height-slide">
-              <a href="{{ url($item[0]->product3_file) }}" data-lightbox="products" data-title="{{ Lang::get('validation.attributes.product3_file') }}">
-				<img class="scale" src="{{ url($item[0]->product3_file) }}">
-			  </a>
-              <div class="carousel-caption"></div>
-            </div>
-            @endif
-          </div>
-
-          <!-- Controls -->
-          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-        <br/>
+    @if($user!=null)
+        @include('shared.usermenu', array('setActive'=>''))
     @endif
+    <br/>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-4" style="padding-right:30px;">
 
-    <span class="glyphicon glyphicon-map-marker"></span>
-    {{ $item[0]->city }} {{ $item[0]->province }}
-    <h3>{{ $item[0]->product_title }}</h3>
-    <p>{!! $item[0]->product_description !!}</p>
-    <h3>
-      {{ Lang::get('validation.attributes.price') }} :
+                <a href="#" class="btn btn-default" onclick="history.back();">
+                    {{trans('messages.backtoresult')}}
+                </a>
+                @if($user!=null && $user->id != $productRequest->users_id)
+                    @if($productRequest->users_imageprofile != "")
+                        <img height="150" width="150" src="{{ url($productRequest->users_imageprofile) }}"
+                             class="img-circle">
+                        <br/><br/>
+                    @endif
+                @endif
+                <div class="clearfix"
+                     style="border-top: 1px solid #d4d4d4; padding-bottom: 10px; margin-top: 5px;"></div>
+                @if($productRequest->iwantto == "sale")
+                    @include('frontend.product_element.seller')
+                @else
+                    @include('frontend.product_element.buyer')
+                @endif
+            </div>
+            @if($productRequest->iwantto == "sale")
+                @include('frontend.product_element.product_detail')
+            @else
+                @include('frontend.product_element.want_buy_detail')
+            @endif
+        </div>
+    </div>
 
-      @if($item[0]->iwantto == "buy")
-        {{ floatval($item[0]->pricerange_start) }} - {{ floatval($item[0]->pricerange_end) }}
-      @endif
-      @if($item[0]->iwantto == "sale")
-        @if($item[0]->is_showprice)
-          {{ floatval($item[0]->price) }}
+    @if($productRequest->iwantto == "sale")
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-lg-12">
+                <div class="detailBox">
+                    <div class="commentBox row">
+                        <h4>{{ trans('messages.text_detail_product') }} : {{ $productRequest->product_title }}</h4>
+                        <p>{!! $productRequest->product_description !!}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-lg-12">
+                <link rel="stylesheet" href="{{url('font-awesome/css/font-awesome.min.css')}}">
+                <link rel="stylesheet" href="{{url('css/star.css')}}">
+                <link rel="stylesheet" href="{{url('css/comment.css')}}">
+                @if($user!=null)
+                    @include('frontend.product_element.comment')
+                @endif
+            </div>
+        </div>
+    @endif
+    <!-- modal product added to cart -->
+    @include('frontend.product_element.modal_add_to_cart')
+    <!-- /.modal -->
+    @if($user==null || ($user!=null && $user->iwanttobuy == 'buy'))
+        @if($productRequest->iwantto == "sale")
+            @if(($productRequest['selling_type'] == "all" || $productRequest['selling_type'] == "wholesale") && $productRequest['productstatus'] == "open")
+                @include('frontend.product_element.modal_add_quotation')
+            @endif
         @endif
-        @if(!$item[0]->is_showprice)
-          {{ trans('messages.product_no_price') }}
-        @endif
-      @endif
-    </h3>
-    <h3>
-      {{ Lang::get('validation.attributes.volumn') }} :
-      @if($item[0]->iwantto == "buy")
-        {{ floatval($item[0]->volumnrange_start) }} - {{ floatval($item[0]->volumnrange_end) }}  {{ $item[0]->units }}
-      @endif
-      @if($item[0]->iwantto == "sale")
-        {{ floatval($item[0]->volumn) }} {{ $item[0]->units }}
-      @endif
-    </h3>
-  </div>
-</div>
+    @endif
 @stop
+@push('scripts')
+<link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
+<script src="{{url('jquery-loading/waitMe.js')}}"></script>
+<script> var partUrl = "{{url('/')}}"; </script>
+<script src="{{url('js/comment_product.js')}}"></script>
+<link rel="stylesheet" href="{{url('css/star.css')}}">
+<script>
+
+    var BASE_URL = '<?php echo url('/')?>';
+
+    $(document).ready(function () {
+        $('#modal_add_to_cart').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    });
+
+    function addToCart(productRequestId, userId, unit_price, min_order) {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
+        $.ajax({
+            type: 'POST',
+            url: targetUrl,
+            data: {
+                _token: CSRF_TOKEN,
+                product_request_id: productRequestId,
+                user_id: userId,
+                unit_price: unit_price,
+                min_order: min_order
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'success') {
+                    showProductAdded(response.product_request);
+                } else {
+                    window.location = BASE_URL + '/user/login';
+                }
+            },
+            error: function (request, status, error) {
+                window.location = BASE_URL + '/user/login';
+                console.log(request.responseText);
+                //alert(request.responseText);
+            }
+        });
+    }
+
+    function showAddQuotation() {
+        $('#modal_add_quotaiton').modal('show');
+    }
+
+    function addQuotation(productRequestId) {
+        var quantity = $('input[name=quantity]').val();
+        if (quantity<1){
+            $('#quantity-error').css('color', '#a94442');
+            $('#quantity-error').html('กรุณากรอกจำนวน');
+            return;
+        }
+        window.location = BASE_URL + '/user/quotationRequest/' + productRequestId + '/' + quantity;
+    }
+
+
+    function showProductAdded(productRequest) {
+        if (productRequest != null) {
+            $('#img_product').attr('src', BASE_URL + '/' + productRequest.product1_file);
+            $('#div_product_description').html(productRequest.product_description);
+            $('#div_product_title').html(productRequest.product1_title);
+            $('#sp_product_price').text(productRequest.price);
+            $('#sp_product_volume').text(productRequest.volumn);
+            $('#units').html(productRequest.units);
+        }
+        $('#modal_add_to_cart').modal('show');
+    }
+
+</script>
+@endpush

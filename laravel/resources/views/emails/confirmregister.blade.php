@@ -7,10 +7,10 @@
 <div>
     เรียน <strong>{!! $fullname !!}</strong>
     <br/><br/>
-    ขอต้อนรับเข้าสู่การเป็นสมาชิก Greenmart Online Market ขณะนี้คุณได้รับการตรวจสอบข้อมูลจากเจ้าหน้าที่ เรียบร้อยแล้ว คุณสามารถเข้าใช้งานเว็บไซต์ได้อย่างสมบูรณ์
+    ขอต้อนรับเข้าสู่การเป็นสมาชิก <a href="http://www.DGTFarm.com" target="_blank">www.DGTFarm.com</a> ขณะนี้คุณได้รับการตรวจสอบข้อมูลจากเจ้าหน้าที่ เรียบร้อยแล้ว คุณสามารถเข้าใช้งานเว็บไซต์ได้อย่างสมบูรณ์
     <br/><br/>
     ขอแสดงความนับถือ<br/>
-    <strong>Greenmart Online Market</strong>
+    <strong>DGTFarm</strong>
 </div>
 
 </body>

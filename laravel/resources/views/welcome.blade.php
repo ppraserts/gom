@@ -3,7 +3,7 @@
 @include('shared.search')
       @if(Request::input('market')=="buy")
       <!-- Menu3 -->
-      <h1 class="one"><span>{{ trans('messages.i_want_to_buy') }}</span></h1>
+      <h1 style="display:none" class="one"><span>{{ trans('messages.i_want_to_buy') }}</span></h1>
       <div class="row marketmenuboxs">
         @foreach ($marketItem as $key => $item)
                 <div class="col-md-4 col-sm-6">
@@ -25,7 +25,7 @@
       </div>
       @endif
       @if(Request::input('market')=="sale")
-	    <h1 class="one"><span>{{ trans('messages.i_want_to_sale') }}</span></h1>
+	    <h1 style="display:none" class="one"><span>{{ trans('messages.i_want_to_sale') }}</span></h1>
         <div class="row marketmenuboxs">
         @foreach ($marketItem as $key => $item)
                 <div class="col-md-4 col-sm-6">
@@ -35,7 +35,7 @@
                             <h3>{{ $item->{ "market_title_".Lang::locale()} }}</h3>
                             <p>{{ $item->{ "market_description_".Lang::locale()} }}</p>
                             <p>
-                                <a href="{{ url('choosecategory/?iwantto=sale&id='.$item->id) }}" class="btn btn-primary">
+                                <a href="{{ url('result/?markets[]='.$item->id) }}" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ trans('messages.menu_loginmarket') }}
                                 </a>
                             </p>

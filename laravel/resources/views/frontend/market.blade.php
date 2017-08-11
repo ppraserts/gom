@@ -25,7 +25,7 @@ use App\Http\Controllers\frontend\MarketController;
 		 	   $col_md_4_item['product1_file'] = '/images/default.jpg';
 		  }
   ?>
-          <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+          <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
               <div class="col-item">
                   <div class="photo crop-height">
 						<img src="{{ url($col_md_4_item['product1_file']) }}" class="scale" alt="a">
@@ -37,7 +37,7 @@ use App\Http\Controllers\frontend\MarketController;
 							  <span class="glyphicon glyphicon-tag"></span>
 							  <i title="{{ $product_name }}"><?php echo mb_strimwidth($col_md_4_item['product_title'], 0, 15, '...', 'UTF-8'); ?></i><br/>
                               <span class="glyphicon glyphicon-map-marker"></span>
-                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              {{ $col_md_4_item['province'] }}
                               <br/><br/>
                           </div>
                           <div class="rating hidden-sm col-md-4">
@@ -48,9 +48,7 @@ use App\Http\Controllers\frontend\MarketController;
                           <p class="btn-add">
                               <span class="hidden-sm">  {{ $col_md_4_item['is_showprice']? floatval($col_md_4_item['price']) : trans('messages.product_no_price') }}</span>
                           </p>
-                          <p class="btn-details">
-                              <i class="fa fa-list"></i>
-                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}</a>
                       </div>
                       <div class="clearfix">
                       </div>
@@ -84,14 +82,14 @@ use App\Http\Controllers\frontend\MarketController;
       {
           $col_md_4_item = (array)$col_md_4_items;
   ?>
-          <div class="col-md-3" title="{{ $col_md_4_item['created_at'] }}">
+          <div class="col-md-3" title="{{ \App\Helpers\DateFuncs::mysqlToThaiDate($col_md_4_item['created_at']) }}">
               <div class="col-item">
                   <div class="info">
                         <div class="row">
                           <div class="price col-md-9">
                                <h4>{{ $col_md_4_item['product_title'] }} : {{ floatval($col_md_4_item['volumnrange_start']) }} - {{ floatval($col_md_4_item['volumnrange_end']) }} {{ $col_md_4_item['units'] }}</h4>
                               <span class="glyphicon glyphicon-map-marker"></span>
-                              {{ $col_md_4_item['city'] }} {{ $col_md_4_item['province'] }}
+                              {{ $col_md_4_item['province'] }}
                               <br/><br/>
                           </div>
                           <div class="rating hidden-sm col-md-3">
@@ -101,9 +99,8 @@ use App\Http\Controllers\frontend\MarketController;
                           <p class="btn-add">
                               <span class="hidden-sm">THB  {{ floatval($col_md_4_item['pricerange_start']) }} - {{ floatval($col_md_4_item['pricerange_end']) }}</span>
                           </p>
-                          <p class="btn-details">
-                              <i class="fa fa-list"></i>
-                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="hidden-sm">{{ trans('messages.button_moredetail')}}</a></p>
+
+                              <a href="{{ url('user/productview/'.$col_md_4_item['id']) }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> {{ trans('messages.button_moredetail')}}</a>
                       </div>
                       <div class="clearfix">
                       </div>

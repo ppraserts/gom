@@ -1,0 +1,24 @@
+.nav-tabs > li > a {
+    margin-right: 3.5px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    background: #eeeeee;
+    color: #919191;
+    margin-bottom: 10px;
+}
+.nav-tabs > li > a:hover{
+    opacity: 0.7;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fff;
+    cursor: default;
+    background-color: #009688;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.form-horizontal .form-group {
+    margin-right: 0px;
+    margin-left: 0px;
+}

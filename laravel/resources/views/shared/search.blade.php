@@ -5,7 +5,7 @@ $(function()
 	 var query_url = '';
 	 var products;
 
-	query_url = '/information/create/ajax-state';
+	query_url = '{{url('/information/create/ajax-state')}}';
 
 	products = new Bloodhound({
 		datumTokenizer: function (datum) {
@@ -41,14 +41,14 @@ $(function()
 		displayKey: 'value',
 		source: products.ttAdapter(),
 		templates: {
-			header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+			header: '<div style="text-align: center;">{{trans('messages.baht')}}</div><hr style="margin:3px; padding:0;" />'
 		}
 	});
 
 	 $('#productcategorys_id').on('change', function(e){
 		product_category_value = e.target.value;
 
-		query_url = '/information/create/ajax-state?search=true&productcategorys_id='+product_category_value;
+		query_url = '{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}'+product_category_value;
 
 		products = new Bloodhound({
 			datumTokenizer: function (datum) {
@@ -85,7 +85,7 @@ $(function()
 			displayKey: 'value',
 			source: products.ttAdapter(),
 			templates: {
-				header: '<div style="text-align: center;">ชื่อสินค้า</div><hr style="margin:3px; padding:0;" />'
+				header: '<div style="text-align: center;">{{trans('messages.product_name')}}</div><hr style="margin:3px; padding:0;" />'
 			}
 		});
 	 });

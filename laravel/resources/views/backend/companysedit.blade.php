@@ -92,6 +92,21 @@ $controllerAction = "companys.update";
                   <input value="1" type="checkbox" id="is_active" name="is_active" {{ $item->is_active == 0? '' : 'checked' }}>
                 </strong>
             </div>
+            @if($item->iwanttosale=='sale')
+                <div class="form-group form-inline">
+                    <span> {{ trans('validation.attributes.market') }} :</span>
+                    <div>
+                        @for($i = 0 ; $i < count($markets) ; $i++)
+                            {{--<label class="checkbox-inline">--}}
+                            <input name="markets[]" type="checkbox"
+                                   value="{{ $markets[$i]->id}}"
+                                   {{ $markets[$i]->checked ? "checked" : ""}} style="margin-left: 10px;">
+                            {{$markets[$i]->market_title_th}} <br>
+                            {{--</label>--}}
+                        @endfor
+                    </div>
+                </div>
+            @endif
             <div class="form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.iwantto') }}
                 :
@@ -102,21 +117,41 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_taxcode }}</strong>
             </div>
+            @if($item->iwanttosale == 'sale')
             <div class="form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_qrcode') }}
                 :
                 <strong>{{ $item->users_qrcode }}</strong>
             </div>
+            <div class="form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
+                {{ trans('validation.attributes.guarantee') }}
+                :
+                <strong>
+                    @if(!empty($standard))
+                        {{$standard}}
+                        @if(!empty($item->other_standard))
+                            ,<span>อื่นๆ : {{$item->other_standard}}</span>
+                        @endif
+                    @else
+                        @if(!empty($item->other_standard))
+                            <span>อื่นๆ : {{$item->other_standard}}</span>
+                        @else
+                            -
+                        @endif
+                    @endif
+                </strong>
+            </div>
+            @endif
             <div class="form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_company_th') }}
                 :
                 <strong>{{ $item->users_company_th }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_company_en') }}
-                :
-                <strong>{{ $item->users_company_en }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_company_en') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_company_en') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_company_en }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.email') }}
                 :
@@ -127,11 +162,11 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_addressname }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_street') }}
-                :
-                <strong>{{ $item->users_street }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_street') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_street') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_street }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">
                 {{ Lang::get('validation.attributes.users_district') }}
                 :
@@ -159,16 +194,16 @@ $controllerAction = "companys.update";
                 :
                 <strong>{{ $item->users_mobilephone }}</strong>
             </div>
-            <div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_phone') }}
-                :
-                <strong>{{ $item->users_phone }}</strong>
-            </div>
-            <div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">
-                {{ Lang::get('validation.attributes.users_fax') }}
-                :
-                <strong>{{ $item->users_fax }}</strong>
-            </div>
+            {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_phone') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_phone }}</strong>--}}
+            {{--</div>--}}
+            {{--<div class="form-group {{ $errors->has('users_fax') ? 'has-error' : '' }}">--}}
+                {{--{{ Lang::get('validation.attributes.users_fax') }}--}}
+                {{--:--}}
+                {{--<strong>{{ $item->users_fax }}</strong>--}}
+            {{--</div>--}}
             <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
                   <div id="map" style="width: 100%; height: 300px;"></div>
             </div>

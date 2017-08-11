@@ -15,6 +15,10 @@ return [
     'upload_imageprofile' => 'upload/imageprofiles/',
     'upload_product' => 'upload/products/',
     'upload_mailfile' => 'upload/mailfile/',
+    'upload_shopimage' => 'upload/shopimage/',
+    'upload_promotion' => 'upload/promotion/',
+    'upload_payment' => 'upload/payments/',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -64,7 +68,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://52.163.212.67/dgtfarmdev'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +81,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Bangkok',
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +201,18 @@ return [
 		* Helper Service Providers
 		*/
 		App\Providers\HelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Way\Generators\GeneratorsServiceProvider::class,
+        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
+        //excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        //pdf
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -246,6 +262,14 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 		'DateFuncs' => App\Helpers\DateFuncs::class,
+       'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+
+        //excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        //PDF
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

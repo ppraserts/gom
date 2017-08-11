@@ -24,7 +24,7 @@
 	        	<a href="{{ url($item->news_document_file) }}" target="_blank">
 	        	@endif
 		<span class="glyphicon glyphicon-save"></span>
-			{{ trans('messages.download') }}
+			{{ trans('messages.download_doc') }}
 		@if($item->news_document_file != "")
 	          	</a>
 	          	@endif
