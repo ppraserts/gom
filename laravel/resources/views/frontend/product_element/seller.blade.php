@@ -67,7 +67,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding-bottom: 10px;"></div>
-        <p><strong>{{ $productRequest->product_name_th }}</strong></p>
+        <h4>{{ $productRequest->product_name_th }}</h4>
         @if(!empty($productRequest->product_title))
         <p>
             <span class="glyphicon glyphicon-tag"></span>

@@ -35,8 +35,7 @@
                                     {{--<strong class="label label-danger {{$col_md_4_item['product_stock'] > 0 ? 'invisible' : ''}}">สินค้าหมด</strong>--}}
                                 {{--@endif--}}
                                 <h4 title="{{ $product_name }}"
-                                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-
+                                    style="white-space: nowrap; line-height:2em; margin-top: 2px;     margin-bottom: 5px; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $product_name }}
                                 </h4>
                                 <?php
