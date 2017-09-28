@@ -362,12 +362,12 @@
                                 @if(count($deliveryList) < 1)
                                     <tr>
                                         <td>
-                                            <input type="text" name="delivery_name[]" class="form-control"
+                                            <input type="text" name="delivery_name[0]" class="form-control"
                                                    value="ฟรีค่าจัดส่ง" readonly="true" required="true"
                                                    oninvalid="this.setCustomValidity('กรุณากรอกช่องทางการจัดส่ง')">
                                         </td>
                                         <td>
-                                            {{Form::number('delivery_price[]', 0 , array('class' => 'form-control','readonly' => 'true'))}}
+                                            {{Form::number('delivery_price[0]', 0 , array('class' => 'form-control','readonly' => 'true'))}}
                                         </td>
                                         <td>
                                             <button class="btn btn-danger hidden" type="button">
@@ -379,10 +379,10 @@
                                     @foreach($deliveryList as $index => $delivery)
                                         <tr>
                                             <td>
-                                                <input type="text" name="delivery_name[]" class="form-control" value="{{$delivery->delivery_name}}" @if($index == 0)readonly="true"@endif required="true" oninvalid="this.setCustomValidity('กรุณากรอกช่องทางการจัดส่ง')">
+                                                <input type="text" name="delivery_name[0]" class="form-control" value="{{$delivery->delivery_name}}" @if($index == 0)readonly="true"@endif required="true" oninvalid="this.setCustomValidity('กรุณากรอกช่องทางการจัดส่ง')">
                                             </td>
                                             <td>
-                                                <input type="number" value="{{$delivery->delivery_price}}" name="delivery_price[]" class="form-control" {{$index == 0 ? 'readonly' : ''}}>
+                                                <input type="number" value="{{$delivery->delivery_price}}" name="delivery_price[0]" class="form-control" {{$index == 0 ? 'readonly' : ''}}>
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger {{$index == 0 ? 'hidden' : ''}}" type="button">
