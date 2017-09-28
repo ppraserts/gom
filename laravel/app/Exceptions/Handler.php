@@ -42,16 +42,39 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
-        /*if ($request->is('admin/*')) {
+
+        //return parent::render($request, $e);
+        if ($request->is('admin/*')) {
             $errors = 'errors.404_admin'; // _admin
         } else {
             $errors = 'errors.404'; // frontend
         }
         //$errors = 'errors.404';
-        return response()->view($errors);*/
+        
+
+        if ($e instanceof HttpException) {
+            return response()->view($errors);
+        } elseif ($e instanceof ModelNotFoundException) {
+            return response()->view($errors);
+        } elseif ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
+        } elseif ($e instanceof AuthorizationException) {
+            $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ValidationException && $e->getResponse()) {
+            //return $e->getResponse();
+            return parent::render($request, $e);
+        } elseif ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) 
+        {
+             return response()->view($errors);
+        }
+        
+        else{
+            return parent::render($request, $e);
+        }
+
+        
     }
 
     /**
