@@ -4,10 +4,9 @@ $filters = array('filterprice' => $filterprice, 'filterquantity' => $filterquant
 ?>
 @extends('layouts.main')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'matchings'))
-
     <br/>
-
     <div class="btn-group"><a
                 href="{{ route('matchings.index', array_merge($filters,[ 'orderby'=>$orderby,'filterprice'=>!$filterprice])) }}"
                 class="btn btn-info"><span class="fa fa-check {{$filterprice ? '' : 'invisible'}}"/></a>

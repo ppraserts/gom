@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\OrderItem;
-use Validator, Response;
+use Validator, Response,DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -28,6 +28,15 @@ class ProductController extends Controller
     {
 
         $user = auth()->guard('user')->user();
+        if($user->iwanttosale == "sale"){
+            $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+            if(count($cshop) <= 0 ){
+                $listMenuArr = array('productsaleedit','iwanttosale','productsaleupdate','shoporder','userproduct','promotion');
+                if (in_array($request->segment(3), $listMenuArr) or in_array($request->segment(2), $listMenuArr) ){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
 
         $items = Product::with(['productCategory','productRequest'])->Where('user_id', $user->id)->Where(function ($query) {
             $search = \Request::get('search');

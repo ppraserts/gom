@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+@include('frontend.messages_element.shop_show_ms')
 @include('shared.usermenu', array('setActive'=>'changepasswords'))
 <br/>
 <form enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="{{ url('user/updatepasswords') }}">

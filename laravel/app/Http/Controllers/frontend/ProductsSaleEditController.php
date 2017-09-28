@@ -145,6 +145,15 @@ class ProductsSaleEditController extends Controller
     {
         $id = $request->id;
         $user = auth()->guard('user')->user();
+        if($user->iwanttosale == "sale"){
+            $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+            if(count($cshop) <= 0 ){
+                $listMenuArr = array('productsaleedit','iwanttosale','productsaleupdate');
+                if (in_array($request->segment(3), $listMenuArr)){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
 
 
         if ($id == 0)
@@ -350,6 +359,7 @@ class ProductsSaleEditController extends Controller
             $sendemailFrom = env('MAIL_USERNAME');
 
             $data = array(
+                'email' => $item->email,
                 'fullname' => $item->users_firstname_th . " " . $item->users_lastname_th
             );
             sleep(0.1);

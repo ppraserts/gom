@@ -36,7 +36,8 @@
                             <p>{{ $item->{ "market_description_".Lang::locale()} }}</p>
                             <p>
                                 <a href="{{ url('result/?markets[]='.$item->id) }}" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ trans('messages.menu_loginmarket') }}
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                    {{ trans('messages.menu_loginmarket') }}
                                 </a>
                             </p>
                         </div>

@@ -3,6 +3,7 @@ $url = "user/iwanttobuy";
 ?>
 @extends('layouts.main')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'iwanttobuy'))
     @push('scripts')
     <script type="text/javascript">

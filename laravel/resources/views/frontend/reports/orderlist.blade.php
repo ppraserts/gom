@@ -5,6 +5,7 @@ $pagetitle = trans('message.report_order');
 @section('page_heading',$pagetitle)
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'reports'))
     <div class="col-sm-12" style="padding: 10px 25px; border: 1px solid #ddd; margin-top: 15px;">
         <div class="row">

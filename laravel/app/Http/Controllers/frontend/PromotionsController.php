@@ -60,6 +60,15 @@ class PromotionsController extends Controller
         $user = auth()->guard('user')->user();
         $shop = Shop::where('user_id', $user->id)->first();
 
+        if($user->iwanttosale == "sale"){
+            if(count($shop) <= 0 ){
+                $listMenuArr = array('productsaleedit','iwanttosale','productsaleupdate','shoporder','promotion');
+                if (in_array($request->segment(3), $listMenuArr) or in_array($request->segment(2), $listMenuArr) ){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
+
         $items = array();
         if ($shop != null) {
             $items = Promotions::where('shop_id', $shop->id)->Where(function ($query) {
@@ -67,7 +76,7 @@ class PromotionsController extends Controller
                 $query->where('promotion_title', 'like', '%' . $search . '%')
                     ->orWhere('promotion_description', 'like', '%' . $search . '%');
             })
-                ->select(DB::raw('*,end_date < NOW() as expired'))
+                ->select(DB::raw('*,date(NOW()) > date(end_date) as expired'))
                 ->orderBy('sequence', 'ASC')
                 ->paginate(config('app.paginate'));
             $data = array('i' => ($request->input('page', 1) - 1) * config('app.paginate'),

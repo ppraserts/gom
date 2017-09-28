@@ -34,6 +34,7 @@ function renderHTML($text)
                     @include('frontend.product_element.buyer')
                 @endif
             </div>
+
             @if($productRequest->iwantto == "sale")
                 @include('frontend.product_element.product_detail')
             @else

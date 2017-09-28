@@ -52,7 +52,7 @@ return [
     'menu_search' => 'ค้นหา',
     'menu_announcement' => 'ประชาสัมพันธ์',
     'menu_login' => 'เข้าสู่ระบบ',
-    'menu_loginmarket' => 'เข้าตลาด(ล็อคอิน)',
+    'menu_loginmarket' => 'เข้าตลาด',
     'menu_openshop' => 'ลงทะเบียน',
     'menu_register' => 'สมัครสมาชิก',
     'menu_market1' => 'ตลาดเกษตรอินทรีย์',
@@ -225,7 +225,7 @@ return [
     'text_zip_code' => 'รหัสไปรษณีย์',
     'text_sub_district' => 'ตำบล/แขวง',
     'text_road' => 'ถนน',
-    'text_moblie_phone' => 'เบอร์มือถือ',
+    'text_moblie_phone' => 'เบอร์โทรศัพท์',
     'text_phone' => 'เบอร์โทร',
     'text_firstname_lastname' => 'ชื่อ - นามสกุล',
     'text_input_detail_promotion' => 'กรอกรายละเอียดแนะนำโปรโมชั่น',
@@ -347,5 +347,7 @@ return [
     'shipping_information'=>'ข้อมูลช่องทางการจัดส่ง/ค่าจัดส่ง',
     'selected'=>'เลือก',
     'net_balance_shipping'=>'ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)',
+    'please_login_to_see_the_information'=>'กรุณาเข้าสู่ระบบเพื่อดูข้อมูลเบอร์โทรศัพท์',
+    'please_input_information_shop'=>'กรุณาบันทึกข้อมูลร้านค้าให้ครบถ้วนก่อนจึงจะทำการขายสินค้าได้',
 
 ];

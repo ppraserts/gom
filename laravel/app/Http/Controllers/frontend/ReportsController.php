@@ -268,6 +268,16 @@ class ReportsController extends BaseReports
     public function listSale(Request $request)
     {
         $user = auth()->guard('user')->user();
+        if($user->iwanttosale == "sale"){
+            $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+            if(count($cshop) <= 0 ){
+                $listMenuArr = array('list-sale','sale');
+                if (in_array($request->segment(3), $listMenuArr)){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
+
         if (!empty($request->input('is_search'))) {
 
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);
@@ -342,6 +352,15 @@ class ReportsController extends BaseReports
     public function SaleItemIndex(Request $request)
     {
         $user = auth()->guard('user')->user();
+        if($user->iwanttosale == "sale"){
+            $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+            if(count($cshop) <= 0 ){
+                $listMenuArr = array('list-sale','sale');
+                if (in_array($request->segment(3), $listMenuArr)){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
         if (!empty($request->input('is_search'))) {
 
             $request['start_date'] = DateFuncs::convertYear($request['start_date']);

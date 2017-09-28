@@ -54,8 +54,10 @@ $pagetitle = trans('messages.menu_user');
                           <th>{{ trans('messages.no') }}</th>
                           <th>{{ Lang::get('validation.attributes.iwantto') }}</th>
                           <th>{{ Lang::get('validation.attributes.users_company_th') }}</th>
-                          <th>{{ Lang::get('validation.attributes.users_company_en') }}</th>
                           <th>{{ Lang::get('validation.attributes.email') }}</th>
+                          <th>{{ trans('messages.register_date') }}</th>
+                          <th>{{ trans('messages.updated_date') }}</th>
+                          <th>{{ trans('messages.userstatus') }}</th>
                           <th width="130px" style="text-align:center;">
                           </th>
                       </tr>
@@ -66,8 +68,10 @@ $pagetitle = trans('messages.menu_user');
                           <td>{{ ++$i }}</td>
                           <td>{{ $item->iwanttosale }} {{ $item->iwanttobuy}}</td>
                           <td>{{ $item->users_company_th }}</td>
-                          <td>{{ $item->users_company_en }}</td>
                           <td>{{ $item->email }}</td>
+                          <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->created_at,false) }}</td>
+                          <td>{{ \App\Helpers\DateFuncs::mysqlToThaiDate($item->updated_at,false) }}</td>
+                          <td>{{ $item->is_active==0? trans('messages.waitapprove') : trans('messages.approve') }}</td>
                           <td style="text-align:center;">
                               <a class="btn btn-primary" href="{{ route('companys.edit',$item->id) }}">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -89,7 +93,7 @@ $pagetitle = trans('messages.menu_user');
                 </table>
               </div>
 
-              {!! $items->render() !!}
+            {!! $items->appends(Request::all()) !!}
         </div>
 		  </div>
     </div>

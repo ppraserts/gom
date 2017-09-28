@@ -23,6 +23,15 @@ class IwanttoSaleController extends Controller
   public function index(Request $request)
   {
       $item = auth()->guard('user')->user();
+      if($item->iwanttosale == "sale"){
+          $cshop = DB::table('shops')->where('user_id', $item->id)->first();
+          if(count($cshop) <= 0 ){
+              $listMenuArr = array('productsaleedit','iwanttosale','productsaleupdate','shoporder');
+              if (in_array($request->segment(3), $listMenuArr) or in_array($request->segment(2), $listMenuArr) ){
+                  return redirect('user/shopsetting');
+              }
+          }
+      }
       if($item->iwanttosale != 'sale' )
       {
         return redirect()->action('frontend\UserProfileController@index');

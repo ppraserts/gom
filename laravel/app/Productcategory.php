@@ -12,5 +12,10 @@ class ProductCategory extends Model
                         'productcategory_description_en',
                         'sequence'];
 
+    public function product()
+    {
+        return $this->hasMany('App\Product');
+    }
+
 }
 ?>

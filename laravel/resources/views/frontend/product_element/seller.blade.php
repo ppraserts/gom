@@ -15,13 +15,23 @@
 
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
-    <strong>{{ trans('messages.text_firstname_lastname') }}
-        : </strong> {{$productRequest->users_firstname_th.' '.$productRequest->users_lastname_th}}
+    <strong>
+        {{ trans('messages.text_firstname_lastname') }} :
+    </strong>
+    {{$productRequest->users_firstname_th.' '.$productRequest->users_lastname_th}}
 </div>
+<?php $result_user = auth()->guard('user')->user();?>
+@if(count($result_user) > 0)
 <div class="col-xs-12 col-sm-12 col-md-12">
     <strong>{{ trans('messages.text_moblie_phone') }} : </strong> {{$productRequest->users_mobilephone}}
 </div>
-
+@else
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <a href="{{url('user/login')}}" style="color: #aec54b;">
+            {{ trans('messages.please_login_to_see_the_information') }}
+        </a>
+    </div>
+@endif
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
     <strong>{{ trans('messages.text_email') }} : </strong>
     @if(!empty($productRequest->email))

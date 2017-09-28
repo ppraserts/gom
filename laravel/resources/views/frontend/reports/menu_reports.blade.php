@@ -1,5 +1,11 @@
 <?php
 $user = auth()->guard('user')->user();
+$cshop = array();
+if(count($user) > 0){
+    if(!empty($user->iwanttosale)){
+        $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+    }
+}
 ?>
 <ul class="nav nav-tabs">
     @if($user->iwanttobuy == "buy")
@@ -8,11 +14,13 @@ $user = auth()->guard('user')->user();
     </li>
     @endif
     @if($user->iwanttosale == "sale")
-    <li @if(Request::segment(3) == 'list-sale') class="active" @endif>
-        <a href="{{url('user/reports/list-sale')}}">{{ trans('messages.report_sale') }}</a>
-    </li>
-    <li  @if(Request::segment(3) == 'sale') class="active" @endif>
-        <a href="{{url('user/reports/sale')}}">{{trans('messages.report_title_sale')}}</a>
-    </li>
+        @if(count($cshop) > 0)
+            <li @if(Request::segment(3) == 'list-sale') class="active" @endif>
+                <a href="{{url('user/reports/list-sale')}}">{{ trans('messages.report_sale') }}</a>
+            </li>
+            <li  @if(Request::segment(3) == 'sale') class="active" @endif>
+                <a href="{{url('user/reports/sale')}}">{{trans('messages.report_title_sale')}}</a>
+            </li>
+         @endif
     @endif
 </ul>

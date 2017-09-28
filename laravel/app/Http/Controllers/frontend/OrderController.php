@@ -60,6 +60,15 @@ class OrderController extends Systems
     public function shoporder(Request $request)
     {
         $user = auth()->guard('user')->user();
+        if($user->iwanttosale == "sale"){
+            $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+            if(count($cshop) <= 0 ){
+                $listMenuArr = array('productsaleedit','iwanttosale','productsaleupdate','shoporder','userproduct','promotion');
+                if (in_array($request->segment(3), $listMenuArr) or in_array($request->segment(2), $listMenuArr) ){
+                    return redirect('user/shopsetting');
+                }
+            }
+        }
         if(!empty($request->input('filter'))){
             $filter = $request->input('filter');
             $orderList = \App\Order::join('order_status', 'order_status.id', '=', 'orders.order_status')
@@ -109,7 +118,13 @@ class OrderController extends Systems
 //        $user = auth()->guard('user')->user();
 //        $userId = $user->id;
         //return $order;
-        $shopdeliverys = ShopDelivery::all();
+        $user = auth()->guard('user')->user();
+        $shop = Shop::where('user_id',$user->id)->first();
+        $shopdeliverys = array();
+        if(count($shop) > 0){
+            $shopdeliverys = ShopDelivery::where('shop_id',$shop->id)->get();
+        }
+
         $orderDeliverys = OrderDelivery::where('order_id',$order_id)->get();
         $order_delivery = OrderDelivery::where('order_id',$order_id)->where('user_buy_id','!=',0)->first();
         return view('frontend.orderdetail', compact('order','orderId','shopdeliverys','orderDeliverys','order_delivery'));

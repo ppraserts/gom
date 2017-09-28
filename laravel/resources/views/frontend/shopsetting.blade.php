@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'shopsetting'))
     <BR>
     <div class="col-sm-12">

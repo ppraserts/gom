@@ -5,6 +5,7 @@ $pagetitle = trans('message.menu_order_list');
 @section('page_heading',$pagetitle)
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'order'))
     <div class="col-sm-12">
         @if ($message = Session::get('success'))

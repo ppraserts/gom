@@ -6,6 +6,7 @@ $i =0;
 @section('page_heading',trans('message.menu_quotation'))
 @section('page_heading_image','<i class="glyphicon glyphicon-apple"></i>')
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'quotation'))
     <div class="col-sm-12">
         <h3>{{trans('messages.menu_quotation')}}</h3>

@@ -207,6 +207,7 @@ class ProductsBuyEditController extends Controller
             $sendemailFrom = env('MAIL_USERNAME');
 
             $data = array(
+                'email' => $item->email,
                 'fullname' => $item->users_firstname_th . " " . $item->users_lastname_th
             );
             sleep(0.1);

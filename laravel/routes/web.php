@@ -147,6 +147,10 @@ Route::group(['prefix' => 'user','middleware' => ['user']], function () {
     Route::get('/information/removeproduct/ajax-state',function()
     {
         $stateid = Input::get('stateid');
+        /*$productStandards = \App\ProductStandard::where('product_request_id',$stateid)->get();
+        foreach($productStandards as $productStandard){
+            $productStandard->delete();
+        }*/
         $Iwantto = ProductRequest::find($stateid);
         $Iwantto->standards()->detach();
         $Iwantto->delete();
@@ -268,9 +272,9 @@ Route::post('/{shop}/{id}', 'frontend\ShopIndexController@updateCommentStatus');
 
 //Route::get('/migrate/usermarket/{key}', 'MigrateController@user_market');
 //Route::get('/migrate/productmarket/{key}', 'MigrateController@product_market');
-Route::get('/migrate/productprovince/', 'MigrateController@product_province');
-Route::get('/migrate/badword/', 'MigrateController@badword');
-Route::get('/fix/product/', 'FixController@removeDubProduct');
-Route::get('/fix/matchingprovince/', 'FixController@fixMatchingProvince');
-Route::get('/fix/fixstar/', 'FixController@fixStarAmphurDistrict');
+// Route::get('/migrate/productprovince/', 'MigrateController@product_province');
+// Route::get('/migrate/badword/', 'MigrateController@badword');
+// Route::get('/fix/product/', 'FixController@removeDubProduct');
+// Route::get('/fix/matchingprovince/', 'FixController@fixMatchingProvince');
+// Route::get('/fix/fixstar/', 'FixController@fixStarAmphurDistrict');
 //Route::get('/{shop}', ['middleware' => ['shop']], 'frontend\ShopIndexController@index');

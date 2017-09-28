@@ -63,8 +63,8 @@ class ShopIndexController extends Controller
         $dateNow = date('Y-m-d');
         $promotions = Promotions::where('shop_id', $shop->id)
             ->where('is_active', 1)
-            ->where('start_date', '<=', $dateNow)
-            ->where('end_date', '>=', $dateNow)
+            ->whereDate('start_date', '<=', $dateNow)
+            ->whereDate('end_date', '>=', $dateNow)
             ->orderBy('sequence', 'asc')
             ->get();
 

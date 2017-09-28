@@ -77,6 +77,7 @@
 </script>
 @endpush
 @section('content')
+    @include('frontend.messages_element.shop_show_ms')
     @include('shared.usermenu', array('setActive'=>'userprofiles'))
     <br/>
     <form enctype="multipart/form-data" role="form" method="POST"

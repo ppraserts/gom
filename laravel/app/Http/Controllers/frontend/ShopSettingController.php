@@ -55,7 +55,8 @@ class ShopSettingController extends Controller
             if ($request->input('theme') == ''){
                 $shop->theme = 'theme3'; // default theme
             }
-            $this->validate($request, $this->rules(null));
+            // $this->validate($request, $this->rules(null));
+            $this->validate($request, $this->rules(false));
         } else {
             $shop = Shop::where('user_id', $user->id)->first();
             $this->validate($request, $this->rules((strtolower($shop->shop_name))===(strtolower($request->shop_name))));

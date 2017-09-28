@@ -2,6 +2,12 @@
 use App\ProductRequest;
 $user = auth()->guard('user')->user();
 $productRequest = new ProductRequest();
+$cshop = array();
+if(count($user) > 0){
+    if(!empty($user->iwanttosale)){
+        $cshop = DB::table('shops')->where('user_id', $user->id)->first();
+    }
+}
 ?>
 <ul class="nav nav-tabs">
 
@@ -26,6 +32,7 @@ $productRequest = new ProductRequest();
         {{--</a>--}}
     {{--</li>--}}
     @if($user->iwanttosale == "sale")
+        @if(count($cshop) > 0)
         <li role="presentation" {{ ($setActive == "iwanttosale")? 'class=active' : ''  }}>
             <a href="{{ url('user/iwanttosale') }}">
                 {{ trans('messages.i_want_to_sale') }}
@@ -41,6 +48,7 @@ $productRequest = new ProductRequest();
                 {{ trans('messages.menu_quotation_request') }}
             </a>
         </li>
+        @endif
     @endif
     @if($user->iwanttobuy == "buy")
         <li role="presentation" {{ ($setActive == "iwanttobuy")? 'class=active' : ''  }}>
@@ -63,7 +71,7 @@ $productRequest = new ProductRequest();
         <a href="{{ url('user/matchings') }}">
             {{ trans('messages.menu_matching') }}
             <span class="badge">
-                           @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
+                @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == "sale"))
                     {{ count($productRequest->matchWithBuy($user->id, [])) + count($productRequest->matchingWithSale($user->id, [])) }}
                 @endif
                 @if(($user->iwanttobuy == "buy")&&($user->iwanttosale == ""))
@@ -72,30 +80,35 @@ $productRequest = new ProductRequest();
                 @if(($user->iwanttobuy == "")&&($user->iwanttosale == "sale"))
                     {{ count($productRequest->matchingWithSale($user->id, [])) }}
                 @endif
-                           </span>
+            </span>
         </a>
     </li>
     @if($user->iwanttosale == "sale")
-        <li role="presentation" {{ ($setActive == "addproduct")? 'class=active' : ''  }}>
-            <a href="{{ url('user/userproduct') }}">
-                {{ trans('messages.menu_add_product') }}
-            </a>
-        </li>
-        <li role="presentation" {{ ($setActive == "promotion")? 'class=active' : ''  }}>
-            <a href="{{ url('user/promotion') }}">
-                {{ trans('messages.menu_promotion') }}
-            </a>
-        </li>
+        @if(count($cshop) > 0)
+            <li role="presentation" {{ ($setActive == "addproduct")? 'class=active' : ''  }}>
+                <a href="{{ url('user/userproduct') }}">
+                    {{ trans('messages.menu_add_product') }}
+                </a>
+            </li>
+            <li role="presentation" {{ ($setActive == "promotion")? 'class=active' : ''  }}>
+                <a href="{{ url('user/promotion') }}">
+                    {{ trans('messages.menu_promotion') }}
+                </a>
+            </li>
+        @endif
     @endif
     @if($user->iwanttosale == "sale" or $user->iwanttobuy == "buy")
         <li role="presentation" {{ (Request::segment(2) == "reports")? 'class=active' : ''  }}>
             @if($user->iwanttobuy == "buy")
                     <a href="{{ url('/user/reports/buy') }}">
+                        รายงาน
+                    </a>
             @elseif($user->iwanttosale == "sale")
-                    <a href="{{ url('/user/reports/list-sale') }}">
+                @if(count($cshop) > 0)
+                    <a href="{{ url('/user/reports/list-sale') }}">รายงาน
+                    </a>
+                @endif
             @endif
-                รายงาน
-            </a>
         </li>
     @endif
 </ul>

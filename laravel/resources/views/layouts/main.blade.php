@@ -259,7 +259,7 @@ function check($array_txt,$value){
                 @if($user == null)
                     <li>
                         <a href="{{ url('/user/login') }}" title="{{ trans('messages.menu_login') }}"><span
-                                    class="glyphicon glyphicon-user"></span> {{ trans('messages.menu_loginmarket') }}
+                                    class="glyphicon glyphicon-user"></span> {{ trans('messages.menu_login') }}
                         </a>
                     </li>
                 @endif
