@@ -269,7 +269,7 @@ return [
         'start_date' => 'วันที่เริ่มต้น',
         'end_date' => 'วันที่สิ้นสุด',
         'message_validate_productcategorys_id' => 'กรุณาเลือกกลุ่มสินค้า',
-        'message_validate_products_id' => 'กรุณาเลือกสินค้า',
+        'message_validate_products_id' => 'กรุณาเลือกสินค้าหรือหากต้องการเพิ่มชนิดสินค้ากรุณาติดต่อเจ้าหน้าที่ตลาดออนไลน์',
         'message_validate_product_package_size' => 'กรุณากรอกขนาดบรรจุ',
         'message_validate_units' => 'กรุณาเลือกหน่วยนับขนาดบรรจุ',
         'message_validate_grade' => 'กรุณาเกรด',

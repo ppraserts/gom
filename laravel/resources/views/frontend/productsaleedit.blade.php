@@ -26,14 +26,18 @@
 
     var products_array = [];
 
-    //function validate() {
-    /*if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) {
-     alert('กรุณาระบุ สินค้าจากรายการเท่านั้น หากไม่พบข้อมูลโปรดติดต่อเจ้าหน้าที่');
-     $('input[name=fake_products_name]').focus();
-     return false;
-     }*/
-    // return true;
-    //}
+    function validate() {
+        if (jQuery.inArray($('input[name=fake_products_name]').val(), products_array) == -1) 
+        {
+            $('input[name=fake_products_name]').val('');
+            $('input[name=fake_products_name]').focus();
+            $('input[name=fake_products_name]').validator('update');
+            $('input[name=fake_products_name]').validator('validate');
+
+            return true;
+        }
+        return true;
+    }
 
     $(function () {
         var query_url = '';
@@ -128,6 +132,23 @@
 
         $('.typeahead').bind('typeahead:select', function (ev, suggestion) {
             $('#products_id').val(suggestion.id);
+        });
+        
+
+        $(function()
+        {
+            if($('input[name=fake_products_name]').val() != '')
+            {
+                $.get('{{url('/information/create/ajax-state?search=true&productcategorys_id=')}}' + $('#products_id').val() + '&product_name_th='+$('input[name=fake_products_name]').val(), function(data)
+                {
+                    products_array = [];
+
+                    $.map(data, function (product)
+                    {
+                        products_array[product.id] = product.product_name_th;
+                    });                
+                });
+            }
         });
 
 
@@ -382,8 +403,8 @@
                             <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
                             {{ trans('messages.clone_product')}}</button>
                     @endif
-                    {{--<button type="submit" class="btn btn-primary" onclick="return validate();">--}}
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">
+                    {{--<button type="submit" class="btn btn-primary">--}}
                         <span class="glyphicon glyphicon-floppy-disk"></span>
                         {{ trans('messages.button_save')}}
                     </button>

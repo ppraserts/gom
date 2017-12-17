@@ -38,6 +38,7 @@ class ProductController extends Controller
             }
         }
 
+        /*
         $items = Product::with(['productCategory','productRequest'])->Where('user_id', $user->id)->Where(function ($query) {
             $search = \Request::get('search');
             $query->where('product_name_th', 'like', '%' . $search . '%')
@@ -49,13 +50,29 @@ class ProductController extends Controller
 
         $data = array('user_id' => $user->id,
             'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
-        /*$json = array(
-            'items' => $items,
-            'data' => $data
-        );
-        return response($json, 200);*/
+        //$json = array(
+        //    'items' => $items,
+        //    'data' => $data
+        //);
+        //return response($json, 200);
         return view('frontend.productindex', compact('items'))
             ->with($data);
+        */
+
+        $items = Product::with(['productCategory', 'productRequest'])->Where(function ($query) {
+            $search = \Request::get('search');
+            $query->where('product_name_th', 'like', '%' . $search . '%')
+                ->orWhere('product_name_en', 'like', '%' . $search . '%');
+        })
+            ->orderBy('sequence', 'ASC')
+            ->paginate(config('app.paginate'));
+
+
+        $data = array('user_id' => $user->id,
+            'i' => ($request->input('page', 1) - 1) * config('app.paginate'));
+//        return response($items, 200);
+        return view('frontend.productall', compact('items'))
+            ->with($data);        
     }
 
     public function create()

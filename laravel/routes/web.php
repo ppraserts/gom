@@ -1,4 +1,5 @@
 <?php
+use App\Model\frontend\User;
 use App\Product;
 use App\ProductRequest;
 use App\Amphur;
@@ -86,7 +87,6 @@ Route::group(['middleware' => ['guest']], function () {
         return $subcategories;
 
     });
-
 
     // ADMIN
     Route::get('admin/login', 'backend\Auth\LoginController@getLoginForm');
@@ -260,6 +260,21 @@ Route::group(['prefix' => 'admin','middleware' => ['admin']], function () {
 
     //export PDF
     Route::get('orderdetail/pdf/{order_id}','backend\ReportsController@exportPdf');
+
+    //change password
+    Route::get('changepassword',function()
+    {
+        $random_password = 'dgtfarm'.rand(1000,9999);
+
+        $user_id = Input::get('id');
+
+        $user = User::find($user_id);
+
+        $user->password = Hash::make($random_password);
+        $user->save();
+
+        return $random_password;
+    });
 
 });
 

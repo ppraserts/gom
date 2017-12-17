@@ -11,7 +11,7 @@ $pagetitle = Lang::get('message.menu_add_product');
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h3>{{ trans('messages.addeditform') }}</h3>
+                    <h3>{{ trans('messages.productall') }}</h3>
                 </div>
             </div>
         </div>
@@ -39,10 +39,10 @@ $pagetitle = Lang::get('message.menu_add_product');
         </div>
         <div class="row">
             <div class="form-group">
-                <a href="{{ url('user/userproduct') }}" type="button"
-                   class="btn btn-primary">{{ trans('messages.only_me') }}</a>
+                {{--<a href="{{ url('user/userproduct') }}" type="button"
+                   class="btn btn-primary">{{ trans('messages.only_me') }}</a>--}}
                 <a href="{{ url('user/userproduct/all') }}"
-                   class="btn btn-default">{{ trans('messages.all_product') }}</a>
+                   class="btn btn-primary">{{ trans('messages.all_product') }}</a>
                 {{--<label class="radio-inline">
                     <input type="radio" name="user">{{ trans('messages.only_me') }}
                 </label>

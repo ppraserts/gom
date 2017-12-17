@@ -185,7 +185,9 @@ class ProductsSaleEditController extends Controller
             }
         }
 
+
         if (!$productExist) {
+            /*
             $product = new Product();
             $product->product_name_th = $request->fake_products_name;
             $product->product_name_en = $request->fake_products_name;
@@ -194,6 +196,8 @@ class ProductsSaleEditController extends Controller
             $product->sequence = 999;
             $product->save();
             $product_id = $product->id;
+            */
+            $this->validate($request, $this->rules);
         }
 
         if ($id == 0) {

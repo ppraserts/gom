@@ -33,8 +33,7 @@ $controllerAction = "users.update";
     })
 </script>
 @endpush
-@section('section')
-    {!! Form::model($item, ['method' => $method,'route' => [$controllerAction, $formModelId]]) !!}
+@section('section')    
     <div class="col-sm-12">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -55,6 +54,7 @@ $controllerAction = "users.update";
             </div>
         </div>
         <br/>
+        {!! Form::model($item, ['method' => $method,'route' => [$controllerAction, $formModelId]]) !!}
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
@@ -83,7 +83,7 @@ $controllerAction = "users.update";
             </div>
         @endif
 
-        <div class="row">
+        <div class="row">            
             <div class="col-xs-6 col-sm-6 col-md-6">
                 @if($item->users_imageprofile != "")
                     <img height="150" width="150" src="{{ url($item->users_imageprofile) }}" alt="" class="img-circle">
@@ -196,8 +196,6 @@ $controllerAction = "users.update";
                     :
                     <strong>{{ $item->users_city }}</strong>
                 </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">
                     {{ trans('validation.attributes.users_province') }}
                     :
@@ -218,11 +216,70 @@ $controllerAction = "users.update";
                     {{--:--}}
                     {{--<strong>{{ $item->users_phone }}</strong>--}}
                 {{--</div>--}}
-                <div class="form-group" style="margin-top:10px; margin-bottom:20px; display:none;">
-                    <div id="map" style="width: 100%; height: 300px;"></div>
-                </div>
+            </div>
+            {!! Form::close() !!}
+            <div class="col-xs-6 col-sm-6 col-md-6">      
+                <div class="form-group" style="margin-top:10px; margin-bottom:10px; display:none;">
+                    <div id="map" style="width: 100%; min-height: 300px;"></div>
+                </div>            
+                <div class="panel panel-default" style="margin-top:10px;">
+                    <div class="panel-heading">{{ trans('messages.resetpassword_title') }}</div>
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="sr-only" for="password">{{ trans('messages.password') }}</label>
+                                <input type="text" class="form-control copy" id="password" data-clipboard-target="#password" readonly>
+                            </div>                        
+                            <button type="button" class="btn btn-primary" data-userid="{{ $item->id }}" data-toggle="modal" data-target="#password_confirm">{{ trans('messages.resetpassword_btn') }}</button>
+                            <!--<button type="button" class="btn copy btn-default" data-clipboard-target="#password">Copy</button>-->
+                        </form>
+                    </div>
+                </div>                                                     
+            </div>            
+        </div>
+    </div>     
+    @push('scripts')
+    <div class="modal fade" id="password_confirm" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ trans('messages.resetpassword_title') }}</h4>
+            </div>
+            <div class="modal-body">
+                <p style="color:red;">{!! trans('messages.confirm_password_change') !!}</p>
+                <input type="hidden" id="change_password_userid" value="" />
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-primary" onclick="request_password()">{{ trans('messages.confirm_password_yes') }}</button>
+                <button type="button" class="btn btn-default" id="close_modal" data-dismiss="modal">{{ trans('messages.confirm_password_no') }}</button>
+            </div>
             </div>
         </div>
-    </div>
-    {!! Form::close() !!}
+    </div>  
+    <script src="{{url('/js/clipboard.min.js')}}"></script>
+    <script>
+        jQuery( document ).ready(function( $ ) {
+            new Clipboard('.copy'); 
+
+            $('#password_confirm').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('userid') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('#change_password_userid').val(recipient)
+            });             
+        });          
+
+        function request_password(user_id)
+        {
+            $.get('{{url('admin/changepassword')}}', { 'id' : $('#change_password_userid').val() }, function(data)
+            {                
+                $('#password').val(data);                
+                $('#password_confirm').modal('hide');
+            });
+        }
+    </script>
+    @endpush
 @endsection

@@ -10,6 +10,7 @@ return [
     'userprofile' => 'ข้อมูลส่วนตัว',
     'confirm_delete' => 'คุณต้องการลบข้อมูล :attribute ใช่หรือไม่ ?',
     'addeditform' => 'เพิ่ม/แก้ไข',
+    'productall' => 'ชนิดสินค้า',
     'edit' => 'แก้ไข',
     'message_whoops_error' => 'พบข้อผิดพลาด !!',
     'message_result_error' => 'พบข้อผิดพลาด !!',
@@ -349,5 +350,10 @@ return [
     'net_balance_shipping'=>'ยอดสุทธิ (ค่าสินค้า + ค่าจัดส่ง)',
     'please_login_to_see_the_information'=>'กรุณาเข้าสู่ระบบเพื่อดูข้อมูลเบอร์โทรศัพท์',
     'please_input_information_shop'=>'กรุณากำหนด  ตั้งค่าร้านค้า  ให้ครบถ้วน จึงจะสามารถทำการลงขายสินค้าได้',
-
+    'resetpassword_title'=>'กำหนดรหัสผ่านใหม่สำหรับผู้ใช้งาน',
+    'resetpassword_btn'=>'กำหนดรหัสผ่านใหม่',
+    'password'=>'รหัสผ่าน',
+    'confirm_password_change'=>'การกำหนดรหัสผ่านใหม่ จะส่งผลให้ผู้ใช้งานไม่สามารถใช้งานรหัสผ่านเดิมได้<br>ต้องการกำหนดรหัสผ่านใหม่ใช่หรือไม่?',
+    'confirm_password_yes'=>'ใช่',
+    'confirm_password_no'=>'ไม่'
 ];

@@ -12,7 +12,7 @@ $pagetitle = Lang::get('message.menu_add_product');
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h3>{{ trans('messages.addeditform') }}</h3>
+                    <h3>{{ trans('messages.productall') }}</h3>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@ $pagetitle = Lang::get('message.menu_add_product');
         </div>
         <div class="row">
             <div class="form-group">
-                <a href="{{ url('user/userproduct') }}" type="button" class="btn btn-default">{{ trans('messages.only_me') }}</a>
+                {{--<a href="{{ url('user/userproduct') }}" type="button" class="btn btn-default">{{ trans('messages.only_me') }}</a>--}}
                 <a href="{{ url('user/userproduct/all') }}" class="btn btn-primary">{{ trans('messages.all_product') }}</a>
                 {{--<label class="radio-inline">
                     <input type="radio" name="user">{{ trans('messages.only_me') }}
@@ -75,11 +75,11 @@ $pagetitle = Lang::get('message.menu_add_product');
                         <th>{{ Lang::get('validation.attributes.product_name_en') }}</th>
                         <th>{{ Lang::get('messages.menu_product_category') }}</th>
                         <th>{{ Lang::get('validation.attributes.sequence') }}</th>
-                        <th width="130px" style="text-align:center;">
+                        {{--<th width="130px" style="text-align:center;">
                             <a class="btn btn-success" href="{{ url ('user/userproduct/create') }}" data-toggle="tooltip" title="{{trans('messages.add')}}">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </a>
-                        </th>
+                        </th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -89,27 +89,7 @@ $pagetitle = Lang::get('message.menu_add_product');
                             <td>{{ $item->product_name_th }}</td>
                             <td>{{ $item->product_name_en }}</td>
                             <td>{{ $item->productCategory->productcategory_title_th }}</td>
-                            <td>{{ $item->sequence }}</td>
-                            <td style="text-align:center;">
-                                <?php
-                                if (count($item->productOrderItem) == 0 && $item->user_id == $user_id) { ?>
-                                <a class="btn btn-primary"
-                                   href="{{ url ('user/userproduct/'.$item->id.'/edit') }}">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </a>
-                                <?php
-                                $confirmdelete = trans('messages.confirm_delete', ['attribute' => $item->product_question_th]);
-                                ?>
-                                {!! Form::open(['method' => 'DELETE','route' => ['userproduct.destroy', $item->id],'style'=>'display:inline']) !!}
-                                <button onclick="return confirm('{{$confirmdelete}}');"
-                                        class="btn btn-danger" type="submit">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-
-                                <?php } ?>
-
-                                {!! Form::close() !!}
-                            </td>
+                            <td>{{ $item->sequence }}</td>                            
                         </tr>
                     @endforeach
                     </tbody>
