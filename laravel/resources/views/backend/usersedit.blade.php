@@ -92,6 +92,11 @@ $controllerAction = "users.update";
         <br/>
         {!! Form::model($item, ['method' => $method,'route' => [$controllerAction, $formModelId]]) !!}
         <div class="row">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
                 </div>
@@ -175,35 +180,29 @@ $controllerAction = "users.update";
                         @endif
                         <div class="col-md-6 form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                             {{ trans('validation.attributes.iwantto') }}:
-                            <strong>{{ $item->iwanttosale }} {{ $item->iwanttobuy }}</strong>
+                            <input type="checkbox" name="iwanttosale" value="{{ $item->iwanttosale }}" @if($item->iwanttosale == 'sale') checked @endif> sale
+                            <input type="checkbox" name="iwanttobuy" value="{{ $item->iwanttobuy }}" @if($item->iwanttobuy == 'buy')checked @endif> Buy
                         </div>
                         <div class="col-md-6 form-group {{ $errors->has('users_idcard') ? 'has-error' : '' }}">
                             {{ trans('validation.attributes.users_idcard') }}:
-                            <input type="text" class="form-control" name="users_idcard" value="{{ $item->users_idcard }}">
+                            <input type="text" class="form-control" name="users_idcard"
+                                   value="{{ $item->users_idcard }}">
                         </div>
                         @if($item->iwanttosale == 'sale')
                             <div class="col-md-6 form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
                                 {{ trans('validation.attributes.users_qrcode') }}:
-                                <strong>{{ $item->users_qrcode }}</strong>
+                                <input type="text" name="users_qrcode" class="form-control" value="{{ $item->users_qrcode }}">
                             </div>
                         @endif
                         @if($item->iwanttosale == 'sale')
                             <div class="col-md-6 form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
                                 {{ trans('validation.attributes.guarantee') }}:
-                                <strong>
-                                    @if(!empty($standard))
-                                        {{$standard}}
-                                        @if(!empty($item->other_standard))
-                                            ,<span>อื่นๆ : {{$item->other_standard}}</span>
-                                        @endif
-                                    @else
-                                        @if(!empty($item->other_standard))
-                                            <span>อื่นๆ : {{$item->other_standard}}</span>
-                                        @else
-                                            -
-                                        @endif
-                                    @endif
-                                </strong>
+                                @foreach($standard_all as $v)
+                                    <input type="checkbox" name="standard[]" value="{{$v->id}}" @if(in_array($v->id, $standard)) checked @endif> {{$v->name}}
+                                @endforeach
+                                <br/><br/>
+                                อื่นๆ <input type="text" name="other_standard" value="{{$item->other_standard}}">
+
                             </div>
                         @endif
                         <div class="col-md-6 form-group {{ $errors->has('users_firstname_th') ? 'has-error' : '' }}">
@@ -228,12 +227,12 @@ $controllerAction = "users.update";
                             </label>
 
                             <input id="users_addressname" type="text" class="form-control"
-                                   name="users_addressname" value="{{ old('users_addressname') }}" autofocus>
+                                   name="users_addressname" value="{{$item->users_addressname}}">
 
                             @if ($errors->has('users_addressname'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('users_addressname') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('users_addressname') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -243,13 +242,10 @@ $controllerAction = "users.update";
 
                             <select id="users_province" name="users_province" class="form-control" required>
                                 <option value="">{{ trans('messages.please_select') }}</option>
-                                @foreach ($provinceItem as $key => $province)
-                                    @if(old('users_province') == $province->PROVINCE_NAME)
-                                        <option selected
-                                                value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
-                                    @else
-                                        <option value="{{ $province->PROVINCE_NAME }}">{{ $province->PROVINCE_NAME }}</option>
-                                    @endif
+                                @foreach ($provinceItem as $province)
+                                    <option value="{{ $province->PROVINCE_NAME }}" @if($province->PROVINCE_NAME ==  $item->users_province)selected @endif>
+                                        {{ $province->PROVINCE_NAME}}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->has('users_province'))
@@ -260,76 +256,59 @@ $controllerAction = "users.update";
                         </div>
 
                         <div class="col-md-6 form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
-                            <label for="users_city"
-                                   class="control-label"> {{ Lang::get('validation.attributes.users_city') }}</label>
-
+                            <label for="users_city" class="control-label">
+                                {{ Lang::get('validation.attributes.users_city') }}
+                            </label>
                             <select id="users_city" name="users_city" class="form-control">
+                                @foreach($amphurs as $amphur)
+                                <option value="{{$amphur->AMPHUR_NAME}}" @if($amphur->AMPHUR_NAME == $item->users_city) selected @endif>
+                                    {{$amphur->AMPHUR_NAME}}
+                                </option>
+                                @endforeach
                             </select>
                             @if ($errors->has('users_city'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('users_city') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('users_city') }}</strong>
+                                </span>
                             @endif
                         </div>
 
                         <div class="col-md-6 form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
-                            <label for="users_district"
-                                   class="control-label"> {{ Lang::get('validation.attributes.users_district') }}</label>
-
+                            <label for="users_district" class="control-label">
+                                {{ Lang::get('validation.attributes.users_district') }}
+                            </label>
                             <select id="users_district" name="users_district" class="form-control">
+                                @foreach($districts as $district)
+                                    <option value="{{$district->DISTRICT_NAME}}" @if($district->DISTRICT_NAME == $item->users_district) selected @endif>
+                                        {{$district->DISTRICT_NAME}}
+                                    </option>
+                                @endforeach
                             </select>
                             @if ($errors->has('users_district'))
                                 <span class="help-block">
-                                            <strong>{{ $errors->first('users_district') }}</strong>
-                                        </span>
+                                    <strong>
+                                        {{ $errors->first('users_district') }}
+                                    </strong>
+                                </span>
                             @endif
                         </div>
                         <div class="col-md-6 form-group{{ $errors->has('users_postcode') ? ' has-error' : '' }}">
-                            <label for="users_postcode"
-                                   class="control-label">{{ Lang::get('validation.attributes.users_postcode') }}</label>
-
-                            <input id="users_postcode" type="text" class="form-control"
-                                   name="users_postcode"
-                                   value="{{ old('users_postcode') }}" autofocus>
-
+                            <label for="users_postcode" class="control-label">
+                                {{ Lang::get('validation.attributes.users_postcode') }}
+                            </label>
+                            <input type="text" class="form-control" name="users_postcode" value="{{$item->users_postcode}}">
                             @if ($errors->has('users_postcode'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('users_postcode') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('users_postcode') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="col-md-6 form-group {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
                             {{ trans('validation.attributes.users_mobilephone') }} :
                             <input id="users_mobilephone" type="text" class="form-control" name="users_mobilephone"
-                                   value="{{ $item->users_mobilephone }}" autofocus>
+                                   value="{{ $item->users_mobilephone }}">
                         </div>
 
-                        {{--<div class="form-group {{ $errors->has('users_district') ? 'has-error' : '' }}">--}}
-                        {{--{{ trans('validation.attributes.users_district') }}--}}
-                        {{--:--}}
-                        {{--<strong>{{ $item->users_district }}</strong>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group {{ $errors->has('users_city') ? 'has-error' : '' }}">--}}
-                        {{--{{ trans('validation.attributes.users_city') }}--}}
-                        {{--:--}}
-                        {{--<strong>{{ $item->users_city }}</strong>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group {{ $errors->has('users_province') ? 'has-error' : '' }}">--}}
-                        {{--{{ trans('validation.attributes.users_province') }}--}}
-                        {{--:--}}
-                        {{--<strong>{{ $item->users_province }}</strong>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group {{ $errors->has('users_postcode') ? 'has-error' : '' }}">--}}
-                        {{--{{ trans('validation.attributes.users_postcode') }}--}}
-                        {{--:--}}
-                        {{--<strong>{{ $item->users_postcode }}</strong>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="form-group {{ $errors->has('users_phone') ? 'has-error' : '' }}">--}}
-                        {{--{{ trans('validation.attributes.users_phone') }}--}}
-                        {{--:--}}
-                        {{--<strong>{{ $item->users_phone }}</strong>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
             </div>

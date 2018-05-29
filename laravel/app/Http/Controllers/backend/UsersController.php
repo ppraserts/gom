@@ -6,6 +6,9 @@ use App\Market;
 use App\Standard;
 use App\UserMarket;
 use App\Province;
+use App\District;
+use App\Amphur;
+use App\UserStandard;
 use File;
 use Validator;
 use Illuminate\Support\Facades\Mail;
@@ -79,7 +82,7 @@ class UsersController extends Controller
         $standardArr = array();
         if ($standards != null) {
             foreach ($standards as $standard_item) {
-                array_push($standardArr, $standard_item->name);
+                array_push($standardArr, $standard_item->standard_id);
             }
 
         }
@@ -87,7 +90,8 @@ class UsersController extends Controller
             array_push($standardArr, $item->other_standard);
         }
         if (!empty($standardArr)) {
-            $standard = implode(", ", $standardArr);
+//            $standard = implode(", ", $standardArr);
+            $standard = $standardArr;
         }
 
 
@@ -102,12 +106,14 @@ class UsersController extends Controller
                 }
             }
         }
-        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')
-            ->get();
+        $provinceItem = Province::all();
+        $amphurs = Amphur::where('AMPHUR_NAME',$item->users_city)->get();
+        $districts =District::where('DISTRICT_NAME',$item->users_district)->get();
+        $standard_all = Standard::all();
         return view('backend.usersedit',
             compact('item', 'countinactiveusers',
                 'countinactivecompanyusers',
-                'standard', 'markets','provinceItem'
+                'standard', 'markets','provinceItem','amphurs','districts','standard_all'
 
             ))
             ->with($data);
@@ -115,14 +121,48 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
-
+       //return $request->all();
         $user = User::find($id);
+        $user_id = $user->id;
+        $arr_checked_user_standards =  $request->input('standard');
         $is_active = $user->is_active;
         $user->is_active = $request->is_active == "" ? 0 : 1;
+        if(!empty($request->input('other_standard'))){
+            $user->other_standard = $request->input('other_standard');
+        }
+
+        $user->users_firstname_th = $request->input('users_firstname_th');
+        $user->users_lastname_th = $request->input('users_lastname_th');
+        $user->email = $request->input('email');
+        $user->users_addressname = $request->input('users_addressname');
+        $user->users_province = $request->input('users_province');
+        $user->users_city = $request->input('users_city');
+        $user->users_district = $request->input('users_district');
+        $user->users_postcode = $request->input('users_postcode');
+        $user->users_mobilephone = $request->input('users_mobilephone');
+        $user->users_idcard = $request->input('users_idcard');
+        $user->users_qrcode = $request->input('users_qrcode');
+        if(!empty($request->input('iwanttosale'))){
+            $user->iwanttosale = $request->input('iwanttosale');
+        }
+        if(!empty($request->input('iwanttobuy'))){
+            $user->iwanttobuy = $request->input('iwanttobuy');
+        }
         $user->update();
+        //
 
+        if (is_array($arr_checked_user_standards)) {
+            $user = UserStandard::where('user_id', $user->id)->delete();
+            foreach ($arr_checked_user_standards as $standard_id) {
+                UserStandard::insert([
+                    'user_id' => $user_id,
+                    'standard_id' =>$standard_id
+                ]);
+            }
+        }
+
+        //markets
         $arr_markets = Input::get('markets');
-
         $userMarkets = UserMarket::where('user_id', $id)->get();
         foreach ($userMarkets as $userMarket) {
             $userMarket->delete();
@@ -155,8 +195,7 @@ class UsersController extends Controller
             });
         }
 
-        return redirect()->route('users.index')
-            ->with('success', trans('messages.message_update_success'));
+        return redirect('admin/users/'.$id.'/edit')->with('success', trans('messages.message_update_success'));
     }
 
     public function destroy($id)
