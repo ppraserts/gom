@@ -92,6 +92,7 @@ $controllerAction = "companys.update";
             @endif
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
+                    <h4 class="text-center">{{ trans('messages.membertype_company') }}</h4>
                 </div>
                 <div class="pull-right">
                     <a class="btn btn-default" href="{{ route('companys.index') }}">
@@ -125,13 +126,13 @@ $controllerAction = "companys.update";
                                  class="img-circle">
                         @endif
                         <div class="form-group {{ $errors->has('is_active') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.is_active') }} :
+                            <strong>{{ trans('validation.attributes.is_active') }}:</strong>
                             <input value="1" type="checkbox" id="is_active"
                                    name="is_active" {{ $item->is_active == 0? '' : 'checked' }}>
                         </div>
                         @if($item->iwanttosale=='sale')
                             <div class="form-group form-inline">
-                                <span> {{ trans('validation.attributes.market') }} :</span>
+                                <strong> {{ trans('validation.attributes.market') }}:</strong>
                                 <div>
                                     @for($i = 0 ; $i < count($markets) ; $i++)
                                         <input name="markets[]" type="checkbox"
@@ -142,28 +143,16 @@ $controllerAction = "companys.update";
                                 </div>
                             </div>
                         @endif
-                        <div class="col-md-6 form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.iwantto') }}:
+                        <div class="col-md-12 form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
+                            <strong>{{ trans('validation.attributes.iwantto') }}:</strong>
                             <input type="checkbox" name="iwanttosale" value="{{ $item->iwanttosale }}"
                                    @if($item->iwanttosale == 'sale') checked @endif> sale
                             <input type="checkbox" name="iwanttobuy" value="{{ $item->iwanttobuy }}"
                                    @if($item->iwanttobuy == 'buy')checked @endif> Buy
                         </div>
-                        <div class="col-md-6 form-group {{ $errors->has('users_idcard') ? 'has-error' : '' }}">
-                            {{ Lang::get('validation.attributes.users_taxcode') }}:
-                            <input type="text" class="form-control" name="users_taxcode"
-                                   value="{{ $item->users_taxcode }}">
-                        </div>
                         @if($item->iwanttosale == 'sale')
-                            <div class="col-md-6 form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
-                                {{ trans('validation.attributes.users_qrcode') }}:
-                                <input type="text" name="users_qrcode" class="form-control"
-                                       value="{{ $item->users_qrcode }}">
-                            </div>
-                        @endif
-                        @if($item->iwanttosale == 'sale')
-                            <div class="col-md-6 form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
-                                {{ trans('validation.attributes.guarantee') }}:
+                            <div class="col-md-12 form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.guarantee') }}:</strong>
                                 @foreach($standard_all as $v)
                                     <input type="checkbox" name="standard[]" value="{{$v->id}}"
                                            @if(in_array($v->id, $standard)) checked @endif> {{$v->name}}
@@ -173,22 +162,34 @@ $controllerAction = "companys.update";
 
                             </div>
                         @endif
+                        <div class="col-md-6 form-group {{ $errors->has('users_idcard') ? 'has-error' : '' }}">
+                            <strong>{{ Lang::get('validation.attributes.users_taxcode') }}:</strong>
+                            <input type="text" class="form-control" name="users_taxcode"
+                                   value="{{ $item->users_taxcode }}">
+                        </div>
+                        @if($item->iwanttosale == 'sale')
+                            <div class="col-md-6 form-group {{ $errors->has('users_qrcode') ? 'has-error' : '' }}">
+                                <strong>{{ trans('validation.attributes.users_qrcode') }}:</strong>
+                                <input type="text" name="users_qrcode" class="form-control"
+                                       value="{{ $item->users_qrcode }}">
+                            </div>
+                        @endif
+
                             <div class="col-md-6 form-group {{ $errors->has('users_company_th') ? 'has-error' : '' }}">
-                                {{ Lang::get('validation.attributes.users_company_th') }}:
+                                <strong>{{ Lang::get('validation.attributes.users_company_th') }}:</strong>
                                 <input type="text" name="users_company_th" class="form-control"
                                        value="{{$item->users_company_th}}">
                             </div>
 
                         <div class="col-md-6 form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.email') }}:
+                            <strong>{{ trans('validation.attributes.email') }}:</strong>
                             <input type="email" name="email" class="form-control" value="{{$item->email}}">
                         </div>
 
                         <div class="col-md-6 form-group {{ $errors->has('users_addressname') ? 'has-error' : '' }}">
                             <label for="users_addressname" class="control-label">
-                                {{ trans('validation.attributes.users_addressname') }}:
+                                <strong>{{ trans('validation.attributes.users_addressname') }}:</strong>
                             </label>
-
                             <input id="users_addressname" type="text" class="form-control"
                                    name="users_addressname" value="{{$item->users_addressname}}">
 
@@ -200,8 +201,9 @@ $controllerAction = "companys.update";
                         </div>
 
                         <div class="col-md-6 form-group {{ $errors->has('users_province') ? ' has-error' : '' }}">
-                            <label for="users_province"
-                                   class="control-label">* {{ Lang::get('validation.attributes.users_province') }}</label>
+                            <label for="users_province" class="control-label">
+                                <strong>* {{ Lang::get('validation.attributes.users_province') }}:</strong>
+                            </label>
 
                             <select id="users_province" name="users_province" class="form-control" required>
                                 <option value="">{{ trans('messages.please_select') }}</option>
@@ -214,14 +216,14 @@ $controllerAction = "companys.update";
                             </select>
                             @if ($errors->has('users_province'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('users_province') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('users_province') }}</strong>
+                                </span>
                             @endif
                         </div>
 
                         <div class="col-md-6 form-group{{ $errors->has('users_city') ? ' has-error' : '' }}">
                             <label for="users_city" class="control-label">
-                                {{ Lang::get('validation.attributes.users_city') }}
+                                <strong>{{ Lang::get('validation.attributes.users_city') }}:</strong>
                             </label>
                             <select id="users_city" name="users_city" class="form-control">
                                 @foreach($amphurs as $amphur)
@@ -240,7 +242,7 @@ $controllerAction = "companys.update";
 
                         <div class="col-md-6 form-group{{ $errors->has('users_district') ? ' has-error' : '' }}">
                             <label for="users_district" class="control-label">
-                                {{ Lang::get('validation.attributes.users_district') }}
+                                <strong>{{ Lang::get('validation.attributes.users_district') }}:</strong>
                             </label>
                             <select id="users_district" name="users_district" class="form-control">
                                 @foreach($districts as $district)
@@ -260,7 +262,7 @@ $controllerAction = "companys.update";
                         </div>
                         <div class="col-md-6 form-group{{ $errors->has('users_postcode') ? ' has-error' : '' }}">
                             <label for="users_postcode" class="control-label">
-                                {{ Lang::get('validation.attributes.users_postcode') }}
+                                <strong>{{ Lang::get('validation.attributes.users_postcode') }}:</strong>
                             </label>
                             <input type="text" class="form-control" name="users_postcode"
                                    value="{{$item->users_postcode}}">
@@ -271,11 +273,33 @@ $controllerAction = "companys.update";
                             @endif
                         </div>
                         <div class="col-md-6 form-group {{ $errors->has('users_mobilephone') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.users_mobilephone') }} :
+                            <strong>{{ trans('validation.attributes.users_mobilephone') }}:</strong>
                             <input type="text" class="form-control" name="users_mobilephone"
                                    value="{{ $item->users_mobilephone }}">
                         </div>
 
+                    </div>
+                </div>
+            </div>
+            {{--//reset Password--}}
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group" style="margin-top:10px; margin-bottom:10px; display:none;">
+                    <div id="map" style="width: 100%; min-height: 300px;"></div>
+                </div>
+                <div class="panel panel-default" style="margin-top:10px;">
+                    <div class="panel-heading">{{ trans('messages.resetpassword_title') }}</div>
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="sr-only" for="password">{{ trans('messages.password') }}</label>
+                                <input type="text" class="form-control copy" id="password"
+                                       data-clipboard-target="#password" readonly>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-userid="{{ $item->id }}"
+                                    data-toggle="modal"
+                                    data-target="#password_confirm">{{ trans('messages.resetpassword_btn') }}</button>
+                            <!--<button type="button" class="btn copy btn-default" data-clipboard-target="#password">Copy</button>-->
+                        </form>
                     </div>
                 </div>
             </div>
