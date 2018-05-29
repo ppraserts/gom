@@ -73,10 +73,10 @@
     <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding:0px; margin-top: 15px;"></div>
     <h4>{{trans('messages.standard_received')}}</h4>
     <button type="button" class="btn btn-info btn-sm" style="width: 100%; margin-bottom: 5px;">
-        <?php $c = 0; $count_standards = count($standards); ?>
+        <?php $c = 1; $count_standards = count($standards); ?>
         @foreach($standards as $standard)
             <?php $commact = '';?>
-            @if($c < $count_standards && $count_standards != 1)
+            @if($c < $count_standards && $c != $count_standards && $count_standards != 1)
                     <?php $commact = ',';?>
             @endif
             {{$standard->name}}{{$commact}}
