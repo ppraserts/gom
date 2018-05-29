@@ -94,7 +94,6 @@ class UsersController extends Controller
             $standard = $standardArr;
         }
 
-
         $markets = Market::all();
         $userMarkets = UserMarket::where('user_id', $id)->get();
 
@@ -150,14 +149,21 @@ class UsersController extends Controller
         }
         $user->update();
         //
-
         if (is_array($arr_checked_user_standards)) {
-            $user = UserStandard::where('user_id', $user->id)->delete();
+            $UserStandards = UserStandard::where('user_id', $user->id)->get();
+            if(count($UserStandards)>0){
+                UserStandard::where('user_id', $user->id)->delete();
+            }
             foreach ($arr_checked_user_standards as $standard_id) {
                 UserStandard::insert([
                     'user_id' => $user_id,
                     'standard_id' =>$standard_id
                 ]);
+            }
+        }else{
+            $UserStandards = UserStandard::where('user_id', $user->id)->get();
+            if(count($UserStandards)>0){
+                UserStandard::where('user_id', $user->id)->delete();
             }
         }
 

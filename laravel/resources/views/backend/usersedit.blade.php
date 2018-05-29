@@ -148,7 +148,6 @@ $controllerAction = "users.update";
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="panel panel-default" style="margin-top:10px;">
-                    <div class="panel-heading">ฟอมแก้ไขข้อมูลสมาชิก</div>
                     <div class="panel-body">
 
                         @if($item->users_imageprofile != "")
@@ -156,8 +155,7 @@ $controllerAction = "users.update";
                                  class="img-circle">
                         @endif
                         <div class="form-group {{ $errors->has('is_active') ? 'has-error' : '' }}">
-                            {{ trans('validation.attributes.is_active') }}
-                            :
+                            {{ trans('validation.attributes.is_active') }}:
                             <strong>
                                 <input value="1" type="checkbox" id="is_active"
                                        name="is_active" {{ $item->is_active == 0? '' : 'checked' }}>
