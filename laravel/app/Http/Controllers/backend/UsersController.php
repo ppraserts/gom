@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Market;
 use App\Standard;
 use App\UserMarket;
+use App\Province;
 use File;
 use Validator;
 use Illuminate\Support\Facades\Mail;
@@ -101,9 +102,15 @@ class UsersController extends Controller
                 }
             }
         }
+        $provinceItem = Province::orderByRaw('CONVERT (PROVINCE_NAME USING tis620)', 'ASC')
+            ->get();
+        return view('backend.usersedit',
+            compact('item', 'countinactiveusers',
+                'countinactivecompanyusers',
+                'standard', 'markets','provinceItem'
 
-
-        return view('backend.usersedit', compact('item', 'countinactiveusers', 'countinactivecompanyusers', 'standard', 'markets'))->with($data);
+            ))
+            ->with($data);
     }
 
     public function update(Request $request, $id)
