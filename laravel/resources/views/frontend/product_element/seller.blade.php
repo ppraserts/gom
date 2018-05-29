@@ -4,15 +4,12 @@
     </div>
     <div class="col-md-6">
         @if(count($shop) > 0)
-
             <a class="btn btn-info btn-sm pull-right" href="{{url($shop->shop_name)}}">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 {{trans('messages.text_go_to_shop')}}
             </a>
-
         @endif
     </div>
-
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 pd-top-bottom">
     <strong>
@@ -73,6 +70,19 @@
     @else
         -
     @endif
+    <div class="clearfix" style="border-top: 1px solid #d4d4d4; padding:0px; margin-top: 15px;"></div>
+    <h4>{{trans('messages.standard_received')}}</h4>
+    <button type="button" class="btn btn-info btn-sm" style="width: 100%; margin-bottom: 5px;">
+        <?php $c = 0; $count_standards = count($standards); ?>
+        @foreach($standards as $standard)
+            <?php $commact = '';?>
+            @if($c < $count_standards && $count_standards != 1)
+                    <?php $commact = ',';?>
+            @endif
+            {{$standard->name}}{{$commact}}
+            <?php $c++?>
+        @endforeach
+    </button>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -96,7 +106,6 @@
             $avg_score = round($productRequest->avg_score);
         }
         ?>
-
         <p class="score-star">
             @if($avg_score == 1)
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -167,7 +176,6 @@
                 @endif
             @endif
         </p>
-
         <p>
             {{ trans('validation.attributes.volumn') }} :
             <strong>
@@ -180,7 +188,6 @@
                 @endif
             </strong>
         </p>
-
         @if($user!=null && $user->id == $productRequest->users_id)
             <p>
                 <a href="{{ url('user/productsaleedit/'.$productRequest->id)  }}"

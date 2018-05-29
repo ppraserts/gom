@@ -16,6 +16,7 @@ use App\ProductCategory;
 use App\Comment;
 use App\Shop;
 use App\Config;
+use App\Standard;
 use Redirect, Session;
 
 class ProductsViewController extends Controller
@@ -32,7 +33,6 @@ class ProductsViewController extends Controller
 
     public function show($id)
     {
-
         $productRequest = ProductRequest::join('users', 'users.id', '=', 'product_requests.users_id')
             ->join('products', 'product_requests.products_id', '=', 'products.id')
             ->leftJoin('comments', 'product_requests.id', '=', 'comments.product_id')
@@ -40,7 +40,6 @@ class ProductsViewController extends Controller
                 ,sum(comments.score)/count(comments.product_id) as avg_score'))
             ->where('product_requests.id', $id)
             ->first();
-
         if($productRequest->is_active == 0){
             return abort(404);
         }
@@ -50,6 +49,10 @@ class ProductsViewController extends Controller
         if ($productRequest->user_id == $user['id']) {
             $status_comment = 1;
         }
+
+        $standards = Standard::join('user_standard', 'user_standard.standard_id', '=', 'standards.id')
+            ->where('user_standard.user_id', $productRequest->user_id)->get();
+
         $shop = Shop::where('user_id', $productRequest->user_id)->first();
 
         $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
@@ -67,9 +70,8 @@ class ProductsViewController extends Controller
                 }
             }
         }
-
-
-        return view('frontend.productview', compact('productRequest', 'user', 'comments', 'status_comment', 'shop'));
+        return view('frontend.productview',
+            compact('productRequest', 'user', 'comments', 'status_comment', 'shop','standards'));
     }
 
     /**

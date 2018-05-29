@@ -15,7 +15,6 @@ function renderHTML($text)
     <div class="row">
         <div class="col-lg-12">
             <div class="col-md-4" style="padding-right:30px;">
-
                 <a href="#" class="btn btn-default" onclick="history.back();">
                     {{trans('messages.backtoresult')}}
                 </a>
@@ -77,76 +76,76 @@ function renderHTML($text)
     @endif
 @stop
 @push('scripts')
-<link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
-<script src="{{url('jquery-loading/waitMe.js')}}"></script>
-<script> var partUrl = "{{url('/')}}"; </script>
-<script src="{{url('js/comment_product.js')}}"></script>
-<link rel="stylesheet" href="{{url('css/star.css')}}">
-<script>
+    <link href="{{url('jquery-loading/waitMe.css')}}" rel="stylesheet">
+    <script src="{{url('jquery-loading/waitMe.js')}}"></script>
+    <script> var partUrl = "{{url('/')}}"; </script>
+    <script src="{{url('js/comment_product.js')}}"></script>
+    <link rel="stylesheet" href="{{url('css/star.css')}}">
+    <script>
 
-    var BASE_URL = '<?php echo url('/')?>';
+        var BASE_URL = '<?php echo url('/')?>';
 
-    $(document).ready(function () {
-        $('#modal_add_to_cart').on('hidden.bs.modal', function () {
-            location.reload();
+        $(document).ready(function () {
+            $('#modal_add_to_cart').on('hidden.bs.modal', function () {
+                location.reload();
+            });
         });
-    });
 
-    function addToCart(productRequestId, userId, unit_price, min_order) {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
-        $.ajax({
-            type: 'POST',
-            url: targetUrl,
-            data: {
-                _token: CSRF_TOKEN,
-                product_request_id: productRequestId,
-                user_id: userId,
-                unit_price: unit_price,
-                min_order: min_order
-            },
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 'success') {
-                    showProductAdded(response.product_request);
-                } else {
+        function addToCart(productRequestId, userId, unit_price, min_order) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var targetUrl = BASE_URL + '/user/shoppingcart/addToCart';
+            $.ajax({
+                type: 'POST',
+                url: targetUrl,
+                data: {
+                    _token: CSRF_TOKEN,
+                    product_request_id: productRequestId,
+                    user_id: userId,
+                    unit_price: unit_price,
+                    min_order: min_order
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == 'success') {
+                        showProductAdded(response.product_request);
+                    } else {
+                        window.location = BASE_URL + '/user/login';
+                    }
+                },
+                error: function (request, status, error) {
                     window.location = BASE_URL + '/user/login';
+                    console.log(request.responseText);
+                    //alert(request.responseText);
                 }
-            },
-            error: function (request, status, error) {
-                window.location = BASE_URL + '/user/login';
-                console.log(request.responseText);
-                //alert(request.responseText);
+            });
+        }
+
+        function showAddQuotation() {
+            $('#modal_add_quotaiton').modal('show');
+        }
+
+        function addQuotation(productRequestId) {
+            var quantity = $('input[name=quantity]').val();
+            if (quantity < 1) {
+                $('#quantity-error').css('color', '#a94442');
+                $('#quantity-error').html('กรุณากรอกจำนวน');
+                return;
             }
-        });
-    }
-
-    function showAddQuotation() {
-        $('#modal_add_quotaiton').modal('show');
-    }
-
-    function addQuotation(productRequestId) {
-        var quantity = $('input[name=quantity]').val();
-        if (quantity<1){
-            $('#quantity-error').css('color', '#a94442');
-            $('#quantity-error').html('กรุณากรอกจำนวน');
-            return;
+            window.location = BASE_URL + '/user/quotationRequest/' + productRequestId + '/' + quantity;
         }
-        window.location = BASE_URL + '/user/quotationRequest/' + productRequestId + '/' + quantity;
-    }
 
 
-    function showProductAdded(productRequest) {
-        if (productRequest != null) {
-            $('#img_product').attr('src', BASE_URL + '/' + productRequest.product1_file);
-            $('#div_product_description').html(productRequest.product_description);
-            $('#div_product_title').html(productRequest.product1_title);
-            $('#sp_product_price').text(productRequest.price);
-            $('#sp_product_volume').text(productRequest.volumn);
-            $('#units').html(productRequest.units);
+        function showProductAdded(productRequest) {
+            if (productRequest != null) {
+                $('#img_product').attr('src', BASE_URL + '/' + productRequest.product1_file);
+                $('#div_product_description').html(productRequest.product_description);
+                $('#div_product_title').html(productRequest.product1_title);
+                $('#sp_product_price').text(productRequest.price);
+                $('#sp_product_volume').text(productRequest.volumn);
+                $('#units').html(productRequest.units);
+            }
+            $('#modal_add_to_cart').modal('show');
         }
-        $('#modal_add_to_cart').modal('show');
-    }
 
-</script>
+    </script>
 @endpush
