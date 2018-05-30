@@ -356,5 +356,6 @@ return [
     'confirm_password_change'=>'การกำหนดรหัสผ่านใหม่ จะส่งผลให้ผู้ใช้งานไม่สามารถใช้งานรหัสผ่านเดิมได้<br>ต้องการกำหนดรหัสผ่านใหม่ใช่หรือไม่?',
     'confirm_password_yes'=>'ใช่',
     'confirm_password_no'=>'ไม่',
-    'standard_received'=>'Standard received'
+    'standard_received'=>'Standard received',
+    'other' => 'Other'
 ];
