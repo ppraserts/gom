@@ -306,4 +306,50 @@ $controllerAction = "companys.update";
         </div>
     </div>
     {!! Form::close() !!}
+    @push('scripts')
+        <div class="modal fade" id="password_confirm" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">{{ trans('messages.resetpassword_title') }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color:red;">{!! trans('messages.confirm_password_change') !!}</p>
+                        <input type="hidden" id="change_password_userid" value=""/>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;">
+                        <button type="button" class="btn btn-primary"
+                                onclick="request_password()">{{ trans('messages.confirm_password_yes') }}</button>
+                        <button type="button" class="btn btn-default" id="close_modal"
+                                data-dismiss="modal">{{ trans('messages.confirm_password_no') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="{{url('/js/clipboard.min.js')}}"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                new Clipboard('.copy');
+
+                $('#password_confirm').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var recipient = button.data('userid') // Extract info from data-* attributes
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                    var modal = $(this)
+                    modal.find('#change_password_userid').val(recipient)
+                });
+            });
+
+            function request_password(user_id) {
+                $.get('{{url('admin/changepassword')}}', {'id': $('#change_password_userid').val()}, function (data) {
+                    $('#password').val(data);
+                    $('#password_confirm').modal('hide');
+                });
+            }
+        </script>
+    @endpush
 @endsection
