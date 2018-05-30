@@ -159,11 +159,10 @@ $controllerAction = "users.update";
                         </div>
                         @if($item->iwanttosale == 'sale')
                             <div class="col-md-12 form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
-                                <strong>{{ trans('validation.attributes.guarantee') }}:</strong>
+                                <strong>{{ trans('validation.attributes.guarantee') }}:</strong><br/>
                                 @foreach($standard_all as $v)
-                                    <input type="checkbox" name="standard[]" value="{{$v->id}}" @if(in_array($v->id, $standard)) checked @endif> {{$v->name}}
+                                    <input type="checkbox" name="standard[]" value="{{$v->id}}" @if(in_array($v->id, $standard)) checked @endif> {{$v->name}} <br/>
                                 @endforeach
-                                <br/><br/>
                                 อื่นๆ <input type="text" name="other_standard" value="{{$item->other_standard}}">
 
                             </div>

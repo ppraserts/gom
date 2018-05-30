@@ -76,20 +76,33 @@
     $other_standard= '';
     if(!empty($productRequest->other_standard)){
         //trans('messages.other')
-        $other_standard = ', '.$productRequest->other_standard;
+        $other_standard = $productRequest->other_standard;
     }
     ?>
     <?php $c = 1; $count_standards = count($standards); ?>
+    <?php $str = ''; $commact = '';?>
     @foreach($standards as $standard)
-        <?php $commact = '';?>
         @if($c < $count_standards && $c != $count_standards && $count_standards != 1)
-                <?php $commact = ', ';?>
+                <?php
+            $commact = ', ';
+            ?>
         @endif
-        <span style="width: 100%;margin-bottom: 15px;background-color: #aec54b;padding: 5px 15px;display: block;text-align: center;color: white;">
-        {{$standard->name}}{{$commact}}{{$other_standard}}
-        </span>
-        <?php $c++?>
+        <?php
+                $str = $standard->name.$commact;
+            $c++
+            ?>
     @endforeach
+    <?php
+        $str_standard = $other_standard;
+        if(!empty($str)){
+            $str_standard = $str.', '.$other_standard;
+        }
+        ?>
+    @if(!empty($str_standard))
+    <span style="width: 100%;margin-bottom: 15px;background-color: #aec54b;padding: 5px 15px;display: block;text-align: center;color: white;">
+    {{$str}}{{$other_standard}}
+    </span>
+    @endif
 </div>
 <div class="row">
     <div class="col-md-12">

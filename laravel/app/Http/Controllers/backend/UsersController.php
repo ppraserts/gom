@@ -126,10 +126,7 @@ class UsersController extends Controller
         $arr_checked_user_standards =  $request->input('standard');
         $is_active = $user->is_active;
         $user->is_active = $request->is_active == "" ? 0 : 1;
-        if(!empty($request->input('other_standard'))){
-            $user->other_standard = $request->input('other_standard');
-        }
-
+        $user->other_standard = $request->input('other_standard');
         $user->users_firstname_th = $request->input('users_firstname_th');
         $user->users_lastname_th = $request->input('users_lastname_th');
         $user->email = $request->input('email');

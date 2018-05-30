@@ -115,9 +115,7 @@ class CompanysController extends Controller
 
         $user->is_active = $request->is_active == "" ? 0 : 1;
         $user->is_active = $request->is_active == "" ? 0 : 1;
-        if(!empty($request->input('other_standard'))){
-            $user->other_standard = $request->input('other_standard');
-        }
+        $user->other_standard = $request->input('other_standard');
         $user->users_company_th = $request->input('users_company_th');
         $user->email = $request->input('email');
         $user->users_addressname = $request->input('users_addressname');
