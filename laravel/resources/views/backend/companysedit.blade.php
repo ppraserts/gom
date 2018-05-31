@@ -157,7 +157,7 @@ $controllerAction = "companys.update";
                                     <input type="checkbox" name="standard[]" value="{{$v->id}}"
                                            @if(in_array($v->id, $standard)) checked @endif> {{$v->name}}<br/>
                                 @endforeach
-                                อื่นๆ <input type="text" name="other_standard" value="{{$item->other_standard}}">
+                                อื่นๆ <input type="text" name="other_standard" style="width: 410px;" value="{{$item->other_standard}}">
 
                             </div>
                         @endif
