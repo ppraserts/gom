@@ -161,7 +161,7 @@ $controllerAction = "users.update";
                             <div class="col-md-12 form-group {{ $errors->has('users_standard') ? 'has-error' : '' }}">
                                 <strong>{{ trans('validation.attributes.guarantee') }}:</strong><br/>
                                 @foreach($standard_all as $v)
-                                    <input type="checkbox" name="standard[]" value="{{$v->id}}" @if(in_array($v->id, $standard)) checked @endif> {{$v->name}} <br/>
+                                    <input type="checkbox" name="standard[]" value="{{$v->id}}" @if(!empty($standard)) @if(in_array($v->id, $standard)) checked @endif @endif> {{$v->name}} <br/>
                                 @endforeach
                                 อื่นๆ <input type="text" name="other_standard" style="width: 410px;" value="{{$item->other_standard}}">
 
