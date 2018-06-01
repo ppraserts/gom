@@ -138,12 +138,8 @@ class UsersController extends Controller
         $user->users_mobilephone = $request->input('users_mobilephone');
         $user->users_idcard = $request->input('users_idcard');
         $user->users_qrcode = $request->input('users_qrcode');
-        if(!empty($request->input('iwanttosale'))){
-            $user->iwanttosale = $request->input('iwanttosale');
-        }
-        if(!empty($request->input('iwanttobuy'))){
-            $user->iwanttobuy = $request->input('iwanttobuy');
-        }
+        $user->iwanttosale = $request->input('iwanttosale');
+        $user->iwanttobuy = $request->input('iwanttobuy');
         $user->update();
         //
         if (is_array($arr_checked_user_standards)) {

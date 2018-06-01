@@ -126,12 +126,8 @@ class CompanysController extends Controller
         $user->users_mobilephone = $request->input('users_mobilephone');
         $user->users_qrcode = $request->input('users_qrcode');
         $user->users_taxcode = $request->input('users_taxcode');
-        if(!empty($request->input('iwanttosale'))){
-            $user->iwanttosale = $request->input('iwanttosale');
-        }
-        if(!empty($request->input('iwanttobuy'))){
-            $user->iwanttobuy = $request->input('iwanttobuy');
-        }
+        $user->iwanttosale = $request->input('iwanttosale');
+        $user->iwanttobuy = $request->input('iwanttobuy');
         $user->update();
 
         //UserStandard
