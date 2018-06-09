@@ -1,4 +1,4 @@
-# Project Title
+# DGT Farm Project
 
 DGT Farm
 
