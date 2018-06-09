@@ -1,37 +1,37 @@
 # DGT Farm Project
 
-DGT Farm
-
 ### Prerequisites
 * Docker
 
 ### Installing
 
-Clone project to your local
+* Clone project to your local
 
 ```
 git clone https://github.com/ppraserts/gom.git
 ```
 
-Go to directory
+* Go to directory
 
 ```
 cd gom
 ```
 
-Install Laravel Package via Docker
+* Install Laravel Package via Docker
 
 ```
 docker run --rm -v $(pwd)/laravel:/app composer/composer install
 ```
 
-Start your project
+* Change file ./laravel/.env.example to ./laravel/.env
+
+* Start your project
 
 ```
 docker-compose up
 ```
 
-Remove your container project
+* Remove your container project
 
 ```
 docker-compose down
