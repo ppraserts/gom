@@ -25,10 +25,16 @@ Install Laravel Package via Docker
 docker run --rm -v $(pwd)/laravel:/app composer/composer install
 ```
 
-Install Laravel Package via Docker
+Start your project
 
 ```
 docker-compose up
+```
+
+Remove your container project
+
+```
+docker-compose down
 ```
 
 ## Running your website
