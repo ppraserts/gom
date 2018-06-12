@@ -43,7 +43,7 @@ Open browser: http://localhost
 
 ## Running your phpMyAdmin
 
-Open browser: http://localhost:8081
+Open browser: http://localhost:8080
 Username: root
 Password: gom
 
