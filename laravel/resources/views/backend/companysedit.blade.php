@@ -145,9 +145,9 @@ $controllerAction = "companys.update";
                         @endif
                         <div class="col-md-12 form-group {{ $errors->has('iwantto') ? 'has-error' : '' }}">
                             <strong>{{ trans('validation.attributes.iwantto') }}:</strong>
-                            <input type="checkbox" name="iwanttosale" value="{{ $item->iwanttosale }}"
+                            <input type="checkbox" name="iwanttosale" value="sale"
                                    @if($item->iwanttosale == 'sale') checked @endif> sale
-                            <input type="checkbox" name="iwanttobuy" value="{{ $item->iwanttobuy }}"
+                            <input type="checkbox" name="iwanttobuy" value="buy"
                                    @if($item->iwanttobuy == 'buy')checked @endif> Buy
                         </div>
                         @if($item->iwanttosale == 'sale')
